@@ -30,8 +30,10 @@
         <Chronometer
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:id="@+id/chronometer2"
-            android:textSize="70dp"
+            android:id="@+id/start_time"
+            android:textSize="30dp"
+            android:gravity="center"
+            android:textColor="#ffff00"
             android:layout_weight="71" />
 
         <Button

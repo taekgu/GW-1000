@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.Chronometer;
 
 import com.sinest.gw_1000.R;
 
@@ -19,6 +20,17 @@ public class Activity_finishtime extends Activity {
 
     boolean[] finish_flag = {true,true,true,true,true,true,true,true,true,true,true,true};
 
+    Chronometer finish_time;
+
+    String s_buf;
+    int int_buf;
+    int int_c = 0;
+
+    String buf_l;
+    String buf_r;
+    int int_l;
+    int int_r;
+    int check;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,131 +55,62 @@ public class Activity_finishtime extends Activity {
         finish_time_enter = (Button) findViewById(R.id.finish_time_enter);
         finish_time_back = (Button) findViewById(R.id.finish_time_back);
 
+        finish_time = (Chronometer) findViewById(R.id.finish_time);
+
+        finish_time.setText("00:00");
+
         View.OnClickListener listener = new View.OnClickListener() {
             public void onClick(View v) {
                 switch (v.getId()) {
                     case R.id.start_time1:
                         //
-                        if (finish_flag[0] == true) {
-                            finish_time1.setBackgroundResource(R.drawable.keypad_1);
-                            finish_flag[0] = false;
-                        } else {
-                            finish_time1.setBackgroundResource(R.drawable.keypad_1);
-                            finish_flag[0] = true;
-                        }
+                        time_sum(1);
                         break;
                     case R.id.finish_time2:
                         //
-                        if (finish_flag[1] == true) {
-                            finish_time2.setBackgroundResource(R.drawable.keypad_2);
-                            finish_flag[1] = false;
-                        } else {
-                            finish_time2.setBackgroundResource(R.drawable.keypad_2);
-                            finish_flag[1] = true;
-                        }
+                        time_sum(2);
                         break;
                     case R.id.finish_time3:
                         //
-                        if (finish_flag[2] == true) {
-                            finish_time3.setBackgroundResource(R.drawable.keypad_3);
-                            finish_flag[2] = false;
-                        } else {
-                            finish_time3.setBackgroundResource(R.drawable.keypad_3);
-                            finish_flag[2] = true;
-                        }
+                        time_sum(3);
                         break;
                     case R.id.finish_time4:
                         //
-                        if (finish_flag[3] == true) {
-                            finish_time4.setBackgroundResource(R.drawable.keypad_4);
-                            finish_flag[3] = false;
-                        } else {
-                            finish_time4.setBackgroundResource(R.drawable.keypad_4);
-                            finish_flag[3] = true;
-                        }
+                        time_sum(4);
                         break;
                     case R.id.finish_time5:
                         //
-                        if (finish_flag[4] == true) {
-                            finish_time5.setBackgroundResource(R.drawable.keypad_5);
-                            finish_flag[4] = false;
-                        } else {
-                            finish_time5.setBackgroundResource(R.drawable.keypad_5);
-                            finish_flag[4] = true;
-                        }
+                        time_sum(5);
                         break;
                     case R.id.finish_time6:
                         //
-                        if (finish_flag[5] == true) {
-                            finish_time6.setBackgroundResource(R.drawable.keypad_6);
-                            finish_flag[5] = false;
-                        } else {
-                            finish_time6.setBackgroundResource(R.drawable.keypad_6);
-                            finish_flag[5] = true;
-                        }
+                        time_sum(6);
                         break;
                     case R.id.finish_time7:
                         //
-                        if (finish_flag[6] == true) {
-                            finish_time7.setBackgroundResource(R.drawable.keypad_7);
-                            finish_flag[6] = false;
-                        } else {
-                            finish_time7.setBackgroundResource(R.drawable.keypad_7);
-                            finish_flag[6] = true;
-                        }
+                        time_sum(7);
                         break;
                     case R.id.finish_time8:
                         //
-                        if (finish_flag[7] == true) {
-                            finish_time8.setBackgroundResource(R.drawable.keypad_8);
-                            finish_flag[7] = false;
-                        } else {
-                            finish_time8.setBackgroundResource(R.drawable.keypad_8);
-                            finish_flag[7] = true;
-                        }
+                        time_sum(8);
                         break;
                     case R.id.finish_time9:
                         //
-                        if (finish_flag[8] == true) {
-                            finish_time9.setBackgroundResource(R.drawable.keypad_9);
-                            finish_flag[8] = false;
-                        } else {
-                            finish_time9.setBackgroundResource(R.drawable.keypad_9);
-                            finish_flag[8] = true;
-                        }
+                        time_sum(9);
                         break;
                     case R.id.finish_time0:
                         //
-                        if (finish_flag[9] == true) {
-                            finish_time0.setBackgroundResource(R.drawable.keypad_0);
-                            finish_flag[9] = false;
-                        } else {
-                            finish_time0.setBackgroundResource(R.drawable.keypad_0);
-                            finish_flag[9] = true;
-                        }
+                        time_sum(0);
                         break;
 
 
                     case R.id.finish_time_enter:
                         //
-                        if (finish_flag[10] == true) {
-                            finish_time_enter.setBackgroundResource(R.drawable.keypad_enter);
-                            finish_flag[10] = false;
-                        } else {
-                            finish_time_enter.setBackgroundResource(R.drawable.keypad_enter);
-                            finish_flag[10] = true;
-                        }
+
                         break;
                     case R.id.finish_time_back:
                         //
-                        if (finish_flag[11] == true) {
-                            finish_time_back.setBackgroundResource(R.drawable.keypad_back);
-                            finish_flag[11] = false;
-                            finish();
-                        } else {
-                            finish_time_back.setBackgroundResource(R.drawable.keypad_back);
-                            finish_flag[11] = true;
-                        }
+                        finish();
                         break;
                 }
             }
@@ -185,9 +128,92 @@ public class Activity_finishtime extends Activity {
         finish_time0.setOnClickListener(listener);
         finish_time_enter.setOnClickListener(listener);
         finish_time_back.setOnClickListener(listener);
+    }
 
+    void time_sum(int k)
+    {
+        if(int_c >= 4)
+        {
+            s_buf = (String)finish_time.getText();
+            check = s_buf.indexOf(":");
+            buf_l = s_buf.substring(0,check);
+            buf_r = s_buf.substring(check+1);
+            int_buf = Integer.parseInt(buf_l)*100 + Integer.parseInt(buf_r);
+            // change
+            int_buf = (int_buf%1000)*10 + k;
 
+            int_l = int_buf/100;
+            int_r = int_buf%100;
 
+            if(int_l == 0)
+            {
+                buf_l = "00";
+            }else if(int_l < 10)
+            {
+                buf_l = "0"+Integer.toString(int_l);
+            }else{
+                buf_l = Integer.toString(int_l);
+            }
+            /*
+            if(k == 0)
+            {
+                buf_r = "00";
+            }else{
+                buf_r = Integer.toString(int_r);
+            }
+*/
+            if(int_r == 0)
+            {
+                buf_r = "00";
+            }else if(int_r < 10){
+                buf_r = "0"+Integer.toString(int_r);
+            }else{
+                buf_r = Integer.toString(int_r);
+            }
 
+            s_buf = buf_l+":"+buf_r;
+
+            finish_time.setText(s_buf);
+
+        }else if(int_c == 0) {
+            finish_time.setText("00:0"+Integer.toString(k));
+            int_c++;
+        }
+        else {
+            s_buf = (String)finish_time.getText();
+            check = s_buf.indexOf(":");
+            buf_l = s_buf.substring(0,check);
+            buf_r = s_buf.substring(check+1);
+            int_buf = Integer.parseInt(buf_l)*100 + Integer.parseInt(buf_r);
+            //change
+            int_buf = int_buf*10 + k;
+
+            int_l = int_buf/100;
+            int_r = int_buf%100;
+
+            if(int_l == 0)
+            {
+                buf_l = "00";
+            }else if(int_l < 10)
+            {
+                buf_l = "0"+Integer.toString(int_l);
+            }else{
+                buf_l = Integer.toString(int_l);
+            }
+
+            if(int_r == 0)
+            {
+                buf_r = "00";
+            }else if(int_r < 10){
+                buf_r = "0"+Integer.toString(int_r);
+            }else{
+                buf_r = Integer.toString(int_r);
+            }
+
+            s_buf = buf_l+":"+buf_r;
+
+            finish_time.setText(s_buf);
+            int_c++;
+        }
     }
 }
