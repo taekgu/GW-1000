@@ -22,24 +22,21 @@
             android:theme="@style/SplashTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+
 
         <activity
             android:name=".mode.Activity_waiting_rfid"
             android:screenOrientation="landscape"
             android:theme="@style/AppTheme" />
-
         <activity
             android:name=".mode.Activity_library"
             android:screenOrientation="landscape" />
-
         <activity android:name=".mode.Activity_waiting" />
-
         <activity android:name=".mode.Activity_manual_mode_setting" />
-
         <activity
             android:name=".mode.Activity_manual_mode_pattern_popup"
             android:screenOrientation="landscape"
@@ -48,6 +45,45 @@
         <activity android:name=".mode.Activity_waiting_working_time_popup"
             android:screenOrientation="landscape"
             android:theme="@android:style/Theme.Dialog"/>
+
+
+
+        <activity
+            android:name=".setting.Activity_emotion"
+            android:launchMode="singleInstance"
+            android:theme="@style/Theme.AppCompat.Dialog"
+            android:screenOrientation="landscape">
+        </activity>
+        <activity
+            android:name=".setting.Activity_rfid"
+            android:launchMode="singleInstance"
+            android:screenOrientation="landscape"
+            android:theme="@style/Theme.AppCompat.Dialog" />
+        <activity
+            android:name=".setting.Activity_water"
+            android:launchMode="singleInstance"
+            android:screenOrientation="landscape"
+            android:theme="@style/Theme.AppCompat.Dialog" />
+        <activity
+            android:name=".setting.Activity_engine"
+            android:launchMode="singleInstance"
+            android:screenOrientation="landscape"
+            android:theme="@style/Theme.AppCompat.NoActionBar" />
+        <activity
+            android:name=".setting.Activity_rfidcardpassord"
+            android:launchMode="singleInstance"
+            android:screenOrientation="landscape"
+            android:theme="@style/Theme.AppCompat.Dialog" />
+        <activity
+            android:name=".setting.Activity_starttime"
+            android:launchMode="singleInstance"
+            android:screenOrientation="landscape"
+            android:theme="@style/Theme.AppCompat.Dialog" />
+        <activity
+            android:name=".setting.Activity_finishtime"
+            android:launchMode="singleInstance"
+            android:screenOrientation="landscape"
+            android:theme="@style/Theme.AppCompat.Dialog" />
 
     </application>
 
