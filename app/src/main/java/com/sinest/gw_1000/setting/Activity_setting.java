@@ -10,6 +10,8 @@ import com.sinest.gw_1000.R;
 
 public class Activity_setting extends AppCompatActivity {
 
+    // Modified by Jinwook
+
     Button b_11; Button b_21; Button b_31; Button b_41;
     Button b_12; Button b_22; Button b_32; Button b_42;
     Button b_13; Button b_23; Button b_33; Button b_43;
