@@ -24,8 +24,6 @@ public class Activity_waiting extends AppCompatActivity {
     Communicator communicator;
     // Modified by Byeongeon
 
-    Intent intent_setting;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,8 +46,6 @@ public class Activity_waiting extends AppCompatActivity {
         Button waiting_door_close_button = (Button)findViewById(R.id.waiting_doorclose_button);
 
         TextView time_text = (TextView)findViewById(R.id.waiting_time_text);
-
-        intent_setting = new Intent(this, Activity_setting.class);
 
         waiting_library_button.setOnTouchListener(mTouchEvent);
         waiting_setting_button.setOnTouchListener(mTouchEvent);
@@ -74,6 +70,7 @@ public class Activity_waiting extends AppCompatActivity {
             TextView txt;
             LinearLayout background;
             Intent intent;
+            Intent intent_setting;
             String t;
             int temp;
             int action = motionEvent.getAction();
@@ -87,8 +84,6 @@ public class Activity_waiting extends AppCompatActivity {
                     case R.id.waiting_setting_button:
                         b  = (Button) view;
                         b.setBackgroundResource(R.drawable.setting_on);
-                        //setting
-                        startActivity(intent_setting);
                         break;
                     case R.id.waiting_oxygen_up_button:
                         b  = (Button) view;
@@ -136,6 +131,9 @@ public class Activity_waiting extends AppCompatActivity {
                     case R.id.waiting_setting_button:
                         b  = (Button) view;
                         b.setBackgroundResource(R.drawable.setting);
+                        //setting
+                        intent_setting = new Intent(getApplicationContext(), Activity_setting.class);
+                        startActivityForResult(intent_setting, REQUEST_CODE_LIBRARY);
                         break;
                     case R.id.waiting_oxygen_up_button:
                         b  = (Button) view;
