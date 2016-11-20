@@ -21,6 +21,7 @@ public class Activity_waiting extends AppCompatActivity {
     public static final int REQUEST_CODE_SETTING = 1003;
 
     Communicator communicator;
+    // Modified by Byeongeon
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
