@@ -159,14 +159,14 @@
             android:orientation="vertical"
             android:layout_weight="1">
 
-            <LinearLayout
-                android:id="@+id/linearLayout_fragment"
+            <FrameLayout
+                android:id="@+id/frameLayout_fragment"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="horizontal"
                 android:layout_weight="1">
 
-            </LinearLayout>
+            </FrameLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"

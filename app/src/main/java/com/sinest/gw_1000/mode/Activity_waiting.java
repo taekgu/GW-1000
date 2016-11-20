@@ -1,5 +1,8 @@
 package com.sinest.gw_1000.mode;
 
+import android.app.Fragment;
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.content.BroadcastReceiver;
 import android.content.Intent;
 import android.content.IntentFilter;
@@ -47,6 +50,11 @@ public class Activity_waiting extends AppCompatActivity {
         val_time = sharedPreferences.getInt(Application_communicator.VAL_TIME, 10);
 
         communicator = Application_communicator.getCommunicator();
+
+        FragmentManager fragmentManager = getFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.add(R.id.frameLayout_fragment, new Fragment_waiting());
+        fragmentTransaction.commit();
 
         setContentView(R.layout.activity_waiting);
 
@@ -107,6 +115,19 @@ public class Activity_waiting extends AppCompatActivity {
         editor.putInt(Application_communicator.VAL_PRESSURE, val_pressure);
         editor.putInt(Application_communicator.VAL_TIME, val_time);
         editor.commit();
+    }
+
+    public void changeFragment(int modeNum) {
+
+        Log.i("WIFI", "changeFragment");
+        FragmentManager fm = getFragmentManager();
+        FragmentTransaction fragmentTransaction = fm.beginTransaction();
+
+        Fragment_working fragment_working = new Fragment_working();
+        fragment_working.setModeNum(modeNum);
+
+        fragmentTransaction.replace(R.id.frameLayout_fragment, fragment_working);
+        fragmentTransaction.commit();
     }
 
     private void registReceiver() {
