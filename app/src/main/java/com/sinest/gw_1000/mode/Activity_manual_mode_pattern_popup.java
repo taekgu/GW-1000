@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.ImageView;
 
 import com.sinest.gw_1000.R;
 
@@ -25,10 +26,16 @@ public class Activity_manual_mode_pattern_popup extends Activity {
         Button manual_popup_save = (Button)findViewById(R.id.manual_popup_save);
         Button manual_popup_back = (Button)findViewById(R.id.manual_popup_back);
 
+        int resourceId;
+        for(int i=1; i<=12; i++){
+            resourceId = getResources().getIdentifier("pattern_"+i,"id","com.sinest.gw_1000");
+            Button btn = (Button)findViewById(resourceId);
+            btn.setOnClickListener(mClickListener);
+        }
+
         manual_popup_save.setOnTouchListener(mTouchEvent);
         manual_popup_back.setOnTouchListener(mTouchEvent);
     }
-
     private View.OnTouchListener mTouchEvent = new View.OnTouchListener() {
         @Override
         public boolean onTouch(View view, MotionEvent motionEvent) {
@@ -50,16 +57,32 @@ public class Activity_manual_mode_pattern_popup extends Activity {
                 switch (id) {
                     case R.id.manual_popup_save:
                         b = (Button) view;
-                        b.setBackgroundResource(R.drawable.save_mode_on);
+                        b.setBackgroundResource(R.drawable.save_mode_off);
                         break;
                     case R.id.manual_popup_back:
                         b = (Button) view;
-                        b.setBackgroundResource(R.drawable.button_circle_back_on);
+                        b.setBackgroundResource(R.drawable.button_circle_back_off);
                         finish();
                         break;
                 }
             }
             return true;
+        }
+    };
+    private View.OnClickListener mClickListener = new View.OnClickListener() {
+        public void onClick(View v) {
+            ImageView img = (ImageView)findViewById(R.id.manual_popup_imageview);
+            int id = v.getId();
+            int resourceId, ImageResourceId;
+            for(int i=1; i<=12; i++)
+            {
+                resourceId = getResources().getIdentifier("pattern_"+i,"id","com.sinest.gw_1000");
+                if(resourceId==id)
+                {
+                    ImageResourceId = getResources().getIdentifier("manual_mode_pattern_"+i,"drawable","com.sinest.gw_1000");
+                    img.setImageResource(ImageResourceId);
+                }
+            }
         }
     };
 }

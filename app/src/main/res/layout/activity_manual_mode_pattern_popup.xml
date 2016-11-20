@@ -13,6 +13,7 @@
     android:layout_height="match_parent"
     android:orientation="horizontal"
     android:weightSum="1"/>
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -23,9 +24,11 @@
             android:layout_marginTop="65dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/manual_mode_pattern_01"/>
+            android:id="@+id/manual_popup_imageview"
+            android:src="@drawable/manual_mode_pattern_1"/>
 
     </RelativeLayout>
+
     <TableLayout
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
@@ -36,21 +39,21 @@
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/pattern_01"
+                android:id="@+id/pattern_1"
                 android:layout_margin="2dp"
                 android:background="@drawable/manualmode_popup_button01"
                 />
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/pattern_02"
+                android:id="@+id/pattern_2"
                 android:layout_margin="2dp"
                 android:background="@drawable/manualmode_popup_button02"
                 />
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/pattern_03"
+                android:id="@+id/pattern_3"
                 android:layout_margin="2dp"
                 android:background="@drawable/manualmode_popup_button03"
                 />
@@ -60,21 +63,21 @@
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/pattern_04"
+                android:id="@+id/pattern_4"
                 android:layout_margin="2dp"
                 android:background="@drawable/manualmode_popup_button04"
                 />
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/pattern_05"
+                android:id="@+id/pattern_5"
                 android:layout_margin="2dp"
                 android:background="@drawable/manualmode_popup_button05"
                 />
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/pattern_06"
+                android:id="@+id/pattern_6"
                 android:layout_margin="2dp"
                 android:background="@drawable/manualmode_popup_button06"
                 />
@@ -84,21 +87,21 @@
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/pattern_07"
+                android:id="@+id/pattern_7"
                 android:layout_margin="2dp"
                 android:background="@drawable/manualmode_popup_button07"
                 />
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/pattern_08"
+                android:id="@+id/pattern_8"
                 android:layout_margin="2dp"
                 android:background="@drawable/manualmode_popup_button08"
                 />
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/pattern_09"
+                android:id="@+id/pattern_9"
                 android:layout_margin="2dp"
                 android:background="@drawable/manualmode_popup_button09"
                 />

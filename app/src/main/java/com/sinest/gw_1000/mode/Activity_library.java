@@ -77,348 +77,54 @@ public class Activity_library extends AppCompatActivity {
     public void onClicked(View v)
     {
         ToggleButton tb;
-        switch(v.getId()){
-            case R.id.automode_01:
-                tb = (ToggleButton)this.findViewById(R.id.automode_01);
-                if(tb.isChecked()){
-                    if(cnt>3)
-                    {
-                        tb.setChecked(false);
-                    }
-                    else {
-                        tb.setBackgroundResource(R.drawable.automode_on_01);
-                        cnt++;
-                    }
-                }
-                else {
-                    tb.setBackgroundDrawable(getResources().getDrawable(R.drawable.automode_01));
-                    cnt--;
-                }
-                break;
-            case R.id.automode_02:
-                tb = (ToggleButton)this.findViewById(R.id.automode_02);
-                if(tb.isChecked()){
-                    if(cnt>3)
-                    {
-                        tb.setChecked(false);
-                    }
-                    else {
-                        tb.setBackgroundResource(R.drawable.automode_on_02);
-                        cnt++;
-                    }
-                }
-                else {
-                    tb.setBackgroundDrawable(getResources().getDrawable(R.drawable.automode_02));
-                    cnt--;
-                }
-                break;
-            case R.id.automode_03:
-                tb = (ToggleButton)this.findViewById(R.id.automode_03);
-                if(tb.isChecked()){
-                    if(cnt>3)
-                    {
-                        tb.setChecked(false);
-                    }
-                    else {
-                        tb.setBackgroundResource(R.drawable.automode_on_03);
-                        cnt++;
-                    }
-                }
-                else {
-                    tb.setBackgroundDrawable(getResources().getDrawable(R.drawable.automode_03));
-                    cnt--;
-                }
-                break;
-            case R.id.automode_04:
-                tb = (ToggleButton)this.findViewById(R.id.automode_04);
-                if(tb.isChecked()){
-                    if(cnt>3)
-                    {
-                        tb.setChecked(false);
-                    }
-                    else {
-                        tb.setBackgroundResource(R.drawable.automode_on_04);
-                        cnt++;
-                    }
-                }
-                else {
-                    tb.setBackgroundDrawable(getResources().getDrawable(R.drawable.automode_04));
-                    cnt--;
-                }
-                break;
-            case R.id.automode_05:
-                tb = (ToggleButton)this.findViewById(R.id.automode_05);
-                if(tb.isChecked()){
-                    if(cnt>3)
-                    {
-                        tb.setChecked(false);
-                    }
-                    else {
-                        tb.setBackgroundResource(R.drawable.automode_on_05);
-                        cnt++;
-                    }
-                }
-                else {
-                    tb.setBackgroundDrawable(getResources().getDrawable(R.drawable.automode_05));
-                    cnt--;
-                }
-                break;
-            case R.id.automode_06:
-                tb = (ToggleButton)this.findViewById(R.id.automode_06);
-                if(tb.isChecked()){
-                    if(cnt>3)
-                    {
-                        tb.setChecked(false);
-                    }
-                    else {
-                        tb.setBackgroundResource(R.drawable.automode_on_06);
-                        cnt++;
-                    }
-                }
-                else {
-                    tb.setBackgroundDrawable(getResources().getDrawable(R.drawable.automode_06));
-                    cnt--;
-                }
-                break;
-            case R.id.automode_07:
-                tb = (ToggleButton)this.findViewById(R.id.automode_07);
-                if(tb.isChecked()){
-                    if(cnt>3)
-                    {
-                        tb.setChecked(false);
-                    }
-                    else {
-                        tb.setBackgroundResource(R.drawable.automode_on_07);
-                        cnt++;
-                    }
-                }
-                else {
-                    tb.setBackgroundDrawable(getResources().getDrawable(R.drawable.automode_07));
-                    cnt--;
-                }
-                break;
-            case R.id.automode_08:
-                tb = (ToggleButton)this.findViewById(R.id.automode_08);
-                if(tb.isChecked()){
-                    if(cnt>3)
-                    {
-                        tb.setChecked(false);
-                    }
-                    else {
-                        tb.setBackgroundResource(R.drawable.automode_on_08);
-                        cnt++;
-                    }
-                }
-                else {
-                    tb.setBackgroundDrawable(getResources().getDrawable(R.drawable.automode_08));
-                    cnt--;
-                }
-                break;
-            case R.id.automode_09:
-                tb = (ToggleButton)this.findViewById(R.id.automode_09);
-                if(tb.isChecked()){
-                    if(cnt>3)
-                    {
-                        tb.setChecked(false);
-                    }
-                    else {
-                        tb.setBackgroundResource(R.drawable.automode_on_09);
-                        cnt++;
-                    }
-                }
-                else {
-                    tb.setBackgroundDrawable(getResources().getDrawable(R.drawable.automode_09));
-                    cnt--;
-                }
-                break;
-            case R.id.automode_10:
-                tb = (ToggleButton)this.findViewById(R.id.automode_10);
-                if(tb.isChecked()){
-                    if(cnt>3)
-                    {
-                        tb.setChecked(false);
-                    }
-                    else {
-                        tb.setBackgroundResource(R.drawable.automode_on_10);
-                        cnt++;
-                    }
-                }
-                else {
-                    tb.setBackgroundDrawable(getResources().getDrawable(R.drawable.automode_10));
-                    cnt--;
-                }
-                break;
-            case R.id.automode_11:
-                tb = (ToggleButton)this.findViewById(R.id.automode_11);
-                if(tb.isChecked()){
-                    if(cnt>3)
-                    {
-                        tb.setChecked(false);
-                    }
-                    else {
-                        tb.setBackgroundResource(R.drawable.automode_on_11);
-                        cnt++;
-                    }
-                }
-                else {
-                    tb.setBackgroundDrawable(getResources().getDrawable(R.drawable.automode_11));
-                    cnt--;
-                }
-                break;
-            case R.id.automode_12:
-                tb = (ToggleButton)this.findViewById(R.id.automode_12);
-                if(tb.isChecked()){
-                    if(cnt>3)
-                    {
-                        tb.setChecked(false);
-                    }
-                    else {
-                        tb.setBackgroundResource(R.drawable.automode_on_12);
-                        cnt++;
-                    }
-                }
-                else {
-                    tb.setBackgroundDrawable(getResources().getDrawable(R.drawable.automode_12));
-                    cnt--;
-                }
-                break;
-            case R.id.automode_13:
-                tb = (ToggleButton)this.findViewById(R.id.automode_13);
-                if(tb.isChecked()){
-                    if(cnt>3)
-                    {
-                        tb.setChecked(false);
-                    }
-                    else {
-                        tb.setBackgroundResource(R.drawable.automode_on_13);
-                        cnt++;
-                    }
-                }
-                else {
-                    tb.setBackgroundDrawable(getResources().getDrawable(R.drawable.automode_13));
-                    cnt--;
-                }
-                break;
-            case R.id.automode_14:
-                tb = (ToggleButton)this.findViewById(R.id.automode_14);
-                if(tb.isChecked()){
-                    if(cnt>3)
-                    {
-                        tb.setChecked(false);
-                    }
-                    else {
-                        tb.setBackgroundResource(R.drawable.automode_on_14);
-                        cnt++;
-                    }
-                }
-                else {
-                    tb.setBackgroundDrawable(getResources().getDrawable(R.drawable.automode_14));
-                    cnt--;
-                }
-                break;
-            case R.id.automode_15:
-                tb = (ToggleButton)this.findViewById(R.id.automode_15);
-                if(tb.isChecked()){
-                    if(cnt>3)
-                    {
-                        tb.setChecked(false);
-                    }
-                    else {
-                        tb.setBackgroundResource(R.drawable.automode_on_15);
-                        cnt++;
-                    }
-                }
-                else {
-                    tb.setBackgroundDrawable(getResources().getDrawable(R.drawable.automode_15));
-                    cnt--;
-                }
-                break;
+        int id = v.getId();
+        int resourceId, tb_resourceId;
 
-            case R.id.manual_mode_01:
-                tb = (ToggleButton)this.findViewById(R.id.manual_mode_01);
+        for(int i=1; i<=15; i++){
+            resourceId = getResources().getIdentifier("automode_"+i,"id","com.sinest.gw_1000");
+            if(resourceId==id)
+            {
+                tb = (ToggleButton)findViewById(resourceId);
                 if(tb.isChecked()) {
-                    if (cnt > 3) {
+                    tb_resourceId = getResources().getIdentifier("automode_on_"+i,"drawable","com.sinest.gw_1000");
+                    if (cnt > 3)
                         tb.setChecked(false);
-                    } else {
-                        tb.setBackgroundDrawable(getResources().getDrawable(R.drawable.manual_mode_on_01));
+                    else
+                    {
+                        tb.setBackgroundResource(tb_resourceId);
+                        cnt++;
+                    }
+                }
+                else{
+                    tb_resourceId = getResources().getIdentifier("automode_"+i,"drawable","com.sinest.gw_1000");
+                    tb.setBackgroundResource(tb_resourceId);
+                    cnt--;
+                }
+            }
+        }
+        for(int i=1; i<=5; i++) {
+            resourceId = getResources().getIdentifier("manual_mode_"+i,"id","com.sinest.gw_1000");
+            if(resourceId==id)
+            {
+                tb = (ToggleButton)findViewById(resourceId);
+                if(tb.isChecked()) {
+                    tb_resourceId = getResources().getIdentifier("manual_mode_on_"+i,"drawable","com.sinest.gw_1000");
+                    if (cnt > 3)
+                        tb.setChecked(false);
+                    else
+                    {
+                        tb.setBackgroundResource(tb_resourceId);
                         manual_cnt++;
                         cnt++;
                     }
                 }
                 else{
-                    tb.setBackgroundDrawable(getResources().getDrawable(R.drawable.manual_mode_01));
+                    tb_resourceId = getResources().getIdentifier("manual_mode_"+i,"drawable","com.sinest.gw_1000");
+                    tb.setBackgroundResource(tb_resourceId);
                     manual_cnt--;
                     cnt--;
                 }
-                break;
-            case R.id.manual_mode_02:
-                tb = (ToggleButton)this.findViewById(R.id.manual_mode_02);
-                if(tb.isChecked()) {
-                    if (cnt > 3) {
-                        tb.setChecked(false);
-                    } else {
-                        tb.setBackgroundDrawable(getResources().getDrawable(R.drawable.manual_mode_on_02));
-                        manual_cnt++;
-                        cnt++;
-                    }
-                }
-                else{
-                    tb.setBackgroundDrawable(getResources().getDrawable(R.drawable.manual_mode_02));
-                    manual_cnt--;
-                    cnt--;
-                }
-                break;
-            case R.id.manual_mode_03:
-                tb = (ToggleButton)this.findViewById(R.id.manual_mode_03);
-                if(tb.isChecked()) {
-                    if (cnt > 3) {
-                        tb.setChecked(false);
-                    } else {
-                        tb.setBackgroundDrawable(getResources().getDrawable(R.drawable.manual_mode_on_03));
-                        manual_cnt++;
-                        cnt++;
-                    }
-                }
-                else{
-                    tb.setBackgroundDrawable(getResources().getDrawable(R.drawable.manual_mode_03));
-                    manual_cnt--;
-                    cnt--;
-                }
-                break;
-            case R.id.manual_mode_04:
-                tb = (ToggleButton)this.findViewById(R.id.manual_mode_04);
-                if(tb.isChecked()) {
-                    if (cnt > 3) {
-                        tb.setChecked(false);
-                    } else {
-                        tb.setBackgroundDrawable(getResources().getDrawable(R.drawable.manual_mode_on_04));
-                        manual_cnt++;
-                        cnt++;
-                    }
-                }
-                else{
-                    tb.setBackgroundDrawable(getResources().getDrawable(R.drawable.manual_mode_04));
-                    manual_cnt--;
-                    cnt--;
-                }
-                break;
-            case R.id.manual_mode_05:
-                tb = (ToggleButton)this.findViewById(R.id.manual_mode_05);
-                if(tb.isChecked()) {
-                    if (cnt > 3) {
-                        tb.setChecked(false);
-                    } else {
-                        tb.setBackgroundDrawable(getResources().getDrawable(R.drawable.manual_mode_on_05));
-                        manual_cnt++;
-                        cnt++;
-                    }
-                }
-                else{
-                    tb.setBackgroundDrawable(getResources().getDrawable(R.drawable.manual_mode_05));
-                    manual_cnt--;
-                    cnt--;
-                }
-                break;
+            }
         }
     }
 }

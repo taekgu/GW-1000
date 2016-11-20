@@ -35,28 +35,28 @@
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/manual_mode_01"
+            android:background="@drawable/manual_mode_1"
             android:id="@+id/manual_setting_selected_mode"
             android:layout_marginLeft="50dp"
             android:layout_marginTop="40dp"/>
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/manual_mode_pattern_01"
+            android:src="@drawable/manual_mode_pattern_1"
             android:id="@+id/manual_mode_setting_1"
             android:layout_marginLeft="235dp"
             android:layout_marginTop="83dp"/>
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/manual_mode_pattern_01"
+            android:src="@drawable/manual_mode_pattern_1"
             android:id="@+id/manual_mode_setting_2"
             android:layout_marginLeft="444dp"
             android:layout_marginTop="83dp"/>
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/manual_mode_pattern_01"
+            android:src="@drawable/manual_mode_pattern_1"
             android:id="@+id/manual_mode_setting_3"
             android:layout_marginLeft="643dp"
             android:layout_marginTop="83dp"/>

@@ -1,6 +1,5 @@
 package com.sinest.gw_1000.mode;
 
-import android.content.BroadcastReceiver;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -11,8 +10,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.sinest.gw_1000.R;
-import com.sinest.gw_1000.management.Application_communicator;
 import com.sinest.gw_1000.communication.Communicator;
+import com.sinest.gw_1000.management.Application_communicator;
 
 public class Activity_waiting extends AppCompatActivity {
 
