@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
@@ -34,36 +35,6 @@ public class Activity_waiting extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         communicator = Application_communicator.getCommunicator();
-        handler_update_data = new Handler() {
-
-            @Override
-            public void handleMessage(Message msg) {
-                super.handleMessage(msg);
-
-                if (msg.what == 1) {
-
-                    String temp = ""+communicator.get_rx_idx(7);
-                    TextView textView_oxygen = (TextView) findViewById(R.id.textView_oxygen);
-                    textView_oxygen.setText(temp);
-
-                    temp = ""+communicator.get_rx_idx(11);
-                    TextView textView_humidity = (TextView) findViewById(R.id.textView_humidity);
-                    textView_humidity.setText(temp);
-
-                    temp = ""+communicator.get_rx_idx(3);
-                    TextView textView_temperature = (TextView) findViewById(R.id.textView_temperature);
-                    textView_temperature.setText(temp);
-
-                    temp = ""+communicator.get_rx_idx(2);
-                    TextView textView_temperature_bed = (TextView) findViewById(R.id.textView_temperature_bed);
-                    textView_temperature_bed.setText(temp);
-                }
-            }
-        };
-        broadcastReceiver = new Application_broadcast(handler_update_data);
-        IntentFilter mIntentFilter = new IntentFilter();
-        mIntentFilter.addAction("update.data");
-        //registerReceiver(broadcastReceiver, mIntentFilter);
 
         setContentView(R.layout.activity_waiting);
 
@@ -99,17 +70,71 @@ public class Activity_waiting extends AppCompatActivity {
     }
 
     @Override
+    protected void onResume() {
+        super.onResume();
+        registReceiver();
+    }
+
+    @Override
     protected void onPause() {
         super.onPause();
-        //unregisterReceiver(broadcastReceiver);
+        unregistReceiver();
     }
 
     private void registReceiver() {
 
-        if (broadcastReceiver == null) {
+        if (broadcastReceiver != null) {
 
-
+            return;
         }
+
+        final IntentFilter mIntentFilter = new IntentFilter();
+        mIntentFilter.addAction("update.data");
+
+        setHandler_update_data();
+        broadcastReceiver = new Application_broadcast(handler_update_data);
+        this.registerReceiver(broadcastReceiver, mIntentFilter);
+        Log.i("WIFI", "registerReceiver");
+    }
+
+    private void unregistReceiver() {
+
+        if (broadcastReceiver != null) {
+
+            this.unregisterReceiver(broadcastReceiver);
+            broadcastReceiver = null;
+            Log.i("WIFI", "unregisterReceiver");
+        }
+    }
+
+    private void setHandler_update_data() {
+
+        handler_update_data = new Handler() {
+
+            @Override
+            public void handleMessage(Message msg) {
+                super.handleMessage(msg);
+
+                if (msg.what == 1) {
+
+                    String temp = ""+communicator.get_rx_idx(7);
+                    TextView textView_oxygen = (TextView) findViewById(R.id.textView_oxygen);
+                    textView_oxygen.setText(temp);
+
+                    temp = ""+communicator.get_rx_idx(11);
+                    TextView textView_humidity = (TextView) findViewById(R.id.textView_humidity);
+                    textView_humidity.setText(temp);
+
+                    temp = ""+communicator.get_rx_idx(3);
+                    TextView textView_temperature = (TextView) findViewById(R.id.textView_temperature);
+                    textView_temperature.setText(temp);
+
+                    temp = ""+communicator.get_rx_idx(2);
+                    TextView textView_temperature_bed = (TextView) findViewById(R.id.textView_temperature_bed);
+                    textView_temperature_bed.setText(temp);
+                }
+            }
+        };
     }
 
     private View.OnTouchListener mTouchEvent = new View.OnTouchListener() {

@@ -95,8 +95,9 @@ public class Communicator {
                     Log.i("WIFI", "Rx data is wrong (checkSum error)");
                     calcCheckSum(msg_rx);
                 }
-
-
+                Intent intent = new Intent("update.data");
+                mContext.sendBroadcast(intent);
+                Log.i("WIFI", "sendBroadcast");
             }
         };
     }

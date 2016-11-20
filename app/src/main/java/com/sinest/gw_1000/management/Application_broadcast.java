@@ -4,6 +4,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Handler;
+import android.util.Log;
 
 import com.sinest.gw_1000.R;
 
@@ -27,6 +28,7 @@ public class Application_broadcast extends BroadcastReceiver {
 
         if (name.equals("update.data")) {
 
+            Log.i("WIFI", "send msg (update.data)");
             mHandler.sendEmptyMessage(1);
         }
     }

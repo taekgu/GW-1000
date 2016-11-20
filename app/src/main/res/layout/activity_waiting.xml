@@ -58,8 +58,8 @@
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:srcCompat="@drawable/humidity"
-                android:id="@+id/waiting_humidity"
+                app:srcCompat="@drawable/oxygen"
+                android:id="@+id/waiting_oxygen"
                 android:layout_centerVertical="true"
                 android:layout_alignParentStart="true"
                 android:layout_marginStart="120dp"/>
@@ -70,6 +70,7 @@
                 android:id="@+id/textView_oxygen"
                 android:alpha="100"
                 android:text="0"
+                android:textColor="#000000"
                 android:gravity="center"
                 android:layout_centerVertical="true"
                 android:layout_alignParentStart="true"
@@ -78,11 +79,11 @@
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:srcCompat="@drawable/oxygen"
+                app:srcCompat="@drawable/humidity"
                 android:layout_centerVertical="true"
-                android:layout_toEndOf="@+id/waiting_humidity"
+                android:layout_toEndOf="@+id/waiting_oxygen"
                 android:layout_marginStart="100dp"
-                android:id="@+id/waiting_oxygen" />
+                android:id="@+id/waiting_humidity" />
 
             <TextView
                 android:layout_width="40sp"
@@ -90,9 +91,10 @@
                 android:id="@+id/textView_humidity"
                 android:alpha="100"
                 android:text="0"
+                android:textColor="#000000"
                 android:gravity="center"
                 android:layout_centerVertical="true"
-                android:layout_toEndOf="@+id/waiting_humidity"
+                android:layout_toEndOf="@+id/waiting_oxygen"
                 android:layout_marginStart="100dp"/>
 
             <ImageView
