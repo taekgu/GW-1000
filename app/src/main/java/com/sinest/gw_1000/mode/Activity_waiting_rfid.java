@@ -1,12 +1,16 @@
 package com.sinest.gw_1000.mode;
 
+import android.content.BroadcastReceiver;
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.widget.TextView;
 import android.widget.Toast;
 import android.view.View;
 import android.content.Intent;
 
 import com.sinest.gw_1000.R;
+import com.sinest.gw_1000.communication.Communicator;
 
 public class Activity_waiting_rfid extends AppCompatActivity {
 

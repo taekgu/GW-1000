@@ -1,14 +1,22 @@
 package com.sinest.gw_1000.mode;
 
+import android.content.BroadcastReceiver;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.ToggleButton;
 
 import com.sinest.gw_1000.R;
+import com.sinest.gw_1000.communication.Communicator;
+import com.sinest.gw_1000.management.Application_broadcast;
 
 public class Activity_library extends AppCompatActivity {
 
@@ -29,7 +37,6 @@ public class Activity_library extends AppCompatActivity {
         library_back_button.setOnTouchListener(mTouchEvent);
         library_save_button.setOnTouchListener(mTouchEvent);
         library_set_button.setOnTouchListener(mTouchEvent);
-
     }
 
     private View.OnTouchListener mTouchEvent = new View.OnTouchListener() {

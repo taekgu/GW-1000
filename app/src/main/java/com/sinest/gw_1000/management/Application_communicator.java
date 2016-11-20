@@ -11,6 +11,12 @@ import com.sinest.gw_1000.communication.Communicator;
 
 public class Application_communicator extends Application {
 
+    public final static String NAME_OF_SHARED_PREF = "myData";
+
+    public final static String VAL_OXYGEN   = "val_oxygen";
+    public final static String VAL_PRESSURE = "val_pressure";
+    public final static String VAL_TIME     = "val_time";
+
     private static Context context;
     private static Communicator communicator;
 

@@ -3,6 +3,7 @@ package com.sinest.gw_1000.mode;
 import android.content.BroadcastReceiver;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -30,9 +31,20 @@ public class Activity_waiting extends AppCompatActivity {
     Handler handler_update_data;
     BroadcastReceiver broadcastReceiver;
 
+    private int val_oxygen = 0;
+    private int val_pressure = 0;
+    private int val_time = 0;
+
+    TextView time_text, oxygen_text, pressure_text;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        SharedPreferences sharedPreferences = getSharedPreferences(Application_communicator.NAME_OF_SHARED_PREF, 0);
+        val_oxygen = sharedPreferences.getInt(Application_communicator.VAL_OXYGEN, 20);
+        val_pressure = sharedPreferences.getInt(Application_communicator.VAL_PRESSURE, 1);
+        val_time = sharedPreferences.getInt(Application_communicator.VAL_TIME, 10);
 
         communicator = Application_communicator.getCommunicator();
 
@@ -51,7 +63,12 @@ public class Activity_waiting extends AppCompatActivity {
         Button waiting_door_open_button = (Button)findViewById(R.id.waiting_dooropen_button);
         Button waiting_door_close_button = (Button)findViewById(R.id.waiting_doorclose_button);
 
-        TextView time_text = (TextView)findViewById(R.id.waiting_time_text);
+        time_text = (TextView)findViewById(R.id.waiting_time_text);
+        oxygen_text = (TextView)findViewById(R.id.waiting_oxygen_text);
+        pressure_text = (TextView)findViewById(R.id.waiting_pressure_text);
+        oxygen_text.setText(""+val_oxygen);
+        pressure_text.setText(""+val_pressure);
+        time_text.setText(""+val_time);
 
         waiting_library_button.setOnTouchListener(mTouchEvent);
         waiting_setting_button.setOnTouchListener(mTouchEvent);
@@ -79,6 +96,17 @@ public class Activity_waiting extends AppCompatActivity {
     protected void onPause() {
         super.onPause();
         unregistReceiver();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        SharedPreferences sharedPreferences = getSharedPreferences(Application_communicator.NAME_OF_SHARED_PREF, 0);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putInt(Application_communicator.VAL_OXYGEN, val_oxygen);
+        editor.putInt(Application_communicator.VAL_PRESSURE, val_pressure);
+        editor.putInt(Application_communicator.VAL_TIME, val_time);
+        editor.commit();
     }
 
     private void registReceiver() {
@@ -195,6 +223,8 @@ public class Activity_waiting extends AppCompatActivity {
                         break;
                 }
             } else if (action == MotionEvent.ACTION_UP) {
+
+                byte val = 0x00;
                 switch (id) {
                     case R.id.waiting_library_button:
                         b  = (Button) view;
@@ -212,56 +242,66 @@ public class Activity_waiting extends AppCompatActivity {
                     case R.id.waiting_oxygen_up_button:
                         b  = (Button) view;
                         b.setBackgroundResource(R.drawable.button_up);
-                        txt = (TextView)findViewById(R.id.waiting_oxygen_text);
-                        t = (String)txt.getText();
-                        temp = Integer.parseInt(t)+5;
-                        t = Integer.toString(temp);
-                        txt.setText(t);
+
+                        val_oxygen += 5;
+                        if (val_oxygen > 40) val_oxygen = 40;
+                        oxygen_text.setText(""+val_oxygen);
+
+                        // 20:5:40 -> 1 ~ 5 값으로 변환해서 전송
+                        val = (byte) ((val_oxygen / 5) - 3);
+                        communicator.set_tx(8, val);
+                        communicator.send(communicator.get_tx());
                         break;
                     case R.id.waiting_oxygen_down_button:
                         b  = (Button) view;
                         b.setBackgroundResource(R.drawable.button_down);
-                        txt = (TextView)findViewById(R.id.waiting_oxygen_text);
-                        t = (String)txt.getText();
-                        temp = Integer.parseInt(t)-5;
-                        t = Integer.toString(temp);
-                        txt.setText(t);
+
+                        val_oxygen -= 5;
+                        if (val_oxygen < 20) val_oxygen = 20;
+                        oxygen_text.setText(""+val_oxygen);
+
+                        // 20:5:40 -> 1 ~ 5 값으로 변환해서 전송
+                        val = (byte) ((val_oxygen / 5) - 3);
+                        communicator.set_tx(8, val);
+                        communicator.send(communicator.get_tx());
                         break;
                     case R.id.waiting_pressure_up_button:
                         b  = (Button) view;
                         b.setBackgroundResource(R.drawable.button_up);
-                        txt = (TextView)findViewById(R.id.waiting_pressure_text);
-                        t = (String)txt.getText();
-                        temp = Integer.parseInt(t)+5;
-                        t = Integer.toString(temp);
-                        txt.setText(t);
+
+                        val_pressure += 1;
+                        if (val_pressure > 6) val_pressure = 6;
+                        pressure_text.setText(""+val_pressure);
+
+                        communicator.set_tx(5, (byte)val_pressure);
+                        communicator.send(communicator.get_tx());
                         break;
                     case R.id.waiting_pressure_down_button:
                         b  = (Button) view;
                         b.setBackgroundResource(R.drawable.button_down);
-                        txt = (TextView)findViewById(R.id.waiting_pressure_text);
-                        t = (String)txt.getText();
-                        temp = Integer.parseInt(t)-5;
-                        t = Integer.toString(temp);
-                        txt.setText(t);
+
+                        val_pressure -= 1;
+                        if (val_pressure < 1) val_pressure = 1;
+                        pressure_text.setText(""+val_pressure);
+
+                        communicator.set_tx(5, (byte)val_pressure);
+                        communicator.send(communicator.get_tx());
                         break;
                     case R.id.waiting_time_up_button:
                         b  = (Button) view;
                         b.setBackgroundResource(R.drawable.button_up);
-                        txt = (TextView)findViewById(R.id.waiting_time_text);
-                        t = (String)txt.getText();
-                        temp = Integer.parseInt(t)+1;
-                        t = Integer.toString(temp);
-                        txt.setText(t);
+
+                        val_time += 1;
+                        if (val_time > 90) val_time = 90;
+                        time_text.setText(""+val_time);
                         break;
                     case R.id.waiting_time_down_button:
                         b  = (Button) view;
                         b.setBackgroundResource(R.drawable.button_down);
-                        txt = (TextView)findViewById(R.id.waiting_time_text);
-                        t = (String)txt.getText();
-                        temp = Integer.parseInt(t)-1;
-                        t = Integer.toString(temp);
-                        txt.setText(t);
+
+                        val_time -= 1;
+                        if (val_time < 1) val_time = 1;
+                        time_text.setText(""+val_time);
                         break;
                     case R.id.waiting_dooropen_button:
                         b  = (Button) view;
@@ -269,7 +309,7 @@ public class Activity_waiting extends AppCompatActivity {
                         b.setBackgroundResource(R.drawable.door_open_off);
                         background.setBackgroundResource(R.drawable.waiting_dooropen_backimage);
 
-                        byte val = 0x01;
+                        val = 0x01;
                         communicator.set_tx(11, val);
                         communicator.send(communicator.get_tx());
                         break;
@@ -278,6 +318,10 @@ public class Activity_waiting extends AppCompatActivity {
                         background = (LinearLayout)findViewById(R.id.waiting_background);
                         b.setBackgroundResource(R.drawable.door_close_off);
                         background.setBackgroundResource(R.drawable.waiting_doorclose_backimage);
+
+                        val = 0x02;
+                        communicator.set_tx(11, val);
+                        communicator.send(communicator.get_tx());
                         break;
                     case R.id.waiting_time_text:
                         intent = new Intent(getApplicationContext(), Activity_waiting_working_time_popup.class);

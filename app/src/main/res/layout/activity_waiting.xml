@@ -160,10 +160,12 @@
             android:layout_weight="1">
 
             <LinearLayout
+                android:id="@+id/linearLayout_fragment"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="horizontal"
                 android:layout_weight="1">
+
             </LinearLayout>
 
             <LinearLayout
@@ -200,7 +202,7 @@
                         android:layout_alignParentBottom="true"
                         android:layout_marginBottom="55dp"
                         android:layout_marginLeft="12dp"
-                        android:text="20"
+                        android:text="0"
                         android:textSize="45dp"
                         android:gravity="right|center_vertical"
                         android:id="@+id/waiting_oxygen_text"/>
@@ -235,7 +237,7 @@
                         android:layout_marginBottom="55dp"
                         android:layout_marginLeft="15dp"
                         android:gravity="right|center_vertical"
-                        android:text="28"
+                        android:text="0"
                         android:textSize="45dp"
                         android:id="@+id/waiting_pressure_text"/>
                 </RelativeLayout>
@@ -270,7 +272,7 @@
                         android:layout_marginLeft="17dp"
                         android:layout_marginBottom="50dp"
                         android:textSize="45dp"
-                        android:text="50"
+                        android:text="0"
                         android:id="@+id/waiting_time_text"/>
                 </RelativeLayout>
             </LinearLayout>
