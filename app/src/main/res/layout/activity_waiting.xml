@@ -62,7 +62,18 @@
                 android:id="@+id/waiting_humidity"
                 android:layout_centerVertical="true"
                 android:layout_alignParentStart="true"
-                android:layout_marginStart="120dp" />
+                android:layout_marginStart="120dp"/>
+
+            <TextView
+                android:layout_width="40sp"
+                android:layout_height="50sp"
+                android:id="@+id/textView_oxygen"
+                android:alpha="100"
+                android:text="0"
+                android:gravity="center"
+                android:layout_centerVertical="true"
+                android:layout_alignParentStart="true"
+                android:layout_marginStart="120dp"/>
 
             <ImageView
                 android:layout_width="wrap_content"
@@ -73,6 +84,17 @@
                 android:layout_marginStart="100dp"
                 android:id="@+id/waiting_oxygen" />
 
+            <TextView
+                android:layout_width="40sp"
+                android:layout_height="50sp"
+                android:id="@+id/textView_humidity"
+                android:alpha="100"
+                android:text="0"
+                android:gravity="center"
+                android:layout_centerVertical="true"
+                android:layout_toEndOf="@+id/waiting_humidity"
+                android:layout_marginStart="100dp"/>
+
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -80,6 +102,17 @@
                 android:layout_centerVertical="true"
                 android:layout_centerHorizontal="true"
                 android:id="@+id/waiting_temperature_above" />
+
+            <TextView
+                android:layout_width="40sp"
+                android:layout_height="50sp"
+                android:id="@+id/textView_temperature"
+                android:alpha="100"
+                android:text="0"
+                android:textColor="#ffffff"
+                android:gravity="center"
+                android:layout_centerVertical="true"
+                android:layout_centerHorizontal="true"/>
 
             <ImageView
                 android:layout_width="wrap_content"
@@ -89,20 +122,33 @@
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="45dp"
                 android:id="@+id/waiting_temperature_below" />
-                <Button
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/waiting_dooropen_button"
-                    android:layout_marginLeft="120dp"
-                    android:layout_marginTop="335dp"
-                    android:background="@drawable/door_open_off" />
-                <Button
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="347dp"
-                    android:layout_marginLeft="260dp"
-                    android:id="@+id/waiting_doorclose_button"
-                    android:background="@drawable/door_close_off" />
+
+            <TextView
+                android:layout_width="40sp"
+                android:layout_height="50sp"
+                android:id="@+id/textView_temperature_bed"
+                android:alpha="100"
+                android:text="0"
+                android:textColor="#ffffff"
+                android:gravity="center"
+                android:layout_below="@+id/waiting_temperature_above"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="31dp"/>
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/waiting_dooropen_button"
+                android:layout_marginLeft="120dp"
+                android:layout_marginTop="335dp"
+                android:background="@drawable/door_open_off" />
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="347dp"
+                android:layout_marginLeft="260dp"
+                android:id="@+id/waiting_doorclose_button"
+                android:background="@drawable/door_close_off" />
         </RelativeLayout>
 
         <LinearLayout

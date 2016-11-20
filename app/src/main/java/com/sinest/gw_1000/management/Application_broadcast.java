@@ -5,6 +5,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Handler;
 
+import com.sinest.gw_1000.R;
+
 /**
  * Created by Jinwook on 2016-11-20.
  */
@@ -25,7 +27,7 @@ public class Application_broadcast extends BroadcastReceiver {
 
         if (name.equals("update.data")) {
 
-            mHandler.sendEmptyMessage(0);
+            mHandler.sendEmptyMessage(1);
         }
     }
 }

@@ -1,7 +1,11 @@
 package com.sinest.gw_1000.mode;
 
+import android.content.BroadcastReceiver;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MotionEvent;
 import android.view.View;
@@ -11,6 +15,7 @@ import android.widget.TextView;
 
 import com.sinest.gw_1000.R;
 import com.sinest.gw_1000.communication.Communicator;
+import com.sinest.gw_1000.management.Application_broadcast;
 import com.sinest.gw_1000.management.Application_communicator;
 import com.sinest.gw_1000.setting.Activity_setting;
 
@@ -21,13 +26,44 @@ public class Activity_waiting extends AppCompatActivity {
     public static final int REQUEST_CODE_SETTING = 1003;
 
     Communicator communicator;
-    // Modified by Byeongeon
+    Handler handler_update_data;
+    BroadcastReceiver broadcastReceiver;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         communicator = Application_communicator.getCommunicator();
+        handler_update_data = new Handler() {
+
+            @Override
+            public void handleMessage(Message msg) {
+                super.handleMessage(msg);
+
+                if (msg.what == 1) {
+
+                    String temp = ""+communicator.get_rx_idx(7);
+                    TextView textView_oxygen = (TextView) findViewById(R.id.textView_oxygen);
+                    textView_oxygen.setText(temp);
+
+                    temp = ""+communicator.get_rx_idx(11);
+                    TextView textView_humidity = (TextView) findViewById(R.id.textView_humidity);
+                    textView_humidity.setText(temp);
+
+                    temp = ""+communicator.get_rx_idx(3);
+                    TextView textView_temperature = (TextView) findViewById(R.id.textView_temperature);
+                    textView_temperature.setText(temp);
+
+                    temp = ""+communicator.get_rx_idx(2);
+                    TextView textView_temperature_bed = (TextView) findViewById(R.id.textView_temperature_bed);
+                    textView_temperature_bed.setText(temp);
+                }
+            }
+        };
+        broadcastReceiver = new Application_broadcast(handler_update_data);
+        IntentFilter mIntentFilter = new IntentFilter();
+        mIntentFilter.addAction("update.data");
+        //registerReceiver(broadcastReceiver, mIntentFilter);
 
         setContentView(R.layout.activity_waiting);
 
@@ -60,6 +96,12 @@ public class Activity_waiting extends AppCompatActivity {
         waiting_door_close_button.setOnTouchListener(mTouchEvent);
 
         time_text.setOnTouchListener(mTouchEvent);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        //unregisterReceiver(broadcastReceiver);
     }
 
     private View.OnTouchListener mTouchEvent = new View.OnTouchListener() {
