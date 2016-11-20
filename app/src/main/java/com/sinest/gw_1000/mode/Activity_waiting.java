@@ -104,6 +104,14 @@ public class Activity_waiting extends AppCompatActivity {
         //unregisterReceiver(broadcastReceiver);
     }
 
+    private void registReceiver() {
+
+        if (broadcastReceiver == null) {
+
+
+        }
+    }
+
     private View.OnTouchListener mTouchEvent = new View.OnTouchListener() {
         @Override
         public boolean onTouch(View view, MotionEvent motionEvent) {
