@@ -10,6 +10,8 @@ import android.widget.ImageView;
 
 import com.sinest.gw_1000.R;
 
+import static com.sinest.gw_1000.mode.Activity_waiting.REQUEST_CODE_WORKINGTIME_POPUP;
+
 public class Activity_manual_mode_setting extends AppCompatActivity {
 
     public static final int REQUEST_CODE_MANUAL_PATTERN_01 = 1011;
@@ -27,12 +29,14 @@ public class Activity_manual_mode_setting extends AppCompatActivity {
         ImageView manual_mode_setting_2 = (ImageView)findViewById(R.id.manual_mode_setting_2);
         ImageView manual_mode_setting_3 = (ImageView)findViewById(R.id.manual_mode_setting_3);
 
+
         manual_mode_setting_save.setOnTouchListener(mTouchEvent);
         manual_mode_setting_back.setOnTouchListener(mTouchEvent);
 
         manual_mode_setting_1.setOnTouchListener(mTouchEvent);
         manual_mode_setting_2.setOnTouchListener(mTouchEvent);
         manual_mode_setting_3.setOnTouchListener(mTouchEvent);
+
     }
     private View.OnTouchListener mTouchEvent = new View.OnTouchListener() {
                         @Override
@@ -87,4 +91,20 @@ public class Activity_manual_mode_setting extends AppCompatActivity {
             return true;
         }
     };
+    public void onClicked(View v)
+    {
+        Intent intent;
+        int id = v.getId();
+        int resourceId;
+
+        for(int i=1; i<=4; i++)
+        {
+            resourceId = getResources().getIdentifier("manual_setting_text_"+i,"id","com.sinest.gw_1000");
+            if(resourceId==id){
+                intent = new Intent(getApplicationContext(), Activity_waiting_working_time_popup.class);
+                startActivityForResult(intent, REQUEST_CODE_WORKINGTIME_POPUP);
+                break;
+            }
+        }
+    }
 }

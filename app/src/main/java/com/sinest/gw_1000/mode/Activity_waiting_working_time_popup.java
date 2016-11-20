@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.TextView;
 
 import com.sinest.gw_1000.R;
 
@@ -54,4 +55,33 @@ public class Activity_waiting_working_time_popup extends Activity {
             return true;
         }
     };
+    public void onClicked(View v)
+    {
+        int id = v.getId();
+        int resourceId;
+
+        TextView txt;
+        String t;
+        int temp;
+
+        for(int i=0; i<=9; i++)
+        {
+            resourceId = getResources().getIdentifier("popup_keypad_"+i,"id","com.sinest.gw_1000");
+            if(resourceId==id){
+                txt = (TextView)findViewById(R.id.working_time_popup_text);
+                t = (String)txt.getText();
+                temp = Integer.parseInt(t);
+                if(temp==0)
+                    temp = i;
+                else
+                    temp = temp*10 + i;
+
+                if(temp>=0 && temp>90)
+                    temp = 0;
+
+                txt.setText(Integer.toString(temp));
+                break;
+            }
+        }
+    }
 }

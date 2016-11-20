@@ -77,31 +77,43 @@
         <TextView
             android:layout_width="70dp"
             android:layout_height="50dp"
-            android:textSize="50dp"
-            android:id="@+id/manual_setting_1_text"
+            android:gravity="right|center_vertical"
+            android:textSize="45dp"
+            android:text="00"
+            android:onClick="onClicked"
+            android:id="@+id/manual_setting_text_1"
             android:layout_marginTop="330dp"
-            android:layout_marginLeft="210dp"/>
+            android:layout_marginLeft="205dp"/>
         <TextView
             android:layout_width="70dp"
             android:layout_height="50dp"
-            android:textSize="50dp"
-            android:id="@+id/manual_setting_2_text"
+            android:gravity="right|center_vertical"
+            android:textSize="45dp"
+            android:text="00"
+            android:onClick="onClicked"
+            android:id="@+id/manual_setting_text_2"
             android:layout_marginTop="330dp"
-            android:layout_marginLeft="420dp"/>
+            android:layout_marginLeft="415dp"/>
         <TextView
             android:layout_width="70dp"
             android:layout_height="50dp"
-            android:textSize="50dp"
-            android:id="@+id/manual_setting_3_text"
+            android:gravity="right|center_vertical"
+            android:textSize="45dp"
+            android:text="00"
+            android:onClick="onClicked"
+            android:id="@+id/manual_setting_text_3"
             android:layout_marginTop="330dp"
-            android:layout_marginLeft="615dp"/>
+            android:layout_marginLeft="610dp"/>
         <TextView
             android:layout_width="70dp"
             android:layout_height="50dp"
-            android:textSize="50dp"
-            android:id="@+id/manual_setting_total_text"
+            android:gravity="right|center_vertical"
+            android:textSize="45dp"
+            android:text="00"
+            android:onClick="onClicked"
+            android:id="@+id/manual_setting_text_4"
             android:layout_marginTop="330dp"
-            android:layout_marginLeft="810dp"/>
+            android:layout_marginLeft="805dp"/>
     </RelativeLayout>
 
 </LinearLayout>
