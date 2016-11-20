@@ -302,6 +302,7 @@ public class Activity_setting extends AppCompatActivity {
                         if(b_back_f == true){
                             b_back.setBackgroundResource(R.drawable.button_circle_back_on);
                             b_back_f = false;
+                            finish();
                         }else{
                             b_back.setBackgroundResource(R.drawable.button_circle_back_off);
                             b_back_f = true;

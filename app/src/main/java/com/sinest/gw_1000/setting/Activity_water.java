@@ -3,6 +3,7 @@ package com.sinest.gw_1000.setting;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -51,16 +52,6 @@ public class Activity_water extends Activity {
         View.OnClickListener listener = new View.OnClickListener() {
             public void onClick(View v) {
                 switch (v.getId()) {
-                    case R.id.water_save:
-                        //
-                        if (water_flag[0] == true) {
-                            water_save.setBackgroundResource(R.drawable.save_setting_on);
-                            water_flag[0] = false;
-                        } else {
-                            water_save.setBackgroundResource(R.drawable.save_setting_off);
-                            water_flag[0] = true;
-                        }
-                        break;
                     case R.id.water_off:
                         //
                         if (water_flag[1] == true) {
@@ -69,17 +60,6 @@ public class Activity_water extends Activity {
                         } else {
                             water_off.setBackgroundResource(R.drawable.off);
                             water_flag[1] = true;
-                        }
-                        break;
-                    case R.id.water_back:
-                        //
-                        if (water_b_f == true) {
-                            water_back.setBackgroundResource(R.drawable.button_elipse_back_on);
-                            water_b_f = false;
-                            finish();
-                        } else {
-                            water_back.setBackgroundResource(R.drawable.button_elipse_back_off);
-                            water_b_f = true;
                         }
                         break;
                     case R.id.water_s_c:
@@ -92,11 +72,42 @@ public class Activity_water extends Activity {
             }
         };
 
-        water_save.setOnClickListener(listener);
+        //water_save.setOnClickListener(listener);
         water_off.setOnClickListener(listener);
-        water_back.setOnClickListener(listener);
+        //water_back.setOnClickListener(listener);
         water_s_c.setOnClickListener(listener);
         water_f_c.setOnClickListener(listener);
 
+        water_save.setOnTouchListener(mTouchEvent);
+        water_back.setOnTouchListener(mTouchEvent);
     }
+
+    private View.OnTouchListener mTouchEvent = new View.OnTouchListener() {
+        @Override
+        public boolean onTouch(View view, MotionEvent motionEvent) {
+            int action = motionEvent.getAction();
+            int id = view.getId();
+            if (action == MotionEvent.ACTION_DOWN) {
+                switch (id) {
+                    case R.id.water_save:
+                        water_save.setBackgroundResource(R.drawable.save_setting_on);
+                        break;
+                    case R.id.water_back:
+                        water_back.setBackgroundResource(R.drawable.button_elipse_back_on);
+                        break;
+                }
+            } else if (action == MotionEvent.ACTION_UP) {
+                switch (id) {
+                    case R.id.water_save:
+                        water_save.setBackgroundResource(R.drawable.save_setting_off);
+                        break;
+                    case R.id.water_back:
+                        water_back.setBackgroundResource(R.drawable.button_elipse_back_off);
+                        finish();
+                        break;
+                }
+            }
+            return true;
+        }
+    };
 }
