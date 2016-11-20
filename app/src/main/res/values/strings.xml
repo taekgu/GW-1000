@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">GW-1000</string>
+    <string name="msg_cannot_load_img">Cannot load image!</string>
+</resources>

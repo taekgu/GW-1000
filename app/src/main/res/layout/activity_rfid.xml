@@ -1,0 +1,232 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_rfid"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@drawable/rfid_working_popup">
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="8">
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="11">
+
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:visibility="invisible"
+            android:layout_weight="75" />
+
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:background="@drawable/button_elipse_back_off"
+            android:id="@+id/rfid_back"
+            android:layout_weight="15" />
+
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="60dp"
+            android:visibility="invisible"
+            android:layout_weight="10" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="11">
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="20">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="20">
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="15">
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:visibility="invisible"
+                android:layout_weight="20" />
+
+            <Chronometer
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:textSize="40dp"
+                android:id="@+id/rfid_t_c"
+                android:layout_weight="50" />
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:visibility="invisible"
+                android:layout_weight="30"/>
+
+        </LinearLayout>
+
+
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="15">
+
+            <Button
+                android:layout_width="70dp"
+                android:layout_height="0dp"
+                android:id="@+id/rfid_w_up"
+                android:layout_weight="50"
+                android:layout_marginBottom="5dp"
+                android:background="@drawable/button_up_off"/>
+
+            <Button
+                android:layout_width="70dp"
+                android:layout_height="0dp"
+                android:id="@+id/rfid_w_down"
+                android:layout_weight="50"
+                android:layout_marginTop="5dp"
+                android:background="@drawable/button_down_off"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="15">
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="15">
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:visibility="invisible"
+                android:layout_weight="20" />
+
+            <Chronometer
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:textSize="40dp"
+                android:id="@+id/rfid_w_c"
+                android:layout_weight="50" />
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:visibility="invisible"
+                android:layout_weight="30"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="18">
+
+            <Button
+                android:layout_width="70dp"
+                android:layout_height="0dp"
+                android:id="@+id/rfid_t_up"
+                android:layout_weight="50"
+                android:layout_marginBottom="5dp"
+                android:background="@drawable/button_up_off"/>
+
+            <Button
+                android:layout_width="70dp"
+                android:layout_height="0dp"
+                android:id="@+id/rfid_t_down"
+                android:layout_weight="50"
+                android:layout_marginTop="5dp"
+                android:background="@drawable/button_down_off"/>
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="20">
+
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:visibility="invisible"
+            android:layout_weight="20" />
+
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/rfid_save"
+            android:background="@drawable/save_setting_off"
+            android:layout_marginTop="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_weight="10" />
+
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/rfid_check"
+            android:background="@drawable/check_off"
+            android:layout_marginTop="20dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_weight="10" />
+
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/rfid_off"
+            android:background="@drawable/off"
+            android:layout_marginTop="20dp"
+            android:layout_marginLeft="20dp"
+            android:layout_weight="10" />
+
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:visibility="invisible"
+            android:layout_weight="20" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="10">
+    </LinearLayout>
+
+</LinearLayout>

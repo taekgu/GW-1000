@@ -1,0 +1,272 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@drawable/ribrary_back_image"
+    tools:context="com.sinest.gw_1000.mode.Activity_waiting_rfid">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        android:gravity="right|center_vertical"
+        android:layout_marginTop="20dp"
+        android:layout_marginRight="80dp"
+        android:layout_weight="0.75">
+        </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        android:layout_weight="0.2">
+        <TableLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="170dp"
+            android:layout_weight="0.25">
+            <TableRow>
+                <ToggleButton
+                    android:text="ToggleButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/automode_01"
+                    android:id="@+id/automode_01"
+                    android:onClick="onClicked"
+                    android:textOn=""
+                    android:textOff=""
+                    android:layout_margin="5dp" />
+                <ToggleButton
+                    android:text="ToggleButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/automode_02"
+                    android:id="@+id/automode_02"
+                    android:onClick="onClicked"
+                    android:textOn=""
+                    android:textOff=""
+                    android:layout_margin="5dp"/>
+>
+                <ToggleButton
+                    android:text="ToggleButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/automode_03"
+                    android:id="@+id/automode_03"
+                    android:onClick="onClicked"
+                    android:textOn=""
+                    android:textOff=""
+                    android:layout_margin="5dp"/>
+>
+                <ToggleButton
+                    android:text="ToggleButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/automode_04"
+                    android:id="@+id/automode_04"
+                    android:onClick="onClicked"
+                    android:textOn=""
+                    android:textOff=""
+                    android:layout_margin="5dp" />
+                <ToggleButton
+                    android:text="ToggleButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/automode_05"
+                    android:id="@+id/automode_05"
+                    android:onClick="onClicked"
+                    android:textOn=""
+                    android:textOff=""
+                    android:layout_margin="5dp" />
+            </TableRow>
+            <TableRow>
+                <ToggleButton
+                    android:text="ToggleButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/automode_06"
+                    android:id="@+id/automode_06"
+                    android:onClick="onClicked"
+                    android:textOn=""
+                    android:textOff=""
+                    android:layout_margin="5dp" />
+                <ToggleButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/automode_07"
+                    android:id="@+id/automode_07"
+                    android:onClick="onClicked"
+                    android:textOn=""
+                    android:textOff=""
+                    android:layout_margin="5dp" />
+                <ToggleButton
+                    android:text="ToggleButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/automode_08"
+                    android:id="@+id/automode_08"
+                    android:onClick="onClicked"
+                    android:textOn=""
+                    android:textOff=""
+                    android:layout_margin="5dp"
+/>
+                <ToggleButton
+                    android:text="ToggleButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/automode_09"
+                    android:id="@+id/automode_09"
+                    android:onClick="onClicked"
+                    android:textOn=""
+                    android:textOff=""
+                    android:layout_margin="5dp" />
+                <ToggleButton
+                    android:text="ToggleButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/automode_10"
+                    android:id="@+id/automode_10"
+                    android:onClick="onClicked"
+                    android:textOn=""
+                    android:textOff=""
+                    android:layout_margin="5dp" />
+            </TableRow>
+            <TableRow>
+                <ToggleButton
+                    android:text="ToggleButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/automode_11"
+                    android:id="@+id/automode_11"
+                    android:onClick="onClicked"
+                    android:textOn=""
+                    android:textOff=""
+                    android:layout_margin="5dp" />
+                <ToggleButton
+                    android:text="ToggleButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/automode_12"
+                    android:id="@+id/automode_12"
+                    android:onClick="onClicked"
+                    android:textOn=""
+                    android:textOff=""
+                    android:layout_margin="5dp" />
+                <ToggleButton
+                    android:text="ToggleButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/automode_13"
+                    android:id="@+id/automode_13"
+                    android:onClick="onClicked"
+                    android:textOn=""
+                    android:textOff=""
+                    android:layout_margin="5dp" />
+                <ToggleButton
+                    android:text="ToggleButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/automode_14"
+                    android:id="@+id/automode_14"
+                    android:onClick="onClicked"
+                    android:textOn=""
+                    android:textOff=""
+                    android:layout_margin="5dp" />
+                <ToggleButton
+                    android:text="ToggleButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/automode_15"
+                    android:id="@+id/automode_15"
+                    android:onClick="onClicked"
+                    android:textOn=""
+                    android:textOff=""
+                    android:layout_margin="5dp" />
+            </TableRow>
+            <TableRow
+                android:layout_marginTop="6dp">
+                <ToggleButton
+                    android:text="ToggleButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/manual_mode_01"
+                    android:id="@+id/manual_mode_01"
+                    android:onClick="onClicked"
+                    android:textOn=""
+                    android:textOff=""
+                    android:layout_margin="5dp" />
+                <ToggleButton
+                    android:text="ToggleButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/manual_mode_02"
+                    android:id="@+id/manual_mode_02"
+                    android:onClick="onClicked"
+                    android:textOn=""
+                    android:textOff=""
+                    android:layout_margin="5dp" />
+                <ToggleButton
+                    android:text="ToggleButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/manual_mode_03"
+                    android:id="@+id/manual_mode_03"
+                    android:onClick="onClicked"
+                    android:textOn=""
+                    android:textOff=""
+                    android:layout_margin="5dp" />
+                <ToggleButton
+                    android:text="ToggleButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/manual_mode_04"
+                    android:id="@+id/manual_mode_04"
+                    android:onClick="onClicked"
+                    android:textOn=""
+                    android:textOff=""
+                    android:layout_margin="5dp" />
+                <ToggleButton
+                    android:text="ToggleButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/manual_mode_05"
+                    android:id="@+id/manual_mode_05"
+                    android:onClick="onClicked"
+                    android:textOn=""
+                    android:textOff=""
+                    android:layout_margin="5dp" />
+            </TableRow>
+        </TableLayout>
+
+        <LinearLayout
+            android:layout_width="260dp"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="40dp"
+                android:layout_marginLeft="10dp"
+                android:id="@+id/library_save_button"
+                android:background="@drawable/save_mode_off" />
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="10dp"
+                android:id="@+id/library_back_button"
+                android:onClick="onClicked"
+                android:background="@drawable/button_circle_back_off" />
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="85dp"
+                android:layout_marginLeft="10dp"
+                android:id="@+id/library_set_button"
+                android:onClick="onClicked"
+                android:background="@drawable/library_setting_off" />
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>
