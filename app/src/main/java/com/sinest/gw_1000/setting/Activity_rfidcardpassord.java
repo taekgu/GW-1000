@@ -1,12 +1,15 @@
 package com.sinest.gw_1000.setting;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.sinest.gw_1000.R;
 
@@ -20,6 +23,12 @@ public class Activity_rfidcardpassord extends Activity {
     boolean[] r_password_kflag = {true,true,true,true,true,true,true,true,true,true};
     boolean[] r_password_flag = {true,true,true,true};
 
+    TextView rfid_p;
+    Intent intent_rfid;
+
+    String s_buf;
+    int int_buf;
+    int int_c = 0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,153 +54,218 @@ public class Activity_rfidcardpassord extends Activity {
         rfid_password_e = (Button) findViewById(R.id.rfid_password_e);
         rfid_password_b = (Button) findViewById(R.id.rfid_password_b);
 
+        rfid_p = (TextView) findViewById(R.id.rfid_p);
+
+        intent_rfid = new Intent(this, Activity_rfid.class);
+        intent_rfid.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+
         View.OnClickListener listener = new View.OnClickListener() {
             public void onClick(View v) {
                 switch (v.getId()) {
                     case R.id.rfid_password_1:
                         //
-                        if (r_password_kflag[0] == true) {
-                            rfid_password_1.setBackgroundResource(R.drawable.keypad_1);
-                            r_password_kflag[0] = false;
-                        } else {
-                            rfid_password_1.setBackgroundResource(R.drawable.keypad_1);
-                            r_password_kflag[0] = true;
+                        if(int_c >= 4)
+                        {
+                            s_buf = (String)rfid_p.getText();
+                            int_buf = Integer.parseInt(s_buf);
+                            int_buf = (int_buf%1000)*10 + 1;
+                            s_buf = Integer.toString(int_buf);
+                            rfid_p.setText(s_buf);
+                        }else
+                        {
+                            s_buf = (String)rfid_p.getText();
+                            int_buf = Integer.parseInt(s_buf)*10 + 1;
+                            s_buf = Integer.toString(int_buf);
+                            rfid_p.setText(s_buf);
+                            int_c++;
                         }
                         break;
                     case R.id.rfid_password_2:
                         //
-                        if (r_password_kflag[1] == true) {
-                            rfid_password_2.setBackgroundResource(R.drawable.keypad_2);
-                            r_password_kflag[1] = false;
-                        } else {
-                            rfid_password_2.setBackgroundResource(R.drawable.keypad_2);
-                            r_password_kflag[1] = true;
+                        if(int_c >= 4)
+                        {
+                            s_buf = (String)rfid_p.getText();
+                            int_buf = Integer.parseInt(s_buf);
+                            int_buf = (int_buf%1000)*10 + 2;
+                            s_buf = Integer.toString(int_buf);
+                            rfid_p.setText(s_buf);
+                        }else
+                        {
+                            s_buf = (String)rfid_p.getText();
+                            int_buf = Integer.parseInt(s_buf)*10 + 2;
+                            s_buf = Integer.toString(int_buf);
+                            rfid_p.setText(s_buf);
+                            int_c++;
                         }
                         break;
                     case R.id.rfid_password_3:
                         //
-                        if (r_password_kflag[2] == true) {
-                            rfid_password_3.setBackgroundResource(R.drawable.keypad_3);
-                            r_password_kflag[2] = false;
-                        } else {
-                            rfid_password_3.setBackgroundResource(R.drawable.keypad_3);
-                            r_password_kflag[2] = true;
+                        if(int_c >= 4)
+                        {
+                            s_buf = (String)rfid_p.getText();
+                            int_buf = Integer.parseInt(s_buf);
+                            int_buf = (int_buf%1000)*10 + 3;
+                            s_buf = Integer.toString(int_buf);
+                            rfid_p.setText(s_buf);
+                        }else
+                        {
+                            s_buf = (String)rfid_p.getText();
+                            int_buf = Integer.parseInt(s_buf)*10 + 3;
+                            s_buf = Integer.toString(int_buf);
+                            rfid_p.setText(s_buf);
+                            int_c++;
                         }
                         break;
                     case R.id.rfid_password_4:
                         //
-                        if (r_password_kflag[3] == true) {
-                            rfid_password_4.setBackgroundResource(R.drawable.keypad_4);
-                            r_password_kflag[3] = false;
-                        } else {
-                            rfid_password_4.setBackgroundResource(R.drawable.keypad_4);
-                            r_password_kflag[3] = true;
+                        if(int_c >= 4)
+                        {
+                            s_buf = (String)rfid_p.getText();
+                            int_buf = Integer.parseInt(s_buf);
+                            int_buf = (int_buf%1000)*10 + 4;
+                            s_buf = Integer.toString(int_buf);
+                            rfid_p.setText(s_buf);
+                        }else
+                        {
+                            s_buf = (String)rfid_p.getText();
+                            int_buf = Integer.parseInt(s_buf)*10 + 4;
+                            s_buf = Integer.toString(int_buf);
+                            rfid_p.setText(s_buf);
+                            int_c++;
                         }
                         break;
                     case R.id.rfid_password_5:
                         //
-                        if (r_password_kflag[4] == true) {
-                            rfid_password_5.setBackgroundResource(R.drawable.keypad_5);
-                            r_password_kflag[4] = false;
-                        } else {
-                            rfid_password_5.setBackgroundResource(R.drawable.keypad_5);
-                            r_password_kflag[4] = true;
+                        if(int_c >= 4)
+                        {
+                            s_buf = (String)rfid_p.getText();
+                            int_buf = Integer.parseInt(s_buf);
+                            int_buf = (int_buf%1000)*10 + 5;
+                            s_buf = Integer.toString(int_buf);
+                            rfid_p.setText(s_buf);
+                        }else
+                        {
+                            s_buf = (String)rfid_p.getText();
+                            int_buf = Integer.parseInt(s_buf)*10 + 5;
+                            s_buf = Integer.toString(int_buf);
+                            rfid_p.setText(s_buf);
+                            int_c++;
                         }
                         break;
                     case R.id.rfid_password_6:
                         //
-                        if (r_password_kflag[5] == true) {
-                            rfid_password_6.setBackgroundResource(R.drawable.keypad_6);
-                            r_password_kflag[5] = false;
-                        } else {
-                            rfid_password_6.setBackgroundResource(R.drawable.keypad_6);
-                            r_password_kflag[5] = true;
+                        if(int_c >= 4)
+                        {
+                            s_buf = (String)rfid_p.getText();
+                            int_buf = Integer.parseInt(s_buf);
+                            int_buf = (int_buf%1000)*10 + 6;
+                            s_buf = Integer.toString(int_buf);
+                            rfid_p.setText(s_buf);
+                        }else
+                        {
+                            s_buf = (String)rfid_p.getText();
+                            int_buf = Integer.parseInt(s_buf)*10 + 6;
+                            s_buf = Integer.toString(int_buf);
+                            rfid_p.setText(s_buf);
+                            int_c++;
                         }
                         break;
                     case R.id.rfid_password_7:
                         //
-                        if (r_password_kflag[6] == true) {
-                            rfid_password_7.setBackgroundResource(R.drawable.keypad_7);
-                            r_password_kflag[6] = false;
-                        } else {
-                            rfid_password_7.setBackgroundResource(R.drawable.keypad_7);
-                            r_password_kflag[6] = true;
+                        if(int_c >= 4)
+                        {
+                            s_buf = (String)rfid_p.getText();
+                            int_buf = Integer.parseInt(s_buf);
+                            int_buf = (int_buf%1000)*10 + 7;
+                            s_buf = Integer.toString(int_buf);
+                            rfid_p.setText(s_buf);
+                        }else
+                        {
+                            s_buf = (String)rfid_p.getText();
+                            int_buf = Integer.parseInt(s_buf)*10 + 7;
+                            s_buf = Integer.toString(int_buf);
+                            rfid_p.setText(s_buf);
+                            int_c++;
                         }
                         break;
                     case R.id.rfid_password_8:
                         //
-                        if (r_password_kflag[7] == true) {
-                            rfid_password_8.setBackgroundResource(R.drawable.keypad_8);
-                            r_password_kflag[7] = false;
-                        } else {
-                            rfid_password_8.setBackgroundResource(R.drawable.keypad_8);
-                            r_password_kflag[7] = true;
+                        if(int_c >= 4)
+                        {
+                            s_buf = (String)rfid_p.getText();
+                            int_buf = Integer.parseInt(s_buf);
+                            int_buf = (int_buf%1000)*10 + 8;
+                            s_buf = Integer.toString(int_buf);
+                            rfid_p.setText(s_buf);
+                        }else
+                        {
+                            s_buf = (String)rfid_p.getText();
+                            int_buf = Integer.parseInt(s_buf)*10 + 8;
+                            s_buf = Integer.toString(int_buf);
+                            rfid_p.setText(s_buf);
+                            int_c++;
                         }
                         break;
                     case R.id.rfid_password_9:
                         //
-                        if (r_password_kflag[8] == true) {
-                            rfid_password_9.setBackgroundResource(R.drawable.keypad_9);
-                            r_password_kflag[8] = false;
-                        } else {
-                            rfid_password_9.setBackgroundResource(R.drawable.keypad_9);
-                            r_password_kflag[8] = true;
+                        if(int_c >= 4)
+                        {
+                            s_buf = (String)rfid_p.getText();
+                            int_buf = Integer.parseInt(s_buf);
+                            int_buf = (int_buf%1000)*10 + 9;
+                            s_buf = Integer.toString(int_buf);
+                            rfid_p.setText(s_buf);
+                        }else
+                        {
+                            s_buf = (String)rfid_p.getText();
+                            int_buf = Integer.parseInt(s_buf)*10 + 9;
+                            s_buf = Integer.toString(int_buf);
+                            rfid_p.setText(s_buf);
+                            int_c++;
                         }
                         break;
                     case R.id.rfid_password_0:
                         //
-                        if (r_password_kflag[9] == true) {
-                            rfid_password_0.setBackgroundResource(R.drawable.keypad_0);
-                            r_password_kflag[9] = false;
-                        } else {
-                            rfid_password_0.setBackgroundResource(R.drawable.keypad_0);
-                            r_password_kflag[9] = true;
+                        if(int_c >= 4)
+                        {
+                            s_buf = (String)rfid_p.getText();
+                            int_buf = Integer.parseInt(s_buf);
+                            int_buf = (int_buf%1000)*10 + 0;
+                            s_buf = Integer.toString(int_buf);
+                            rfid_p.setText(s_buf);
+                        }else
+                        {
+                            s_buf = (String)rfid_p.getText();
+                            int_buf = Integer.parseInt(s_buf)*10 + 0;
+                            s_buf = Integer.toString(int_buf);
+                            rfid_p.setText(s_buf);
+                            int_c++;
                         }
                         break;
                     //-----------------------------------------------
                     case R.id.rfid_password_d:
                         //
-                        if (r_password_flag[0] == true) {
-                            rfid_password_d.setBackgroundResource(R.drawable.keypad_delete);
-                            r_password_flag[0] = false;
-                        } else {
-                            rfid_password_d.setBackgroundResource(R.drawable.keypad_delete);
-                            r_password_flag[0] = true;
-                        }
+                        s_buf = (String)rfid_p.getText();
+                        int_buf = Integer.parseInt(s_buf);
+                        int_buf = int_buf/10;
+                        s_buf = Integer.toString(int_buf);
+                        rfid_p.setText(s_buf);
                         break;
                     case R.id.rfid_password_c:
                         //
-                        if (r_password_flag[1] == true) {
-                            rfid_password_c.setBackgroundResource(R.drawable.keypad_change);
-                            r_password_flag[1] = false;
-                        } else {
-                            rfid_password_c.setBackgroundResource(R.drawable.keypad_change);
-                            r_password_flag[1] = true;
-                        }
+
                         break;
                     case R.id.rfid_password_b:
                         //
-                        if (r_password_flag[2] == true) {
-                            rfid_password_b.setBackgroundResource(R.drawable.keypad_back);
-                            r_password_flag[2] = false;
-                            finish();
-                        } else {
-                            rfid_password_b.setBackgroundResource(R.drawable.keypad_back);
-                            r_password_flag[2] = true;
-                        }
+                        finish();
                         break;
                     case R.id.rfid_password_e:
                         //
-                        if (r_password_flag[3] == true) {
-                            rfid_password_e.setBackgroundResource(R.drawable.keypad_enter);
-                            r_password_flag[3] = false;
-
-                        } else {
-                            rfid_password_e.setBackgroundResource(R.drawable.keypad_enter);
-                            r_password_flag[3] = true;
-                        }
+                        startActivity(intent_rfid);
+                        finish();
                         break;
                 }
+                //Toast.makeText(Activity_rfidcardpassord.this, s_buf, Toast.LENGTH_SHORT).show();
             }
         };
 

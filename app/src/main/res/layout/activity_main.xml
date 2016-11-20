@@ -17,7 +17,7 @@
         android:layout_marginEnd="70dp"
         android:layout_marginBottom="453dp"
         android:id="@+id/textClock"
-        android:textSize="27dp"
+        android:textSize="23dp"
         android:layout_weight="10" />
 
     <LinearLayout

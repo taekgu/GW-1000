@@ -47,126 +47,53 @@ public class Activity_starttime extends Activity {
                 switch (v.getId()) {
                     case R.id.start_time1:
                         //
-                        if (start_flag[0] == true) {
-                            start_time1.setBackgroundResource(R.drawable.keypad_1);
-                            start_flag[0] = false;
-                        } else {
-                            start_time1.setBackgroundResource(R.drawable.keypad_1);
-                            start_flag[0] = true;
-                        }
+
                         break;
                     case R.id.start_time2:
                         //
-                        if (start_flag[1] == true) {
-                            start_time2.setBackgroundResource(R.drawable.keypad_2);
-                            start_flag[1] = false;
-                        } else {
-                            start_time2.setBackgroundResource(R.drawable.keypad_2);
-                            start_flag[1] = true;
-                        }
+
                         break;
                     case R.id.start_time3:
                         //
-                        if (start_flag[2] == true) {
-                            start_time3.setBackgroundResource(R.drawable.keypad_3);
-                            start_flag[2] = false;
-                        } else {
-                            start_time3.setBackgroundResource(R.drawable.keypad_3);
-                            start_flag[2] = true;
-                        }
+
                         break;
                     case R.id.start_time4:
                         //
-                        if (start_flag[3] == true) {
-                            start_time4.setBackgroundResource(R.drawable.keypad_4);
-                            start_flag[3] = false;
-                        } else {
-                            start_time4.setBackgroundResource(R.drawable.keypad_4);
-                            start_flag[3] = true;
-                        }
+
                         break;
                     case R.id.start_time5:
                         //
-                        if (start_flag[4] == true) {
-                            start_time5.setBackgroundResource(R.drawable.keypad_5);
-                            start_flag[4] = false;
-                        } else {
-                            start_time5.setBackgroundResource(R.drawable.keypad_5);
-                            start_flag[4] = true;
-                        }
+
                         break;
                     case R.id.start_time6:
                         //
-                        if (start_flag[5] == true) {
-                            start_time6.setBackgroundResource(R.drawable.keypad_6);
-                            start_flag[5] = false;
-                        } else {
-                            start_time6.setBackgroundResource(R.drawable.keypad_6);
-                            start_flag[5] = true;
-                        }
+
                         break;
                     case R.id.start_time7:
                         //
-                        if (start_flag[6] == true) {
-                            start_time7.setBackgroundResource(R.drawable.keypad_7);
-                            start_flag[6] = false;
-                        } else {
-                            start_time7.setBackgroundResource(R.drawable.keypad_7);
-                            start_flag[6] = true;
-                        }
+
                         break;
                     case R.id.start_time8:
                         //
-                        if (start_flag[7] == true) {
-                            start_time8.setBackgroundResource(R.drawable.keypad_8);
-                            start_flag[7] = false;
-                        } else {
-                            start_time8.setBackgroundResource(R.drawable.keypad_8);
-                            start_flag[7] = true;
-                        }
+
                         break;
                     case R.id.start_time9:
                         //
-                        if (start_flag[8] == true) {
-                            start_time9.setBackgroundResource(R.drawable.keypad_9);
-                            start_flag[8] = false;
-                        } else {
-                            start_time9.setBackgroundResource(R.drawable.keypad_9);
-                            start_flag[8] = true;
-                        }
+
                         break;
                     case R.id.start_time0:
                         //
-                        if (start_flag[9] == true) {
-                            start_time0.setBackgroundResource(R.drawable.keypad_0);
-                            start_flag[9] = false;
-                        } else {
-                            start_time0.setBackgroundResource(R.drawable.keypad_0);
-                            start_flag[9] = true;
-                        }
+
                         break;
 
 
                     case R.id.start_time_enter:
                         //
-                        if (start_flag[10] == true) {
-                            start_time_enter.setBackgroundResource(R.drawable.keypad_enter);
-                            start_flag[10] = false;
-                        } else {
-                            start_time_enter.setBackgroundResource(R.drawable.keypad_enter);
-                            start_flag[10] = true;
-                        }
+
                         break;
                     case R.id.start_time_back:
                         //
-                        if (start_flag[11] == true) {
-                            start_time_back.setBackgroundResource(R.drawable.keypad_back);
-                            start_flag[11] = false;
-                            finish();
-                        } else {
-                            start_time_back.setBackgroundResource(R.drawable.keypad_back);
-                            start_flag[11] = true;
-                        }
+                        finish();
                         break;
                 }
             }
