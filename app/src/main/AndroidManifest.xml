@@ -46,14 +46,17 @@
             android:screenOrientation="landscape"
             android:theme="@android:style/Theme.Dialog"/>
 
+        
 
-
+        <activity
+            android:name=".setting.Activity_setting"
+            android:screenOrientation="landscape"
+            android:theme="@style/Theme.AppCompat.NoActionBar"/>
         <activity
             android:name=".setting.Activity_emotion"
             android:launchMode="singleInstance"
             android:theme="@style/Theme.AppCompat.Dialog"
-            android:screenOrientation="landscape">
-        </activity>
+            android:screenOrientation="landscape"/>
         <activity
             android:name=".setting.Activity_rfid"
             android:launchMode="singleInstance"
