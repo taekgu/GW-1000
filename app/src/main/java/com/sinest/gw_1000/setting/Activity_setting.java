@@ -7,8 +7,12 @@ import android.view.View;
 import android.widget.Button;
 
 import com.sinest.gw_1000.R;
+import com.sinest.gw_1000.communication.Communicator;
+import com.sinest.gw_1000.management.Application_communicator;
 
 public class Activity_setting extends AppCompatActivity {
+
+    Communicator communicator;
 
     Button b_11; Button b_21; Button b_31; Button b_41;
     Button b_12; Button b_22; Button b_32; Button b_42;
@@ -34,6 +38,10 @@ public class Activity_setting extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        communicator = Application_communicator.getCommunicator();
+
+        //communicator.send(communicator.get_tx)
 
         b_11 = (Button)findViewById(R.id.button11);
         b_21 = (Button)findViewById(R.id.button21);
