@@ -2,12 +2,16 @@ package com.sinest.gw_1000.setting;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 
 import com.sinest.gw_1000.R;
+
+import static android.R.attr.action;
+import static android.R.attr.id;
 
 public class Activity_emotion extends Activity {
 
@@ -43,7 +47,7 @@ public class Activity_emotion extends Activity {
         emotion_sound_up = (Button)findViewById(R.id.emotion_sound_up);
         emotion_sound_down = (Button)findViewById(R.id.emotion_sound_down);
         emotion_back = (Button)findViewById(R.id.emotion_back);
-
+/*
         View.OnClickListener listener = new View.OnClickListener() {
             public void onClick(View v) {
                 switch (v.getId()) {
@@ -151,6 +155,88 @@ public class Activity_emotion extends Activity {
         emotion_sound_up.setOnClickListener(listener);
         emotion_sound_down.setOnClickListener(listener);
         emotion_back.setOnClickListener(listener);
+*/
+
+        emotion_ledm_up.setOnTouchListener(mTouchEvent);
+        emotion_ledm_down.setOnTouchListener(mTouchEvent);
+        emotion_led_up.setOnTouchListener(mTouchEvent);
+        emotion_led_down.setOnTouchListener(mTouchEvent);
+        emotion_soundm_up.setOnTouchListener(mTouchEvent);
+        emotion_soundm_down.setOnTouchListener(mTouchEvent);
+        emotion_sound_up.setOnTouchListener(mTouchEvent);
+        emotion_sound_down.setOnTouchListener(mTouchEvent);
+        emotion_back.setOnTouchListener(mTouchEvent);
 
     }
+
+    private View.OnTouchListener mTouchEvent = new View.OnTouchListener() {
+        @Override
+        public boolean onTouch(View view, MotionEvent motionEvent) {
+            int action = motionEvent.getAction();
+            int id = view.getId();
+            if (action == MotionEvent.ACTION_DOWN) {
+                switch (id) {
+                    case R.id.emotion_ledm_up:
+                        emotion_ledm_up.setBackgroundResource(R.drawable.button_up_on);
+                        break;
+                    case R.id.emotion_ledm_down:
+                        emotion_ledm_down.setBackgroundResource(R.drawable.button_down_on);
+                        break;
+                    case R.id.emotion_led_up:
+                        emotion_led_up.setBackgroundResource(R.drawable.button_up_on);
+                        break;
+                    case R.id.emotion_led_down:
+                        emotion_led_down.setBackgroundResource(R.drawable.button_down_on);
+                        break;
+                    case R.id.emotion_soundm_up:
+                        emotion_soundm_up.setBackgroundResource(R.drawable.button_up_on);
+                        break;
+                    case R.id.emotion_soundm_down:
+                        emotion_soundm_down.setBackgroundResource(R.drawable.button_down_on);
+                        break;
+                    case R.id.emotion_sound_up:
+                        emotion_sound_up.setBackgroundResource(R.drawable.button_up_on);
+                        break;
+                    case R.id.emotion_sound_down:
+                        emotion_sound_down.setBackgroundResource(R.drawable.button_down_on);
+                        break;
+                    case R.id.emotion_back:
+                        emotion_back.setBackgroundResource(R.drawable.button_elipse_back_on);
+                        break;
+                }
+            } else if (action == MotionEvent.ACTION_UP) {
+                switch (id) {
+                    case R.id.emotion_ledm_up:
+                        emotion_ledm_up.setBackgroundResource(R.drawable.button_up_off);
+                        break;
+                    case R.id.emotion_ledm_down:
+                        emotion_ledm_down.setBackgroundResource(R.drawable.button_down_off);
+                        break;
+                    case R.id.emotion_led_up:
+                        emotion_led_up.setBackgroundResource(R.drawable.button_up_off);
+                        break;
+                    case R.id.emotion_led_down:
+                        emotion_led_down.setBackgroundResource(R.drawable.button_down_off);
+                        break;
+                    case R.id.emotion_soundm_up:
+                        emotion_soundm_up.setBackgroundResource(R.drawable.button_up_off);
+                        break;
+                    case R.id.emotion_soundm_down:
+                        emotion_soundm_down.setBackgroundResource(R.drawable.button_down_off);
+                        break;
+                    case R.id.emotion_sound_up:
+                        emotion_sound_up.setBackgroundResource(R.drawable.button_up_off);
+                        break;
+                    case R.id.emotion_sound_down:
+                        emotion_sound_down.setBackgroundResource(R.drawable.button_down_off);
+                        break;
+                    case R.id.emotion_back:
+                        emotion_back.setBackgroundResource(R.drawable.button_elipse_back_off);
+                        finish();
+                        break;
+                }
+            }
+            return true;
+        }
+    };
 }

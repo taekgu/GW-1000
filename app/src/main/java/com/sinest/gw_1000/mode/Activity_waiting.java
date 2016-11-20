@@ -12,6 +12,7 @@ import android.widget.TextView;
 import com.sinest.gw_1000.R;
 import com.sinest.gw_1000.communication.Communicator;
 import com.sinest.gw_1000.management.Application_communicator;
+import com.sinest.gw_1000.setting.Activity_setting;
 
 public class Activity_waiting extends AppCompatActivity {
 
@@ -45,7 +46,6 @@ public class Activity_waiting extends AppCompatActivity {
 
         TextView time_text = (TextView)findViewById(R.id.waiting_time_text);
 
-
         waiting_library_button.setOnTouchListener(mTouchEvent);
         waiting_setting_button.setOnTouchListener(mTouchEvent);
 
@@ -69,6 +69,7 @@ public class Activity_waiting extends AppCompatActivity {
             TextView txt;
             LinearLayout background;
             Intent intent;
+            Intent intent_setting;
             String t;
             int temp;
             int action = motionEvent.getAction();
@@ -129,6 +130,9 @@ public class Activity_waiting extends AppCompatActivity {
                     case R.id.waiting_setting_button:
                         b  = (Button) view;
                         b.setBackgroundResource(R.drawable.setting);
+                        //setting
+                        intent_setting = new Intent(getApplicationContext(), Activity_setting.class);
+                        startActivityForResult(intent_setting, REQUEST_CODE_LIBRARY);
                         break;
                     case R.id.waiting_oxygen_up_button:
                         b  = (Button) view;
