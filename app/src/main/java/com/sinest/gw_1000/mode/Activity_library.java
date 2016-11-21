@@ -122,8 +122,20 @@ public class Activity_library extends AppCompatActivity {
                     case R.id.library_set_button:
                         b.setBackgroundResource(R.drawable.library_setting_off);
                         if(manual_cnt==1) {
+
+                            int modeNum = -1;
+                            for (int i=15; i<=19; i++) {
+
+                                if (checked_loc[i] == 1) {
+
+                                    modeNum = i - 14;
+                                }
+                            }
+
                             intent = new Intent(getApplicationContext(), Activity_manual_mode_setting.class);
-                            startActivityForResult(intent, REQUEST_CODE_MANUAL_MODE_SETTING);
+                            intent.putExtra("modeNum", modeNum);
+                            startActivity(intent);
+                        //    startActivityForResult(intent, REQUEST_CODE_MANUAL_MODE_SETTING);
                         }
                         break;
                 }

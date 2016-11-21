@@ -16,7 +16,12 @@ public class Application_communicator extends Application {
     public final static String VAL_OXYGEN   = "val_oxygen";
     public final static String VAL_PRESSURE = "val_pressure";
     public final static String VAL_TIME     = "val_time";
-    public final static String LIBRARY_LOC  = "library_location";
+    public final static String LIBRARY_LOC  = "library_location"; // 라이브러리 20개중 선택된 값
+
+    // 매뉴얼 모드 man_pattern_*_*
+    public final static String MANUAL_MODE_PATTERN_ = "man_pattern_";
+    public final static String MANUAL_MODE_TIME_ = "man_time_";
+
 
     private static Context context;
     private static Communicator communicator;
