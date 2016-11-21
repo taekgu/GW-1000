@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
@@ -57,6 +58,7 @@ public class Activity_rfid extends Activity {
         treatment_num = 0;
         rfid_t_c.setText(Integer.toString(working_mode_num));
         rfid_w_c.setText(Integer.toString(treatment_num));
+
 
 
         View.OnClickListener listener = new View.OnClickListener() {

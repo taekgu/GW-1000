@@ -3,12 +3,20 @@ package com.sinest.gw_1000.setting;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
+import android.widget.LinearLayout;
+import android.widget.TextClock;
+import android.widget.TextView;
 
 import com.sinest.gw_1000.R;
 import com.sinest.gw_1000.communication.Communicator;
 import com.sinest.gw_1000.management.Application_communicator;
+import com.sinest.gw_1000.mode.Activity_library;
+
+import static com.sinest.gw_1000.R.id.textClock;
 
 public class Activity_setting extends AppCompatActivity {
 
@@ -34,6 +42,8 @@ public class Activity_setting extends AppCompatActivity {
     Intent intent_rfid;
     Intent intent_wa;
 
+    String check;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,6 +52,9 @@ public class Activity_setting extends AppCompatActivity {
         communicator = Application_communicator.getCommunicator();
 
         //communicator.send(communicator.get_tx)
+
+        TextClock textClock = (TextClock) findViewById(R.id.textClock);
+        //textClock.setFormat24Hour();
 
         b_11 = (Button)findViewById(R.id.button11);
         b_21 = (Button)findViewById(R.id.button21);
@@ -71,10 +84,10 @@ public class Activity_setting extends AppCompatActivity {
         b_inverter = (Button)findViewById(R.id.b_inverter);
 
         intent_emotion = new Intent(this, Activity_emotion.class);
-        intent_emotion.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+        //intent_emotion.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_SINGLE_TOP);
 
         intent_rfid = new Intent(this, Activity_rfidcardpassord.class);
-        intent_rfid.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+        //intent_rfid.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_SINGLE_TOP);
 
         intent_wa = new Intent(this, Activity_water.class);
         //intent_wa.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_SINGLE_TOP);
@@ -217,7 +230,9 @@ public class Activity_setting extends AppCompatActivity {
                         if(button2_flag[0] == true){
                             b_rf.setBackgroundResource(R.drawable.on);
                             button2_flag[0] = false;
-                            startActivity(intent_rfid);
+                            intent_rfid.putExtra("check","ok");
+                            startActivityForResult(intent_rfid,1);
+                            //startActivity(intent_rfid);
                         }else{
                             b_rf.setBackgroundResource(R.drawable.off);
                             button2_flag[0] = true;
@@ -238,7 +253,9 @@ public class Activity_setting extends AppCompatActivity {
                         if(button2_flag[2] == true){
                             b_wa.setBackgroundResource(R.drawable.on);
                             button2_flag[2] = false;
-                            startActivity(intent_wa);
+                            intent_wa.putExtra("check","ok");
+                            startActivityForResult(intent_wa,2);
+                            //startActivity(intent_wa);
                         }else{
                             b_wa.setBackgroundResource(R.drawable.off);
                             button2_flag[2] = true;
@@ -312,7 +329,6 @@ public class Activity_setting extends AppCompatActivity {
                         //
                         if(b_emotion_f == true){
                             b_emotion.setBackgroundResource(R.drawable.emotion_on);
-                            startActivity(intent_emotion);
                             b_emotion_f = false;
                         }else{
                             b_emotion.setBackgroundResource(R.drawable.emotion_off);
@@ -373,9 +389,65 @@ public class Activity_setting extends AppCompatActivity {
         b_5m.setOnClickListener(listener);
         b_coutinue.setOnClickListener(listener);
         b_back.setOnClickListener(listener);
-        b_emotion.setOnClickListener(listener);
+        //b_emotion.setOnClickListener(listener);
         b_language.setOnClickListener(listener);
         b_inverter.setOnClickListener(listener);
 
+        b_emotion.setOnTouchListener(mTouchEvent);
+
+    }
+
+    private View.OnTouchListener mTouchEvent = new View.OnTouchListener() {
+        @Override
+        public boolean onTouch(View view, MotionEvent motionEvent) {
+            int action = motionEvent.getAction();
+            int id = view.getId();
+            if (action == MotionEvent.ACTION_DOWN) {
+                switch (id) {
+                    case R.id.b_emotion:
+                        b_emotion.setBackgroundResource(R.drawable.emotion_on);
+
+                        break;
+                }
+            } else if (action == MotionEvent.ACTION_UP) {
+                byte val = 0x00;
+                switch (id) {
+                    case R.id.b_emotion:
+                        b_emotion.setBackgroundResource(R.drawable.emotion_off);
+                        startActivity(intent_emotion);
+                        break;
+                }
+            }
+            return true;
+        }
+    };
+
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode,resultCode,data);
+        if(resultCode == RESULT_OK){
+            switch (requestCode) {
+                case 1:
+                    check = data.getStringExtra("check");
+                    Log.v("test",check);
+                    if(check.equals("No")){
+                        b_rf.setBackgroundResource(R.drawable.off);
+                        button2_flag[0] = true;
+                        check = "Yes";
+                    }
+                    break;
+                case 2:
+                    check = data.getStringExtra("check");
+                    if(check.equals("No")){
+                        b_wa.setBackgroundResource(R.drawable.off);
+                        button2_flag[2] = true;
+                        check = "Yes";
+                    }
+                    break;
+                default:
+                    break;
+            }
+        }
     }
 }

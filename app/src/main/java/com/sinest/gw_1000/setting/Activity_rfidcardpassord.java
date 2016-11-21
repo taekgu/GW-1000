@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -29,6 +30,9 @@ public class Activity_rfidcardpassord extends Activity {
     String s_buf;
     int int_buf;
     int int_c = 0;
+
+    Intent check;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -58,6 +62,8 @@ public class Activity_rfidcardpassord extends Activity {
 
         intent_rfid = new Intent(this, Activity_rfid.class);
         intent_rfid.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+
+        check = this.getIntent();
 
         View.OnClickListener listener = new View.OnClickListener() {
             public void onClick(View v) {
@@ -257,6 +263,8 @@ public class Activity_rfidcardpassord extends Activity {
                         break;
                     case R.id.rfid_password_b:
                         //
+                        check.putExtra("check","No");
+                        setResult(RESULT_OK, check);
                         finish();
                         break;
                     case R.id.rfid_password_e:

@@ -32,6 +32,8 @@ public class Activity_water extends Activity {
 
     Intent intent_start;
     Intent intent_finish;
+    Intent check;
+    int check_h = 0;
 
     String start_time = "00:00";
     String finish_time = "00:00";
@@ -63,6 +65,8 @@ public class Activity_water extends Activity {
 
         water_s_c.setText(start_time);
         water_f_c.setText(finish_time);
+
+        check = getIntent();
 
         View.OnClickListener listener = new View.OnClickListener() {
             public void onClick(View v) {
@@ -117,9 +121,15 @@ public class Activity_water extends Activity {
                 switch (id) {
                     case R.id.water_save:
                         water_save.setBackgroundResource(R.drawable.save_setting_off);
+                        check_h = 1;
                         break;
                     case R.id.water_back:
                         water_back.setBackgroundResource(R.drawable.button_elipse_back_off);
+                        if(check_h == 0)
+                        {
+                            check.putExtra("check","No");
+                            setResult(RESULT_OK, check);
+                        }
                         finish();
                         break;
                 }
@@ -132,18 +142,18 @@ public class Activity_water extends Activity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode,resultCode,data);
         if(resultCode == RESULT_OK){
-        switch (requestCode) {
-            case 11:
-                start_time = data.getStringExtra("start");
-                water_s_c.setText(start_time);
-                break;
-            case 22:
-                finish_time = data.getStringExtra("finish");
-                water_f_c.setText(finish_time);
-                break;
-            default:
-                break;
-        }
+            switch (requestCode) {
+                case 11:
+                    start_time = data.getStringExtra("start");
+                    water_s_c.setText(start_time);
+                    break;
+                case 22:
+                    finish_time = data.getStringExtra("finish");
+                    water_f_c.setText(finish_time);
+                    break;
+                default:
+                    break;
+            }
         }
     }
 }
