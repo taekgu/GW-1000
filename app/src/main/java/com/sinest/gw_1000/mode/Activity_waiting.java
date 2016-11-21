@@ -41,6 +41,7 @@ public class Activity_waiting extends AppCompatActivity {
     TextView time_text, oxygen_text, pressure_text;
     int[] checked_loc = new int[20];
     Fragment_waiting fragment_waiting;
+    Fragment_working fragment_working;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -122,7 +123,7 @@ public class Activity_waiting extends AppCompatActivity {
             if (checked_loc[i] == 1) {
 
                 fragment_waiting.addCheckedIdx(i);
-                Log.i("WIFI", "addCheckedIdx " + i);
+            //    Log.i("WIFI", "addCheckedIdx " + i);
             }
         }
 
@@ -152,16 +153,29 @@ public class Activity_waiting extends AppCompatActivity {
         editor.commit();
     }
 
-    public void changeFragment(int modeNum) {
+    public void changeFragment_working(int modeNum) {
 
         Log.i("WIFI", "changeFragment");
         FragmentManager fm = getFragmentManager();
         FragmentTransaction fragmentTransaction = fm.beginTransaction();
 
-        Fragment_working fragment_working = new Fragment_working();
+        if (fragment_working == null) {
+
+            fragment_working = new Fragment_working();
+        }
         fragment_working.setModeNum(modeNum);
 
         fragmentTransaction.replace(R.id.frameLayout_fragment, fragment_working);
+        fragmentTransaction.commit();
+    }
+
+    public void changeFragment_waiting() {
+
+        Log.i("WIFI", "changeFragment");
+        FragmentManager fm = getFragmentManager();
+        FragmentTransaction fragmentTransaction = fm.beginTransaction();
+
+        fragmentTransaction.replace(R.id.frameLayout_fragment, fragment_waiting);
         fragmentTransaction.commit();
     }
 

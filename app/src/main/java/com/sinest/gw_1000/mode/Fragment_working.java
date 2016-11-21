@@ -87,6 +87,7 @@ public class Fragment_working extends Fragment {
                     case R.id.button_stop:
 
                         button_clicked.setBackgroundResource(R.drawable.button_stop_off);
+                        activity_waiting.changeFragment_waiting();
                         break;
                 }
             }
