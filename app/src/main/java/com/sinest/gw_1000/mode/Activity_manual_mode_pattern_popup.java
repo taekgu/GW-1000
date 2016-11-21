@@ -61,7 +61,7 @@ public class Activity_manual_mode_pattern_popup extends Activity {
                         b = (Button) view;
                         b.setBackgroundResource(R.drawable.save_mode_off);
                         intent = new Intent(getApplicationContext(), Activity_manual_mode_setting.class);
-                        intent.putExtra(Integer.toString(pattern_num), 0);
+                        intent.putExtra("pattern_num", pattern_num);
                         finish();
                         break;
                     case R.id.manual_popup_back:
