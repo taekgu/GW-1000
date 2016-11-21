@@ -100,7 +100,7 @@ public class Activity_setting extends AppCompatActivity {
             public void onStopTrackingTouch(SeekBar seekBar) {
                 // 메소드 이름대로 사용자가 SeekBar를 손에서 땠을때 실행됩니다
                 // TODO Auto-generated method stub
-                Log.v("test2","v : "+volume);
+                Log.v("test2","v : " + volume);
             }
 
             @Override
