@@ -1,8 +1,10 @@
 package com.sinest.gw_1000.setting;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -32,6 +34,8 @@ public class Activity_starttime extends Activity {
     int int_r;
     int check;
 
+    Intent start_result;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,9 +59,11 @@ public class Activity_starttime extends Activity {
         start_time_enter = (Button) findViewById(R.id.start_time_enter);
         start_time_back = (Button) findViewById(R.id.start_time_back);
 
+        start_result = getIntent();
+
         start_time = (Chronometer) findViewById(R.id.start_time);
 
-        start_time.setText("00:00");
+        start_time.setText(start_result.getStringExtra("start"));
 
         View.OnClickListener listener = new View.OnClickListener() {
             public void onClick(View v) {
@@ -105,7 +111,10 @@ public class Activity_starttime extends Activity {
 
                     case R.id.start_time_enter:
                         //
-
+                        start_result.putExtra("start",s_buf);
+                        setResult(RESULT_OK,start_result);
+                        Log.v("to go?",s_buf);
+                        finish();
                         break;
                     case R.id.start_time_back:
                         //
