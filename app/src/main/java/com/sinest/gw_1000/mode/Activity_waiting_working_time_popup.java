@@ -1,6 +1,7 @@
 package com.sinest.gw_1000.mode;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.MotionEvent;
 import android.view.View;
@@ -14,6 +15,7 @@ import com.sinest.gw_1000.R;
 public class Activity_waiting_working_time_popup extends Activity {
 
     @Override
+
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -59,7 +61,8 @@ public class Activity_waiting_working_time_popup extends Activity {
     {
         int id = v.getId();
         int resourceId;
-
+        Intent intent;
+        intent = new Intent(getApplicationContext(), Activity_waiting.class);
         TextView txt;
         String t;
         int temp;
@@ -79,6 +82,7 @@ public class Activity_waiting_working_time_popup extends Activity {
                 if(temp>=0 && temp>90)
                     temp = 0;
 
+                intent.putExtra("working_time", temp);
                 txt.setText(Integer.toString(temp));
                 break;
             }

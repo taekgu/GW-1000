@@ -13,7 +13,8 @@ import android.widget.ImageView;
 import com.sinest.gw_1000.R;
 
 public class Activity_manual_mode_pattern_popup extends Activity {
-    int pattern_num;
+    @Override
+
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -42,7 +43,6 @@ public class Activity_manual_mode_pattern_popup extends Activity {
             Button b;
             int action = motionEvent.getAction();
             int id = view.getId();
-            Intent intent;
 
             if (action == MotionEvent.ACTION_DOWN) {
                 switch (id) {
@@ -60,8 +60,6 @@ public class Activity_manual_mode_pattern_popup extends Activity {
                     case R.id.manual_popup_save:
                         b = (Button) view;
                         b.setBackgroundResource(R.drawable.save_mode_off);
-                        intent = new Intent(getApplicationContext(), Activity_manual_mode_setting.class);
-                        intent.putExtra("pattern_num", pattern_num);
                         finish();
                         break;
                     case R.id.manual_popup_back:
@@ -79,6 +77,8 @@ public class Activity_manual_mode_pattern_popup extends Activity {
             ImageView img = (ImageView)findViewById(R.id.manual_popup_imageview);
             int id = v.getId();
             int resourceId, ImageResourceId;
+            Intent intent;
+            intent = new Intent(getApplicationContext(), Activity_manual_mode_setting.class);
             for(int i=1; i<=12; i++)
             {
                 resourceId = getResources().getIdentifier("pattern_"+i,"id","com.sinest.gw_1000");
@@ -86,7 +86,7 @@ public class Activity_manual_mode_pattern_popup extends Activity {
                 {
                     ImageResourceId = getResources().getIdentifier("manual_mode_pattern_"+i,"drawable","com.sinest.gw_1000");
                     img.setImageResource(ImageResourceId);
-                    pattern_num = i;
+                    intent.putExtra("pattern_num", i);
                 }
             }
         }
