@@ -125,9 +125,10 @@ public class Activity_waiting extends AppCompatActivity {
             //    Log.i("WIFI", "addCheckedIdx " + i);
             }
         }
-
         fragment_waiting.refresh();
 
+        val_time = sharedPreferences.getInt(Application_communicator.WAITING_WORKING_TIME, 0);
+        time_text.setText(Integer.toString(val_time));
         /*
         FragmentManager fragmentManager = getFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();

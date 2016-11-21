@@ -22,6 +22,8 @@ public class Application_communicator extends Application {
     public final static String MANUAL_MODE_PATTERN_ = "man_pattern_";
     public final static String MANUAL_MODE_TIME_ = "man_time_";
 
+    public final static String WAITING_WORKING_TIME = "waiting_working_time";
+
 
     private static Context context;
     private static Communicator communicator;

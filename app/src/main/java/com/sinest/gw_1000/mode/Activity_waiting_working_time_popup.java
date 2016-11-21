@@ -2,6 +2,7 @@ package com.sinest.gw_1000.mode;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.MotionEvent;
 import android.view.View;
@@ -11,9 +12,10 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.sinest.gw_1000.R;
+import com.sinest.gw_1000.management.Application_communicator;
 
 public class Activity_waiting_working_time_popup extends Activity {
-
+    int workingtime;
     @Override
 
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +50,11 @@ public class Activity_waiting_working_time_popup extends Activity {
             } else if (action == MotionEvent.ACTION_UP) {
                 switch (id) {
                     case R.id.popup_keypad_enter:
+                        SharedPreferences sharedPreferences = getSharedPreferences(Application_communicator.NAME_OF_SHARED_PREF, 0);
+                        SharedPreferences.Editor editor = sharedPreferences.edit();
+                        editor.putInt(Application_communicator.WAITING_WORKING_TIME, workingtime);
+                        editor.commit();
+                        finish();
                         break;
                     case R.id.popup_keypad_back:
                         finish();
@@ -81,8 +88,8 @@ public class Activity_waiting_working_time_popup extends Activity {
 
                 if(temp>=0 && temp>90)
                     temp = 0;
-
-                intent.putExtra("working_time", temp);
+               workingtime = temp;
+                /*intent.putExtra("working_time", temp);*/
                 txt.setText(Integer.toString(temp));
                 break;
             }
