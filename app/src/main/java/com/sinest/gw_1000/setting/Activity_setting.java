@@ -77,7 +77,7 @@ public class Activity_setting extends AppCompatActivity {
         intent_rfid.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_SINGLE_TOP);
 
         intent_wa = new Intent(this, Activity_water.class);
-        intent_wa.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+        //intent_wa.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_SINGLE_TOP);
 
 /*
         findViewById(R.id.button11).setOnClickListener(

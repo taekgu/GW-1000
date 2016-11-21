@@ -33,7 +33,7 @@ public class Activity_water extends Activity {
     Intent intent_start;
     Intent intent_finish;
 
-    String start_time = "00:01";
+    String start_time = "00:00";
     String finish_time = "00:00";
     /**
      * ATTENTION: This was auto-generated to implement the App Indexing API.
@@ -59,10 +59,10 @@ public class Activity_water extends Activity {
         water_f_c = (Chronometer) findViewById(R.id.water_f_c);
 
         intent_start = new Intent(this, Activity_starttime.class);
-        intent_start.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+        //intent_start.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_SINGLE_TOP);
 
         intent_finish = new Intent(this, Activity_finishtime.class);
-        intent_finish.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+        //intent_finish.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_SINGLE_TOP);
 
         water_s_c.setText(start_time);
         water_f_c.setText(finish_time);
@@ -82,10 +82,11 @@ public class Activity_water extends Activity {
                         break;
                     case R.id.water_s_c:
                         intent_start.putExtra("start", start_time);
-                        startActivityForResult(intent_start, 7);
+                        startActivityForResult(intent_start, 11);
                         break;
                     case R.id.water_f_c:
-                        startActivityForResult(intent_finish, 1);
+                        intent_finish.putExtra("finish", finish_time);
+                        startActivityForResult(intent_finish, 22);
                         break;
                 }
             }
@@ -101,7 +102,6 @@ public class Activity_water extends Activity {
         water_back.setOnTouchListener(mTouchEvent);
         // ATTENTION: This was auto-generated to implement the App Indexing API.
         // See https://g.co/AppIndexing/AndroidStudio for more information.
-        client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
     }
 
     private View.OnTouchListener mTouchEvent = new View.OnTouchListener() {
@@ -135,63 +135,21 @@ public class Activity_water extends Activity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        Log.v("te", "te" + resultCode);
-        //super.onActivityResult(requestCode,resultCode,data);
-        //if(resultCode == RESULT_OK){
+        super.onActivityResult(requestCode,resultCode,data);
+        if(resultCode == RESULT_OK){
         switch (requestCode) {
-            case 6:
-                if (resultCode == RESULT_OK) {
-                    Log.v("test0", "test : " + requestCode);
-                    Intent intent = getIntent();
-                    start_time = data.getStringExtra("start");
-                    water_s_c.setText(start_time);
-                    Log.v("test1", "test1" + start_time);
-                    break;
-                }
+            case 11:
+                start_time = data.getStringExtra("start");
+                water_s_c.setText(start_time);
                 break;
-            case 2:
-                Log.v("test11", "test1" + requestCode);
+            case 22:
+                finish_time = data.getStringExtra("finish");
+                water_f_c.setText(finish_time);
                 break;
             default:
                 break;
         }
-        //}
-    }
-
-    /**
-     * ATTENTION: This was auto-generated to implement the App Indexing API.
-     * See https://g.co/AppIndexing/AndroidStudio for more information.
-     */
-    public Action getIndexApiAction() {
-        Thing object = new Thing.Builder()
-                .setName("Activity_water Page") // TODO: Define a title for the content shown.
-                // TODO: Make sure this auto-generated URL is correct.
-                .setUrl(Uri.parse("http://[ENTER-YOUR-URL-HERE]"))
-                .build();
-        return new Action.Builder(Action.TYPE_VIEW)
-                .setObject(object)
-                .setActionStatus(Action.STATUS_TYPE_COMPLETED)
-                .build();
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
-
-        // ATTENTION: This was auto-generated to implement the App Indexing API.
-        // See https://g.co/AppIndexing/AndroidStudio for more information.
-        client.connect();
-        AppIndex.AppIndexApi.start(client, getIndexApiAction());
-    }
-
-    @Override
-    public void onStop() {
-        super.onStop();
-
-        // ATTENTION: This was auto-generated to implement the App Indexing API.
-        // See https://g.co/AppIndexing/AndroidStudio for more information.
-        AppIndex.AppIndexApi.end(client, getIndexApiAction());
-        client.disconnect();
+        }
     }
 }
 

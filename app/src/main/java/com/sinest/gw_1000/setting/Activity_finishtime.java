@@ -1,8 +1,10 @@
 package com.sinest.gw_1000.setting;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -32,6 +34,8 @@ public class Activity_finishtime extends Activity {
     int int_r;
     int check;
 
+    Intent finish_result;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,14 +59,16 @@ public class Activity_finishtime extends Activity {
         finish_time_enter = (Button) findViewById(R.id.finish_time_enter);
         finish_time_back = (Button) findViewById(R.id.finish_time_back);
 
+        finish_result = this.getIntent();
+
         finish_time = (Chronometer) findViewById(R.id.finish_time);
 
-        finish_time.setText("00:00");
+        finish_time.setText(finish_result.getStringExtra("finish"));
 
         View.OnClickListener listener = new View.OnClickListener() {
             public void onClick(View v) {
                 switch (v.getId()) {
-                    case R.id.start_time1:
+                    case R.id.finish_time1:
                         //
                         time_sum(1);
                         break;
@@ -106,6 +112,9 @@ public class Activity_finishtime extends Activity {
 
                     case R.id.finish_time_enter:
                         //
+                        finish_result.putExtra("finish",s_buf);
+                        setResult(RESULT_OK, finish_result);
+                        finish();
 
                         break;
                     case R.id.finish_time_back:

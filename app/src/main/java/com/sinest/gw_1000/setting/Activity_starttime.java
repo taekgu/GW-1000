@@ -59,7 +59,7 @@ public class Activity_starttime extends Activity {
         start_time_enter = (Button) findViewById(R.id.start_time_enter);
         start_time_back = (Button) findViewById(R.id.start_time_back);
 
-        start_result = getIntent();
+        start_result = this.getIntent();
 
         start_time = (Chronometer) findViewById(R.id.start_time);
 
@@ -112,8 +112,7 @@ public class Activity_starttime extends Activity {
                     case R.id.start_time_enter:
                         //
                         start_result.putExtra("start",s_buf);
-                        setResult(RESULT_OK,start_result);
-                        Log.v("to go?",s_buf);
+                        setResult(RESULT_OK, start_result);
                         finish();
                         break;
                     case R.id.start_time_back:
