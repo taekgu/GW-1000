@@ -1,6 +1,7 @@
 package com.sinest.gw_1000.mode;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.MotionEvent;
 import android.view.View;
@@ -12,8 +13,7 @@ import android.widget.ImageView;
 import com.sinest.gw_1000.R;
 
 public class Activity_manual_mode_pattern_popup extends Activity {
-
-    @Override
+    int pattern_num;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -42,6 +42,8 @@ public class Activity_manual_mode_pattern_popup extends Activity {
             Button b;
             int action = motionEvent.getAction();
             int id = view.getId();
+            Intent intent;
+
             if (action == MotionEvent.ACTION_DOWN) {
                 switch (id) {
                     case R.id.manual_popup_save:
@@ -58,6 +60,9 @@ public class Activity_manual_mode_pattern_popup extends Activity {
                     case R.id.manual_popup_save:
                         b = (Button) view;
                         b.setBackgroundResource(R.drawable.save_mode_off);
+                        intent = new Intent(getApplicationContext(), Activity_manual_mode_setting.class);
+                        intent.putExtra(Integer.toString(pattern_num), 0);
+                        finish();
                         break;
                     case R.id.manual_popup_back:
                         b = (Button) view;
@@ -81,6 +86,7 @@ public class Activity_manual_mode_pattern_popup extends Activity {
                 {
                     ImageResourceId = getResources().getIdentifier("manual_mode_pattern_"+i,"drawable","com.sinest.gw_1000");
                     img.setImageResource(ImageResourceId);
+                    pattern_num = i;
                 }
             }
         }

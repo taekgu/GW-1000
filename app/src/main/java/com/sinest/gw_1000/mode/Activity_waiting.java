@@ -1,6 +1,5 @@
 package com.sinest.gw_1000.mode;
 
-import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.BroadcastReceiver;
