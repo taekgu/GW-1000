@@ -16,6 +16,7 @@ public class Application_communicator extends Application {
     public final static String VAL_OXYGEN   = "val_oxygen";
     public final static String VAL_PRESSURE = "val_pressure";
     public final static String VAL_TIME     = "val_time";
+    public final static String LIBRARY_LOC  = "library_location";
 
     private static Context context;
     private static Communicator communicator;

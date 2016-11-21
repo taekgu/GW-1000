@@ -39,6 +39,8 @@ public class Activity_waiting extends AppCompatActivity {
     private int val_time = 0;
 
     TextView time_text, oxygen_text, pressure_text;
+    int[] checked_loc = new int[20];
+    Fragment_waiting fragment_waiting;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,9 +53,20 @@ public class Activity_waiting extends AppCompatActivity {
 
         communicator = Application_communicator.getCommunicator();
 
+        fragment_waiting = new Fragment_waiting();
+        for (int i=0; i<20; i++) {
+
+            checked_loc[i] = sharedPreferences.getInt(Application_communicator.LIBRARY_LOC + i, 0);
+            if (checked_loc[i] == 1) {
+
+                fragment_waiting.addCheckedIdx(i);
+                Log.i("WIFI", "addCheckedIdx " + i);
+            }
+        }
+
         FragmentManager fragmentManager = getFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.add(R.id.frameLayout_fragment, new Fragment_waiting());
+        fragmentTransaction.add(R.id.frameLayout_fragment, fragment_waiting);
         fragmentTransaction.commit();
 
         setContentView(R.layout.activity_waiting);
@@ -98,6 +111,28 @@ public class Activity_waiting extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         registReceiver();
+
+        SharedPreferences sharedPreferences = getSharedPreferences(Application_communicator.NAME_OF_SHARED_PREF, 0);
+
+        fragment_waiting.reset();
+        for (int i=0; i<20; i++) {
+
+            checked_loc[i] = 0;
+            checked_loc[i] = sharedPreferences.getInt(Application_communicator.LIBRARY_LOC + i, 0);
+            if (checked_loc[i] == 1) {
+
+                fragment_waiting.addCheckedIdx(i);
+                Log.i("WIFI", "addCheckedIdx " + i);
+            }
+        }
+
+        fragment_waiting.refresh();
+
+        /*
+        FragmentManager fragmentManager = getFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.add(R.id.frameLayout_fragment, fragment_waiting);
+        fragmentTransaction.commit();*/
     }
 
     @Override

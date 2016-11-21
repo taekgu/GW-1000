@@ -3,6 +3,7 @@ package com.sinest.gw_1000.mode;
 import android.content.BroadcastReceiver;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -17,6 +18,7 @@ import android.widget.ToggleButton;
 import com.sinest.gw_1000.R;
 import com.sinest.gw_1000.communication.Communicator;
 import com.sinest.gw_1000.management.Application_broadcast;
+import com.sinest.gw_1000.management.Application_communicator;
 
 public class Activity_library extends AppCompatActivity {
 
@@ -25,10 +27,45 @@ public class Activity_library extends AppCompatActivity {
 
     int cnt;
     int manual_cnt;
+    int[] checked_loc = new int[20];
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_library);
+
+        SharedPreferences sharedPreferences = getSharedPreferences(Application_communicator.NAME_OF_SHARED_PREF, 0);
+        for (int i=0; i<15; i++) {
+
+            checked_loc[i] = sharedPreferences.getInt(Application_communicator.LIBRARY_LOC + i, 0);
+            if (checked_loc[i] == 1) {
+
+                int tb_resourceId = getResources().getIdentifier("automode_"+(i+1),"id","com.sinest.gw_1000");
+                ToggleButton tb = (ToggleButton) findViewById(tb_resourceId);
+                tb_resourceId = getResources().getIdentifier("automode_on_"+(i+1),"drawable","com.sinest.gw_1000");
+                tb.setBackgroundResource(tb_resourceId);
+
+                cnt++;
+             //   Log.i("WIFI", "checked_loc" + i + " get 1");
+            }
+        }
+        for (int i=1; i<=5; i++) {
+
+            checked_loc[14+i] = sharedPreferences.getInt(Application_communicator.LIBRARY_LOC + (14+i), 0);
+            if (checked_loc[14+i] == 1) {
+
+                int tb_resourceId = getResources().getIdentifier("manual_mode_"+i,"id","com.sinest.gw_1000");
+                ToggleButton tb = (ToggleButton) findViewById(tb_resourceId);
+                tb_resourceId = getResources().getIdentifier("manual_mode_on_"+i,"drawable","com.sinest.gw_1000");
+                tb.setBackgroundResource(tb_resourceId);
+
+                cnt++;
+                manual_cnt++;
+            //    Log.i("WIFI", "checked_loc" + i + " get 1");
+            }
+        }
+        Log.i("WIFI", "library loaded, cnt = " + cnt + ", manual_cnt = " + manual_cnt);
 
         Button library_back_button = (Button)findViewById(R.id.library_back_button);
         Button library_save_button = (Button)findViewById(R.id.library_save_button);
@@ -68,6 +105,19 @@ public class Activity_library extends AppCompatActivity {
                         break;
                     case R.id.library_save_button:
                         b.setBackgroundResource(R.drawable.save_mode_off);
+
+                        if (cnt == 4) {
+
+                            SharedPreferences sharedPreferences = getSharedPreferences(Application_communicator.NAME_OF_SHARED_PREF, 0);
+                            SharedPreferences.Editor editor = sharedPreferences.edit();
+                            for (int i = 0; i < 20; i++) {
+
+                                editor.putInt(Application_communicator.LIBRARY_LOC + i, checked_loc[i]);
+                            //    Log.i("WIFI", "checked_loc" + i + " set " + checked_loc[i]);
+                            }
+                            editor.commit();
+                            finish();
+                        }
                         break;
                     case R.id.library_set_button:
                         b.setBackgroundResource(R.drawable.library_setting_off);
@@ -92,20 +142,25 @@ public class Activity_library extends AppCompatActivity {
             if(resourceId==id)
             {
                 tb = (ToggleButton)findViewById(resourceId);
-                if(tb.isChecked()) {
-                    tb_resourceId = getResources().getIdentifier("automode_on_"+i,"drawable","com.sinest.gw_1000");
-                    if (cnt > 3)
-                        tb.setChecked(false);
-                    else
-                    {
-                        tb.setBackgroundResource(tb_resourceId);
-                        cnt++;
-                    }
-                }
-                else{
+
+                if (checked_loc[i-1] == 1) {
+
                     tb_resourceId = getResources().getIdentifier("automode_"+i,"drawable","com.sinest.gw_1000");
                     tb.setBackgroundResource(tb_resourceId);
+
+                    checked_loc[i-1] = 0;
                     cnt--;
+                }
+                else {
+
+                    if (cnt < 4) {
+
+                        tb_resourceId = getResources().getIdentifier("automode_on_" + i, "drawable", "com.sinest.gw_1000");
+                        tb.setBackgroundResource(tb_resourceId);
+
+                        checked_loc[i-1] = 1;
+                        cnt++;
+                    }
                 }
             }
         }
@@ -114,22 +169,27 @@ public class Activity_library extends AppCompatActivity {
             if(resourceId==id)
             {
                 tb = (ToggleButton)findViewById(resourceId);
-                if(tb.isChecked()) {
-                    tb_resourceId = getResources().getIdentifier("manual_mode_on_"+i,"drawable","com.sinest.gw_1000");
-                    if (cnt > 3)
-                        tb.setChecked(false);
-                    else
-                    {
-                        tb.setBackgroundResource(tb_resourceId);
-                        manual_cnt++;
-                        cnt++;
-                    }
-                }
-                else{
+
+                if (checked_loc[14+i] == 1) {
+
                     tb_resourceId = getResources().getIdentifier("manual_mode_"+i,"drawable","com.sinest.gw_1000");
                     tb.setBackgroundResource(tb_resourceId);
-                    manual_cnt--;
+
+                    checked_loc[14+i] = 0;
                     cnt--;
+                    manual_cnt--;
+                }
+                else {
+
+                    if (cnt < 4) {
+
+                        tb_resourceId = getResources().getIdentifier("manual_mode_on_" + i, "drawable", "com.sinest.gw_1000");
+                        tb.setBackgroundResource(tb_resourceId);
+
+                        checked_loc[14+i] = 1;
+                        cnt++;
+                        manual_cnt++;
+                    }
                 }
             }
         }

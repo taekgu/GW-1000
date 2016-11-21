@@ -19,7 +19,11 @@ import com.sinest.gw_1000.R;
 
 public class Fragment_waiting extends Fragment {
 
-    Button mode1, mode2, mode3, mode4;
+    Button[] mode = new Button[4];
+    int idx = 0;
+    int[] checked_idx = new int[4];
+
+    private View view;
 
     public Fragment_waiting() {
 
@@ -28,21 +32,49 @@ public class Fragment_waiting extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_waiting, container, false);
+        view = inflater.inflate(R.layout.fragment_waiting, container, false);
 
-     //   Log.i("WIFI", "onCreateView - Fragment-waiting");
-
-        mode1 = (Button) view.findViewById(R.id.button_mode_1);
-        mode2 = (Button) view.findViewById(R.id.button_mode_2);
-        mode3 = (Button) view.findViewById(R.id.button_mode_3);
-        mode4 = (Button) view.findViewById(R.id.button_mode_4);
-
-        mode1.setOnTouchListener(mTouchEvent);
-        mode2.setOnTouchListener(mTouchEvent);
-        mode3.setOnTouchListener(mTouchEvent);
-        mode4.setOnTouchListener(mTouchEvent);
+        refresh();
 
         return view;
+    }
+
+    public void reset() {
+
+        idx = 0;
+        for (int i=0; i<4; i++) {
+
+            checked_idx[i] = 0;
+        }
+    }
+
+    public void refresh() {
+
+        for (int i=0; i<4; i++) {
+
+            int btn_resourceId = getResources().getIdentifier("button_mode_" + (i + 1), "id", "com.sinest.gw_1000");
+            mode[i] = (Button) view.findViewById(btn_resourceId);
+            mode[i].setOnTouchListener(mTouchEvent);
+
+            int resourceId = -1;
+            if (checked_idx[i] < 15) {
+
+                resourceId = getResources().getIdentifier("automode_" + (checked_idx[i]+1), "drawable", "com.sinest.gw_1000");
+                Log.i("WIFI", "automode_" + (checked_idx[i]+1));
+            }
+            else {
+
+                resourceId = getResources().getIdentifier("manual_mode_" + (checked_idx[i]-14), "drawable", "com.sinest.gw_1000");
+                Log.i("WIFI", "manual_mode_" + (checked_idx[i]+1));
+            }
+            mode[i].setBackgroundResource(resourceId);
+        }
+    }
+
+    public void addCheckedIdx(int _idx) {
+
+        checked_idx[idx] = _idx;
+        idx++;
     }
 
     private View.OnTouchListener mTouchEvent = new View.OnTouchListener() {
@@ -54,39 +86,41 @@ public class Fragment_waiting extends Fragment {
 
             if (motionEvent.getAction() == MotionEvent.ACTION_DOWN) {
 
-                if (button_clicked == mode1) {
+                for (int i=0; i<4; i++) {
 
-                    // sp로부터 모드 선택된거받아와서적용
-                    //button_clicked.setBackgroundResource(R.drawable.button_play_on);
-                }
-                else if (button_clicked == mode2) {
+                    if (button_clicked == mode[i]) {
 
-                }
-                else if (button_clicked == mode3) {
+                        int resourceId = -1;
+                        if (checked_idx[i] < 15) {
 
-                }
-                else if (button_clicked == mode4) {
+                            resourceId = getResources().getIdentifier("automode_on_" + (checked_idx[i]+1), "drawable", "com.sinest.gw_1000");
+                        }
+                        else {
 
+                            resourceId = getResources().getIdentifier("manual_mode_on_" + (checked_idx[i]+1), "drawable", "com.sinest.gw_1000");
+                        }
+                        mode[i].setBackgroundResource(resourceId);
+                    }
                 }
             }
             else if (motionEvent.getAction() == MotionEvent.ACTION_UP) {
 
-                // 추가해야됨 off
-                if (button_clicked == mode1) {
+                for (int i=0; i<4; i++) {
 
-                    activity.changeFragment(1);
-                }
-                else if (button_clicked == mode2) {
+                    if (button_clicked == mode[i]) {
 
-                    activity.changeFragment(2);
-                }
-                else if (button_clicked == mode3) {
+                        int resourceId = -1;
+                        if (checked_idx[i] < 15) {
 
-                    activity.changeFragment(3);
-                }
-                else if (button_clicked == mode4) {
+                            resourceId = getResources().getIdentifier("automode_" + (checked_idx[i]+1), "drawable", "com.sinest.gw_1000");
+                        }
+                        else {
 
-                    activity.changeFragment(4);
+                            resourceId = getResources().getIdentifier("manual_mode_" + (checked_idx[i]+1), "drawable", "com.sinest.gw_1000");
+                        }
+                        mode[i].setBackgroundResource(resourceId);
+                        activity.changeFragment(i+1);
+                    }
                 }
             }
 
