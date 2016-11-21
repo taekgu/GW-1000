@@ -35,10 +35,7 @@ public class Activity_water extends Activity {
 
     String start_time = "00:00";
     String finish_time = "00:00";
-    /**
-     * ATTENTION: This was auto-generated to implement the App Indexing API.
-     * See https://g.co/AppIndexing/AndroidStudio for more information.
-     */
+
     private GoogleApiClient client;
 
     @Override
@@ -100,8 +97,6 @@ public class Activity_water extends Activity {
 
         water_save.setOnTouchListener(mTouchEvent);
         water_back.setOnTouchListener(mTouchEvent);
-        // ATTENTION: This was auto-generated to implement the App Indexing API.
-        // See https://g.co/AppIndexing/AndroidStudio for more information.
     }
 
     private View.OnTouchListener mTouchEvent = new View.OnTouchListener() {

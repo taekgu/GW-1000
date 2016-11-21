@@ -7,11 +7,56 @@
     android:background="@drawable/emotionpopup"
     tools:context="com.sinest.gw_1000.setting.Activity_emotion">
 
+
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="0dp"
         android:layout_height="match_parent"
-        android:layout_weight="40"></LinearLayout>
+        android:layout_weight="20"></LinearLayout>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="15">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="40"
+            android:visibility="invisible" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="15"
+            android:textColor="#ffff00"
+            android:gravity="center"
+            android:textSize="40dp"
+            android:id="@+id/led_mode" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="15"
+            android:visibility="invisible" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="15"
+            android:textColor="#ffff00"
+            android:gravity="center"
+            android:textSize="40dp"
+            android:id="@+id/sound_mode" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="15"
+            android:visibility="invisible" />
+
+    </LinearLayout>
 
     <LinearLayout
         android:orientation="vertical"
@@ -32,19 +77,21 @@
                 android:visibility="invisible"/>
 
             <Button
-                android:layout_width="60dp"
+                android:layout_width="50dp"
                 android:layout_height="0dp"
                 android:layout_weight="20"
                 android:id="@+id/emotion_led_up"
                 android:layout_marginBottom="5dp"
+                android:layout_marginLeft="5dp"
                 android:background="@drawable/button_up_off"/>
 
             <Button
-                android:layout_width="60dp"
+                android:layout_width="50dp"
                 android:layout_height="0dp"
                 android:layout_weight="20"
                 android:id="@+id/emotion_led_down"
                 android:layout_marginTop="5dp"
+                android:layout_marginLeft="5dp"
                 android:background="@drawable/button_down_off"/>
         </LinearLayout>
 
@@ -61,19 +108,21 @@
                 android:visibility="invisible"/>
 
             <Button
-                android:layout_width="60dp"
+                android:layout_width="50dp"
                 android:layout_height="0dp"
                 android:layout_weight="33"
                 android:id="@+id/emotion_sound_up"
                 android:layout_marginBottom="5dp"
+                android:layout_marginLeft="5dp"
                 android:background="@drawable/button_up_off"/>
 
             <Button
-                android:layout_width="60dp"
+                android:layout_width="50dp"
                 android:layout_height="0dp"
                 android:layout_weight="33"
                 android:id="@+id/emotion_sound_down"
                 android:layout_marginTop="5dp"
+                android:layout_marginLeft="5dp"
                 android:background="@drawable/button_down_off"/>
 
             <Button
@@ -89,13 +138,59 @@
         android:orientation="vertical"
         android:layout_width="0dp"
         android:layout_height="match_parent"
-        android:layout_weight="30"></LinearLayout>
+        android:layout_weight="22"
+        android:visibility="invisible"
+        ></LinearLayout>
 
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="0dp"
         android:layout_height="match_parent"
-        android:layout_weight="15">>
+        android:layout_weight="6">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="40"
+            android:visibility="invisible" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="15"
+            android:textColor="#ffff00"
+            android:textSize="40dp"
+            android:gravity="center"
+            android:id="@+id/led_bright" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="15"
+            android:visibility="invisible" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="15"
+            android:textColor="#ffff00"
+            android:textSize="40dp"
+            android:gravity="center"
+            android:id="@+id/sound_volume" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="15"
+            android:visibility="invisible" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="17">>
 
         <Button
             android:layout_width="60dp"
@@ -123,19 +218,19 @@
             android:layout_weight="30">
 
             <Button
-                android:layout_width="60dp"
+                android:layout_width="50dp"
                 android:layout_height="0dp"
                 android:layout_weight="40"
-                android:layout_marginLeft="30dp"
+                android:layout_marginLeft="40dp"
                 android:id="@+id/emotion_ledm_up"
                 android:layout_marginBottom="5dp"
                 android:background="@drawable/button_up_off"/>
 
             <Button
-                android:layout_width="60dp"
+                android:layout_width="50dp"
                 android:layout_height="0dp"
                 android:layout_weight="40"
-                android:layout_marginLeft="30dp"
+                android:layout_marginLeft="40dp"
                 android:id="@+id/emotion_ledm_down"
                 android:layout_marginTop="5dp"
                 android:background="@drawable/button_down_off"/>
@@ -156,19 +251,19 @@
             android:layout_weight="35">
 
             <Button
-                android:layout_width="60dp"
+                android:layout_width="50dp"
                 android:layout_height="0dp"
                 android:layout_weight="35"
-                android:layout_marginLeft="30dp"
+                android:layout_marginLeft="40dp"
                 android:id="@+id/emotion_soundm_up"
                 android:layout_marginBottom="5dp"
                 android:background="@drawable/button_up_off"/>
 
             <Button
-                android:layout_width="60dp"
+                android:layout_width="50dp"
                 android:layout_height="0dp"
                 android:layout_weight="35"
-                android:layout_marginLeft="30dp"
+                android:layout_marginLeft="40dp"
                 android:id="@+id/emotion_soundm_down"
                 android:layout_marginTop="5dp"
                 android:background="@drawable/button_down_off"/>

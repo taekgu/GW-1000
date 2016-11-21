@@ -163,14 +163,7 @@ public class Activity_finishtime extends Activity {
             }else{
                 buf_l = Integer.toString(int_l);
             }
-            /*
-            if(k == 0)
-            {
-                buf_r = "00";
-            }else{
-                buf_r = Integer.toString(int_r);
-            }
-*/
+
             if(int_r == 0)
             {
                 buf_r = "00";
