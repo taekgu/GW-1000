@@ -265,6 +265,7 @@ public class Activity_rfidcardpassord extends Activity {
                         //
                         check.putExtra("check","No");
                         setResult(RESULT_OK, check);
+                        Log.v("tttt","ttttt");
                         finish();
                         break;
                     case R.id.rfid_password_e:

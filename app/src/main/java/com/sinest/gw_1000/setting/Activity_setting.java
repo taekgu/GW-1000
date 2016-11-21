@@ -44,6 +44,7 @@ public class Activity_setting extends AppCompatActivity {
     Intent intent_wa;
 
     String check;
+    String check2;
 
     SeekBar seekbar;
     int volume;
@@ -467,27 +468,16 @@ public class Activity_setting extends AppCompatActivity {
                     }
                     break;
                 case 2:
-                    check = data.getStringExtra("check");
-                    if(check.equals("No")){
+                    check2 = data.getStringExtra("check");
+                    if(check2.equals("No")){
                         b_wa.setBackgroundResource(R.drawable.off);
                         button2_flag[2] = true;
-                        check = "Yes";
+                        check2 = "Yes";
                     }
                     break;
                 default:
                     break;
             }
-        }
-    }
-
-    class SeekBar_Listener implements SeekBar.OnSeekBarChangeListener {
-        public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-        }
-
-        public void onStartTrackingTouch(SeekBar seekBar) {
-        }
-
-        public void onStopTrackingTouch(SeekBar seekBar) {
         }
     }
 }
