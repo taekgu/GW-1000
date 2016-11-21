@@ -292,11 +292,11 @@
 
     <SeekBar
         android:layout_width="380dp"
-        android:layout_height="30dp"
-        android:layout_marginTop="32dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="30dp"
         android:id="@+id/seekBar"
-        android:maxHeight="10dp"
-        android:minHeight="10dp"
+        android:maxHeight="20dp"
+        android:minHeight="20dp"
         android:max = "100"
         android:background="@drawable/alarm_bar_1"
         android:thumb="@drawable/alarm_bar_control"
