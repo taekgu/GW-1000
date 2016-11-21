@@ -8,6 +8,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.SeekBar;
 import android.widget.TextClock;
 import android.widget.TextView;
 
@@ -43,6 +44,9 @@ public class Activity_setting extends AppCompatActivity {
     Intent intent_wa;
 
     String check;
+
+    SeekBar seekbar;
+    int volume;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,6 +86,31 @@ public class Activity_setting extends AppCompatActivity {
         b_emotion = (Button)findViewById(R.id.b_emotion);
         b_language = (Button)findViewById(R.id.b_language);
         b_inverter = (Button)findViewById(R.id.b_inverter);
+
+        seekbar = (SeekBar)findViewById(R.id.seekBar);
+        seekbar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+                // 메소드 이름대로 사용자가 SeekBar를 터치했을때 실행됩니다
+                // TODO Auto-generated method stub
+                Log.v("test1","v : "+volume);
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+                // 메소드 이름대로 사용자가 SeekBar를 손에서 땠을때 실행됩니다
+                // TODO Auto-generated method stub
+                Log.v("test2","v : "+volume);
+            }
+
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                // 메소드 이름대로 사용자가 SeekBar를 움직일때 실행됩니다
+                // 주로 사용되는 메소드 입니다
+                // TODO Auto-generated method stub
+                volume = progress;
+            }
+        });
 
         intent_emotion = new Intent(this, Activity_emotion.class);
         //intent_emotion.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_SINGLE_TOP);
@@ -448,6 +477,17 @@ public class Activity_setting extends AppCompatActivity {
                 default:
                     break;
             }
+        }
+    }
+
+    class SeekBar_Listener implements SeekBar.OnSeekBarChangeListener {
+        public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+        }
+
+        public void onStartTrackingTouch(SeekBar seekBar) {
+        }
+
+        public void onStopTrackingTouch(SeekBar seekBar) {
         }
     }
 }
