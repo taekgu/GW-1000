@@ -23,9 +23,9 @@ public class Activity_setting extends AppCompatActivity {
 
     Communicator communicator;
 
-    Button b_11; Button b_21; Button b_31; Button b_41;
-    Button b_12; Button b_22; Button b_32; Button b_42;
-    Button b_13; Button b_23; Button b_33; Button b_43;
+    TextView b_11; TextView b_21; TextView b_31; TextView b_41;
+    TextView b_12; TextView b_22; TextView b_32; TextView b_42;
+    TextView b_13; TextView b_23; TextView b_33; TextView b_43;
 
     Button b_rf; Button b_ex; Button b_wa; Button b_pa;
     Button b_1m; Button b_3m; Button b_5m; Button b_coutinue;
@@ -40,6 +40,7 @@ public class Activity_setting extends AppCompatActivity {
 
     boolean[] hidden = {false,false,false,false};
 
+    int ex_f = 0;
 
     boolean b_back_f = true;
     boolean b_emotion_f = true;
@@ -57,7 +58,6 @@ public class Activity_setting extends AppCompatActivity {
     SeekBar seekbar;
     int volume;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -70,18 +70,18 @@ public class Activity_setting extends AppCompatActivity {
         TextClock textClock = (TextClock) findViewById(R.id.textClock);
         //textClock.setFormat24Hour();
 
-        b_11 = (Button)findViewById(R.id.button11);
-        b_21 = (Button)findViewById(R.id.button21);
-        b_31 = (Button)findViewById(R.id.button31);
-        b_41 = (Button)findViewById(R.id.button41);
-        b_12 = (Button)findViewById(R.id.button12);
-        b_22 = (Button)findViewById(R.id.button22);
-        b_32 = (Button)findViewById(R.id.button32);
-        b_42 = (Button)findViewById(R.id.button42);
-        b_13 = (Button)findViewById(R.id.button13);
-        b_23 = (Button)findViewById(R.id.button23);
-        b_33 = (Button)findViewById(R.id.button33);
-        b_43 = (Button)findViewById(R.id.button43);
+        b_11 = (TextView)findViewById(R.id.button11);
+        b_21 = (TextView)findViewById(R.id.button21);
+        b_31 = (TextView)findViewById(R.id.button31);
+        b_41 = (TextView)findViewById(R.id.button41);
+        b_12 = (TextView)findViewById(R.id.button12);
+        b_22 = (TextView)findViewById(R.id.button22);
+        b_32 = (TextView)findViewById(R.id.button32);
+        b_42 = (TextView)findViewById(R.id.button42);
+        b_13 = (TextView)findViewById(R.id.button13);
+        b_23 = (TextView)findViewById(R.id.button23);
+        b_33 = (TextView)findViewById(R.id.button33);
+        b_43 = (TextView)findViewById(R.id.button43);
 
         b_rf = (Button)findViewById(R.id.b_rf);
         b_ex = (Button)findViewById(R.id.b_ex);
@@ -153,9 +153,11 @@ public class Activity_setting extends AppCompatActivity {
                         //
                         if(button_flag[0] == true){
                             b_11.setBackgroundResource(R.drawable.button_on);
+                            b_11.setText(""+communicator.get_rx_idx(11));
                             button_flag[0] = false;
                         }else{
                             b_11.setBackgroundResource(R.drawable.button_off);
+                            b_11.setText("");
                             button_flag[0] = true;
                         }
                         break;
@@ -163,9 +165,11 @@ public class Activity_setting extends AppCompatActivity {
                         //
                         if(button_flag[1] == true){
                             b_21.setBackgroundResource(R.drawable.button_on);
+                            b_21.setText(""+communicator.get_rx_idx(12));
                             button_flag[1] = false;
                         }else{
                             b_21.setBackgroundResource(R.drawable.button_off);
+                            b_21.setText("");
                             button_flag[1] = true;
                         }
                         break;
@@ -173,100 +177,120 @@ public class Activity_setting extends AppCompatActivity {
                         //
                         if(button_flag[2] == true){
                             b_31.setBackgroundResource(R.drawable.button_on);
+                            b_31.setText(""+communicator.get_rx_idx(13));
                             button_flag[2] = false;
                         }else{
                             b_31.setBackgroundResource(R.drawable.button_off);
                             button_flag[2] = true;
+                            b_31.setText("");
                         }
                         break;
                     case R.id.button41:
                         //
                         if(button_flag[3] == true){
                             b_41.setBackgroundResource(R.drawable.button_on);
+                            b_41.setText(""+communicator.get_rx_idx(14));
                             button_flag[3] = false;
                         }else{
                             b_41.setBackgroundResource(R.drawable.button_off);
                             button_flag[3] = true;
+                            b_41.setText("");
                         }
                         break;
                     case R.id.button12:
                         //
                         if(button_flag[4] == true){
                             b_12.setBackgroundResource(R.drawable.button_on);
+                            b_12.setText(""+communicator.get_rx_idx(3));
                             button_flag[4] = false;
                         }else{
                             b_12.setBackgroundResource(R.drawable.button_off);
                             button_flag[4] = true;
+                            b_12.setText("");
                         }
                         break;
                     case R.id.button22:
                         //
                         if(button_flag[5] == true){
                             b_22.setBackgroundResource(R.drawable.button_on);
+                            b_22.setText(""+communicator.get_rx_idx(4));
                             button_flag[5] = false;
                         }else{
                             b_22.setBackgroundResource(R.drawable.button_off);
                             button_flag[5] = true;
+                            b_22.setText("");
                         }
                         break;
                     case R.id.button32:
                         //
                         if(button_flag[6] == true){
                             b_32.setBackgroundResource(R.drawable.button_on);
+                            b_32.setText(""+communicator.get_rx_idx(5));
                             button_flag[6] = false;
                         }else{
                             b_32.setBackgroundResource(R.drawable.button_off);
                             button_flag[6] = true;
+                            b_32.setText("");
                         }
                         break;
                     case R.id.button42:
                         //
                         if(button_flag[7] == true){
                             b_42.setBackgroundResource(R.drawable.button_on);
+                            b_42.setText(""+communicator.get_rx_idx(6));
                             button_flag[7] = false;
                         }else{
                             b_42.setBackgroundResource(R.drawable.button_off);
                             button_flag[7] = true;
+                            b_42.setText("");
                         }
                         break;
                     case R.id.button13:
                         //
                         if(button_flag[8] == true){
                             b_13.setBackgroundResource(R.drawable.button_on);
+                            b_13.setText(""+communicator.get_rx_idx(7));
                             button_flag[8] = false;
                         }else{
                             b_13.setBackgroundResource(R.drawable.button_off);
                             button_flag[8] = true;
+                            b_13.setText("");
                         }
                         break;
                     case R.id.button23:
                         //
                         if(button_flag[9] == true){
                             b_23.setBackgroundResource(R.drawable.button_on);
+                            b_23.setText(""+communicator.get_rx_idx(8));
                             button_flag[9] = false;
                         }else{
                             b_23.setBackgroundResource(R.drawable.button_off);
                             button_flag[9] = true;
+                            b_23.setText("");
                         }
                         break;
                     case R.id.button33:
                         //
                         if(button_flag[10] == true){
                             b_33.setBackgroundResource(R.drawable.button_on);
+                            b_33.setText(""+communicator.get_rx_idx(9));
                             button_flag[10] = false;
                         }else{
                             b_33.setBackgroundResource(R.drawable.button_off);
                             button_flag[10] = true;
+                            b_33.setText("");
                         }
                         break;
                     case R.id.button43:
                         //
                         if(button_flag[11] == true){
                             b_43.setBackgroundResource(R.drawable.button_on);
+                            b_43.setText(""+communicator.get_rx_idx(10));
                             button_flag[11] = false;
                         }else{
                             b_43.setBackgroundResource(R.drawable.button_off);
                             button_flag[11] = true;
+                            b_43.setText("");
                         }
                         break;
 //----------------------------------------------------------------------------------------
@@ -285,12 +309,18 @@ public class Activity_setting extends AppCompatActivity {
                         break;
                     case R.id.b_ex:
                         //
-                        if(button2_flag[1] == true){
-                            b_ex.setBackgroundResource(R.drawable.on);
-                            button2_flag[1] = false;
-                        }else{
+                        if(ex_f == 0){
                             b_ex.setBackgroundResource(R.drawable.off);
-                            button2_flag[1] = true;
+                            ex_f = 1;
+                            communicator.set_setting(2,(byte)0x01);
+                        }else if (ex_f == 1){
+                            b_ex.setBackgroundResource(R.drawable.on);
+                            ex_f = 2;
+                            communicator.set_setting(2,(byte)0x02);
+                        }else if (ex_f == 2){
+                            b_ex.setBackgroundResource(R.drawable.button_play_on);
+                            ex_f = 0;
+                            communicator.set_setting(2,(byte)0x00);
                         }
                         break;
                     case R.id.b_wa:
@@ -311,9 +341,11 @@ public class Activity_setting extends AppCompatActivity {
                         if(button2_flag[3] == true){
                             b_pa.setBackgroundResource(R.drawable.on);
                             button2_flag[3] = false;
+                            communicator.set_setting(4,(byte)0x01);
                         }else{
                             b_pa.setBackgroundResource(R.drawable.off);
                             button2_flag[3] = true;
+                            communicator.set_setting(4,(byte)0x00);
                         }
                         break;
 
@@ -359,28 +391,6 @@ public class Activity_setting extends AppCompatActivity {
                         }
                         break;
 //------------------------------------------------------------------------------------
-                    case R.id.b_back:
-                        //
-                        if(b_back_f == true){
-                            b_back.setBackgroundResource(R.drawable.button_circle_back_on);
-                            b_back_f = false;
-                            finish();
-                        }else{
-                            b_back.setBackgroundResource(R.drawable.button_circle_back_off);
-                            b_back_f = true;
-                        }
-                        break;
-                    case R.id.b_emotion:
-                        //
-                        if(b_emotion_f == true){
-                            b_emotion.setBackgroundResource(R.drawable.emotion_on);
-                            b_emotion_f = false;
-                        }else{
-                            b_emotion.setBackgroundResource(R.drawable.emotion_off);
-                            b_emotion_f = true;
-                        }
-                        break;
-
                     case R.id.b_language:
                         //
                         if(b_language_f == 0){
@@ -472,7 +482,7 @@ public class Activity_setting extends AppCompatActivity {
         b_3m.setOnClickListener(listener);
         b_5m.setOnClickListener(listener);
         b_coutinue.setOnClickListener(listener);
-        b_back.setOnClickListener(listener);
+        //b_back.setOnClickListener(listener);
         //b_emotion.setOnClickListener(listener);
         b_language.setOnClickListener(listener);
         b_inverter.setOnClickListener(listener);
@@ -483,7 +493,7 @@ public class Activity_setting extends AppCompatActivity {
         hidden_s_4.setOnClickListener(listener);
 
         b_emotion.setOnTouchListener(mTouchEvent);
-
+        b_back.setOnTouchListener(mTouchEvent);
     }
 
     private View.OnTouchListener mTouchEvent = new View.OnTouchListener() {
@@ -497,6 +507,10 @@ public class Activity_setting extends AppCompatActivity {
                         b_emotion.setBackgroundResource(R.drawable.emotion_on);
 
                         break;
+                    case R.id.b_back:
+                        b_back.setBackgroundResource(R.drawable.button_circle_back_on);
+
+                        break;
                 }
             } else if (action == MotionEvent.ACTION_UP) {
                 byte val = 0x00;
@@ -504,6 +518,10 @@ public class Activity_setting extends AppCompatActivity {
                     case R.id.b_emotion:
                         b_emotion.setBackgroundResource(R.drawable.emotion_off);
                         startActivity(intent_emotion);
+                        break;
+                    case R.id.b_back:
+                        b_back.setBackgroundResource(R.drawable.button_circle_back_off);
+                        finish();
                         break;
                 }
             }

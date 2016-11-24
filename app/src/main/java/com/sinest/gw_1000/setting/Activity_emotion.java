@@ -10,11 +10,15 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.sinest.gw_1000.R;
+import com.sinest.gw_1000.communication.Communicator;
+import com.sinest.gw_1000.management.Application_communicator;
 
 import static android.R.attr.action;
 import static android.R.attr.id;
 
 public class Activity_emotion extends Activity {
+
+    Communicator communicator;
 
     Button emotion_ledm_up; Button emotion_ledm_down;
     Button emotion_led_up; Button emotion_led_down;
@@ -38,6 +42,9 @@ public class Activity_emotion extends Activity {
     int sound_mode_num;
     int led_bright_num;
     int sound_volume_num;
+
+    Byte up;
+    Byte down;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,116 +71,7 @@ public class Activity_emotion extends Activity {
         led_bright = (TextView)findViewById(R.id.led_bright);
         sound_volume = (TextView)findViewById(R.id.sound_volume);
 
-
-/*
-        View.OnClickListener listener = new View.OnClickListener() {
-            public void onClick(View v) {
-                switch (v.getId()) {
-                    case R.id.emotion_ledm_up:
-                        //
-                        if (emotion_ledm_flag[0] == true) {
-                            emotion_ledm_up.setBackgroundResource(R.drawable.button_up_on);
-                            emotion_ledm_flag[0] = false;
-                        } else {
-                            emotion_ledm_up.setBackgroundResource(R.drawable.button_up_off);
-                            emotion_ledm_flag[0] = true;
-                        }
-                        break;
-                    case R.id.emotion_ledm_down:
-                        //
-                        if (emotion_ledm_flag[1] == true) {
-                            emotion_ledm_down.setBackgroundResource(R.drawable.button_down_on);
-                            emotion_ledm_flag[1] = false;
-                        } else {
-                            emotion_ledm_down.setBackgroundResource(R.drawable.button_down_off);
-                            emotion_ledm_flag[1] = true;
-                        }
-                        break;
-                    case R.id.emotion_led_up:
-                        //
-                        if (emotion_led_flag[0] == true) {
-                            emotion_led_up.setBackgroundResource(R.drawable.button_up_on);
-                            emotion_led_flag[0] = false;
-                        } else {
-                            emotion_led_up.setBackgroundResource(R.drawable.button_up_off);
-                            emotion_led_flag[0] = true;
-                        }
-                        break;
-                    case R.id.emotion_led_down:
-                        //
-                        if (emotion_led_flag[1] == true) {
-                            emotion_led_down.setBackgroundResource(R.drawable.button_down_on);
-                            emotion_led_flag[1] = false;
-                        } else {
-                            emotion_led_down.setBackgroundResource(R.drawable.button_down_off);
-                            emotion_led_flag[1] = true;
-                        }
-                        break;
-                    //--------------------------------------------------
-                    case R.id.emotion_soundm_up:
-                        //
-                        if (emotion_soundm_flag[0] == true) {
-                            emotion_soundm_up.setBackgroundResource(R.drawable.button_up_on);
-                            emotion_soundm_flag[0] = false;
-                        } else {
-                            emotion_soundm_up.setBackgroundResource(R.drawable.button_up_off);
-                            emotion_soundm_flag[0] = true;
-                        }
-                        break;
-                    case R.id.emotion_soundm_down:
-                        //
-                        if (emotion_soundm_flag[1] == true) {
-                            emotion_soundm_down.setBackgroundResource(R.drawable.button_down_on);
-                            emotion_soundm_flag[1] = false;
-                        } else {
-                            emotion_soundm_down.setBackgroundResource(R.drawable.button_down_off);
-                            emotion_soundm_flag[1] = true;
-                        }
-                        break;
-                    case R.id.emotion_sound_up:
-                        //
-                        if (emotion_sound_flag[0] == true) {
-                            emotion_sound_up.setBackgroundResource(R.drawable.button_up_on);
-                            emotion_sound_flag[0] = false;
-                        } else {
-                            emotion_sound_up.setBackgroundResource(R.drawable.button_up_off);
-                            emotion_sound_flag[0] = true;
-                        }
-                        break;
-                    case R.id.emotion_sound_down:
-                        //
-                        if (emotion_sound_flag[1] == true) {
-                            emotion_sound_down.setBackgroundResource(R.drawable.button_down_on);
-                            emotion_sound_flag[1] = false;
-                        } else {
-                            emotion_sound_down.setBackgroundResource(R.drawable.button_down_off);
-                            emotion_sound_flag[1] = true;
-                        }
-                        break;
-                    case R.id.emotion_back:
-                        if (emotion_b_f == true) {
-                            emotion_back.setBackgroundResource(R.drawable.button_elipse_back_on);
-                            emotion_b_f = false;
-                            finish();
-                        } else {
-                            emotion_back.setBackgroundResource(R.drawable.button_elipse_back_off);
-                            emotion_b_f = true;
-                        }
-                        break;
-                }
-            }
-        };
-
-        emotion_ledm_up.setOnClickListener(listener);
-        emotion_ledm_down.setOnClickListener(listener);
-        emotion_led_up.setOnClickListener(listener);
-        emotion_led_down.setOnClickListener(listener);
-        emotion_soundm_up.setOnClickListener(listener);
-        emotion_soundm_down.setOnClickListener(listener);
-        emotion_sound_up.setOnClickListener(listener);
-        emotion_sound_down.setOnClickListener(listener);
-        emotion_back.setOnClickListener(listener);
-*/
+        communicator = Application_communicator.getCommunicator();
 
         emotion_ledm_up.setOnTouchListener(mTouchEvent);
         emotion_ledm_down.setOnTouchListener(mTouchEvent);
@@ -187,12 +85,15 @@ public class Activity_emotion extends Activity {
 
         led_mode_num = 0;
         sound_mode_num = 0;
-        led_bright_num = 0;
-        sound_volume_num = 0;
+        led_bright_num = 1;
+        sound_volume_num = 1;
         led_mode .setText(Integer.toString(led_mode_num));
         sound_mode .setText(Integer.toString(sound_mode_num));
         led_bright  .setText(Integer.toString(led_bright_num));
         sound_volume  .setText(Integer.toString(sound_volume_num));
+
+        up = 0x00;
+        down = 0x00;
 
     }
 
@@ -235,67 +136,87 @@ public class Activity_emotion extends Activity {
                 switch (id) {
                     case R.id.emotion_ledm_up:
                         emotion_ledm_up.setBackgroundResource(R.drawable.button_up_off);
-                        s_buf = (String)led_bright.getText();
-                        int_buf = Integer.parseInt(s_buf) + 1;
-                        led_bright_num++;
-                        s_buf = Integer.toString(int_buf);
-                        led_bright.setText(s_buf);
+                        //s_buf = (String)led_bright.getText();
+                        //int_buf = Integer.parseInt(s_buf) + 1;
+                        if(1 <= led_bright_num && 5 > led_bright_num)
+                        {
+                            led_bright_num++;
+                            //s_buf = Integer.toString(int_buf);
+                            up = (byte)led_bright_num;
+                            led_bright.setText(String.valueOf(led_bright_num));
+                            communicator.set_setting(4,(byte)((byte)up|(byte)down));
+                        }
                         break;
                     case R.id.emotion_ledm_down:
                         emotion_ledm_down.setBackgroundResource(R.drawable.button_down_off);
-                        s_buf = (String)led_bright.getText();
-                        int_buf = Integer.parseInt(s_buf) - 1;
-                        led_bright_num--;
-                        s_buf = Integer.toString(int_buf);
-                        led_bright.setText(s_buf);
+                        //s_buf = (String)led_bright.getText();
+                        //int_buf = Integer.parseInt(s_buf) - 1;
+                        if(1 < led_bright_num && 5 >= led_bright_num)
+                        {
+                            led_bright_num--;
+                            //s_buf = Integer.toString(int_buf);
+                            up = (byte)led_bright_num;
+                            led_bright.setText(String.valueOf(led_bright_num));
+                            communicator.set_setting(4,(byte)((byte)up|(byte)down));
+                        }
                         break;
                     case R.id.emotion_led_up:
                         emotion_led_up.setBackgroundResource(R.drawable.button_up_off);
-                        s_buf = (String)led_mode.getText();
-                        int_buf = Integer.parseInt(s_buf) + 1;
-                        led_mode_num++;
-                        s_buf = Integer.toString(int_buf);
-                        led_mode.setText(s_buf);
+                        //s_buf = (String)led_mode.getText();
+                        //int_buf = Integer.parseInt(s_buf) + 1;
+                        if(0 <= led_mode_num && 6 > led_mode_num)
+                        {
+                            led_mode_num++;
+                            //s_buf = Integer.toString(int_buf);
+                            down = (byte)led_mode_num;
+                            led_mode.setText(String.valueOf(led_mode_num));
+                            communicator.set_setting(4,(byte)((byte)up|(byte)down));
+                        }
                         break;
                     case R.id.emotion_led_down:
                         emotion_led_down.setBackgroundResource(R.drawable.button_down_off);
-                        s_buf = (String)led_mode.getText();
-                        int_buf = Integer.parseInt(s_buf) - 1;
-                        led_mode_num--;
-                        s_buf = Integer.toString(int_buf);
-                        led_mode.setText(s_buf);
+                        //s_buf = (String)led_mode.getText();
+                        //int_buf = Integer.parseInt(s_buf) - 1;
+                        if(0 < led_mode_num && 6 >= led_mode_num)
+                        {
+                            led_mode_num--;
+                            //s_buf = Integer.toString(int_buf);
+                            down = (byte)led_mode_num;
+                            led_mode.setText(String.valueOf(led_mode_num));
+                            communicator.set_setting(4,(byte)((byte)up|(byte)down));
+                        }
                         break;
                     case R.id.emotion_soundm_up:
                         emotion_soundm_up.setBackgroundResource(R.drawable.button_up_off);
-                        s_buf = (String)sound_volume.getText();
-                        int_buf = Integer.parseInt(s_buf) + 1;
-                        sound_volume_num++;
-                        s_buf = Integer.toString(int_buf);
-                        sound_volume.setText(s_buf);
+                        if(1 <= sound_volume_num && 10 > sound_volume_num)
+                        {
+                            sound_volume_num++;
+                            sound_volume.setText(String.valueOf(sound_volume_num));
+                        }
                         break;
                     case R.id.emotion_soundm_down:
                         emotion_soundm_down.setBackgroundResource(R.drawable.button_down_off);
-                        s_buf = (String)sound_volume.getText();
-                        int_buf = Integer.parseInt(s_buf) - 1;
-                        sound_volume_num--;
-                        s_buf = Integer.toString(int_buf);
-                        sound_volume.setText(s_buf);
+                        if(1 < sound_volume_num && 10 >= sound_volume_num)
+                        {
+                            sound_volume_num--;
+                            sound_volume.setText(String.valueOf(sound_volume_num));
+                        }
                         break;
                     case R.id.emotion_sound_up:
                         emotion_sound_up.setBackgroundResource(R.drawable.button_up_off);
-                        s_buf = (String)sound_mode.getText();
-                        int_buf = Integer.parseInt(s_buf) + 1;
-                        sound_mode_num++;
-                        s_buf = Integer.toString(int_buf);
-                        sound_mode.setText(s_buf);
+                        if(0 <= sound_mode_num && 6 > sound_mode_num)
+                        {
+                            sound_mode_num++;
+                            sound_mode.setText(String.valueOf(sound_mode_num));
+                        }
                         break;
                     case R.id.emotion_sound_down:
                         emotion_sound_down.setBackgroundResource(R.drawable.button_down_off);
-                        s_buf = (String)sound_mode.getText();
-                        int_buf = Integer.parseInt(s_buf) - 1;
-                        sound_mode_num--;
-                        s_buf = Integer.toString(int_buf);
-                        sound_mode.setText(s_buf);
+                        if(0 < sound_mode_num && 6 >= sound_mode_num)
+                        {
+                            sound_mode_num--;
+                            sound_mode.setText(String.valueOf(sound_mode_num));
+                        }
                         break;
                     case R.id.emotion_back:
                         emotion_back.setBackgroundResource(R.drawable.button_elipse_back_off);
