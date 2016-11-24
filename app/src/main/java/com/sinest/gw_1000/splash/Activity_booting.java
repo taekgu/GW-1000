@@ -66,8 +66,6 @@ public class Activity_booting extends AppCompatActivity {
                     hidden_pattern[++hidden_pattern[0]] = i;
                 }
             }
-        }
-        else{
             if(hidden_pattern[1]==1 && hidden_pattern[2]==2 && hidden_pattern[3]==3 && hidden_pattern[4]==4 &&hidden_pattern[5]==1){
                 isRun = false;
                 Intent intent = new Intent(getApplicationContext(), Activity_engine.class);
