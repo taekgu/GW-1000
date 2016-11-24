@@ -4,9 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/waiting_dooropen_backimage"
+    android:background="@drawable/waiting_rfid_doorclose_back"
     android:orientation="vertical"
-    android:id="@+id/waiting_background"
+
     tools:context="com.sinest.gw_1000.mode.Activity_waiting_rfid">
 
 
@@ -22,23 +22,24 @@
         <Button
             android:layout_width="50dp"
             android:layout_height="50dp"
-            android:id="@+id/waiting_library_button"
+            android:id="@+id/waiting_rfid_library_button"
+            android:onClick="onClicked"
             android:layout_marginRight="10dp"
             android:background="@drawable/library" />
+
         <Button
             android:layout_width="50dp"
             android:layout_height="50dp"
-            android:id="@+id/waiting_setting_button"
+            android:id="@+id/waiting_rfid_setting_button"
             android:layout_marginRight="60dp"
             android:background="@drawable/setting" />
+
         <TextClock
-            android:gravity="center"
-            android:layout_width="130dp"
-            android:layout_height="50dp"
-            android:alpha="100"
-            android:textSize="40sp"
-            android:textColor="#00ffff"
-            android:format12Hour="HH:mm"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="30dp"
+            android:textColor="#ffffff"
+
             android:id="@+id/textClock" />
     </LinearLayout>
 
@@ -59,44 +60,20 @@
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:srcCompat="@drawable/oxygen"
-                android:id="@+id/waiting_oxygen"
+                app:srcCompat="@drawable/humidity"
+                android:id="@+id/waiting_rfid_humidity"
                 android:layout_centerVertical="true"
                 android:layout_alignParentStart="true"
-                android:layout_marginStart="134dp"/>
-
-            <TextView
-                android:layout_width="40sp"
-                android:layout_height="50sp"
-                android:id="@+id/textView_oxygen"
-                android:alpha="100"
-                android:text="0"
-                android:textColor="#000000"
-                android:gravity="center"
-                android:layout_centerVertical="true"
-                android:layout_alignParentStart="true"
-                android:layout_marginStart="134dp"/>
+                android:layout_marginStart="120dp" />
 
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:srcCompat="@drawable/humidity"
+                app:srcCompat="@drawable/oxygen"
                 android:layout_centerVertical="true"
-                android:layout_toEndOf="@+id/waiting_oxygen"
+                android:layout_toEndOf="@+id/waiting_rfid_humidity"
                 android:layout_marginStart="100dp"
-                android:id="@+id/waiting_humidity" />
-
-            <TextView
-                android:layout_width="40sp"
-                android:layout_height="50sp"
-                android:id="@+id/textView_humidity"
-                android:alpha="100"
-                android:text="0"
-                android:textColor="#000000"
-                android:gravity="center"
-                android:layout_centerVertical="true"
-                android:layout_toEndOf="@+id/waiting_oxygen"
-                android:layout_marginStart="100dp"/>
+                android:id="@+id/waiting_rfid_oxygen" />
 
             <ImageView
                 android:layout_width="wrap_content"
@@ -104,54 +81,35 @@
                 app:srcCompat="@drawable/temperature"
                 android:layout_centerVertical="true"
                 android:layout_centerHorizontal="true"
-                android:id="@+id/waiting_temperature_above" />
-
-            <TextView
-                android:layout_width="40sp"
-                android:layout_height="50sp"
-                android:id="@+id/textView_temperature"
-                android:alpha="100"
-                android:text="0"
-                android:textColor="#ffffff"
-                android:gravity="center"
-                android:layout_centerVertical="true"
-                android:layout_centerHorizontal="true"/>
+                android:id="@+id/waiting_rfid_temperature_above" />
 
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:srcCompat="@drawable/temperature"
-                android:layout_below="@+id/waiting_temperature_above"
+                android:layout_below="@+id/waiting_rfid_temperature_above"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="45dp"
-                android:id="@+id/waiting_temperature_below" />
+                android:id="@+id/waiting_rfid_temperature_below" />
 
-            <TextView
-                android:layout_width="40sp"
-                android:layout_height="50sp"
-                android:id="@+id/textView_temperature_bed"
-                android:alpha="100"
-                android:text="0"
-                android:textColor="#ffffff"
-                android:gravity="center"
-                android:layout_below="@+id/waiting_temperature_above"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="31dp"/>
-
-            <Button
+            <RadioButton
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/waiting_dooropen_button"
-                android:layout_marginLeft="120dp"
-                android:layout_marginTop="335dp"
-                android:background="@drawable/door_open_off" />
-            <Button
+                android:layout_marginBottom="40dp"
+                android:layout_marginLeft="140dp"
+                android:id="@+id/waiting_rfid_dooropen_button"
+                android:button="@drawable/door_open_off"
+                android:layout_alignParentBottom="true" />
+
+            <RadioButton
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="347dp"
-                android:layout_marginLeft="260dp"
-                android:id="@+id/waiting_doorclose_button"
-                android:background="@drawable/door_close_off" />
+                android:layout_marginBottom="29dp"
+                android:id="@+id/waiting_rfid_doorclose_button"
+                android:button="@drawable/door_close_off"
+                android:layout_alignParentBottom="true"
+                android:layout_alignEnd="@+id/waiting_rfid_oxygen" />
+
         </RelativeLayout>
 
         <LinearLayout
@@ -160,14 +118,12 @@
             android:orientation="vertical"
             android:layout_weight="1">
 
-            <FrameLayout
-                android:id="@+id/frameLayout_fragment"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="horizontal"
                 android:layout_weight="1">
-
-            </FrameLayout>
+            </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -185,96 +141,93 @@
                         android:layout_alignParentRight="true"
                         android:layout_marginTop="20dp"
                         android:layout_marginRight="10dp"
-                        android:id="@+id/waiting_oxygen_up_button"
+                        android:onClick="onClicked"
+                        android:id="@+id/waiting_rfid_oxygen_up_button"
                         android:background="@drawable/button_up"
                         />
                     <Button
                         android:layout_width="50dp"
                         android:layout_height="40dp"
-                        android:layout_below="@id/waiting_oxygen_up_button"
+                        android:layout_below="@id/waiting_rfid_oxygen_up_button"
                         android:layout_marginTop="5dp"
                         android:layout_marginRight="10dp"
                         android:layout_alignParentRight="true"
-                        android:id="@+id/waiting_oxygen_down_button"
+                        android:onClick="onClicked"
+                        android:id="@+id/waiting_rfid_oxygen_down_button"
                         android:background="@drawable/button_down" />
                     <TextView
-                        android:layout_width="70dp"
+                        android:layout_width="100dp"
                         android:layout_height="50dp"
                         android:layout_alignParentBottom="true"
-                        android:layout_marginBottom="55dp"
-                        android:layout_marginLeft="12dp"
-                        android:text="0"
-                        android:textSize="45dp"
-                        android:gravity="right|center_vertical"
-                        android:id="@+id/waiting_oxygen_text"/>
-                </RelativeLayout>
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical"
-                    android:layout_weight="1">
-                    <Button
-                        android:layout_width="50dp"
-                        android:layout_height="40dp"
-                        android:layout_alignParentRight="true"
-                        android:layout_marginTop="20dp"
-                        android:layout_marginRight="10dp"
-                        android:id="@+id/waiting_pressure_up_button"
-                        android:background="@drawable/button_up"
-                        />
-                    <Button
-                        android:layout_width="50dp"
-                        android:layout_height="40dp"
-                        android:layout_below="@id/waiting_pressure_up_button"
-                        android:layout_marginTop="5dp"
-                        android:layout_marginRight="10dp"
-                        android:layout_alignParentRight="true"
-                        android:id="@+id/waiting_pressure_down_button"
-                        android:background="@drawable/button_down" />
-                    <TextView
-                        android:layout_width="70dp"
-                        android:layout_height="50dp"
-                        android:layout_alignParentBottom="true"
-                        android:layout_marginBottom="55dp"
-                        android:layout_marginLeft="15dp"
-                        android:gravity="right|center_vertical"
-                        android:text="0"
-                        android:textSize="45dp"
-                        android:id="@+id/waiting_pressure_text"/>
-                </RelativeLayout>
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical"
-                    android:layout_weight="1">
-                    <Button
-                        android:layout_width="50dp"
-                        android:layout_height="40dp"
-                        android:layout_alignParentRight="true"
-                        android:layout_marginTop="20dp"
-                        android:layout_marginRight="10dp"
-                        android:id="@+id/waiting_time_up_button"
-                        android:background="@drawable/button_up"
-                        />
-                    <Button
-                        android:layout_width="50dp"
-                        android:layout_height="40dp"
-                        android:layout_below="@id/waiting_time_up_button"
-                        android:layout_marginTop="5dp"
-                        android:layout_marginRight="10dp"
-                        android:layout_alignParentRight="true"
-                        android:id="@+id/waiting_time_down_button"
-                        android:background="@drawable/button_down" />
-                    <TextView
-                        android:layout_width="70dp"
-                        android:layout_height="55dp"
-                        android:layout_alignParentBottom="true"
-                        android:gravity="right|center_vertical"
-                        android:layout_marginLeft="17dp"
+                        android:layout_centerHorizontal="true"
                         android:layout_marginBottom="50dp"
-                        android:textSize="45dp"
-                        android:text="0"
-                        android:id="@+id/waiting_time_text"/>
+                        android:id="@+id/waiting_rfid_oxygen_text"/>
+                </RelativeLayout>
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:layout_weight="1">
+                    <Button
+                        android:layout_width="50dp"
+                        android:layout_height="40dp"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginTop="20dp"
+                        android:layout_marginRight="10dp"
+                        android:onClick="onClicked"
+                        android:id="@+id/waiting_rfid_pressure_up_button"
+                        android:background="@drawable/button_up"
+                        />
+                    <Button
+                        android:layout_width="50dp"
+                        android:layout_height="40dp"
+                        android:layout_below="@id/waiting_rfid_pressure_up_button"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginRight="10dp"
+                        android:layout_alignParentRight="true"
+                        android:onClick="onClicked"
+                        android:id="@+id/waiting_rfid_pressure_down_button"
+                        android:background="@drawable/button_down" />
+                    <TextView
+                        android:layout_width="100dp"
+                        android:layout_height="50dp"
+                        android:layout_alignParentBottom="true"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginBottom="50dp"
+                        android:id="@+id/waiting_rfid_pressure_text"/>
+                </RelativeLayout>
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:layout_weight="1">
+                    <Button
+                        android:layout_width="50dp"
+                        android:layout_height="40dp"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginTop="20dp"
+                        android:layout_marginRight="10dp"
+                        android:onClick="onClicked"
+                        android:id="@+id/waiting_rfid_time_up_button"
+                        android:background="@drawable/button_up"
+                        />
+                    <Button
+                        android:layout_width="50dp"
+                        android:layout_height="40dp"
+                        android:layout_below="@id/waiting_rfid_time_up_button"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginRight="10dp"
+                        android:layout_alignParentRight="true"
+                        android:onClick="onClicked"
+                        android:id="@+id/waiting_rfid_time_down_button"
+                        android:background="@drawable/button_down" />
+                    <TextView
+                        android:layout_width="100dp"
+                        android:layout_height="50dp"
+                        android:layout_alignParentBottom="true"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginBottom="50dp"
+                        android:id="@+id/waiting_rfid_time_text"/>
                 </RelativeLayout>
             </LinearLayout>
         </LinearLayout>

@@ -6,6 +6,7 @@ import android.content.BroadcastReceiver;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -15,6 +16,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.TextClock;
 import android.widget.TextView;
 
 import com.sinest.gw_1000.R;
@@ -26,8 +28,8 @@ import com.sinest.gw_1000.setting.Activity_setting;
 public class Activity_waiting extends AppCompatActivity {
 
     public static final int REQUEST_CODE_WORKINGTIME_POPUP = 1001;
-    public static final int REQUEST_CODE_LIBRARY = 1002;
-    public static final int REQUEST_CODE_SETTING = 1003;
+    //public static final int REQUEST_CODE_LIBRARY = 1002;
+    //public static final int REQUEST_CODE_SETTING = 1003;
 
     Communicator communicator;
     Handler handler_update_data;
@@ -45,6 +47,12 @@ public class Activity_waiting extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_waiting);
+
+        // 폰트 설정
+        Typeface tf = Typeface.createFromAsset(getAssets(), "fonts/digital.ttf");
+        TextClock clock = (TextClock) findViewById(R.id.textClock);
+        clock.setTypeface(tf);
 
         SharedPreferences sharedPreferences = getSharedPreferences(Application_communicator.NAME_OF_SHARED_PREF, 0);
         val_oxygen = sharedPreferences.getInt(Application_communicator.VAL_OXYGEN, 20);
@@ -68,8 +76,6 @@ public class Activity_waiting extends AppCompatActivity {
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.add(R.id.frameLayout_fragment, fragment_waiting);
         fragmentTransaction.commit();
-
-        setContentView(R.layout.activity_waiting);
 
         Button waiting_library_button = (Button)findViewById(R.id.waiting_library_button);
         Button waiting_setting_button = (Button)findViewById(R.id.waiting_setting_button);
@@ -152,6 +158,8 @@ public class Activity_waiting extends AppCompatActivity {
         editor.putInt(Application_communicator.VAL_TIME, val_time);
         editor.commit();
     }
+
+
 
     public void changeFragment_working(int modeNum) {
 
@@ -300,14 +308,14 @@ public class Activity_waiting extends AppCompatActivity {
                         b  = (Button) view;
                         b.setBackgroundResource(R.drawable.library);
                         intent = new Intent(getApplicationContext(), Activity_library.class);
-                        startActivityForResult(intent, REQUEST_CODE_LIBRARY);
+                        startActivity(intent);
                         break;
                     case R.id.waiting_setting_button:
                         b  = (Button) view;
                         b.setBackgroundResource(R.drawable.setting);
                         //setting
                         intent_setting = new Intent(getApplicationContext(), Activity_setting.class);
-                        startActivityForResult(intent_setting, REQUEST_CODE_LIBRARY);
+                        startActivity(intent_setting);
                         break;
                     case R.id.waiting_oxygen_up_button:
                         b  = (Button) view;
@@ -395,7 +403,7 @@ public class Activity_waiting extends AppCompatActivity {
                         break;
                     case R.id.waiting_time_text:
                         intent = new Intent(getApplicationContext(), Activity_waiting_working_time_popup.class);
-                        startActivityForResult(intent, REQUEST_CODE_WORKINGTIME_POPUP);
+                        startActivity(intent);
                         break;
                 }
             }
