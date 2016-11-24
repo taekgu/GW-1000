@@ -31,9 +31,16 @@ public class Activity_setting extends AppCompatActivity {
     Button b_1m; Button b_3m; Button b_5m; Button b_coutinue;
     Button b_back; Button b_emotion;
     Button b_language; Button b_inverter;
+
+    Button hidden_s_1; Button hidden_s_2; Button hidden_s_3; Button hidden_s_4; Button hidden_s_5;
+
     boolean[] button_flag = {true,true,true,true,true,true,true,true,true,true,true,true};
     boolean[] button2_flag = {true,true,true,true};
     boolean[] button3_flag = {true,true,true,true};
+
+    boolean[] hidden = {false,false,false,false,false};
+
+
     boolean b_back_f = true;
     boolean b_emotion_f = true;
     int b_language_f = 0;
@@ -42,12 +49,14 @@ public class Activity_setting extends AppCompatActivity {
     Intent intent_emotion;
     Intent intent_rfid;
     Intent intent_wa;
+    Intent intent_hidden;
 
     String check;
     String check2;
 
     SeekBar seekbar;
     int volume;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -88,6 +97,12 @@ public class Activity_setting extends AppCompatActivity {
         b_language = (Button)findViewById(R.id.b_language);
         b_inverter = (Button)findViewById(R.id.b_inverter);
 
+        hidden_s_1 = (Button)findViewById(R.id.hidden_s_1);
+        hidden_s_2 = (Button)findViewById(R.id.hidden_s_2);
+        hidden_s_3 = (Button)findViewById(R.id.hidden_s_3);
+        hidden_s_4 = (Button)findViewById(R.id.hidden_s_4);
+        hidden_s_5 = (Button)findViewById(R.id.hidden_s_5);
+
         seekbar = (SeekBar)findViewById(R.id.seekBar);
         seekbar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
@@ -122,6 +137,7 @@ public class Activity_setting extends AppCompatActivity {
         intent_wa = new Intent(this, Activity_water.class);
         //intent_wa.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_SINGLE_TOP);
 
+        intent_hidden = new Intent(this, Activity_engine.class);
 /*
         findViewById(R.id.button11).setOnClickListener(
                 new Button.OnClickListener(){
@@ -393,6 +409,49 @@ public class Activity_setting extends AppCompatActivity {
                         }
                         break;
 
+                    case R.id.hidden_s_1:
+                        //
+                        hidden[0] = true;
+                        Log.v("hidden","hidden1");
+                        break;
+
+                    case R.id.hidden_s_2:
+                        //
+                        if(hidden[0] == true)
+                        {
+                            hidden[1] = true;
+                            Log.v("hidden","hidden2");
+                        }
+                        break;
+                    case R.id.hidden_s_3:
+                        //
+                        if(hidden[1] == true)
+                        {
+                            hidden[2] = true;
+                            Log.v("hidden","hidden3");
+                        }
+                        break;
+                    case R.id.hidden_s_4:
+                        //
+                        if(hidden[2] == true)
+                        {
+                            hidden[3] = true;
+                            Log.v("hidden","hidden4");
+                        }
+                        break;
+                    case R.id.hidden_s_5:
+                        //
+                        Log.v("hidden","hidden5");
+                        if(hidden[3] == true)
+                        {
+                            hidden[0] = false;
+                            hidden[1] = false;
+                            hidden[2] = false;
+                            hidden[3] = false;
+                            startActivity(intent_hidden);
+                        }
+                        break;
+
                 }
             }
         };
@@ -422,6 +481,12 @@ public class Activity_setting extends AppCompatActivity {
         //b_emotion.setOnClickListener(listener);
         b_language.setOnClickListener(listener);
         b_inverter.setOnClickListener(listener);
+
+        hidden_s_1.setOnClickListener(listener);
+        hidden_s_2.setOnClickListener(listener);
+        hidden_s_3.setOnClickListener(listener);
+        hidden_s_4.setOnClickListener(listener);
+        hidden_s_5.setOnClickListener(listener);
 
         b_emotion.setOnTouchListener(mTouchEvent);
 

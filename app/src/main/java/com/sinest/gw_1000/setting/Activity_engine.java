@@ -1,7 +1,10 @@
 package com.sinest.gw_1000.setting;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 
@@ -247,16 +250,6 @@ public class Activity_engine extends AppCompatActivity {
                             eng_flag[1] = true;
                         }
                         break;
-                    case R.id.eng_b_back:
-                        //
-                        if (eng_flag[2] == true) {
-                            eng_b_back.setBackgroundResource(R.drawable.button_circle_back_on);
-                            eng_flag[2] = false;
-                        } else {
-                            eng_b_back.setBackgroundResource(R.drawable.button_circle_back_off);
-                            eng_flag[2] = true;
-                        }
-                        break;
                     case R.id.eng_r_left:
                         //
                         if (eng_flag[3] == true) {
@@ -308,8 +301,30 @@ public class Activity_engine extends AppCompatActivity {
         eng_r_right.setOnClickListener(listener);
 
 
-
-
-
+        eng_b_back.setOnTouchListener(mTouchEvent);
     }
+
+    private View.OnTouchListener mTouchEvent = new View.OnTouchListener() {
+        @Override
+        public boolean onTouch(View view, MotionEvent motionEvent) {
+            int action = motionEvent.getAction();
+            int id = view.getId();
+            if (action == MotionEvent.ACTION_DOWN) {
+                switch (id) {
+                    case R.id.eng_b_back:
+                        eng_b_back.setBackgroundResource(R.drawable.button_circle_back_on);
+                        break;
+                }
+            } else if (action == MotionEvent.ACTION_UP) {
+                byte val = 0x00;
+                switch (id) {
+                    case R.id.eng_b_back:
+                        eng_b_back.setBackgroundResource(R.drawable.button_circle_back_off);
+                        finish();
+                        break;
+                }
+            }
+            return true;
+        }
+    };
 }
