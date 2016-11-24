@@ -7,8 +7,11 @@ import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
 import com.sinest.gw_1000.R;
+import com.sinest.gw_1000.communication.Communicator;
+import com.sinest.gw_1000.management.Application_communicator;
 
 public class Activity_engine extends AppCompatActivity {
 
@@ -20,11 +23,22 @@ public class Activity_engine extends AppCompatActivity {
     Button eng_door_open; Button eng_door_close;
     Button eng_b_left; Button eng_b_right; Button eng_b_back; Button eng_r_left; Button eng_r_right;
 
+    Button program_m; Button invert_choice;
+
+    TextView oxygen_m;
+
     boolean[] eng_h_flag = {true,true,true,true,true,true};
+    int eng_ff = 0;
     boolean[] eng_step_flag = {true,true,true,true,true};
 
     boolean[] eng_b_flag = {true,true,true,true,true,true};
     boolean[] eng_flag = {true,true,true,true,true};
+
+    boolean mode_f = true; boolean invert_f = true;
+
+    int heater_f = 0;
+
+    Communicator communicator;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,67 +69,88 @@ public class Activity_engine extends AppCompatActivity {
         eng_r_left = (Button)findViewById(R.id.eng_r_left);
         eng_r_right = (Button)findViewById(R.id.eng_r_right);
 
+        oxygen_m = (TextView) findViewById(R.id.oxygen_m);
+
+        program_m = (Button)findViewById(R.id.program_m);
+        invert_choice = (Button)findViewById(R.id.invert_choice);
+
+        communicator = Application_communicator.getCommunicator();
+        int ox_m = (communicator.get_rx_idx(7)+communicator.get_rx_idx(8)+communicator.get_rx_idx(9)+communicator.get_rx_idx(10))/4;
+        oxygen_m.setText(String.valueOf(ox_m));
+
         View.OnClickListener listener = new View.OnClickListener() {
             public void onClick(View v) {
                 switch (v.getId()) {
                     case R.id.eng_28h:
                         //
-                        if (eng_h_flag[0] == true) {
+                        if (eng_h_flag[0] == true && eng_ff == 0) {
                             eng_28h.setBackgroundResource(R.drawable.water_28_on);
                             eng_h_flag[0] = false;
-                        } else {
+                            eng_ff = 1;
+                        } else if (eng_h_flag[0] == false && eng_ff == 1) {
                             eng_28h.setBackgroundResource(R.drawable.water_28_off);
                             eng_h_flag[0] = true;
+                            eng_ff = 0;
                         }
                         break;
                     case R.id.eng_36h:
                         //
-                        if (eng_h_flag[1] == true) {
+                        if (eng_h_flag[1] == true && eng_ff == 0) {
                             eng_36h.setBackgroundResource(R.drawable.water_36_on);
                             eng_h_flag[1] = false;
-                        } else {
+                            eng_ff = 1;
+                        } else if (eng_h_flag[1] == false && eng_ff == 1){
                             eng_36h.setBackgroundResource(R.drawable.water_36_off);
                             eng_h_flag[1] = true;
+                            eng_ff = 0;
                         }
                         break;
                     case R.id.eng_43h:
                         //
-                        if (eng_h_flag[2] == true) {
+                        if (eng_h_flag[2] == true && eng_ff == 0) {
                             eng_43h.setBackgroundResource(R.drawable.water_43_on);
                             eng_h_flag[2] = false;
-                        } else {
+                            eng_ff = 1;
+                        } else if (eng_h_flag[2] == false && eng_ff == 1){
                             eng_43h.setBackgroundResource(R.drawable.water_43_off);
                             eng_h_flag[2] = true;
+                            eng_ff = 0;
                         }
                         break;
                     case R.id.eng_48h:
                         //
-                        if (eng_h_flag[3] == true) {
+                        if (eng_h_flag[3] == true && eng_ff == 0) {
                             eng_48h.setBackgroundResource(R.drawable.water_49_on);
                             eng_h_flag[3] = false;
-                        } else {
+                            eng_ff = 1;
+                        } else if (eng_h_flag[3] == false && eng_ff == 1){
                             eng_48h.setBackgroundResource(R.drawable.water_49_off);
                             eng_h_flag[3] = true;
+                            eng_ff = 0;
                         }
                         break;
                     case R.id.eng_54h:
                         //
-                        if (eng_h_flag[4] == true) {
+                        if (eng_h_flag[4] == true && eng_ff == 0) {
                             eng_54h.setBackgroundResource(R.drawable.water_54_on);
                             eng_h_flag[4] = false;
-                        } else {
+                            eng_ff = 1;
+                        } else if (eng_h_flag[4] == false && eng_ff == 1){
                             eng_54h.setBackgroundResource(R.drawable.water_54_off);
                             eng_h_flag[4] = true;
+                            eng_ff = 0;
                         }
                         break;
                     case R.id.eng_60h:
                         //
-                        if (eng_h_flag[5] == true) {
+                        if (eng_h_flag[5] == true && eng_ff == 0) {
                             eng_60h.setBackgroundResource(R.drawable.water_60_on);
                             eng_h_flag[5] = false;
-                        } else {
+                            eng_ff = 1;
+                        } else if (eng_h_flag[5] == false && eng_ff == 1){
                             eng_60h.setBackgroundResource(R.drawable.water_60_off);
                             eng_h_flag[5] = true;
+                            eng_ff = 0;
                         }
                         break;
                     case R.id.eng_1step:
@@ -182,12 +217,15 @@ public class Activity_engine extends AppCompatActivity {
                         break;
                     case R.id.eng_b_inter:
                         //
-                        if (eng_b_flag[1] == true) {
+                        if (heater_f == 0) {
                             eng_b_inter.setBackgroundResource(R.drawable.button_blue);
-                            eng_b_flag[1] = false;
-                        } else {
+                            heater_f = 1;
+                        } else if(heater_f == 1){
+                            eng_b_inter.setBackgroundResource(R.drawable.button_pink);
+                            heater_f = 2;
+                        } else if(heater_f == 2){
                             eng_b_inter.setBackgroundResource(R.drawable.button_gry);
-                            eng_b_flag[1] = true;
+                            heater_f = 0;
                         }
                         break;
                     case R.id.eng_b_sol:
@@ -210,68 +248,26 @@ public class Activity_engine extends AppCompatActivity {
                             eng_b_flag[3] = true;
                         }
                         break;
-                    case R.id.eng_door_open:
+                    case R.id.program_m:
                         //
-                        if (eng_b_flag[4] == true) {
-                            eng_door_open.setBackgroundResource(R.drawable.door_open_on);
-                            eng_b_flag[4] = false;
+                        if (mode_f == true) {
+                            program_m.setBackgroundResource(R.drawable.program_mode_on);
+                            mode_f = false;
                         } else {
-                            eng_door_open.setBackgroundResource(R.drawable.door_open_off);
-                            eng_b_flag[4] = true;
+                            program_m.setBackgroundResource(R.drawable.program_mode_off);
+                            mode_f = true;
                         }
                         break;
-                    case R.id.eng_door_close:
+                    case R.id.invert_choice:
                         //
-                        if (eng_b_flag[5] == true) {
-                            eng_door_close.setBackgroundResource(R.drawable.door_close_on);
-                            eng_b_flag[5] = false;
+                        if (invert_f == true) {
+                            invert_choice.setBackgroundResource(R.drawable.inverter_ls);
+                            invert_f = false;
                         } else {
-                            eng_door_close.setBackgroundResource(R.drawable.door_close_off);
-                            eng_b_flag[5] = true;
+                            invert_choice.setBackgroundResource(R.drawable.inverter_ys);
+                            invert_f = true;
                         }
                         break;
-                    case R.id.eng_b_left:
-                        //
-                        if (eng_flag[0] == true) {
-                            eng_b_left.setBackgroundResource(R.drawable.moving_left_on);
-                            eng_flag[0] = false;
-                        } else {
-                            eng_b_left.setBackgroundResource(R.drawable.moving_left_off);
-                            eng_flag[0] = true;
-                        }
-                        break;
-                    case R.id.eng_b_right:
-                        //
-                        if (eng_flag[1] == true) {
-                            eng_b_right.setBackgroundResource(R.drawable.moving_right_on);
-                            eng_flag[1] = false;
-                        } else {
-                            eng_b_right.setBackgroundResource(R.drawable.moving_right_off);
-                            eng_flag[1] = true;
-                        }
-                        break;
-                    case R.id.eng_r_left:
-                        //
-                        if (eng_flag[3] == true) {
-                            eng_r_left.setBackgroundResource(R.drawable.rotation_left_on);
-                            eng_flag[3] = false;
-                        } else {
-                            eng_r_left.setBackgroundResource(R.drawable.rotation_left_off);
-                            eng_flag[3] = true;
-                        }
-                        break;
-                    case R.id.eng_r_right:
-                        //
-                        if (eng_flag[4] == true) {
-                            eng_r_right.setBackgroundResource(R.drawable.rotation_right_on);
-                            eng_flag[4] = false;
-                        } else {
-                            eng_r_right.setBackgroundResource(R.drawable.rotation_right_off);
-                            eng_flag[4] = true;
-                        }
-                        break;
-
-
                 }
             }
         };
@@ -292,16 +288,26 @@ public class Activity_engine extends AppCompatActivity {
         eng_b_inter.setOnClickListener(listener);
         eng_b_sol.setOnClickListener(listener);
         eng_b_ven.setOnClickListener(listener);
+        program_m.setOnClickListener(listener);
+        invert_choice.setOnClickListener(listener);
+        /*
         eng_door_open.setOnClickListener(listener);
         eng_door_close.setOnClickListener(listener);
+
         eng_b_left.setOnClickListener(listener);
         eng_b_right.setOnClickListener(listener);
         eng_b_back.setOnClickListener(listener);
         eng_r_left.setOnClickListener(listener);
         eng_r_right.setOnClickListener(listener);
-
-
+*/
         eng_b_back.setOnTouchListener(mTouchEvent);
+        eng_b_left.setOnTouchListener(mTouchEvent);
+        eng_b_right.setOnTouchListener(mTouchEvent);
+        eng_r_left.setOnTouchListener(mTouchEvent);
+        eng_r_right.setOnTouchListener(mTouchEvent);
+
+        eng_door_open.setOnTouchListener(mTouchEvent);
+        eng_door_close.setOnTouchListener(mTouchEvent);
     }
 
     private View.OnTouchListener mTouchEvent = new View.OnTouchListener() {
@@ -314,6 +320,25 @@ public class Activity_engine extends AppCompatActivity {
                     case R.id.eng_b_back:
                         eng_b_back.setBackgroundResource(R.drawable.button_circle_back_on);
                         break;
+                    case R.id.eng_b_left:
+                        eng_b_left.setBackgroundResource(R.drawable.moving_left_on);
+                        break;
+                    case R.id.eng_b_right:
+                        eng_b_right.setBackgroundResource(R.drawable.moving_right_on);
+                        break;
+                    case R.id.eng_r_left:
+                        eng_r_left.setBackgroundResource(R.drawable.rotation_left_on);
+                        break;
+                    case R.id.eng_r_right:
+                        eng_r_right.setBackgroundResource(R.drawable.rotation_right_on);
+                        break;
+
+                    case R.id.eng_door_open:
+                        eng_door_open.setBackgroundResource(R.drawable.door_open_on);
+                        break;
+                    case R.id.eng_door_close:
+                        eng_door_close.setBackgroundResource(R.drawable.door_close_on);
+                        break;
                 }
             } else if (action == MotionEvent.ACTION_UP) {
                 byte val = 0x00;
@@ -321,6 +346,25 @@ public class Activity_engine extends AppCompatActivity {
                     case R.id.eng_b_back:
                         eng_b_back.setBackgroundResource(R.drawable.button_circle_back_off);
                         finish();
+                        break;
+                    case R.id.eng_b_left:
+                        eng_b_left.setBackgroundResource(R.drawable.moving_left_off);
+                        break;
+                    case R.id.eng_b_right:
+                        eng_b_right.setBackgroundResource(R.drawable.moving_right_off);
+                        break;
+                    case R.id.eng_r_left:
+                        eng_r_left.setBackgroundResource(R.drawable.rotation_left_off);
+                        break;
+                    case R.id.eng_r_right:
+                        eng_r_right.setBackgroundResource(R.drawable.rotation_right_off);
+                        break;
+
+                    case R.id.eng_door_open:
+                        eng_door_open.setBackgroundResource(R.drawable.door_open_off);
+                        break;
+                    case R.id.eng_door_close:
+                        eng_door_close.setBackgroundResource(R.drawable.door_close_off);
                         break;
                 }
             }
