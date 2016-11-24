@@ -37,6 +37,8 @@ public class Activity_engine extends AppCompatActivity {
     boolean mode_f = true; boolean invert_f = true;
 
     int heater_f = 0;
+    int w_press = 0;
+    Byte inverter = 0x00;
 
     Communicator communicator;
 
@@ -87,11 +89,14 @@ public class Activity_engine extends AppCompatActivity {
                             eng_28h.setBackgroundResource(R.drawable.water_28_on);
                             eng_h_flag[0] = false;
                             eng_ff = 1;
+                            w_press = 1;
                         } else if (eng_h_flag[0] == false && eng_ff == 1) {
                             eng_28h.setBackgroundResource(R.drawable.water_28_off);
                             eng_h_flag[0] = true;
                             eng_ff = 0;
+                            w_press = 0;
                         }
+                        communicator.set_engineer(2,(byte)((byte)inverter|(byte)w_press));
                         break;
                     case R.id.eng_36h:
                         //
@@ -99,11 +104,14 @@ public class Activity_engine extends AppCompatActivity {
                             eng_36h.setBackgroundResource(R.drawable.water_36_on);
                             eng_h_flag[1] = false;
                             eng_ff = 1;
+                            w_press = 2;
                         } else if (eng_h_flag[1] == false && eng_ff == 1){
                             eng_36h.setBackgroundResource(R.drawable.water_36_off);
                             eng_h_flag[1] = true;
                             eng_ff = 0;
+                            w_press = 0;
                         }
+                        communicator.set_engineer(2,(byte)((byte)inverter|(byte)w_press));
                         break;
                     case R.id.eng_43h:
                         //
@@ -111,11 +119,14 @@ public class Activity_engine extends AppCompatActivity {
                             eng_43h.setBackgroundResource(R.drawable.water_43_on);
                             eng_h_flag[2] = false;
                             eng_ff = 1;
+                            w_press = 3;
                         } else if (eng_h_flag[2] == false && eng_ff == 1){
                             eng_43h.setBackgroundResource(R.drawable.water_43_off);
                             eng_h_flag[2] = true;
                             eng_ff = 0;
+                            w_press = 0;
                         }
+                        communicator.set_engineer(2,(byte)((byte)inverter|(byte)w_press));
                         break;
                     case R.id.eng_48h:
                         //
@@ -123,11 +134,14 @@ public class Activity_engine extends AppCompatActivity {
                             eng_48h.setBackgroundResource(R.drawable.water_49_on);
                             eng_h_flag[3] = false;
                             eng_ff = 1;
+                            w_press = 4;
                         } else if (eng_h_flag[3] == false && eng_ff == 1){
                             eng_48h.setBackgroundResource(R.drawable.water_49_off);
                             eng_h_flag[3] = true;
                             eng_ff = 0;
+                            w_press = 0;
                         }
+                        communicator.set_engineer(2,(byte)((byte)inverter|(byte)w_press));
                         break;
                     case R.id.eng_54h:
                         //
@@ -135,11 +149,14 @@ public class Activity_engine extends AppCompatActivity {
                             eng_54h.setBackgroundResource(R.drawable.water_54_on);
                             eng_h_flag[4] = false;
                             eng_ff = 1;
+                            w_press = 5;
                         } else if (eng_h_flag[4] == false && eng_ff == 1){
                             eng_54h.setBackgroundResource(R.drawable.water_54_off);
                             eng_h_flag[4] = true;
                             eng_ff = 0;
+                            w_press = 0;
                         }
+                        communicator.set_engineer(2,(byte)((byte)inverter|(byte)w_press));
                         break;
                     case R.id.eng_60h:
                         //
@@ -147,20 +164,25 @@ public class Activity_engine extends AppCompatActivity {
                             eng_60h.setBackgroundResource(R.drawable.water_60_on);
                             eng_h_flag[5] = false;
                             eng_ff = 1;
+                            w_press = 6;
                         } else if (eng_h_flag[5] == false && eng_ff == 1){
                             eng_60h.setBackgroundResource(R.drawable.water_60_off);
                             eng_h_flag[5] = true;
                             eng_ff = 0;
+                            w_press = 0;
                         }
+                        communicator.set_engineer(2,(byte)((byte)inverter|(byte)w_press));
                         break;
                     case R.id.eng_1step:
                         //
                         if (eng_step_flag[0] == true) {
                             eng_1step.setBackgroundResource(R.drawable.oxygen_1step_on);
                             eng_step_flag[0] = false;
+                            communicator.set_engineer(5,(byte)0x01);
                         } else {
                             eng_1step.setBackgroundResource(R.drawable.oxygen_1step_off);
                             eng_step_flag[0] = true;
+                            communicator.set_engineer(5,(byte)0x00);
                         }
                         break;
                     case R.id.eng_2step:
@@ -168,9 +190,11 @@ public class Activity_engine extends AppCompatActivity {
                         if (eng_step_flag[1] == true) {
                             eng_2step.setBackgroundResource(R.drawable.oxygen_2step_on);
                             eng_step_flag[1] = false;
+                            communicator.set_engineer(5,(byte)0x02);
                         } else {
                             eng_2step.setBackgroundResource(R.drawable.oxygen_2step_off);
                             eng_step_flag[1] = true;
+                            communicator.set_engineer(5,(byte)0x00);
                         }
                         break;
                     case R.id.eng_3step:
@@ -178,9 +202,11 @@ public class Activity_engine extends AppCompatActivity {
                         if (eng_step_flag[2] == true) {
                             eng_3step.setBackgroundResource(R.drawable.oxygen_3step_on);
                             eng_step_flag[2] = false;
+                            communicator.set_engineer(5,(byte)0x03);
                         } else {
                             eng_3step.setBackgroundResource(R.drawable.oxygen_3step_off);
                             eng_step_flag[2] = true;
+                            communicator.set_engineer(5,(byte)0x00);
                         }
                         break;
                     case R.id.eng_4step:
@@ -188,9 +214,11 @@ public class Activity_engine extends AppCompatActivity {
                         if (eng_step_flag[3] == true) {
                             eng_4step.setBackgroundResource(R.drawable.oxygen_4step_on);
                             eng_step_flag[3] = false;
+                            communicator.set_engineer(5,(byte)0x04);
                         } else {
                             eng_4step.setBackgroundResource(R.drawable.oxygen_4step_off);
                             eng_step_flag[3] = true;
+                            communicator.set_engineer(5,(byte)0x00);
                         }
                         break;
                     case R.id.eng_5step:
@@ -198,9 +226,11 @@ public class Activity_engine extends AppCompatActivity {
                         if (eng_step_flag[4] == true) {
                             eng_5step.setBackgroundResource(R.drawable.oxygen_5step_on);
                             eng_step_flag[4] = false;
+                            communicator.set_engineer(5,(byte)0x05);
                         } else {
                             eng_5step.setBackgroundResource(R.drawable.oxygen_5step_off);
                             eng_step_flag[4] = true;
+                            communicator.set_engineer(5,(byte)0x00);
                         }
                         break;
 //----------------------------------------------------------------------------------------------------------------------------
@@ -210,9 +240,11 @@ public class Activity_engine extends AppCompatActivity {
                         if (eng_b_flag[0] == true) {
                             eng_b_water.setBackgroundResource(R.drawable.button_blue);
                             eng_b_flag[0] = false;
+                            communicator.set_engineer(3,(byte)0x01);
                         } else {
                             eng_b_water.setBackgroundResource(R.drawable.button_gry);
                             eng_b_flag[0] = true;
+                            communicator.set_engineer(3,(byte)0x00);
                         }
                         break;
                     case R.id.eng_b_inter:
@@ -220,12 +252,15 @@ public class Activity_engine extends AppCompatActivity {
                         if (heater_f == 0) {
                             eng_b_inter.setBackgroundResource(R.drawable.button_blue);
                             heater_f = 1;
+                            communicator.set_engineer(4,(byte)0x01);
                         } else if(heater_f == 1){
                             eng_b_inter.setBackgroundResource(R.drawable.button_pink);
                             heater_f = 2;
+                            communicator.set_engineer(4,(byte)0x02);
                         } else if(heater_f == 2){
                             eng_b_inter.setBackgroundResource(R.drawable.button_gry);
                             heater_f = 0;
+                            communicator.set_engineer(4,(byte)0x00);
                         }
                         break;
                     case R.id.eng_b_sol:
@@ -233,9 +268,11 @@ public class Activity_engine extends AppCompatActivity {
                         if (eng_b_flag[2] == true) {
                             eng_b_sol.setBackgroundResource(R.drawable.button_blue);
                             eng_b_flag[2] = false;
+                            communicator.set_engineer(7,(byte)0x01);
                         } else {
                             eng_b_sol.setBackgroundResource(R.drawable.button_gry);
                             eng_b_flag[2] = true;
+                            communicator.set_engineer(7,(byte)0x00);
                         }
                         break;
                     case R.id.eng_b_ven:
@@ -243,9 +280,11 @@ public class Activity_engine extends AppCompatActivity {
                         if (eng_b_flag[3] == true) {
                             eng_b_ven.setBackgroundResource(R.drawable.button_blue);
                             eng_b_flag[3] = false;
+                            communicator.set_engineer(6,(byte)0x01);
                         } else {
                             eng_b_ven.setBackgroundResource(R.drawable.button_gry);
                             eng_b_flag[3] = true;
+                            communicator.set_engineer(6,(byte)0x00);
                         }
                         break;
                     case R.id.program_m:
@@ -263,10 +302,13 @@ public class Activity_engine extends AppCompatActivity {
                         if (invert_f == true) {
                             invert_choice.setBackgroundResource(R.drawable.inverter_ls);
                             invert_f = false;
+                            inverter = 0x10;
                         } else {
                             invert_choice.setBackgroundResource(R.drawable.inverter_ys);
                             invert_f = true;
+                            inverter = 0x00;
                         }
+                        communicator.set_engineer(2,(byte)((byte)inverter|(byte)w_press));
                         break;
                 }
             }
@@ -322,22 +364,28 @@ public class Activity_engine extends AppCompatActivity {
                         break;
                     case R.id.eng_b_left:
                         eng_b_left.setBackgroundResource(R.drawable.moving_left_on);
+                        communicator.set_engineer(9,(byte)0x01);
                         break;
                     case R.id.eng_b_right:
                         eng_b_right.setBackgroundResource(R.drawable.moving_right_on);
+                        communicator.set_engineer(9,(byte)0x02);
                         break;
                     case R.id.eng_r_left:
                         eng_r_left.setBackgroundResource(R.drawable.rotation_left_on);
+                        communicator.set_engineer(9,(byte)0x10);
                         break;
                     case R.id.eng_r_right:
                         eng_r_right.setBackgroundResource(R.drawable.rotation_right_on);
+                        communicator.set_engineer(9,(byte)0x20);
                         break;
 
                     case R.id.eng_door_open:
                         eng_door_open.setBackgroundResource(R.drawable.door_open_on);
+                        communicator.set_engineer(9,(byte)0x01);
                         break;
                     case R.id.eng_door_close:
                         eng_door_close.setBackgroundResource(R.drawable.door_close_on);
+                        communicator.set_engineer(9,(byte)0x02);
                         break;
                 }
             } else if (action == MotionEvent.ACTION_UP) {
@@ -349,22 +397,28 @@ public class Activity_engine extends AppCompatActivity {
                         break;
                     case R.id.eng_b_left:
                         eng_b_left.setBackgroundResource(R.drawable.moving_left_off);
+                        communicator.set_engineer(9,(byte)0x00);
                         break;
                     case R.id.eng_b_right:
                         eng_b_right.setBackgroundResource(R.drawable.moving_right_off);
+                        communicator.set_engineer(9,(byte)0x00);
                         break;
                     case R.id.eng_r_left:
                         eng_r_left.setBackgroundResource(R.drawable.rotation_left_off);
+                        communicator.set_engineer(9,(byte)0x00);
                         break;
                     case R.id.eng_r_right:
                         eng_r_right.setBackgroundResource(R.drawable.rotation_right_off);
+                        communicator.set_engineer(9,(byte)0x00);
                         break;
 
                     case R.id.eng_door_open:
                         eng_door_open.setBackgroundResource(R.drawable.door_open_off);
+                        communicator.set_engineer(9,(byte)0x00);
                         break;
                     case R.id.eng_door_close:
                         eng_door_close.setBackgroundResource(R.drawable.door_close_off);
+                        communicator.set_engineer(9,(byte)0x00);
                         break;
                 }
             }

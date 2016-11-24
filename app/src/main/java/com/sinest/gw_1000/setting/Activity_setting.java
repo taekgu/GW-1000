@@ -32,13 +32,13 @@ public class Activity_setting extends AppCompatActivity {
     Button b_back; Button b_emotion;
     Button b_language; Button b_inverter;
 
-    Button hidden_s_1; Button hidden_s_2; Button hidden_s_3; Button hidden_s_4; Button hidden_s_5;
+    Button hidden_s_1; Button hidden_s_2; Button hidden_s_3; Button hidden_s_4;
 
     boolean[] button_flag = {true,true,true,true,true,true,true,true,true,true,true,true};
     boolean[] button2_flag = {true,true,true,true};
     boolean[] button3_flag = {true,true,true,true};
 
-    boolean[] hidden = {false,false,false,false,false};
+    boolean[] hidden = {false,false,false,false};
 
 
     boolean b_back_f = true;
@@ -101,7 +101,6 @@ public class Activity_setting extends AppCompatActivity {
         hidden_s_2 = (Button)findViewById(R.id.hidden_s_2);
         hidden_s_3 = (Button)findViewById(R.id.hidden_s_3);
         hidden_s_4 = (Button)findViewById(R.id.hidden_s_4);
-        hidden_s_5 = (Button)findViewById(R.id.hidden_s_5);
 
         seekbar = (SeekBar)findViewById(R.id.seekBar);
         seekbar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
@@ -411,10 +410,19 @@ public class Activity_setting extends AppCompatActivity {
 
                     case R.id.hidden_s_1:
                         //
-                        hidden[0] = true;
-                        Log.v("hidden","hidden1");
+                        if(hidden[3] == true)
+                        {
+                            hidden[0] = false;
+                            hidden[1] = false;
+                            hidden[2] = false;
+                            hidden[3] = false;
+                            startActivity(intent_hidden);
+                        }else
+                        {
+                            hidden[0] = true;
+                            Log.v("hidden","hidden1");
+                        }
                         break;
-
                     case R.id.hidden_s_2:
                         //
                         if(hidden[0] == true)
@@ -439,19 +447,6 @@ public class Activity_setting extends AppCompatActivity {
                             Log.v("hidden","hidden4");
                         }
                         break;
-                    case R.id.hidden_s_5:
-                        //
-                        Log.v("hidden","hidden5");
-                        if(hidden[3] == true)
-                        {
-                            hidden[0] = false;
-                            hidden[1] = false;
-                            hidden[2] = false;
-                            hidden[3] = false;
-                            startActivity(intent_hidden);
-                        }
-                        break;
-
                 }
             }
         };
@@ -486,7 +481,6 @@ public class Activity_setting extends AppCompatActivity {
         hidden_s_2.setOnClickListener(listener);
         hidden_s_3.setOnClickListener(listener);
         hidden_s_4.setOnClickListener(listener);
-        hidden_s_5.setOnClickListener(listener);
 
         b_emotion.setOnTouchListener(mTouchEvent);
 
