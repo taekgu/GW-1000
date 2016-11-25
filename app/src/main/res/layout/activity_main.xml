@@ -69,6 +69,29 @@
             android:layout_height="0dp"
             android:layout_weight="7">
 
+            <Button
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:visibility="invisible"
+                android:layout_weight="85" />
+
+            <TextClock
+                android:gravity="center"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:textSize="40dp"
+                android:textColor="#00ffff"
+                android:format12Hour="HH:mm"
+                android:layout_weight="13"
+                android:layout_marginBottom="0dp"
+                android:id="@+id/textClock_s" />
+
+            <Button
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:visibility="invisible"
+                android:layout_weight="2.5" />
+
         </LinearLayout>
 
         <LinearLayout

@@ -1,6 +1,7 @@
 package com.sinest.gw_1000.setting;
 
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -62,6 +63,11 @@ public class Activity_setting extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        // 폰트 설정
+        Typeface tf = Typeface.createFromAsset(getAssets(), "fonts/digital.ttf");
+        TextClock clock = (TextClock) findViewById(R.id.textClock_s);
+        clock.setTypeface(tf);
 
         communicator = Application_communicator.getCommunicator();
 
@@ -426,7 +432,8 @@ public class Activity_setting extends AppCompatActivity {
                             hidden[1] = false;
                             hidden[2] = false;
                             hidden[3] = false;
-                            startActivity(intent_hidden);
+                            intent_hidden.putExtra("activity","setting");
+                            startActivityForResult(intent_hidden,22);
                         }else
                         {
                             hidden[0] = true;

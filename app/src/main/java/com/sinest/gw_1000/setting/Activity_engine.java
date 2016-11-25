@@ -1,17 +1,20 @@
 package com.sinest.gw_1000.setting;
 
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextClock;
 import android.widget.TextView;
 
 import com.sinest.gw_1000.R;
 import com.sinest.gw_1000.communication.Communicator;
 import com.sinest.gw_1000.management.Application_communicator;
+import com.sinest.gw_1000.mode.Activity_waiting;
 
 public class Activity_engine extends AppCompatActivity {
 
@@ -25,7 +28,12 @@ public class Activity_engine extends AppCompatActivity {
 
     Button program_m; Button invert_choice;
 
-    TextView oxygen_m;
+    Button hidden_e_1; Button hidden_e_2; Button hidden_e_3; Button hidden_e_4;
+
+    TextView oxygen_m; TextView operation_t;
+    Intent check;
+    Intent main_intent;
+    String check_activity;
 
     boolean[] eng_h_flag = {true,true,true,true,true,true};
     int eng_ff = 0;
@@ -33,6 +41,8 @@ public class Activity_engine extends AppCompatActivity {
 
     boolean[] eng_b_flag = {true,true,true,true,true,true};
     boolean[] eng_flag = {true,true,true,true,true};
+
+    boolean[] hidden = {false,false,false,false};
 
     boolean mode_f = true; boolean invert_f = true;
 
@@ -46,6 +56,18 @@ public class Activity_engine extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_engine);
+
+        // 폰트 설정
+        Typeface tf = Typeface.createFromAsset(getAssets(), "fonts/digital.ttf");
+        TextClock clock = (TextClock) findViewById(R.id.textClock_e);
+        clock.setTypeface(tf);
+
+        check = getIntent();
+        check_activity = check.getStringExtra("activity");
+        if(check_activity == null)
+        {
+            check_activity = "main";
+        }
 
         eng_28h = (Button)findViewById(R.id.eng_28h);
         eng_36h = (Button)findViewById(R.id.eng_36h);
@@ -72,6 +94,14 @@ public class Activity_engine extends AppCompatActivity {
         eng_r_right = (Button)findViewById(R.id.eng_r_right);
 
         oxygen_m = (TextView) findViewById(R.id.oxygen_m);
+        oxygen_m.setTypeface(tf);
+        operation_t = (TextView) findViewById(R.id.operation_t);
+        operation_t.setTypeface(tf);
+
+        hidden_e_1 = (Button)findViewById(R.id.hidden_e_1);
+        hidden_e_2 = (Button)findViewById(R.id.hidden_e_2);
+        hidden_e_3 = (Button)findViewById(R.id.hidden_e_3);
+        hidden_e_4 = (Button)findViewById(R.id.hidden_e_4);
 
         program_m = (Button)findViewById(R.id.program_m);
         invert_choice = (Button)findViewById(R.id.invert_choice);
@@ -79,6 +109,8 @@ public class Activity_engine extends AppCompatActivity {
         communicator = Application_communicator.getCommunicator();
         int ox_m = (communicator.get_rx_idx(7)+communicator.get_rx_idx(8)+communicator.get_rx_idx(9)+communicator.get_rx_idx(10))/4;
         oxygen_m.setText(String.valueOf(ox_m));
+
+        main_intent = new Intent(this, Activity_waiting.class);
 
         View.OnClickListener listener = new View.OnClickListener() {
             public void onClick(View v) {
@@ -310,6 +342,48 @@ public class Activity_engine extends AppCompatActivity {
                         }
                         communicator.set_engineer(2,(byte)((byte)inverter|(byte)w_press));
                         break;
+
+                    case R.id.hidden_e_1:
+                        //
+                        if(hidden[3] == true)
+                        {
+                            hidden[0] = false;
+                            hidden[1] = false;
+                            hidden[2] = false;
+                            hidden[3] = false;
+                            //operating time re-set
+
+
+                        }else
+                        {
+                            hidden[0] = true;
+                            Log.v("hidden","hidden1");
+                        }
+                        break;
+                    case R.id.hidden_e_2:
+                        //
+                        if(hidden[0] == true)
+                        {
+                            hidden[1] = true;
+                            Log.v("hidden","hidden2");
+                        }
+                        break;
+                    case R.id.hidden_e_3:
+                        //
+                        if(hidden[1] == true)
+                        {
+                            hidden[2] = true;
+                            Log.v("hidden","hidden3");
+                        }
+                        break;
+                    case R.id.hidden_e_4:
+                        //
+                        if(hidden[2] == true)
+                        {
+                            hidden[3] = true;
+                            Log.v("hidden","hidden4");
+                        }
+                        break;
                 }
             }
         };
@@ -332,6 +406,12 @@ public class Activity_engine extends AppCompatActivity {
         eng_b_ven.setOnClickListener(listener);
         program_m.setOnClickListener(listener);
         invert_choice.setOnClickListener(listener);
+
+        hidden_e_1.setOnClickListener(listener);
+        hidden_e_2.setOnClickListener(listener);
+        hidden_e_3.setOnClickListener(listener);
+        hidden_e_4.setOnClickListener(listener);
+
         /*
         eng_door_open.setOnClickListener(listener);
         eng_door_close.setOnClickListener(listener);
@@ -393,7 +473,14 @@ public class Activity_engine extends AppCompatActivity {
                 switch (id) {
                     case R.id.eng_b_back:
                         eng_b_back.setBackgroundResource(R.drawable.button_circle_back_off);
-                        finish();
+                        Log.v("test","check_activity : " + check_activity);
+                        if(check_activity.equals("setting")){
+                            finish();
+                        }
+                        else{
+                            startActivity(main_intent);
+                        }
+
                         break;
                     case R.id.eng_b_left:
                         eng_b_left.setBackgroundResource(R.drawable.moving_left_off);

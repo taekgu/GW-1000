@@ -18,7 +18,7 @@
             android:layout_height="0dp"
             android:visibility="invisible"
             android:layout_weight="7"
-            android:id="@+id/hidden_1" />
+            android:id="@+id/hidden_e_1" />
 
         <Button
             android:layout_width="wrap_content"
@@ -31,7 +31,7 @@
             android:layout_height="0dp"
             android:visibility="invisible"
             android:layout_weight="7"
-            android:id="@+id/hidden_4"/>
+            android:id="@+id/hidden_e_4"/>
 
     </LinearLayout>
 
@@ -202,10 +202,11 @@
                 android:layout_gravity="center"
                 android:gravity="right"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginTop="3.5dp"
                 android:id="@+id/oxygen_m"
-                android:textSize="25dp"
-                android:layout_marginBottom="5dp"
+                android:textSize="45dp"
+                android:textColor="#00ffff"
                 android:layout_weight="10" />
 
             <Button
@@ -309,9 +310,11 @@
                 android:layout_gravity="center"
                 android:gravity="right"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:id="@+id/textView2"
-                android:textSize="25dp"
+                android:layout_height="match_parent"
+                android:id="@+id/operation_t"
+                android:layout_marginTop="7.5dp"
+                android:textSize="40dp"
+                android:textColor="#00ffff"
                 android:layout_weight="37" />
 
             <Button
@@ -359,6 +362,29 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="7">
+
+            <Button
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:visibility="invisible"
+                android:layout_weight="55" />
+
+            <TextClock
+                android:gravity="center"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:textSize="40dp"
+                android:textColor="#00ffff"
+                android:format12Hour="HH:mm"
+                android:layout_weight="40"
+                android:layout_marginBottom="0dp"
+                android:id="@+id/textClock_e" />
+
+            <Button
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:visibility="invisible"
+                android:layout_weight="4.3" />
 
         </LinearLayout>
 
@@ -493,7 +519,7 @@
             android:layout_height="0dp"
             android:visibility="invisible"
             android:layout_weight="7"
-            android:id="@+id/hidden_2" />
+            android:id="@+id/hidden_e_2" />
 
         <Button
             android:layout_width="wrap_content"
@@ -506,7 +532,7 @@
             android:layout_height="0dp"
             android:visibility="invisible"
             android:layout_weight="7"
-            android:id="@+id/hidden_3"/>
+            android:id="@+id/hidden_e_3"/>
 
     </LinearLayout>
 
