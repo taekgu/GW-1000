@@ -9,20 +9,14 @@
         android:id="@+id/button_play"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@drawable/button_play_off"/>
-
-    <Button
-        android:id="@+id/button_pause"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         android:background="@drawable/button_pause_off"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"/>
+        android:layout_marginRight="10dp"/>
 
     <Button
         android:id="@+id/button_stop"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@drawable/button_stop_off"/>
+        android:background="@drawable/button_stop_off"
+        android:layout_marginLeft="10dp"/>
 
 </LinearLayout>

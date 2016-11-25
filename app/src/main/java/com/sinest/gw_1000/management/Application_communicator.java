@@ -21,17 +21,36 @@ public class Application_communicator extends Application {
     public final static String VAL_PRESSURE = "val_pressure";
     public final static String VAL_TIME     = "val_time";
 
+    // 대기모드 동작시간
+    public final static String WAITING_WORKING_TIME = "waiting_working_time";
+
     // 라이브러리 20개중 선택된 값
-    public final static String LIBRARY_LOC  = "library_location";
+    public final static int MAX_CHECKED = 4;
+    public final static String LIBRARY_LOC_  = "library_location_";
 
     // 매뉴얼 모드 man_pattern_*_*
     public final static String MANUAL_MODE_PATTERN_ = "man_pattern_";
     public final static String MANUAL_MODE_TIME_ = "man_time_";
 
-    public final static String WAITING_WORKING_TIME = "waiting_working_time";
+    // 언어 [KOR, ENG, CHI]
+    public static int LANGUAGE = 0;
 
+    // 사운드 id
+    public final static int NUM_OF_LANG = 3;
+    public final static int NUM_OF_SOUND = 5;
+    public final static int[] ID_KOR = new int[5];
+    public final static int[] ID_ENG = new int[5];
+    public final static int[] ID_CHI = new int[5];
+    public final static int[][] ID_LANG_SOUND = new int[NUM_OF_LANG][NUM_OF_SOUND];
+
+    // App context
     private static Context context;
+
+    // Communicator
     private static Communicator communicator;
+
+    // SoundManager
+    private static SoundManager soundManager;
 
     // 앱 동작 시간
     private int runningTime = 0;
@@ -40,12 +59,17 @@ public class Application_communicator extends Application {
 
         Application_communicator.context = getApplicationContext();
         Application_communicator.communicator = new Communicator(context);
-
+        Application_communicator.soundManager = new SoundManager(context);
     }
 
     public static Communicator getCommunicator() {
 
         return communicator;
+    }
+
+    public static SoundManager getSoundManager() {
+
+        return soundManager;
     }
 
     public static void setFullScreen(Activity activity)

@@ -40,7 +40,7 @@ public class Activity_waiting extends AppCompatActivity {
     private int val_time = 0;
 
     TextView time_text, oxygen_text, pressure_text;
-    int[] checked_loc = new int[20];
+    int[] checked_loc = new int[Application_communicator.MAX_CHECKED];
     Fragment_waiting fragment_waiting;
     Fragment_working fragment_working;
 
@@ -51,7 +51,7 @@ public class Activity_waiting extends AppCompatActivity {
 
         // 폰트 설정
         Typeface tf = Typeface.createFromAsset(getAssets(), "fonts/digital.ttf");
-        TextClock clock = (TextClock) findViewById(R.id.textClock);
+        TextClock clock = (TextClock) findViewById(R.id.waiting_clock);
         clock.setTypeface(tf);
 
         SharedPreferences sharedPreferences = getSharedPreferences(Application_communicator.NAME_OF_SHARED_PREF, 0);
@@ -62,14 +62,11 @@ public class Activity_waiting extends AppCompatActivity {
         communicator = Application_communicator.getCommunicator();
 
         fragment_waiting = new Fragment_waiting();
-        for (int i=0; i<20; i++) {
+        for (int i=0; i<Application_communicator.MAX_CHECKED; i++) {
 
-            checked_loc[i] = sharedPreferences.getInt(Application_communicator.LIBRARY_LOC + i, 0);
-            if (checked_loc[i] == 1) {
-
-                fragment_waiting.addCheckedIdx(i);
-                Log.i("WIFI", "addCheckedIdx " + i);
-            }
+            checked_loc[i] = sharedPreferences.getInt(Application_communicator.LIBRARY_LOC_ + i, i);
+            fragment_waiting.addCheckedIdx(checked_loc[i]);
+            Log.i("JW", "Selected library idx : " + checked_loc[i]);
         }
 
         FragmentManager fragmentManager = getFragmentManager();
@@ -121,15 +118,11 @@ public class Activity_waiting extends AppCompatActivity {
         SharedPreferences sharedPreferences = getSharedPreferences(Application_communicator.NAME_OF_SHARED_PREF, 0);
 
         fragment_waiting.reset();
-        for (int i=0; i<20; i++) {
+        for (int i=0; i<Application_communicator.MAX_CHECKED; i++) {
 
-            checked_loc[i] = 0;
-            checked_loc[i] = sharedPreferences.getInt(Application_communicator.LIBRARY_LOC + i, 0);
-            if (checked_loc[i] == 1) {
-
-                fragment_waiting.addCheckedIdx(i);
-            //    Log.i("WIFI", "addCheckedIdx " + i);
-            }
+            checked_loc[i] = sharedPreferences.getInt(Application_communicator.LIBRARY_LOC_ + i, i);
+            fragment_waiting.addCheckedIdx(checked_loc[i]);
+            Log.i("JW", "Selected library idx : " + checked_loc[i]);
         }
         fragment_waiting.refresh();
 
@@ -163,7 +156,7 @@ public class Activity_waiting extends AppCompatActivity {
 
     public void changeFragment_working(int modeNum) {
 
-        Log.i("WIFI", "changeFragment");
+        Log.i("JW", "changeFragment");
         FragmentManager fm = getFragmentManager();
         FragmentTransaction fragmentTransaction = fm.beginTransaction();
 
@@ -179,7 +172,7 @@ public class Activity_waiting extends AppCompatActivity {
 
     public void changeFragment_waiting() {
 
-        Log.i("WIFI", "changeFragment");
+        Log.i("JW", "changeFragment");
         FragmentManager fm = getFragmentManager();
         FragmentTransaction fragmentTransaction = fm.beginTransaction();
 
@@ -200,7 +193,7 @@ public class Activity_waiting extends AppCompatActivity {
         setHandler_update_data();
         broadcastReceiver = new Application_broadcast(handler_update_data);
         this.registerReceiver(broadcastReceiver, mIntentFilter);
-        Log.i("WIFI", "registerReceiver");
+        Log.i("JW", "registerReceiver");
     }
 
     private void unregistReceiver() {
@@ -209,7 +202,7 @@ public class Activity_waiting extends AppCompatActivity {
 
             this.unregisterReceiver(broadcastReceiver);
             broadcastReceiver = null;
-            Log.i("WIFI", "unregisterReceiver");
+            Log.i("JW", "unregisterReceiver");
         }
     }
 
@@ -232,11 +225,11 @@ public class Activity_waiting extends AppCompatActivity {
                     textView_humidity.setText(temp);
 
                     temp = ""+communicator.get_rx_idx(3);
-                    TextView textView_temperature = (TextView) findViewById(R.id.textView_temperature);
+                    TextView textView_temperature = (TextView) findViewById(R.id.textView_temperature_above);
                     textView_temperature.setText(temp);
 
                     temp = ""+communicator.get_rx_idx(2);
-                    TextView textView_temperature_bed = (TextView) findViewById(R.id.textView_temperature_bed);
+                    TextView textView_temperature_bed = (TextView) findViewById(R.id.textView_temperature_below);
                     textView_temperature_bed.setText(temp);
                 }
             }
@@ -321,12 +314,11 @@ public class Activity_waiting extends AppCompatActivity {
                         b  = (Button) view;
                         b.setBackgroundResource(R.drawable.button_up);
 
-                        val_oxygen += 5;
-                        if (val_oxygen > 40) val_oxygen = 40;
+                        val_oxygen++;
+                        if (val_oxygen > 5) val_oxygen = 5;
                         oxygen_text.setText(""+val_oxygen);
 
-                        // 20:5:40 -> 1 ~ 5 값으로 변환해서 전송
-                        val = (byte) ((val_oxygen / 5) - 3);
+                        val = (byte) val_oxygen;
                         communicator.set_tx(8, val);
                         communicator.send(communicator.get_tx());
                         break;
@@ -334,12 +326,11 @@ public class Activity_waiting extends AppCompatActivity {
                         b  = (Button) view;
                         b.setBackgroundResource(R.drawable.button_down);
 
-                        val_oxygen -= 5;
-                        if (val_oxygen < 20) val_oxygen = 20;
+                        val_oxygen--;
+                        if (val_oxygen < 0) val_oxygen = 0;
                         oxygen_text.setText(""+val_oxygen);
 
-                        // 20:5:40 -> 1 ~ 5 값으로 변환해서 전송
-                        val = (byte) ((val_oxygen / 5) - 3);
+                        val = (byte) val_oxygen;
                         communicator.set_tx(8, val);
                         communicator.send(communicator.get_tx());
                         break;
@@ -359,7 +350,7 @@ public class Activity_waiting extends AppCompatActivity {
                         b.setBackgroundResource(R.drawable.button_down);
 
                         val_pressure -= 1;
-                        if (val_pressure < 1) val_pressure = 1;
+                        if (val_pressure < 0) val_pressure = 0;
                         pressure_text.setText(""+val_pressure);
 
                         communicator.set_tx(5, (byte)val_pressure);
@@ -390,6 +381,8 @@ public class Activity_waiting extends AppCompatActivity {
                         val = 0x01;
                         communicator.set_tx(11, val);
                         communicator.send(communicator.get_tx());
+
+                        Application_communicator.getSoundManager().play(Application_communicator.ID_LANG_SOUND[Application_communicator.LANGUAGE][3]);
                         break;
                     case R.id.waiting_doorclose_button:
                         b  = (Button) view;
@@ -400,6 +393,8 @@ public class Activity_waiting extends AppCompatActivity {
                         val = 0x02;
                         communicator.set_tx(11, val);
                         communicator.send(communicator.get_tx());
+
+                        Application_communicator.getSoundManager().play(Application_communicator.ID_LANG_SOUND[Application_communicator.LANGUAGE][4]);
                         break;
                     case R.id.waiting_time_text:
                         intent = new Intent(getApplicationContext(), Activity_waiting_working_time_popup.class);
@@ -408,10 +403,6 @@ public class Activity_waiting extends AppCompatActivity {
                 }
             }
             return true;
-        }
-    };
-    private View.OnClickListener mClickListener = new View.OnClickListener() {
-        public void onClick(View v) {
         }
     };
 }

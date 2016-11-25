@@ -12,6 +12,7 @@ import android.util.Log;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextClock;
 import android.widget.TextView;
@@ -45,7 +46,7 @@ public class Activity_waiting_rfid extends AppCompatActivity {
 
         // 폰트 설정
         Typeface tf = Typeface.createFromAsset(getAssets(), "fonts/digital.ttf");
-        TextClock clock = (TextClock) findViewById(R.id.textView_clock);
+        TextClock clock = (TextClock) findViewById(R.id.waiting_rfid_clock);
         clock.setTypeface(tf);
 
         getDataFromDB();
@@ -128,7 +129,7 @@ public class Activity_waiting_rfid extends AppCompatActivity {
         setHandler_update_data();
         broadcastReceiver = new Application_broadcast(handler_update_data);
         this.registerReceiver(broadcastReceiver, mIntentFilter);
-        Log.i("WIFI", "registerReceiver");
+        Log.i("JW", "registerReceiver");
     }
 
     private void unregistReceiver() {
@@ -137,7 +138,7 @@ public class Activity_waiting_rfid extends AppCompatActivity {
 
             this.unregisterReceiver(broadcastReceiver);
             broadcastReceiver = null;
-            Log.i("WIFI", "unregisterReceiver");
+            Log.i("JW", "unregisterReceiver");
         }
     }
 
@@ -153,21 +154,21 @@ public class Activity_waiting_rfid extends AppCompatActivity {
 
                     int val = (communicator.get_rx_idx(7) + communicator.get_rx_idx(8) + communicator.get_rx_idx(9) + communicator.get_rx_idx(10)) / 4;
                     String temp = ""+ val;
-                    TextView textView_oxygen = (TextView) findViewById(R.id.textView_oxygen);
+                    TextView textView_oxygen = (TextView) findViewById(R.id.textView_rfid_oxygen);
                     textView_oxygen.setText(temp);
 
                     val = (communicator.get_rx_idx(11) + communicator.get_rx_idx(12) + communicator.get_rx_idx(13) + communicator.get_rx_idx(14)) / 4;
                     temp = ""+val;
-                    TextView textView_humidity = (TextView) findViewById(R.id.textView_humidity);
+                    TextView textView_humidity = (TextView) findViewById(R.id.textView_rfid_humidity);
                     textView_humidity.setText(temp);
 
                     val = (communicator.get_rx_idx(3) + communicator.get_rx_idx(4) + communicator.get_rx_idx(5) + communicator.get_rx_idx(6)) / 4;
                     temp = ""+val;
-                    TextView textView_temperature = (TextView) findViewById(R.id.textView_temperature);
+                    TextView textView_temperature = (TextView) findViewById(R.id.textView_rfid_temperature_above);
                     textView_temperature.setText(temp);
 
                     temp = ""+communicator.get_rx_idx(2);
-                    TextView textView_temperature_bed = (TextView) findViewById(R.id.textView_temperature_bed);
+                    TextView textView_temperature_bed = (TextView) findViewById(R.id.textView_rfid_temperature_below);
                     textView_temperature_bed.setText(temp);
                 }
             }
@@ -196,67 +197,67 @@ public class Activity_waiting_rfid extends AppCompatActivity {
             int id = view.getId();
             if (action == MotionEvent.ACTION_DOWN) {
                 switch (id) {
-                    case R.id.waiting_library_button:
+                    case R.id.waiting_rfid_library_button:
                         b  = (Button) view;
                         b.setBackgroundResource(R.drawable.library_on);
                         break;
-                    case R.id.waiting_setting_button:
+                    case R.id.waiting_rfid_setting_button:
                         b  = (Button) view;
                         b.setBackgroundResource(R.drawable.setting_on);
                         break;
-                    case R.id.waiting_oxygen_up_button:
+                    case R.id.waiting_rfid_oxygen_up_button:
                         b  = (Button) view;
                         b.setBackgroundResource(R.drawable.button_up_on);
                         break;
-                    case R.id.waiting_oxygen_down_button:
+                    case R.id.waiting_rfid_oxygen_down_button:
                         b  = (Button) view;
                         b.setBackgroundResource(R.drawable.button_down_on);
                         break;
-                    case R.id.waiting_pressure_up_button:
+                    case R.id.waiting_rfid_pressure_up_button:
                         b  = (Button) view;
                         b.setBackgroundResource(R.drawable.button_up_on);
                         break;
-                    case R.id.waiting_pressure_down_button:
+                    case R.id.waiting_rfid_pressure_down_button:
                         b  = (Button) view;
                         b.setBackgroundResource(R.drawable.button_down_on);
                         break;
-                    case R.id.waiting_time_up_button:
+                    case R.id.waiting_rfid_time_up_button:
                         b  = (Button) view;
                         b.setBackgroundResource(R.drawable.button_up_on);
                         break;
-                    case R.id.waiting_time_down_button:
+                    case R.id.waiting_rfid_time_down_button:
                         b  = (Button) view;
                         b.setBackgroundResource(R.drawable.button_down_on);
                         break;
-                    case R.id.waiting_dooropen_button:
+                    case R.id.waiting_rfid_dooropen_button:
                         b  = (Button) view;
                         b.setBackgroundResource(R.drawable.door_open_on);
                         break;
-                    case R.id.waiting_doorclose_button:
+                    case R.id.waiting_rfid_doorclose_button:
                         b  = (Button) view;
                         b.setBackgroundResource(R.drawable.door_close_on);
                         break;
-                    case R.id.waiting_time_text:
+                    case R.id.waiting_rfid_time_text:
                         break;
                 }
             } else if (action == MotionEvent.ACTION_UP) {
 
                 byte val = 0x00;
                 switch (id) {
-                    case R.id.waiting_library_button:
+                    case R.id.waiting_rfid_library_button:
                         b  = (Button) view;
                         b.setBackgroundResource(R.drawable.library);
                         intent = new Intent(getApplicationContext(), Activity_library.class);
                         startActivity(intent);
                         break;
-                    case R.id.waiting_setting_button:
+                    case R.id.waiting_rfid_setting_button:
                         b  = (Button) view;
                         b.setBackgroundResource(R.drawable.setting);
                         //setting
                         intent_setting = new Intent(getApplicationContext(), Activity_setting.class);
                         startActivity(intent_setting);
                         break;
-                    case R.id.waiting_oxygen_up_button:
+                    case R.id.waiting_rfid_oxygen_up_button:
                         b  = (Button) view;
                         b.setBackgroundResource(R.drawable.button_up);
 /*
@@ -273,7 +274,7 @@ public class Activity_waiting_rfid extends AppCompatActivity {
                         communicator.set_tx(8, val);
                         communicator.send(communicator.get_tx());
                         break;
-                    case R.id.waiting_oxygen_down_button:
+                    case R.id.waiting_rfid_oxygen_down_button:
                         b  = (Button) view;
                         b.setBackgroundResource(R.drawable.button_down);
 /*
@@ -290,7 +291,7 @@ public class Activity_waiting_rfid extends AppCompatActivity {
                         communicator.set_tx(8, val);
                         communicator.send(communicator.get_tx());
                         break;
-                    case R.id.waiting_pressure_up_button:
+                    case R.id.waiting_rfid_pressure_up_button:
                         b  = (Button) view;
                         b.setBackgroundResource(R.drawable.button_up);
 
@@ -301,7 +302,7 @@ public class Activity_waiting_rfid extends AppCompatActivity {
                         communicator.set_tx(5, (byte)val_pressure);
                         communicator.send(communicator.get_tx());
                         break;
-                    case R.id.waiting_pressure_down_button:
+                    case R.id.waiting_rfid_pressure_down_button:
                         b  = (Button) view;
                         b.setBackgroundResource(R.drawable.button_down);
 
@@ -312,7 +313,7 @@ public class Activity_waiting_rfid extends AppCompatActivity {
                         communicator.set_tx(5, (byte)val_pressure);
                         communicator.send(communicator.get_tx());
                         break;
-                    case R.id.waiting_time_up_button:
+                    case R.id.waiting_rfid_time_up_button:
                         b  = (Button) view;
                         b.setBackgroundResource(R.drawable.button_up);
 
@@ -320,7 +321,7 @@ public class Activity_waiting_rfid extends AppCompatActivity {
                         if (val_time > 90) val_time = 90;
                         time_text.setText(""+val_time);
                         break;
-                    case R.id.waiting_time_down_button:
+                    case R.id.waiting_rfid_time_down_button:
                         b  = (Button) view;
                         b.setBackgroundResource(R.drawable.button_down);
 
@@ -328,7 +329,7 @@ public class Activity_waiting_rfid extends AppCompatActivity {
                         if (val_time < 1) val_time = 1;
                         time_text.setText(""+val_time);
                         break;
-                    case R.id.waiting_dooropen_button:
+                    case R.id.waiting_rfid_dooropen_button:
                         b  = (Button) view;
                         background = (LinearLayout)findViewById(R.id.waiting_background);
                         b.setBackgroundResource(R.drawable.door_open_off);
@@ -337,8 +338,10 @@ public class Activity_waiting_rfid extends AppCompatActivity {
                         val = 0x01;
                         communicator.set_tx(11, val);
                         communicator.send(communicator.get_tx());
+
+                        Application_communicator.getSoundManager().play(Application_communicator.ID_LANG_SOUND[Application_communicator.LANGUAGE][3]);
                         break;
-                    case R.id.waiting_doorclose_button:
+                    case R.id.waiting_rfid_doorclose_button:
                         b  = (Button) view;
                         background = (LinearLayout)findViewById(R.id.waiting_background);
                         b.setBackgroundResource(R.drawable.door_close_off);
@@ -347,8 +350,10 @@ public class Activity_waiting_rfid extends AppCompatActivity {
                         val = 0x02;
                         communicator.set_tx(11, val);
                         communicator.send(communicator.get_tx());
+
+                        Application_communicator.getSoundManager().play(Application_communicator.ID_LANG_SOUND[Application_communicator.LANGUAGE][4]);
                         break;
-                    case R.id.waiting_time_text:
+                    case R.id.waiting_rfid_time_text:
                         intent = new Intent(getApplicationContext(), Activity_waiting_working_time_popup.class);
                         startActivity(intent);
                         break;

@@ -22,7 +22,8 @@ import com.sinest.gw_1000.management.Application_communicator;
 public class Fragment_working extends Fragment {
 
     private int modeNum = -1;
-    Button play, pause, stop;
+    Button play, stop;
+    private int state = 0; // 0:pause, 1:play
 
     public Fragment_working() {
 
@@ -38,14 +39,13 @@ public class Fragment_working extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_working, container, false);
 
-     //   Log.i("WIFI", "onCreateView - Fragment_working");
+     //   Log.i("JW", "onCreateView - Fragment_working");
+        state = 1;
 
         play = (Button) view.findViewById(R.id.button_play);
-        pause = (Button) view.findViewById(R.id.button_pause);
         stop = (Button) view.findViewById(R.id.button_stop);
 
         play.setOnTouchListener(mTouchEvent);
-        pause.setOnTouchListener(mTouchEvent);
         stop.setOnTouchListener(mTouchEvent);
 
         return view;
@@ -64,11 +64,15 @@ public class Fragment_working extends Fragment {
                 switch (id) {
                     case R.id.button_play:
 
-                        button_clicked.setBackgroundResource(R.drawable.button_play_on);
-                        break;
-                    case R.id.button_pause:
+                        // play 중이면
+                        if (state == 1) {
 
-                        button_clicked.setBackgroundResource(R.drawable.button_pause_on);
+                            button_clicked.setBackgroundResource(R.drawable.button_pause_on);
+                        }
+                        else {
+
+                            button_clicked.setBackgroundResource(R.drawable.button_play_on);
+                        }
                         break;
                     case R.id.button_stop:
 
@@ -82,18 +86,28 @@ public class Fragment_working extends Fragment {
                 switch (id) {
                     case R.id.button_play:
 
-                        button_clicked.setBackgroundResource(R.drawable.button_play_off);
-                        communicator.set_tx(1, (byte)0x01);
-                        break;
-                    case R.id.button_pause:
+                        // play 중이면
+                        if (state == 1) {
 
-                        button_clicked.setBackgroundResource(R.drawable.button_pause_off);
-                        communicator.set_tx(1, (byte)0x02);
+                            state = 0;
+                            button_clicked.setBackgroundResource(R.drawable.button_play_off);
+                            communicator.set_tx(1, (byte)0x02);
+                            Application_communicator.getSoundManager().play(Application_communicator.ID_LANG_SOUND[Application_communicator.LANGUAGE][1]);
+                        }
+                        // pause 중이면
+                        else {
+
+                            state = 1;
+                            button_clicked.setBackgroundResource(R.drawable.button_pause_off);
+                            communicator.set_tx(1, (byte)0x01);
+                            Application_communicator.getSoundManager().play(Application_communicator.ID_LANG_SOUND[Application_communicator.LANGUAGE][0]);
+                        }
                         break;
                     case R.id.button_stop:
 
                         button_clicked.setBackgroundResource(R.drawable.button_stop_off);
                         communicator.set_tx(1, (byte)0x00);
+                        Application_communicator.getSoundManager().play(Application_communicator.ID_LANG_SOUND[Application_communicator.LANGUAGE][2]);
                         activity_waiting.changeFragment_waiting();
                         break;
                 }

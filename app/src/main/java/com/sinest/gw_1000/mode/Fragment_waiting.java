@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import com.sinest.gw_1000.R;
+import com.sinest.gw_1000.management.Application_communicator;
 
 /**
  * Created by Jinwook on 2016-11-21.
@@ -42,32 +43,34 @@ public class Fragment_waiting extends Fragment {
     public void reset() {
 
         idx = 0;
-        for (int i=0; i<4; i++) {
+        for (int i=0; i<Application_communicator.MAX_CHECKED; i++) {
 
-            checked_idx[i] = 0;
+            checked_idx[i] = -1;
         }
     }
 
     public void refresh() {
 
-        for (int i=0; i<4; i++) {
+        for (int i=0; i<Application_communicator.MAX_CHECKED; i++) {
 
-            int btn_resourceId = getResources().getIdentifier("button_mode_" + (i + 1), "id", "com.sinest.gw_1000");
-            mode[i] = (Button) view.findViewById(btn_resourceId);
-            mode[i].setOnTouchListener(mTouchEvent);
+            if (checked_idx[i] != -1) {
 
-            int resourceId = -1;
-            if (checked_idx[i] < 15) {
+                int btn_resourceId = getResources().getIdentifier("button_mode_" + (i + 1), "id", "com.sinest.gw_1000");
+                mode[i] = (Button) view.findViewById(btn_resourceId);
+                mode[i].setOnTouchListener(mTouchEvent);
 
-                resourceId = getResources().getIdentifier("automode_" + (checked_idx[i]+1), "drawable", "com.sinest.gw_1000");
-             //   Log.i("WIFI", "automode_" + (checked_idx[i]+1));
+                int resourceId = -1;
+                if (checked_idx[i] < 15) {
+
+                    resourceId = getResources().getIdentifier("automode_" + (checked_idx[i] + 1), "drawable", "com.sinest.gw_1000");
+                    //   Log.i("JW", "automode_" + (checked_idx[i]+1));
+                } else {
+
+                    resourceId = getResources().getIdentifier("manual_mode_" + (checked_idx[i] - 14), "drawable", "com.sinest.gw_1000");
+                    //    Log.i("JW", "manual_mode_" + (checked_idx[i]+1));
+                }
+                mode[i].setBackgroundResource(resourceId);
             }
-            else {
-
-                resourceId = getResources().getIdentifier("manual_mode_" + (checked_idx[i]-14), "drawable", "com.sinest.gw_1000");
-            //    Log.i("WIFI", "manual_mode_" + (checked_idx[i]+1));
-            }
-            mode[i].setBackgroundResource(resourceId);
         }
     }
 
@@ -120,6 +123,7 @@ public class Fragment_waiting extends Fragment {
                         }
                         mode[i].setBackgroundResource(resourceId);
                         activity.changeFragment_working(i+1);
+                        Application_communicator.getSoundManager().play(Application_communicator.ID_LANG_SOUND[Application_communicator.LANGUAGE][0]);
                     }
                 }
             }
