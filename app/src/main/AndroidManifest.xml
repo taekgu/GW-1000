@@ -1,33 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.sinest.gw_1000">
 
-    <uses-sdk android:minSdkVersion="14"/>
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
-    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE"/>
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
-    <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE"/>
-    <uses-permission android:name="android.permission.INTERNET"/>
-    <uses-feature android:name="android.hardware.wifi.direct" android:required="true"/>
+    <uses-sdk android:minSdkVersion="14" />
+
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+
+    <uses-feature
+        android:name="android.hardware.wifi.direct"
+        android:required="true" />
+
+    <android:uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <android:uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <android:uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <application
+        android:name=".management.Application_communicator"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
-        android:theme="@style/Theme.AppCompat.NoActionBar"
-        android:name=".management.Application_communicator">
-
+        android:theme="@style/Theme.AppCompat.NoActionBar">
         <activity
             android:name=".splash.Activity_booting"
             android:theme="@style/AppTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
-
-
         <activity
             android:name=".mode.Activity_waiting_rfid"
             android:screenOrientation="landscape"
@@ -41,22 +47,19 @@
             android:name=".mode.Activity_manual_mode_pattern_popup"
             android:screenOrientation="landscape"
             android:theme="@android:style/Theme.Dialog" />
-
-        <activity android:name=".mode.Activity_waiting_working_time_popup"
+        <activity
+            android:name=".mode.Activity_waiting_working_time_popup"
             android:screenOrientation="landscape"
-            android:theme="@android:style/Theme.Dialog"/>
-
-
-
+            android:theme="@android:style/Theme.Dialog" />
         <activity
             android:name=".setting.Activity_setting"
             android:screenOrientation="landscape"
-            android:theme="@style/Theme.AppCompat.NoActionBar"/>
+            android:theme="@style/Theme.AppCompat.NoActionBar" />
         <activity
             android:name=".setting.Activity_emotion"
             android:launchMode="singleInstance"
-            android:theme="@style/Theme.AppCompat.Dialog"
-            android:screenOrientation="landscape"/>
+            android:screenOrientation="landscape"
+            android:theme="@style/Theme.AppCompat.Dialog" />
         <activity
             android:name=".setting.Activity_rfid"
             android:launchMode="singleInstance"
@@ -86,12 +89,16 @@
             android:name=".setting.Activity_finishtime"
             android:launchMode="singleInstance"
             android:screenOrientation="landscape"
-            android:theme="@style/Theme.AppCompat.Dialog" /><!-- ATTENTION: This was auto-generated to add Google Play services to your project for
-     App Indexing.  See https://g.co/AppIndexing/AndroidStudio for more information. -->
+            android:theme="@style/Theme.AppCompat.Dialog" />
+        <!--
+ ATTENTION: This was auto-generated to add Google Play services to your project for
+     App Indexing.  See https://g.co/AppIndexing/AndroidStudio for more information.
+        -->
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
 
+        <activity android:name=".setting.Activity_rfidpassword_check"></activity>
     </application>
 
 </manifest>
