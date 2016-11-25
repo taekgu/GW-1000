@@ -14,7 +14,7 @@ import com.sinest.gw_1000.communication.Communicator;
  * Created by Jinwook on 2016-11-20.
  */
 
-public class Application_communicator extends Application {
+public class Application_manager extends Application {
 
     // DB name
     public final static String NAME_OF_SHARED_PREF = "myData";
@@ -62,9 +62,9 @@ public class Application_communicator extends Application {
 
     public void onCreate() {
 
-        Application_communicator.context = getApplicationContext();
-        Application_communicator.communicator = new Communicator(context);
-        Application_communicator.soundManager = new SoundManager(context);
+        Application_manager.context = getApplicationContext();
+        Application_manager.communicator = new Communicator(context);
+        Application_manager.soundManager = new SoundManager(context);
 
         // 러닝타임 측정
         setThread_runningTime();

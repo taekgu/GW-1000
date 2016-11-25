@@ -12,10 +12,7 @@ import android.widget.TextView;
 
 import com.sinest.gw_1000.R;
 import com.sinest.gw_1000.communication.Communicator;
-import com.sinest.gw_1000.management.Application_communicator;
-
-import static android.R.attr.action;
-import static android.R.attr.id;
+import com.sinest.gw_1000.management.Application_manager;
 
 public class Activity_emotion extends Activity {
 
@@ -72,7 +69,7 @@ public class Activity_emotion extends Activity {
         led_bright = (TextView)findViewById(R.id.led_bright);
         sound_volume = (TextView)findViewById(R.id.sound_volume);
 
-        communicator = Application_communicator.getCommunicator();
+        communicator = Application_manager.getCommunicator();
 
         emotion_ledm_up.setOnTouchListener(mTouchEvent);
         emotion_ledm_down.setOnTouchListener(mTouchEvent);

@@ -1,10 +1,8 @@
 package com.sinest.gw_1000.mode;
 
-import android.app.Activity;
 import android.app.Fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -12,7 +10,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import com.sinest.gw_1000.R;
-import com.sinest.gw_1000.management.Application_communicator;
+import com.sinest.gw_1000.management.Application_manager;
 
 /**
  * Created by Jinwook on 2016-11-21.
@@ -43,7 +41,7 @@ public class Fragment_waiting extends Fragment {
     public void reset() {
 
         idx = 0;
-        for (int i=0; i<Application_communicator.MAX_CHECKED; i++) {
+        for (int i = 0; i< Application_manager.MAX_CHECKED; i++) {
 
             checked_idx[i] = -1;
         }
@@ -51,7 +49,7 @@ public class Fragment_waiting extends Fragment {
 
     public void refresh() {
 
-        for (int i=0; i<Application_communicator.MAX_CHECKED; i++) {
+        for (int i = 0; i< Application_manager.MAX_CHECKED; i++) {
 
             if (checked_idx[i] != -1) {
 
@@ -123,7 +121,7 @@ public class Fragment_waiting extends Fragment {
                         }
                         mode[i].setBackgroundResource(resourceId);
                         activity.changeFragment_working(i+1);
-                        Application_communicator.getSoundManager().play(Application_communicator.ID_LANG_SOUND[Application_communicator.LANGUAGE][0]);
+                        Application_manager.getSoundManager().play(Application_manager.ID_LANG_SOUND[Application_manager.LANGUAGE][0]);
                     }
                 }
             }

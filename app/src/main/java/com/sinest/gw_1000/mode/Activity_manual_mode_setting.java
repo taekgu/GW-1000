@@ -11,7 +11,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.sinest.gw_1000.R;
-import com.sinest.gw_1000.management.Application_communicator;
+import com.sinest.gw_1000.management.Application_manager;
 
 import static com.sinest.gw_1000.mode.Activity_waiting.REQUEST_CODE_WORKINGTIME_POPUP;
 
@@ -48,12 +48,12 @@ public class Activity_manual_mode_setting extends AppCompatActivity {
         }
 
         // 선택한 매뉴얼 모드 정보 로드
-        SharedPreferences sharedPreferences = getSharedPreferences(Application_communicator.NAME_OF_SHARED_PREF, 0);
+        SharedPreferences sharedPreferences = getSharedPreferences(Application_manager.NAME_OF_SHARED_PREF, 0);
         int resourceId;
         for (int i=0; i<3; i++) {
 
-            pattern[i] = sharedPreferences.getInt(Application_communicator.MANUAL_MODE_PATTERN_ + modeNum + "_" + i, 1);
-            time[i] = sharedPreferences.getInt(Application_communicator.MANUAL_MODE_TIME_ + modeNum + "_" + i, 30);
+            pattern[i] = sharedPreferences.getInt(Application_manager.MANUAL_MODE_PATTERN_ + modeNum + "_" + i, 1);
+            time[i] = sharedPreferences.getInt(Application_manager.MANUAL_MODE_TIME_ + modeNum + "_" + i, 30);
 
             resourceId = getResources().getIdentifier("manual_mode_setting_" + (i+1), "id", "com.sinest.gw_1000");
             manual_mode_setting[i] = (ImageView)findViewById(resourceId);
@@ -102,13 +102,13 @@ public class Activity_manual_mode_setting extends AppCompatActivity {
                         b.setBackgroundResource(R.drawable.save_mode_off);
 
                         // 변경된 값 저장 후 액티비티 종료
-                        SharedPreferences sharedPreferences = getSharedPreferences(Application_communicator.NAME_OF_SHARED_PREF, 0);
+                        SharedPreferences sharedPreferences = getSharedPreferences(Application_manager.NAME_OF_SHARED_PREF, 0);
                         SharedPreferences.Editor editor = sharedPreferences.edit();
 
                         for (int i=0; i<3; i++) {
 
-                            editor.putInt(Application_communicator.MANUAL_MODE_PATTERN_ + modeNum + "_" + i, pattern[i]);
-                            editor.putInt(Application_communicator.MANUAL_MODE_TIME_ + modeNum + "_" + i, time[i]);
+                            editor.putInt(Application_manager.MANUAL_MODE_PATTERN_ + modeNum + "_" + i, pattern[i]);
+                            editor.putInt(Application_manager.MANUAL_MODE_TIME_ + modeNum + "_" + i, time[i]);
                         }
                         editor.commit();
                         finish();

@@ -22,7 +22,7 @@ import android.widget.TextView;
 import com.sinest.gw_1000.R;
 import com.sinest.gw_1000.communication.Communicator;
 import com.sinest.gw_1000.management.Application_broadcast;
-import com.sinest.gw_1000.management.Application_communicator;
+import com.sinest.gw_1000.management.Application_manager;
 import com.sinest.gw_1000.setting.Activity_setting;
 
 public class Activity_waiting extends AppCompatActivity {
@@ -40,7 +40,7 @@ public class Activity_waiting extends AppCompatActivity {
     private int val_time = 0;
 
     TextView time_text, oxygen_text, pressure_text;
-    int[] checked_loc = new int[Application_communicator.MAX_CHECKED];
+    int[] checked_loc = new int[Application_manager.MAX_CHECKED];
     Fragment_waiting fragment_waiting;
     Fragment_working fragment_working;
 
@@ -54,17 +54,17 @@ public class Activity_waiting extends AppCompatActivity {
         TextClock clock = (TextClock) findViewById(R.id.waiting_clock);
         clock.setTypeface(tf);
 
-        SharedPreferences sharedPreferences = getSharedPreferences(Application_communicator.NAME_OF_SHARED_PREF, 0);
-        val_oxygen = sharedPreferences.getInt(Application_communicator.VAL_OXYGEN, 20);
-        val_pressure = sharedPreferences.getInt(Application_communicator.VAL_PRESSURE, 1);
-        val_time = sharedPreferences.getInt(Application_communicator.VAL_TIME, 10);
+        SharedPreferences sharedPreferences = getSharedPreferences(Application_manager.NAME_OF_SHARED_PREF, 0);
+        val_oxygen = sharedPreferences.getInt(Application_manager.VAL_OXYGEN, 20);
+        val_pressure = sharedPreferences.getInt(Application_manager.VAL_PRESSURE, 1);
+        val_time = sharedPreferences.getInt(Application_manager.VAL_TIME, 10);
 
-        communicator = Application_communicator.getCommunicator();
+        communicator = Application_manager.getCommunicator();
 
         fragment_waiting = new Fragment_waiting();
-        for (int i=0; i<Application_communicator.MAX_CHECKED; i++) {
+        for (int i = 0; i< Application_manager.MAX_CHECKED; i++) {
 
-            checked_loc[i] = sharedPreferences.getInt(Application_communicator.LIBRARY_LOC_ + i, i);
+            checked_loc[i] = sharedPreferences.getInt(Application_manager.LIBRARY_LOC_ + i, i);
             fragment_waiting.addCheckedIdx(checked_loc[i]);
             Log.i("JW", "Selected library idx : " + checked_loc[i]);
         }
@@ -115,18 +115,18 @@ public class Activity_waiting extends AppCompatActivity {
         super.onResume();
         registReceiver();
 
-        SharedPreferences sharedPreferences = getSharedPreferences(Application_communicator.NAME_OF_SHARED_PREF, 0);
+        SharedPreferences sharedPreferences = getSharedPreferences(Application_manager.NAME_OF_SHARED_PREF, 0);
 
         fragment_waiting.reset();
-        for (int i=0; i<Application_communicator.MAX_CHECKED; i++) {
+        for (int i = 0; i< Application_manager.MAX_CHECKED; i++) {
 
-            checked_loc[i] = sharedPreferences.getInt(Application_communicator.LIBRARY_LOC_ + i, i);
+            checked_loc[i] = sharedPreferences.getInt(Application_manager.LIBRARY_LOC_ + i, i);
             fragment_waiting.addCheckedIdx(checked_loc[i]);
             Log.i("JW", "Selected library idx : " + checked_loc[i]);
         }
         fragment_waiting.refresh();
 
-        val_time = sharedPreferences.getInt(Application_communicator.WAITING_WORKING_TIME, 0);
+        val_time = sharedPreferences.getInt(Application_manager.WAITING_WORKING_TIME, 0);
         time_text.setText(Integer.toString(val_time));
         /*
         FragmentManager fragmentManager = getFragmentManager();
@@ -144,11 +144,11 @@ public class Activity_waiting extends AppCompatActivity {
     @Override
     protected void onStop() {
         super.onStop();
-        SharedPreferences sharedPreferences = getSharedPreferences(Application_communicator.NAME_OF_SHARED_PREF, 0);
+        SharedPreferences sharedPreferences = getSharedPreferences(Application_manager.NAME_OF_SHARED_PREF, 0);
         SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putInt(Application_communicator.VAL_OXYGEN, val_oxygen);
-        editor.putInt(Application_communicator.VAL_PRESSURE, val_pressure);
-        editor.putInt(Application_communicator.VAL_TIME, val_time);
+        editor.putInt(Application_manager.VAL_OXYGEN, val_oxygen);
+        editor.putInt(Application_manager.VAL_PRESSURE, val_pressure);
+        editor.putInt(Application_manager.VAL_TIME, val_time);
         editor.commit();
     }
 
@@ -382,7 +382,7 @@ public class Activity_waiting extends AppCompatActivity {
                         communicator.set_tx(11, val);
                         communicator.send(communicator.get_tx());
 
-                        Application_communicator.getSoundManager().play(Application_communicator.ID_LANG_SOUND[Application_communicator.LANGUAGE][3]);
+                        Application_manager.getSoundManager().play(Application_manager.ID_LANG_SOUND[Application_manager.LANGUAGE][3]);
                         break;
                     case R.id.waiting_doorclose_button:
                         b  = (Button) view;
@@ -394,7 +394,7 @@ public class Activity_waiting extends AppCompatActivity {
                         communicator.set_tx(11, val);
                         communicator.send(communicator.get_tx());
 
-                        Application_communicator.getSoundManager().play(Application_communicator.ID_LANG_SOUND[Application_communicator.LANGUAGE][4]);
+                        Application_manager.getSoundManager().play(Application_manager.ID_LANG_SOUND[Application_manager.LANGUAGE][4]);
                         break;
                     case R.id.waiting_time_text:
                         intent = new Intent(getApplicationContext(), Activity_waiting_working_time_popup.class);

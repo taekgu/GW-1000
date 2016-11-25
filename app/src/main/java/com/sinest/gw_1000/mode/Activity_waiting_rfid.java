@@ -12,7 +12,6 @@ import android.util.Log;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextClock;
 import android.widget.TextView;
@@ -22,10 +21,8 @@ import android.content.Intent;
 import com.sinest.gw_1000.R;
 import com.sinest.gw_1000.communication.Communicator;
 import com.sinest.gw_1000.management.Application_broadcast;
-import com.sinest.gw_1000.management.Application_communicator;
+import com.sinest.gw_1000.management.Application_manager;
 import com.sinest.gw_1000.setting.Activity_setting;
-
-import org.w3c.dom.Text;
 
 public class Activity_waiting_rfid extends AppCompatActivity {
 
@@ -50,7 +47,7 @@ public class Activity_waiting_rfid extends AppCompatActivity {
         clock.setTypeface(tf);
 
         getDataFromDB();
-        communicator = Application_communicator.getCommunicator();
+        communicator = Application_manager.getCommunicator();
 
         Button waiting_library_button = (Button)findViewById(R.id.waiting_rfid_library_button);
         Button waiting_setting_button = (Button)findViewById(R.id.waiting_rfid_setting_button);
@@ -93,9 +90,9 @@ public class Activity_waiting_rfid extends AppCompatActivity {
         super.onResume();
         registReceiver();
 
-        SharedPreferences sharedPreferences = getSharedPreferences(Application_communicator.NAME_OF_SHARED_PREF, 0);
+        SharedPreferences sharedPreferences = getSharedPreferences(Application_manager.NAME_OF_SHARED_PREF, 0);
 
-        val_time = sharedPreferences.getInt(Application_communicator.WAITING_WORKING_TIME, 0);
+        val_time = sharedPreferences.getInt(Application_manager.WAITING_WORKING_TIME, 0);
         time_text.setText(Integer.toString(val_time));
     }
 
@@ -108,11 +105,11 @@ public class Activity_waiting_rfid extends AppCompatActivity {
     @Override
     protected void onStop() {
         super.onStop();
-        SharedPreferences sharedPreferences = getSharedPreferences(Application_communicator.NAME_OF_SHARED_PREF, 0);
+        SharedPreferences sharedPreferences = getSharedPreferences(Application_manager.NAME_OF_SHARED_PREF, 0);
         SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putInt(Application_communicator.VAL_OXYGEN, val_oxygen);
-        editor.putInt(Application_communicator.VAL_PRESSURE, val_pressure);
-        editor.putInt(Application_communicator.VAL_TIME, val_time);
+        editor.putInt(Application_manager.VAL_OXYGEN, val_oxygen);
+        editor.putInt(Application_manager.VAL_PRESSURE, val_pressure);
+        editor.putInt(Application_manager.VAL_TIME, val_time);
         editor.commit();
     }
 
@@ -177,10 +174,10 @@ public class Activity_waiting_rfid extends AppCompatActivity {
 
     private void getDataFromDB() {
 
-        SharedPreferences sharedPreferences = getSharedPreferences(Application_communicator.NAME_OF_SHARED_PREF, 0);
-        val_oxygen = sharedPreferences.getInt(Application_communicator.VAL_OXYGEN, 20);
-        val_pressure = sharedPreferences.getInt(Application_communicator.VAL_PRESSURE, 1);
-        val_time = sharedPreferences.getInt(Application_communicator.VAL_TIME, 10);
+        SharedPreferences sharedPreferences = getSharedPreferences(Application_manager.NAME_OF_SHARED_PREF, 0);
+        val_oxygen = sharedPreferences.getInt(Application_manager.VAL_OXYGEN, 20);
+        val_pressure = sharedPreferences.getInt(Application_manager.VAL_PRESSURE, 1);
+        val_time = sharedPreferences.getInt(Application_manager.VAL_TIME, 10);
     }
 
     private View.OnTouchListener mTouchEvent = new View.OnTouchListener() {
@@ -339,7 +336,7 @@ public class Activity_waiting_rfid extends AppCompatActivity {
                         communicator.set_tx(11, val);
                         communicator.send(communicator.get_tx());
 
-                        Application_communicator.getSoundManager().play(Application_communicator.ID_LANG_SOUND[Application_communicator.LANGUAGE][3]);
+                        Application_manager.getSoundManager().play(Application_manager.ID_LANG_SOUND[Application_manager.LANGUAGE][3]);
                         break;
                     case R.id.waiting_rfid_doorclose_button:
                         b  = (Button) view;
@@ -351,7 +348,7 @@ public class Activity_waiting_rfid extends AppCompatActivity {
                         communicator.set_tx(11, val);
                         communicator.send(communicator.get_tx());
 
-                        Application_communicator.getSoundManager().play(Application_communicator.ID_LANG_SOUND[Application_communicator.LANGUAGE][4]);
+                        Application_manager.getSoundManager().play(Application_manager.ID_LANG_SOUND[Application_manager.LANGUAGE][4]);
                         break;
                     case R.id.waiting_rfid_time_text:
                         intent = new Intent(getApplicationContext(), Activity_waiting_working_time_popup.class);

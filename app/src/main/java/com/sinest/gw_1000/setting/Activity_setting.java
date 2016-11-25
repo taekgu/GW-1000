@@ -8,17 +8,13 @@ import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
-import android.widget.LinearLayout;
 import android.widget.SeekBar;
 import android.widget.TextClock;
 import android.widget.TextView;
 
 import com.sinest.gw_1000.R;
 import com.sinest.gw_1000.communication.Communicator;
-import com.sinest.gw_1000.management.Application_communicator;
-import com.sinest.gw_1000.mode.Activity_library;
-
-import static com.sinest.gw_1000.R.id.textClock;
+import com.sinest.gw_1000.management.Application_manager;
 
 public class Activity_setting extends AppCompatActivity {
 
@@ -69,7 +65,7 @@ public class Activity_setting extends AppCompatActivity {
         TextClock clock = (TextClock) findViewById(R.id.textClock_s);
         clock.setTypeface(tf);
 
-        communicator = Application_communicator.getCommunicator();
+        communicator = Application_manager.getCommunicator();
 
         //communicator.send(communicator.get_tx)
 

@@ -1,26 +1,19 @@
 package com.sinest.gw_1000.mode;
 
-import android.content.BroadcastReceiver;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextClock;
-import android.widget.TextView;
 import android.widget.ToggleButton;
 
 import com.sinest.gw_1000.R;
-import com.sinest.gw_1000.communication.Communicator;
-import com.sinest.gw_1000.management.Application_broadcast;
-import com.sinest.gw_1000.management.Application_communicator;
+import com.sinest.gw_1000.management.Application_manager;
 
 public class Activity_library extends AppCompatActivity {
 
@@ -30,7 +23,7 @@ public class Activity_library extends AppCompatActivity {
     int cnt = 0;
     int manual_cnt = 0;
 
-    int[] checked_loc = new int[Application_communicator.MAX_CHECKED];
+    int[] checked_loc = new int[Application_manager.MAX_CHECKED];
     int[] library_map = new int[20];
 
     @Override
@@ -48,10 +41,10 @@ public class Activity_library extends AppCompatActivity {
             library_map[i] = 0;
         }
 
-        SharedPreferences sharedPreferences = getSharedPreferences(Application_communicator.NAME_OF_SHARED_PREF, 0);
-        for (int i=0; i<Application_communicator.MAX_CHECKED; i++) {
+        SharedPreferences sharedPreferences = getSharedPreferences(Application_manager.NAME_OF_SHARED_PREF, 0);
+        for (int i = 0; i< Application_manager.MAX_CHECKED; i++) {
 
-            checked_loc[i] = sharedPreferences.getInt(Application_communicator.LIBRARY_LOC_ + i, i);
+            checked_loc[i] = sharedPreferences.getInt(Application_manager.LIBRARY_LOC_ + i, i);
             library_map[checked_loc[i]] = 1;
 
             int tb_resourceId;
@@ -116,11 +109,11 @@ public class Activity_library extends AppCompatActivity {
 
                         if (cnt == 4) {
 
-                            SharedPreferences sharedPreferences = getSharedPreferences(Application_communicator.NAME_OF_SHARED_PREF, 0);
+                            SharedPreferences sharedPreferences = getSharedPreferences(Application_manager.NAME_OF_SHARED_PREF, 0);
                             SharedPreferences.Editor editor = sharedPreferences.edit();
-                            for (int i = 0; i < Application_communicator.MAX_CHECKED; i++) {
+                            for (int i = 0; i < Application_manager.MAX_CHECKED; i++) {
 
-                                editor.putInt(Application_communicator.LIBRARY_LOC_ + i, checked_loc[i]);
+                                editor.putInt(Application_manager.LIBRARY_LOC_ + i, checked_loc[i]);
                                 Log.i("JW", "Save checked_loc" + i + " set " + checked_loc[i]);
                             }
                             editor.commit();
@@ -172,11 +165,11 @@ public class Activity_library extends AppCompatActivity {
                     tb_resourceId = getResources().getIdentifier("automode_"+i,"drawable","com.sinest.gw_1000");
                     tb.setBackgroundResource(tb_resourceId);
 
-                    for (int j=0; j<Application_communicator.MAX_CHECKED - 1; j++) {
+                    for (int j = 0; j< Application_manager.MAX_CHECKED - 1; j++) {
 
                         if (checked_loc[j] == i-1) {
 
-                            for (int k=j; k<Application_communicator.MAX_CHECKED - 1; k++) {
+                            for (int k = j; k< Application_manager.MAX_CHECKED - 1; k++) {
 
                                 checked_loc[k] = checked_loc[k+1];
                             }
@@ -215,11 +208,11 @@ public class Activity_library extends AppCompatActivity {
                     tb_resourceId = getResources().getIdentifier("manual_mode_"+i,"drawable","com.sinest.gw_1000");
                     tb.setBackgroundResource(tb_resourceId);
 
-                    for (int j=0; j<Application_communicator.MAX_CHECKED - 1; j++) {
+                    for (int j = 0; j< Application_manager.MAX_CHECKED - 1; j++) {
 
                         if (checked_loc[j] == i-1) {
 
-                            for (int k=j; k<Application_communicator.MAX_CHECKED - 1; k++) {
+                            for (int k = j; k< Application_manager.MAX_CHECKED - 1; k++) {
 
                                 checked_loc[k] = checked_loc[k+1];
                             }
