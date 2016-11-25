@@ -56,7 +56,9 @@ public class Application_communicator extends Application {
     private static SoundManager soundManager;
 
     // 앱 동작 시간
-    private int runningTime = 0;
+    private boolean isRun = false;
+    private static int runningTime = 0;
+    private Thread thread_runningTime;
 
     public void onCreate() {
 
@@ -64,11 +66,42 @@ public class Application_communicator extends Application {
         Application_communicator.communicator = new Communicator(context);
         Application_communicator.soundManager = new SoundManager(context);
 
+        // 러닝타임 측정
+        setThread_runningTime();
+        isRun = true;
+        thread_runningTime.start();
+
+        // 기기 DPI 출력
         DisplayMetrics metrics = new DisplayMetrics();
         WindowManager mgr = (WindowManager)context.getSystemService(Context.WINDOW_SERVICE);
         mgr.getDefaultDisplay().getMetrics(metrics);
-
         Log.i("JW", "densityDPI = " + metrics.densityDpi);
+    }
+
+    synchronized public static int getRunningTime() {
+
+        return runningTime;
+    }
+
+    synchronized private void setThread_runningTime() {
+
+        thread_runningTime = new Thread(new Runnable() {
+            @Override
+            public void run() {
+
+                while (isRun) {
+
+                    try {
+
+                        Thread.sleep(1000);
+                        runningTime++;
+                    }
+                    catch (Exception e) {
+
+                    }
+                }
+            }
+        });
     }
 
     public static Communicator getCommunicator() {
