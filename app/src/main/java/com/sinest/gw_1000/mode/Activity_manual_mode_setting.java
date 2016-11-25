@@ -151,4 +151,25 @@ public class Activity_manual_mode_setting extends AppCompatActivity {
             }
         }
     }
+    protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
+        super.onActivityResult(requestCode, resultCode, intent);
+        ImageView iv;
+        int img_resource = intent.getIntExtra("pattern_num", 0);
+        if(requestCode==RESULT_OK) {
+            switch (requestCode) {
+                case REQUEST_CODE_MANUAL_PATTERN_01:
+                    iv = (ImageView) findViewById(R.id.manual_mode_setting_1);
+                    iv.setImageResource(img_resource);
+                    break;
+                case REQUEST_CODE_MANUAL_PATTERN_02:
+                    iv = (ImageView) findViewById(R.id.manual_mode_setting_2);
+                    iv.setImageResource(img_resource);
+                    break;
+                case REQUEST_CODE_MANUAL_PATTERN_03:
+                    iv = (ImageView) findViewById(R.id.manual_mode_setting_3);
+                    iv.setImageResource(img_resource);
+                    break;
+            }
+        }
+    }
 }

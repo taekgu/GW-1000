@@ -9,12 +9,14 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.SeekBar;
 
 import com.sinest.gw_1000.R;
 
 public class Activity_manual_mode_pattern_popup extends Activity {
+    int volume, ImageResourceId;
+    SeekBar seekBar;
     @Override
-
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -36,6 +38,8 @@ public class Activity_manual_mode_pattern_popup extends Activity {
 
         manual_popup_save.setOnTouchListener(mTouchEvent);
         manual_popup_back.setOnTouchListener(mTouchEvent);
+
+
     }
     private View.OnTouchListener mTouchEvent = new View.OnTouchListener() {
         @Override
@@ -60,11 +64,15 @@ public class Activity_manual_mode_pattern_popup extends Activity {
                     case R.id.manual_popup_save:
                         b = (Button) view;
                         b.setBackgroundResource(R.drawable.save_mode_off);
+                        Intent resultIntent= new Intent();
+                        resultIntent.putExtra("pattern_num", ImageResourceId);
+                        setResult(RESULT_OK, resultIntent);
                         finish();
                         break;
                     case R.id.manual_popup_back:
                         b = (Button) view;
                         b.setBackgroundResource(R.drawable.button_circle_back_off);
+                        setResult(RESULT_CANCELED);
                         finish();
                         break;
                 }
@@ -72,13 +80,13 @@ public class Activity_manual_mode_pattern_popup extends Activity {
             return true;
         }
     };
+
     private View.OnClickListener mClickListener = new View.OnClickListener() {
         public void onClick(View v) {
             ImageView img = (ImageView)findViewById(R.id.manual_popup_imageview);
             int id = v.getId();
-            int resourceId, ImageResourceId;
-            Intent intent;
-            intent = new Intent(getApplicationContext(), Activity_manual_mode_setting.class);
+            int resourceId;
+
             for(int i=1; i<=12; i++)
             {
                 resourceId = getResources().getIdentifier("pattern_"+i,"id","com.sinest.gw_1000");
@@ -86,7 +94,7 @@ public class Activity_manual_mode_pattern_popup extends Activity {
                 {
                     ImageResourceId = getResources().getIdentifier("manual_mode_pattern_"+i,"drawable","com.sinest.gw_1000");
                     img.setImageResource(ImageResourceId);
-                    intent.putExtra("pattern_num", i);
+
                 }
             }
         }
