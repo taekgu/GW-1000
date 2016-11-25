@@ -3,7 +3,10 @@ package com.sinest.gw_1000.management;
 import android.app.Activity;
 import android.app.Application;
 import android.content.Context;
+import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.View;
+import android.view.WindowManager;
 
 import com.sinest.gw_1000.communication.Communicator;
 
@@ -60,6 +63,12 @@ public class Application_communicator extends Application {
         Application_communicator.context = getApplicationContext();
         Application_communicator.communicator = new Communicator(context);
         Application_communicator.soundManager = new SoundManager(context);
+
+        DisplayMetrics metrics = new DisplayMetrics();
+        WindowManager mgr = (WindowManager)context.getSystemService(Context.WINDOW_SERVICE);
+        mgr.getDefaultDisplay().getMetrics(metrics);
+
+        Log.i("JW", "densityDPI = " + metrics.densityDpi);
     }
 
     public static Communicator getCommunicator() {
