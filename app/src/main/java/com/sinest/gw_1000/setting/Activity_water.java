@@ -2,6 +2,7 @@ package com.sinest.gw_1000.setting;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
@@ -54,8 +55,11 @@ public class Activity_water extends Activity {
         water_off = (Button) findViewById(R.id.water_off);
         water_back = (Button) findViewById(R.id.water_back);
 
+        Typeface tf = Typeface.createFromAsset(getAssets(), "fonts/digital.ttf");
         water_s_c = (Chronometer) findViewById(R.id.water_s_c);
+        water_s_c.setTypeface(tf);
         water_f_c = (Chronometer) findViewById(R.id.water_f_c);
+        water_f_c.setTypeface(tf);
 
         intent_start = new Intent(this, Activity_starttime.class);
         //intent_start.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_SINGLE_TOP);

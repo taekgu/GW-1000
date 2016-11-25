@@ -31,9 +31,9 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:id="@+id/finish_time"
-            android:textSize="30dp"
+            android:textSize="40dp"
             android:gravity="center"
-            android:textColor="#ffff00"
+            android:textColor="#00ffff"
             android:layout_weight="71" />
 
         <Button

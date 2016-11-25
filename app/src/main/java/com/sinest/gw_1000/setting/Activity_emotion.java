@@ -1,6 +1,7 @@
 package com.sinest.gw_1000.setting;
 
 import android.app.Activity;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.view.MotionEvent;
 import android.view.View;
@@ -87,10 +88,16 @@ public class Activity_emotion extends Activity {
         sound_mode_num = 0;
         led_bright_num = 1;
         sound_volume_num = 1;
+
+        Typeface tf = Typeface.createFromAsset(getAssets(), "fonts/digital.ttf");
         led_mode .setText(Integer.toString(led_mode_num));
         sound_mode .setText(Integer.toString(sound_mode_num));
         led_bright  .setText(Integer.toString(led_bright_num));
         sound_volume  .setText(Integer.toString(sound_volume_num));
+        led_mode.setTypeface(tf);
+        sound_mode.setTypeface(tf);
+        led_bright.setTypeface(tf);
+        sound_volume.setTypeface(tf);
 
         up = 0x00;
         down = 0x00;

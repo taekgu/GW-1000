@@ -2,6 +2,7 @@ package com.sinest.gw_1000.setting;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -63,7 +64,9 @@ public class Activity_finishtime extends Activity {
 
         finish_time = (Chronometer) findViewById(R.id.finish_time);
 
+        Typeface tf = Typeface.createFromAsset(getAssets(), "fonts/digital.ttf");
         finish_time.setText(finish_result.getStringExtra("finish"));
+        finish_time.setTypeface(tf);
 
         View.OnClickListener listener = new View.OnClickListener() {
             public void onClick(View v) {

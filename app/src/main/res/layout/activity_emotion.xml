@@ -30,7 +30,7 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="15"
-            android:textColor="#ffff00"
+            android:textColor="#00ffff"
             android:gravity="center"
             android:textSize="40dp"
             android:id="@+id/led_mode" />
@@ -45,7 +45,7 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="15"
-            android:textColor="#ffff00"
+            android:textColor="#00ffff"
             android:gravity="center"
             android:textSize="40dp"
             android:id="@+id/sound_mode" />
@@ -158,7 +158,7 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="15"
-            android:textColor="#ffff00"
+            android:textColor="#00ffff"
             android:textSize="40dp"
             android:gravity="center"
             android:id="@+id/led_bright" />
@@ -173,7 +173,7 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="15"
-            android:textColor="#ffff00"
+            android:textColor="#00ffff"
             android:textSize="35dp"
             android:gravity="center"
             android:id="@+id/sound_volume" />
@@ -195,20 +195,20 @@
         <Button
             android:layout_width="60dp"
             android:layout_height="0dp"
-            android:layout_weight="10"
+            android:layout_weight="11"
             android:visibility="invisible"/>
 
         <Button
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="15"
+            android:layout_weight="13"
             android:background="@drawable/button_elipse_back_off"
             android:id="@+id/emotion_back" />
 
         <Button
-            android:layout_width="60dp"
+            android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="10"
+            android:layout_weight="11"
             android:visibility="invisible"/>
 
         <LinearLayout
