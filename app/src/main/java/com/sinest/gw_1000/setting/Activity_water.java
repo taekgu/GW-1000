@@ -126,6 +126,7 @@ public class Activity_water extends Activity {
                     case R.id.water_save:
                         water_save.setBackgroundResource(R.drawable.save_setting_off);
                         check_h = 1;
+                        finish();
                         break;
                     case R.id.water_back:
                         water_back.setBackgroundResource(R.drawable.button_elipse_back_off);

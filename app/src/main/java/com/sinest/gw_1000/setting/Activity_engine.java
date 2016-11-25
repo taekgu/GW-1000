@@ -96,6 +96,7 @@ public class Activity_engine extends AppCompatActivity {
         oxygen_m = (TextView) findViewById(R.id.oxygen_m);
         oxygen_m.setTypeface(tf);
         operation_t = (TextView) findViewById(R.id.operation_t);
+        operation_t.setText(""+Application_communicator.getRunningTime());
         operation_t.setTypeface(tf);
 
         hidden_e_1 = (Button)findViewById(R.id.hidden_e_1);

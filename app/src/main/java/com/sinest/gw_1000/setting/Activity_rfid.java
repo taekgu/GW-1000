@@ -2,6 +2,7 @@ package com.sinest.gw_1000.setting;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -32,6 +33,10 @@ public class Activity_rfid extends Activity {
     int working_mode_num;
     int treatment_num;
 
+    String[] w_mode = {"A1","A2","A3","A4","A5","A6","A7","A8","A9","A10","A11","A12","A13","A14","A15",
+            "M1","M2","M3","M4","M5","NM"};
+    int w_mode_idx = 0;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,10 +59,14 @@ public class Activity_rfid extends Activity {
         rfid_t_c = (TextView) findViewById(R.id.rfid_t_c);
         rfid_w_c = (TextView) findViewById(R.id.rfid_w_c);
 
-        working_mode_num = 0;
-        treatment_num = 0;
-        rfid_t_c.setText(Integer.toString(working_mode_num));
+        treatment_num = 1;
+
+        Typeface tf = Typeface.createFromAsset(getAssets(), "fonts/digital.ttf");
+
+        rfid_t_c.setText(w_mode[w_mode_idx]);
         rfid_w_c.setText(Integer.toString(treatment_num));
+        rfid_t_c.setTypeface(tf);
+        rfid_w_c.setTypeface(tf);
 
 
 
@@ -123,35 +132,45 @@ public class Activity_rfid extends Activity {
                 switch (id) {
                     case R.id.rfid_w_up:
                         rfid_w_up.setBackgroundResource(R.drawable.button_up_off);
-                        s_buf = (String)rfid_t_c.getText();
-                        int_buf = Integer.parseInt(s_buf) + 1;
-                        working_mode_num++;
-                        s_buf = Integer.toString(int_buf);
-                        rfid_t_c.setText(s_buf);
+                        if(w_mode_idx == 20)
+                        {
+                            w_mode_idx = 0;
+                        }else{
+                            w_mode_idx++;
+                        }
+                        rfid_t_c.setText(w_mode[w_mode_idx]);
                         break;
                     case R.id.rfid_w_down:
                         rfid_w_down.setBackgroundResource(R.drawable.button_down_off);
-                        s_buf = (String)rfid_t_c.getText();
-                        int_buf = Integer.parseInt(s_buf) - 1;
-                        working_mode_num--;
-                        s_buf = Integer.toString(int_buf);
-                        rfid_t_c.setText(s_buf);
+                        if(w_mode_idx == 0)
+                        {
+                            w_mode_idx = 0;
+                        }else{
+                            w_mode_idx--;
+                        }
+                        rfid_t_c.setText(w_mode[w_mode_idx]);
                         break;
                     case R.id.rfid_t_up:
                         rfid_t_up.setBackgroundResource(R.drawable.button_up_off);
                         s_buf = (String)rfid_w_c.getText();
-                        int_buf = Integer.parseInt(s_buf) + 1;
-                        treatment_num++;
-                        s_buf = Integer.toString(int_buf);
-                        rfid_w_c.setText(s_buf);
+                        if(Integer.parseInt(s_buf) < 10 && 1 <= Integer.parseInt(s_buf))
+                        {
+                            int_buf = Integer.parseInt(s_buf) + 1;
+                            treatment_num++;
+                            s_buf = Integer.toString(int_buf);
+                            rfid_w_c.setText(s_buf);
+                        }
                         break;
                     case R.id.rfid_t_down:
                         rfid_t_down.setBackgroundResource(R.drawable.button_down_off);
                         s_buf = (String)rfid_w_c.getText();
-                        int_buf = Integer.parseInt(s_buf) - 1;
-                        treatment_num--;
-                        s_buf = Integer.toString(int_buf);
-                        rfid_w_c.setText(s_buf);
+                        if(Integer.parseInt(s_buf) <= 10 && 1 < Integer.parseInt(s_buf))
+                        {
+                            int_buf = Integer.parseInt(s_buf) - 1;
+                            treatment_num--;
+                            s_buf = Integer.toString(int_buf);
+                            rfid_w_c.setText(s_buf);
+                        }
                         break;
                     case R.id.rfid_save:
                         rfid_save.setBackgroundResource(R.drawable.save_setting_off);

@@ -78,8 +78,9 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:textSize="30dp"
-                android:textColor="#ffff00"
+                android:text="A1"
+                android:textSize="40dp"
+                android:textColor="#00ffff"
                 android:gravity="center"
                 android:id="@+id/rfid_t_c"
                 android:layout_weight="50" />
@@ -139,8 +140,9 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:textSize="30dp"
-                android:textColor="#ffff00"
+                android:textSize="40dp"
+                android:text="1"
+                android:textColor="#00ffff"
                 android:gravity="center"
                 android:id="@+id/rfid_w_c"
                 android:layout_weight="50" />
