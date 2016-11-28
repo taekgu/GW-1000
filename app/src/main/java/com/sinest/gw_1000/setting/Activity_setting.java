@@ -53,6 +53,11 @@ public class Activity_setting extends AppCompatActivity {
     String check;
     String check2;
 
+    int led_mode_num = 0;
+    int sound_mode_num = 0;
+    int led_bright_num = 1;
+    int sound_volume_num = 1;
+
     SeekBar seekbar;
     int volume;
     Typeface tf;
@@ -71,7 +76,7 @@ public class Activity_setting extends AppCompatActivity {
         communicator = Application_manager.getCommunicator();
 
         //communicator.send(communicator.get_tx)
-        
+
         //textClock.setFormat24Hour();
 
         b_11 = (TextView)findViewById(R.id.button11);
@@ -537,7 +542,13 @@ public class Activity_setting extends AppCompatActivity {
                 switch (id) {
                     case R.id.b_emotion:
                         b_emotion.setBackgroundResource(R.drawable.emotion_off);
-                        startActivity(intent_emotion);
+                        //startActivity(intent_emotion);
+                        intent_emotion.putExtra("LED_M",led_mode_num);
+                        intent_emotion.putExtra("LED",led_bright_num);
+                        intent_emotion.putExtra("SOUND_M",sound_mode_num);
+                        intent_emotion.putExtra("SOUND",sound_volume_num);
+
+                        startActivityForResult(intent_emotion,4);
                         break;
                     case R.id.b_back:
                         b_back.setBackgroundResource(R.drawable.button_circle_back_off);
@@ -581,6 +592,16 @@ public class Activity_setting extends AppCompatActivity {
                         b_rf.setBackgroundResource(R.drawable.off);
                         button2_flag[0] = true;
                         check = "Yes";
+                    }
+                    break;
+                case 4:
+                    check = data.getStringExtra("emotion");
+                    if(check.equals("OK")){
+                        led_mode_num = (int)data.getSerializableExtra("LED_M");
+                        led_bright_num = (int)data.getSerializableExtra("LED");
+                        sound_mode_num = (int)data.getSerializableExtra("SOUND_M");
+                        sound_volume_num = (int)data.getSerializableExtra("SOUND");
+                        Log.v("test",""+led_mode_num);
                     }
                     break;
                 default:

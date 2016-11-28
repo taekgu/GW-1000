@@ -1,8 +1,10 @@
 package com.sinest.gw_1000.setting;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
@@ -40,6 +42,8 @@ public class Activity_emotion extends Activity {
     int sound_mode_num;
     int led_bright_num;
     int sound_volume_num;
+
+    Intent get_intent;
 
     Byte up;
     Byte down;
@@ -81,11 +85,13 @@ public class Activity_emotion extends Activity {
         emotion_sound_down.setOnTouchListener(mTouchEvent);
         emotion_back.setOnTouchListener(mTouchEvent);
 
-        led_mode_num = 0;
-        sound_mode_num = 0;
-        led_bright_num = 1;
-        sound_volume_num = 1;
+        get_intent = getIntent();
 
+        led_mode_num = (int)get_intent.getSerializableExtra("LED_M");
+        led_bright_num = (int)get_intent.getSerializableExtra("LED");
+        sound_mode_num = (int)get_intent.getSerializableExtra("SOUND_M");
+        sound_volume_num = (int)get_intent.getSerializableExtra("SOUND");
+;
         Typeface tf = Typeface.createFromAsset(getAssets(), "fonts/digital.ttf");
         led_mode .setText(Integer.toString(led_mode_num));
         sound_mode .setText(Integer.toString(sound_mode_num));
@@ -224,6 +230,12 @@ public class Activity_emotion extends Activity {
                         break;
                     case R.id.emotion_back:
                         emotion_back.setBackgroundResource(R.drawable.button_elipse_back_off);
+                        get_intent.putExtra("LED_M",led_mode_num);
+                        get_intent.putExtra("LED",led_bright_num);
+                        get_intent.putExtra("SOUND_M",sound_mode_num);
+                        get_intent.putExtra("SOUND",sound_volume_num);
+                        get_intent.putExtra("emotion","OK");
+                        setResult(RESULT_OK, get_intent);
                         finish();
                         break;
                 }
