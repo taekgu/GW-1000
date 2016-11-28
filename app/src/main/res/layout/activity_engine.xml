@@ -89,7 +89,7 @@
                 android:layout_height="match_parent"
                 android:id="@+id/eng_28h"
                 android:layout_weight="1"
-                android:layout_marginRight="7dp"
+                android:layout_marginRight="10dp"
                 android:background="@drawable/water_28_off"/>
 
             <Button
@@ -97,8 +97,8 @@
                 android:layout_height="match_parent"
                 android:id="@+id/eng_36h"
                 android:layout_weight="1"
-                android:layout_marginRight="7dp"
-                android:layout_marginLeft="7dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginLeft="10dp"
                 android:background="@drawable/water_36_off"/>
 
             <Button
@@ -106,8 +106,8 @@
                 android:layout_height="match_parent"
                 android:id="@+id/eng_43h"
                 android:layout_weight="1"
-                android:layout_marginRight="7dp"
-                android:layout_marginLeft="7dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginLeft="10dp"
                 android:background="@drawable/water_43_off"/>
 
             <Button
@@ -115,16 +115,16 @@
                 android:layout_height="match_parent"
                 android:id="@+id/eng_48h"
                 android:layout_weight="1"
-                android:layout_marginRight="7dp"
-                android:layout_marginLeft="7dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginLeft="10dp"
                 android:background="@drawable/water_49_off"/>
             <Button
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:id="@+id/eng_54h"
                 android:layout_weight="1"
-                android:layout_marginRight="7dp"
-                android:layout_marginLeft="7dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginLeft="10dp"
                 android:background="@drawable/water_54_off"/>
 
             <Button
@@ -132,7 +132,7 @@
                 android:layout_height="match_parent"
                 android:id="@+id/eng_60h"
                 android:layout_weight="1"
-                android:layout_marginLeft="7dp"
+                android:layout_marginLeft="10dp"
                 android:background="@drawable/water_60_off"/>
         </LinearLayout>
 
@@ -204,9 +204,9 @@
                 android:gravity="right"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_marginTop="3.5dp"
+                android:layout_marginTop="7dp"
                 android:id="@+id/oxygen_m"
-                android:textSize="45dp"
+                android:textSize="60dp"
                 android:textColor="#00ffff"
                 android:layout_weight="10" />
 
@@ -221,7 +221,7 @@
             android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="8">
+            android:layout_weight="7">
 
         </LinearLayout>
 
@@ -229,15 +229,15 @@
             android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="9">
+            android:layout_weight="11">
 
             <Button
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:id="@+id/eng_b_water"
                 android:layout_weight="1"
-                android:layout_marginLeft="25dp"
-                android:layout_marginRight="25dp"
+                android:layout_marginLeft="35dp"
+                android:layout_marginRight="35dp"
                 android:background="@drawable/button_gry"/>
 
             <Button
@@ -245,8 +245,8 @@
                 android:layout_height="match_parent"
                 android:id="@+id/eng_b_inter"
                 android:layout_weight="1"
-                android:layout_marginLeft="25dp"
-                android:layout_marginRight="25dp"
+                android:layout_marginLeft="35dp"
+                android:layout_marginRight="35dp"
                 android:background="@drawable/button_gry"/>
 
             <Button
@@ -254,8 +254,8 @@
                 android:layout_height="match_parent"
                 android:id="@+id/eng_b_sol"
                 android:layout_weight="1"
-                android:layout_marginLeft="25dp"
-                android:layout_marginRight="25dp"
+                android:layout_marginLeft="35dp"
+                android:layout_marginRight="35dp"
                 android:background="@drawable/button_gry"/>
 
             <Button
@@ -263,8 +263,8 @@
                 android:layout_height="match_parent"
                 android:id="@+id/eng_b_ven"
                 android:layout_weight="1"
-                android:layout_marginLeft="25dp"
-                android:layout_marginRight="25dp"
+                android:layout_marginLeft="35dp"
+                android:layout_marginRight="35dp"
                 android:background="@drawable/button_gry"/>
         </LinearLayout>
 
@@ -272,7 +272,7 @@
             android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="7">
+            android:layout_weight="6">
 
         </LinearLayout>
 
@@ -287,7 +287,7 @@
                 android:layout_height="match_parent"
                 android:id="@+id/eng_door_open"
                 android:layout_weight="22"
-                android:layout_marginBottom="13dp"
+                android:layout_marginBottom="23dp"
                 android:layout_marginRight="10dp"
                 android:background="@drawable/door_open_off"/>
 
@@ -296,7 +296,7 @@
                 android:layout_height="match_parent"
                 android:id="@+id/eng_door_close"
                 android:layout_weight="22"
-                android:layout_marginTop="13dp"
+                android:layout_marginTop="23dp"
                 android:layout_marginLeft="10dp"
                 android:background="@drawable/door_close_off"/>
 
@@ -313,8 +313,8 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:id="@+id/operation_t"
-                android:layout_marginTop="7.5dp"
-                android:textSize="40dp"
+                android:layout_marginTop="14dp"
+                android:textSize="60dp"
                 android:textColor="#00ffff"
                 android:layout_weight="37" />
 
@@ -374,7 +374,7 @@
                 android:gravity="center"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:textSize="40dp"
+                android:textSize="60dp"
                 android:textColor="#00ffff"
                 android:format12Hour="HH:mm"
                 android:layout_weight="40"

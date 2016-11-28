@@ -79,7 +79,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:text="A1"
-                android:textSize="40dp"
+                android:textSize="50dp"
                 android:textColor="#00ffff"
                 android:gravity="center"
                 android:id="@+id/rfid_t_c"
@@ -102,7 +102,7 @@
             android:layout_weight="15">
 
             <Button
-                android:layout_width="110dp"
+                android:layout_width="55dp"
                 android:layout_height="0dp"
                 android:id="@+id/rfid_w_up"
                 android:layout_weight="50"
@@ -110,7 +110,7 @@
                 android:background="@drawable/button_up_off"/>
 
             <Button
-                android:layout_width="110dp"
+                android:layout_width="55dp"
                 android:layout_height="0dp"
                 android:id="@+id/rfid_w_down"
                 android:layout_weight="50"
@@ -140,7 +140,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:textSize="40dp"
+                android:textSize="50dp"
                 android:text="1"
                 android:textColor="#00ffff"
                 android:gravity="center"
@@ -162,7 +162,7 @@
             android:layout_weight="18">
 
             <Button
-                android:layout_width="110dp"
+                android:layout_width="55dp"
                 android:layout_height="0dp"
                 android:id="@+id/rfid_t_up"
                 android:layout_weight="50"
@@ -170,7 +170,7 @@
                 android:background="@drawable/button_up_off"/>
 
             <Button
-                android:layout_width="110dp"
+                android:layout_width="55dp"
                 android:layout_height="0dp"
                 android:id="@+id/rfid_t_down"
                 android:layout_weight="50"
@@ -184,7 +184,7 @@
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="18">
+        android:layout_weight="20">
 
         <Button
             android:layout_width="0dp"
@@ -232,7 +232,7 @@
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="12">
+        android:layout_weight="10">
     </LinearLayout>
 
 </LinearLayout>

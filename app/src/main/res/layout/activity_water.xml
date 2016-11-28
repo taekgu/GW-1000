@@ -54,7 +54,7 @@
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="10">
+        android:layout_weight="13">
 
         <LinearLayout
             android:orientation="vertical"
@@ -66,7 +66,7 @@
         <Chronometer
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:textSize="40dp"
+            android:textSize="50dp"
             android:textColor="#00ffff"
             android:gravity="center"
             android:id="@+id/water_s_c"
@@ -82,7 +82,7 @@
         <Chronometer
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:textSize="40dp"
+            android:textSize="50dp"
             android:textColor="#00ffff"
             android:gravity="center"
             android:id="@+id/water_f_c"
@@ -114,30 +114,33 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:visibility="invisible"
-            android:layout_weight="36" />
+            android:layout_weight="33" />
 
         <Button
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:id="@+id/water_save"
             android:background="@drawable/save_setting_off"
-
-            android:layout_marginRight="30dp"
-            android:layout_weight="14" />
-
-        <Button
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:id="@+id/water_off"
-            android:background="@drawable/off"
-            android:layout_marginLeft="30dp"
             android:layout_weight="14" />
 
         <Button
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:visibility="invisible"
-            android:layout_weight="36" />
+            android:layout_weight="6" />
+
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:id="@+id/water_off"
+            android:background="@drawable/off"
+            android:layout_weight="14" />
+
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:visibility="invisible"
+            android:layout_weight="33" />
 
     </LinearLayout>
 

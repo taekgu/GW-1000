@@ -59,6 +59,8 @@ public class Activity_setting extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        Application_manager.setFullScreen(this);
         
         // 폰트 설정
         tf = Typeface.createFromAsset(getAssets(), "fonts/digital.ttf");

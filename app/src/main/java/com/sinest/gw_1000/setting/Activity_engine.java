@@ -57,6 +57,8 @@ public class Activity_engine extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_engine);
 
+        Application_manager.setFullScreen(this);
+
         // 폰트 설정
         Typeface tf = Typeface.createFromAsset(getAssets(), "fonts/digital.ttf");
         TextClock clock = (TextClock) findViewById(R.id.textClock_e);

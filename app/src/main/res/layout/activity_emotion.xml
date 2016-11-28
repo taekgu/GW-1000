@@ -32,7 +32,7 @@
             android:layout_weight="15"
             android:textColor="#00ffff"
             android:gravity="center"
-            android:textSize="40dp"
+            android:textSize="50dp"
             android:id="@+id/led_mode" />
 
         <TextView
@@ -47,7 +47,7 @@
             android:layout_weight="15"
             android:textColor="#00ffff"
             android:gravity="center"
-            android:textSize="40dp"
+            android:textSize="50dp"
             android:id="@+id/sound_mode" />
 
         <TextView
@@ -77,7 +77,7 @@
                 android:visibility="invisible"/>
 
             <Button
-                android:layout_width="110dp"
+                android:layout_width="55dp"
                 android:layout_height="0dp"
                 android:layout_weight="20"
                 android:id="@+id/emotion_led_up"
@@ -86,7 +86,7 @@
                 android:background="@drawable/button_up_off"/>
 
             <Button
-                android:layout_width="110dp"
+                android:layout_width="55dp"
                 android:layout_height="0dp"
                 android:layout_weight="20"
                 android:id="@+id/emotion_led_down"
@@ -108,7 +108,7 @@
                 android:visibility="invisible"/>
 
             <Button
-                android:layout_width="110dp"
+                android:layout_width="55dp"
                 android:layout_height="0dp"
                 android:layout_weight="33"
                 android:id="@+id/emotion_sound_up"
@@ -117,7 +117,7 @@
                 android:background="@drawable/button_up_off"/>
 
             <Button
-                android:layout_width="110dp"
+                android:layout_width="55dp"
                 android:layout_height="0dp"
                 android:layout_weight="33"
                 android:id="@+id/emotion_sound_down"
@@ -159,7 +159,7 @@
             android:layout_height="0dp"
             android:layout_weight="15"
             android:textColor="#00ffff"
-            android:textSize="40dp"
+            android:textSize="50dp"
             android:gravity="center"
             android:id="@+id/led_bright" />
 
@@ -174,7 +174,7 @@
             android:layout_height="0dp"
             android:layout_weight="15"
             android:textColor="#00ffff"
-            android:textSize="35dp"
+            android:textSize="50dp"
             android:gravity="center"
             android:id="@+id/sound_volume" />
 
@@ -218,21 +218,23 @@
             android:layout_weight="30">
 
             <Button
-                android:layout_width="110dp"
+                android:layout_width="55dp"
                 android:layout_height="0dp"
                 android:layout_weight="40"
                 android:layout_gravity="center"
                 android:id="@+id/emotion_ledm_up"
                 android:layout_marginBottom="5dp"
+                android:layout_marginLeft="5dp"
                 android:background="@drawable/button_up_off"/>
 
             <Button
-                android:layout_width="110dp"
+                android:layout_width="55dp"
                 android:layout_height="0dp"
                 android:layout_weight="40"
                 android:layout_gravity="center"
                 android:id="@+id/emotion_ledm_down"
                 android:layout_marginTop="5dp"
+                android:layout_marginLeft="5dp"
                 android:background="@drawable/button_down_off"/>
 
             <Button
@@ -251,21 +253,23 @@
             android:layout_weight="35">
 
             <Button
-                android:layout_width="110dp"
+                android:layout_width="55dp"
                 android:layout_height="0dp"
                 android:layout_weight="35"
                 android:layout_gravity="center"
                 android:id="@+id/emotion_soundm_up"
                 android:layout_marginBottom="5dp"
+                android:layout_marginLeft="5dp"
                 android:background="@drawable/button_up_off"/>
 
             <Button
-                android:layout_width="110dp"
+                android:layout_width="55dp"
                 android:layout_height="0dp"
                 android:layout_weight="35"
                 android:layout_gravity="center"
                 android:id="@+id/emotion_soundm_down"
                 android:layout_marginTop="5dp"
+                android:layout_marginLeft="5dp"
                 android:background="@drawable/button_down_off"/>
 
             <Button
