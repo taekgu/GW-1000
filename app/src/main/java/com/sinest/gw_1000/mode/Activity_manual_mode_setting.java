@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
@@ -12,8 +13,6 @@ import android.widget.TextView;
 
 import com.sinest.gw_1000.R;
 import com.sinest.gw_1000.management.Application_manager;
-
-import static com.sinest.gw_1000.mode.Activity_waiting.REQUEST_CODE_WORKINGTIME_POPUP;
 
 public class Activity_manual_mode_setting extends AppCompatActivity {
 
@@ -146,7 +145,7 @@ public class Activity_manual_mode_setting extends AppCompatActivity {
             resourceId = getResources().getIdentifier("manual_setting_text_"+i,"id","com.sinest.gw_1000");
             if(resourceId==id){
                 intent = new Intent(getApplicationContext(), Activity_waiting_working_time_popup.class);
-                startActivityForResult(intent, REQUEST_CODE_WORKINGTIME_POPUP);
+                //startActivityForResult(intent, REQUEST_CODE_WORKINGTIME_POPUP);
                 break;
             }
         }
@@ -155,18 +154,25 @@ public class Activity_manual_mode_setting extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, intent);
         ImageView iv;
         int img_resource = intent.getIntExtra("pattern_num", 0);
-        if(requestCode==RESULT_OK) {
+        Log.i("request code : ", Integer.toString(requestCode));
+        Log.i("result code : ", Integer.toString(resultCode));
+        Log.i("RESULT OK : ", Integer.toString(RESULT_OK));
+        Log.i("RESULT CANCELED : ", Integer.toString(RESULT_CANCELED));
+        if(resultCode==RESULT_OK) {
             switch (requestCode) {
                 case REQUEST_CODE_MANUAL_PATTERN_01:
                     iv = (ImageView) findViewById(R.id.manual_mode_setting_1);
+                    Log.i("1",Integer.toString(img_resource));
                     iv.setImageResource(img_resource);
                     break;
                 case REQUEST_CODE_MANUAL_PATTERN_02:
                     iv = (ImageView) findViewById(R.id.manual_mode_setting_2);
+                    Log.i("2",Integer.toString(img_resource));
                     iv.setImageResource(img_resource);
                     break;
                 case REQUEST_CODE_MANUAL_PATTERN_03:
                     iv = (ImageView) findViewById(R.id.manual_mode_setting_3);
+                    Log.i("3",Integer.toString(img_resource));
                     iv.setImageResource(img_resource);
                     break;
             }

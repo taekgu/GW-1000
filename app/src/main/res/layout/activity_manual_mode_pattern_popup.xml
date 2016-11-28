@@ -20,13 +20,13 @@
         android:orientation="horizontal"
         android:layout_weight="0.1">
         <ImageView
-            android:layout_marginLeft="66dp"
-            android:layout_marginTop="65dp"
+            android:layout_marginTop="70dp"
+            android:layout_marginLeft="10dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
             android:id="@+id/manual_popup_imageview"
             android:src="@drawable/manual_mode_pattern_1"/>
-
     </RelativeLayout>
 
     <TableLayout

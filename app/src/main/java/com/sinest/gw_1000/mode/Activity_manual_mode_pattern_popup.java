@@ -3,6 +3,7 @@ package com.sinest.gw_1000.mode;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
@@ -47,7 +48,7 @@ public class Activity_manual_mode_pattern_popup extends Activity {
             Button b;
             int action = motionEvent.getAction();
             int id = view.getId();
-
+            Intent resultIntent= getIntent();
             if (action == MotionEvent.ACTION_DOWN) {
                 switch (id) {
                     case R.id.manual_popup_save:
@@ -63,16 +64,17 @@ public class Activity_manual_mode_pattern_popup extends Activity {
                 switch (id) {
                     case R.id.manual_popup_save:
                         b = (Button) view;
+                        ImageView img = (ImageView)findViewById(R.id.manual_popup_imageview);
                         b.setBackgroundResource(R.drawable.save_mode_off);
-                        Intent resultIntent= new Intent();
                         resultIntent.putExtra("pattern_num", ImageResourceId);
+                        Log.i("image resource id :", Integer.toString(ImageResourceId));
                         setResult(RESULT_OK, resultIntent);
                         finish();
                         break;
                     case R.id.manual_popup_back:
                         b = (Button) view;
                         b.setBackgroundResource(R.drawable.button_circle_back_off);
-                        setResult(RESULT_CANCELED);
+                        setResult(RESULT_CANCELED, resultIntent);
                         finish();
                         break;
                 }
@@ -86,7 +88,6 @@ public class Activity_manual_mode_pattern_popup extends Activity {
             ImageView img = (ImageView)findViewById(R.id.manual_popup_imageview);
             int id = v.getId();
             int resourceId;
-
             for(int i=1; i<=12; i++)
             {
                 resourceId = getResources().getIdentifier("pattern_"+i,"id","com.sinest.gw_1000");
@@ -94,7 +95,6 @@ public class Activity_manual_mode_pattern_popup extends Activity {
                 {
                     ImageResourceId = getResources().getIdentifier("manual_mode_pattern_"+i,"drawable","com.sinest.gw_1000");
                     img.setImageResource(ImageResourceId);
-
                 }
             }
         }
