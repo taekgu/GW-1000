@@ -8,9 +8,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
-import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextClock;
-import android.widget.ToggleButton;
 
 import com.sinest.gw_1000.R;
 import com.sinest.gw_1000.management.Application_manager;
@@ -30,6 +29,7 @@ public class Activity_library extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_library);
+        Application_manager.setFullScreen(this);
 
         // 폰트 설정
         Typeface tf = Typeface.createFromAsset(getAssets(), "fonts/digital.ttf");
@@ -42,58 +42,64 @@ public class Activity_library extends AppCompatActivity {
         }
 
         SharedPreferences sharedPreferences = getSharedPreferences(Application_manager.NAME_OF_SHARED_PREF, 0);
+
+        int imageView_id, image_id;
+        ImageView imageView;
         for (int i = 0; i< Application_manager.MAX_CHECKED; i++) {
 
             checked_loc[i] = sharedPreferences.getInt(Application_manager.LIBRARY_LOC_ + i, i);
             library_map[checked_loc[i]] = 1;
 
-            int tb_resourceId;
-            ToggleButton tb;
-            if (checked_loc[i] < 15) {
+            imageView_id = getResources().getIdentifier("library_mode" + (checked_loc[i]+1), "id", "com.sinest.gw_1000");
+            imageView = (ImageView) findViewById(imageView_id);
+            image_id = getResources().getIdentifier("mode" + (checked_loc[i]+1) + "_on", "drawable", "com.sinest.gw_1000");
+            imageView.setBackgroundResource(image_id);
 
-                tb_resourceId = getResources().getIdentifier("automode_" + (checked_loc[i] + 1), "id", "com.sinest.gw_1000");
-                tb = (ToggleButton) findViewById(tb_resourceId);
-                tb_resourceId = getResources().getIdentifier("automode_on_" + (checked_loc[i] + 1), "drawable", "com.sinest.gw_1000");
-            } else {
+            if (checked_loc[i] >= 15) {
 
-                tb_resourceId = getResources().getIdentifier("manual_mode_" + (checked_loc[i] - 14), "id", "com.sinest.gw_1000");
-                tb = (ToggleButton) findViewById(tb_resourceId);
-                tb_resourceId = getResources().getIdentifier("manual_mode_on_" + (checked_loc[i] - 14), "drawable", "com.sinest.gw_1000");
                 manual_cnt++;
             }
-            tb.setBackgroundResource(tb_resourceId);
 
             cnt++;
         }
 
+        for (int m=0; m<Application_manager.MAX_CHECKED; m++) {
+
+            Log.i("JW", "checked_loc[" + m + "] = " + checked_loc[m]);
+        }
         Log.i("JW", "library loaded, cnt = " + cnt + ", manual_cnt = " + manual_cnt);
 
-        Button library_back_button = (Button)findViewById(R.id.library_back_button);
-        Button library_save_button = (Button)findViewById(R.id.library_save_button);
-        Button library_set_button = (Button)findViewById(R.id.library_set_button);
+        ImageView library_back_button = (ImageView)findViewById(R.id.library_back_button);
+        ImageView library_save_button = (ImageView)findViewById(R.id.library_save_button);
+        ImageView library_set_button = (ImageView)findViewById(R.id.library_set_button);
 
         library_back_button.setOnTouchListener(mTouchEvent);
         library_save_button.setOnTouchListener(mTouchEvent);
         library_set_button.setOnTouchListener(mTouchEvent);
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Application_manager.setFullScreen(this);
+    }
+
     private View.OnTouchListener mTouchEvent = new View.OnTouchListener() {
         @Override
         public boolean onTouch(View view, MotionEvent motionEvent) {
             Intent intent;
-            Button b = (Button) view;
             int action = motionEvent.getAction();
             int id = view.getId();
             if (action == MotionEvent.ACTION_DOWN) {
                 switch (id) {
                     case R.id.library_back_button:
-                        b.setBackgroundResource(R.drawable.button_circle_back_on);
+                        view.setBackgroundResource(R.drawable.button_circle_back_on);
                         break;
                     case R.id.library_save_button:
-                        b.setBackgroundResource(R.drawable.save_mode_on);
+                        view.setBackgroundResource(R.drawable.save_mode_on);
                         break;
                     case R.id.library_set_button:
-                        b.setBackgroundResource(R.drawable.library_setting_on);
+                        view.setBackgroundResource(R.drawable.library_setting_on);
                         break;
 
                 }
@@ -101,11 +107,11 @@ public class Activity_library extends AppCompatActivity {
             else if (action == MotionEvent.ACTION_UP) {
                 switch (id) {
                     case R.id.library_back_button:
-                        b.setBackgroundResource(R.drawable.button_circle_back_off);
+                        view.setBackgroundResource(R.drawable.button_circle_back_off);
                         finish();
                         break;
                     case R.id.library_save_button:
-                        b.setBackgroundResource(R.drawable.save_mode_off);
+                        view.setBackgroundResource(R.drawable.save_mode_off);
 
                         if (cnt == 4) {
 
@@ -114,14 +120,14 @@ public class Activity_library extends AppCompatActivity {
                             for (int i = 0; i < Application_manager.MAX_CHECKED; i++) {
 
                                 editor.putInt(Application_manager.LIBRARY_LOC_ + i, checked_loc[i]);
-                                Log.i("JW", "Save checked_loc" + i + " set " + checked_loc[i]);
+                                Log.i("JW", "Save checked_loc(0-19)" + i + " set " + checked_loc[i]);
                             }
                             editor.commit();
                             finish();
                         }
                         break;
                     case R.id.library_set_button:
-                        b.setBackgroundResource(R.drawable.library_setting_off);
+                        view.setBackgroundResource(R.drawable.library_setting_off);
                         if(manual_cnt==1) {
                             // 추가해야됨
 
@@ -147,93 +153,63 @@ public class Activity_library extends AppCompatActivity {
     };
     public void onClicked(View v)
     {
-        ToggleButton tb;
+        ImageView imageView;
         int id = v.getId();
-        int resourceId, tb_resourceId;
 
-        for(int i=1; i<=15; i++){
-            resourceId = getResources().getIdentifier("automode_"+i,"id","com.sinest.gw_1000");
-            if(resourceId==id)
-            {
-                tb = (ToggleButton)findViewById(resourceId);
+        int imageView_id, image_id;
 
-                if (library_map[i-1] == 1) {
+        for (int i=0; i<20; i++) {
 
-                    //tb.setChecked(false);
-                    library_map[i-1] = 0;
-                    Log.i("JW", "Lib " + i + " checked false");
-                    tb_resourceId = getResources().getIdentifier("automode_"+i,"drawable","com.sinest.gw_1000");
-                    tb.setBackgroundResource(tb_resourceId);
+            imageView_id = getResources().getIdentifier("library_mode" + (i+1), "id", "com.sinest.gw_1000");
+
+            if (imageView_id == id) {
+
+                imageView = (ImageView) findViewById(imageView_id);
+
+                if (library_map[i] == 1) {
+
+                    library_map[i] = 0;
+                    Log.i("JW", "library_mode " + (i+1) + " checked false");
+                    image_id = getResources().getIdentifier("mode" + (i+1), "drawable", "com.sinest.gw_1000");
+                    imageView.setBackgroundResource(image_id);
 
                     for (int j = 0; j< Application_manager.MAX_CHECKED - 1; j++) {
 
-                        if (checked_loc[j] == i-1) {
+                        if (checked_loc[j] == i) {
 
                             for (int k = j; k< Application_manager.MAX_CHECKED - 1; k++) {
 
                                 checked_loc[k] = checked_loc[k+1];
+                                Log.i("JW", "checked_loc[" + k + "] = checked_loc[" + (k+1) + "]");
                             }
                         }
                     }
                     cnt--;
                     checked_loc[cnt] = -1;
+                    for (int m=0; m<Application_manager.MAX_CHECKED; m++) {
+
+                        Log.i("JW", "checked_loc[" + m + "] = " + checked_loc[m]);
+                    }
+                    if (i >= 15) {
+
+                        manual_cnt--;
+                    }
                 }
                 else {
 
                     if (cnt < 4) {
 
-                        //tb.setChecked(true);
-                        library_map[i-1] = 1;
-                        Log.i("JW", "Lib " + i + " checked true");
-                        tb_resourceId = getResources().getIdentifier("automode_on_" + i, "drawable", "com.sinest.gw_1000");
-                        tb.setBackgroundResource(tb_resourceId);
+                        library_map[i] = 1;
+                        Log.i("JW", "library_mode " + (i+1) + " checked true");
+                        image_id = getResources().getIdentifier("mode" + (i+1) + "_on", "drawable", "com.sinest.gw_1000");
+                        imageView.setBackgroundResource(image_id);
 
-                        checked_loc[cnt] = i - 1;
+                        checked_loc[cnt] = i;
                         cnt++;
-                    }
-                }
-            }
-        }
-        for(int i=1; i<=5; i++) {
-            resourceId = getResources().getIdentifier("manual_mode_"+i,"id","com.sinest.gw_1000");
-            if(resourceId==id)
-            {
-                tb = (ToggleButton)findViewById(resourceId);
+                        if (i >= 15) {
 
-                if (library_map[i+14] == 1) {
-
-                    //tb.setChecked(false);
-                    library_map[i+14] = 0;
-                    Log.i("JW", "Lib " + (i+14) + " checked false");
-                    tb_resourceId = getResources().getIdentifier("manual_mode_"+i,"drawable","com.sinest.gw_1000");
-                    tb.setBackgroundResource(tb_resourceId);
-
-                    for (int j = 0; j< Application_manager.MAX_CHECKED - 1; j++) {
-
-                        if (checked_loc[j] == i-1) {
-
-                            for (int k = j; k< Application_manager.MAX_CHECKED - 1; k++) {
-
-                                checked_loc[k] = checked_loc[k+1];
-                            }
+                            manual_cnt++;
                         }
-                    }
-                    cnt--;
-                    checked_loc[cnt] = -1;
-                    manual_cnt--;
-                }
-                else {
-
-                    if (cnt < 4) {
-
-                        //tb.setChecked(true);
-                        library_map[i+14] = 1;
-                        tb_resourceId = getResources().getIdentifier("manual_mode_on_" + i, "drawable", "com.sinest.gw_1000");
-                        tb.setBackgroundResource(tb_resourceId);
-
-                        checked_loc[cnt] = i+14;
-                        cnt++;
-                        manual_cnt++;
                     }
                 }
             }

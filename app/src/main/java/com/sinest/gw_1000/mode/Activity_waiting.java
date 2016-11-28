@@ -14,7 +14,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
-import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextClock;
 import android.widget.TextView;
@@ -48,18 +48,32 @@ public class Activity_waiting extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_waiting);
+        Application_manager.setFullScreen(this);
+
+        communicator = Application_manager.getCommunicator();
 
         // 폰트 설정
         Typeface tf = Typeface.createFromAsset(getAssets(), "fonts/digital.ttf");
+
         TextClock clock = (TextClock) findViewById(R.id.waiting_clock);
         clock.setTypeface(tf);
 
         SharedPreferences sharedPreferences = getSharedPreferences(Application_manager.NAME_OF_SHARED_PREF, 0);
-        val_oxygen = sharedPreferences.getInt(Application_manager.VAL_OXYGEN, 20);
-        val_pressure = sharedPreferences.getInt(Application_manager.VAL_PRESSURE, 1);
+        val_oxygen = sharedPreferences.getInt(Application_manager.VAL_OXYGEN, 0);
+        val_pressure = sharedPreferences.getInt(Application_manager.VAL_PRESSURE, 0);
         val_time = sharedPreferences.getInt(Application_manager.VAL_TIME, 10);
 
-        communicator = Application_manager.getCommunicator();
+        time_text = (TextView)findViewById(R.id.waiting_time_text);
+        time_text.setTypeface(tf);
+        oxygen_text = (TextView)findViewById(R.id.waiting_oxygen_text);
+        oxygen_text.setTypeface(tf);
+        pressure_text = (TextView)findViewById(R.id.waiting_pressure_text);
+        pressure_text.setTypeface(tf);
+
+        oxygen_text.setText(""+val_oxygen);
+        pressure_text.setText(""+val_pressure);
+        time_text.setText(""+val_time);
+
 
         fragment_waiting = new Fragment_waiting();
         for (int i = 0; i< Application_manager.MAX_CHECKED; i++) {
@@ -74,25 +88,18 @@ public class Activity_waiting extends AppCompatActivity {
         fragmentTransaction.add(R.id.frameLayout_fragment, fragment_waiting);
         fragmentTransaction.commit();
 
-        Button waiting_library_button = (Button)findViewById(R.id.waiting_library_button);
-        Button waiting_setting_button = (Button)findViewById(R.id.waiting_setting_button);
+        ImageView waiting_library_button = (ImageView)findViewById(R.id.waiting_library_button);
+        ImageView waiting_setting_button = (ImageView)findViewById(R.id.waiting_setting_button);
 
-        Button waiting_oxygen_up_button = (Button)findViewById(R.id.waiting_oxygen_up_button);
-        Button waiting_oxygen_down_button = (Button)findViewById(R.id.waiting_oxygen_down_button);
-        Button waiting_pressure_up_button = (Button)findViewById(R.id.waiting_pressure_up_button);
-        Button waiting_pressure_down_button = (Button)findViewById(R.id.waiting_pressure_down_button);
-        Button waiting_time_up_button = (Button)findViewById(R.id.waiting_time_up_button);
-        Button waiting_time_down_button = (Button)findViewById(R.id.waiting_time_down_button);
+        ImageView waiting_oxygen_up_button = (ImageView)findViewById(R.id.waiting_oxygen_up_button);
+        ImageView waiting_oxygen_down_button = (ImageView)findViewById(R.id.waiting_oxygen_down_button);
+        ImageView waiting_pressure_up_button = (ImageView)findViewById(R.id.waiting_pressure_up_button);
+        ImageView waiting_pressure_down_button = (ImageView)findViewById(R.id.waiting_pressure_down_button);
+        ImageView waiting_time_up_button = (ImageView)findViewById(R.id.waiting_time_up_button);
+        ImageView waiting_time_down_button = (ImageView)findViewById(R.id.waiting_time_down_button);
 
-        Button waiting_door_open_button = (Button)findViewById(R.id.waiting_dooropen_button);
-        Button waiting_door_close_button = (Button)findViewById(R.id.waiting_doorclose_button);
-
-        time_text = (TextView)findViewById(R.id.waiting_time_text);
-        oxygen_text = (TextView)findViewById(R.id.waiting_oxygen_text);
-        pressure_text = (TextView)findViewById(R.id.waiting_pressure_text);
-        oxygen_text.setText(""+val_oxygen);
-        pressure_text.setText(""+val_pressure);
-        time_text.setText(""+val_time);
+        ImageView waiting_door_open_button = (ImageView)findViewById(R.id.waiting_dooropen_button);
+        ImageView waiting_door_close_button = (ImageView)findViewById(R.id.waiting_doorclose_button);
 
         waiting_library_button.setOnTouchListener(mTouchEvent);
         waiting_setting_button.setOnTouchListener(mTouchEvent);
@@ -113,6 +120,8 @@ public class Activity_waiting extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        Application_manager.setFullScreen(this);
+
         registReceiver();
 
         SharedPreferences sharedPreferences = getSharedPreferences(Application_manager.NAME_OF_SHARED_PREF, 0);
@@ -126,7 +135,7 @@ public class Activity_waiting extends AppCompatActivity {
         }
         fragment_waiting.refresh();
 
-        val_time = sharedPreferences.getInt(Application_manager.WAITING_WORKING_TIME, 0);
+        val_time = sharedPreferences.getInt(Application_manager.WAITING_WORKING_TIME, 10);
         time_text.setText(Integer.toString(val_time));
         /*
         FragmentManager fragmentManager = getFragmentManager();
@@ -239,7 +248,6 @@ public class Activity_waiting extends AppCompatActivity {
     private View.OnTouchListener mTouchEvent = new View.OnTouchListener() {
         @Override
         public boolean onTouch(View view, MotionEvent motionEvent) {
-            Button b;
             TextView txt;
             LinearLayout background;
             Intent intent;
@@ -251,44 +259,35 @@ public class Activity_waiting extends AppCompatActivity {
             if (action == MotionEvent.ACTION_DOWN) {
                 switch (id) {
                     case R.id.waiting_library_button:
-                        b  = (Button) view;
-                        b.setBackgroundResource(R.drawable.library_on);
+                        view.setBackgroundResource(R.drawable.library_on);
                         break;
                     case R.id.waiting_setting_button:
-                        b  = (Button) view;
-                        b.setBackgroundResource(R.drawable.setting_on);
+                        //iv  = (ImageView) view;
+                        view.setBackgroundResource(R.drawable.setting_on);
                         break;
                     case R.id.waiting_oxygen_up_button:
-                        b  = (Button) view;
-                        b.setBackgroundResource(R.drawable.button_up_on);
+                        view.setBackgroundResource(R.drawable.button_up_on);
                         break;
                     case R.id.waiting_oxygen_down_button:
-                        b  = (Button) view;
-                        b.setBackgroundResource(R.drawable.button_down_on);
+                        view.setBackgroundResource(R.drawable.button_down_on);
                         break;
                     case R.id.waiting_pressure_up_button:
-                        b  = (Button) view;
-                        b.setBackgroundResource(R.drawable.button_up_on);
+                        view.setBackgroundResource(R.drawable.button_up_on);
                         break;
                     case R.id.waiting_pressure_down_button:
-                        b  = (Button) view;
-                        b.setBackgroundResource(R.drawable.button_down_on);
+                        view.setBackgroundResource(R.drawable.button_down_on);
                         break;
                     case R.id.waiting_time_up_button:
-                        b  = (Button) view;
-                        b.setBackgroundResource(R.drawable.button_up_on);
+                        view.setBackgroundResource(R.drawable.button_up_on);
                         break;
                     case R.id.waiting_time_down_button:
-                        b  = (Button) view;
-                        b.setBackgroundResource(R.drawable.button_down_on);
+                        view.setBackgroundResource(R.drawable.button_down_on);
                         break;
                     case R.id.waiting_dooropen_button:
-                        b  = (Button) view;
-                        b.setBackgroundResource(R.drawable.door_open_on);
+                        view.setBackgroundResource(R.drawable.door_open_on);
                         break;
                     case R.id.waiting_doorclose_button:
-                        b  = (Button) view;
-                        b.setBackgroundResource(R.drawable.door_close_on);
+                        view.setBackgroundResource(R.drawable.door_close_on);
                         break;
                     case R.id.waiting_time_text:
                         break;
@@ -298,21 +297,18 @@ public class Activity_waiting extends AppCompatActivity {
                 byte val = 0x00;
                 switch (id) {
                     case R.id.waiting_library_button:
-                        b  = (Button) view;
-                        b.setBackgroundResource(R.drawable.library);
+                        view.setBackgroundResource(R.drawable.library);
                         intent = new Intent(getApplicationContext(), Activity_library.class);
                         startActivity(intent);
                         break;
                     case R.id.waiting_setting_button:
-                        b  = (Button) view;
-                        b.setBackgroundResource(R.drawable.setting);
+                        view.setBackgroundResource(R.drawable.setting);
                         //setting
                         intent_setting = new Intent(getApplicationContext(), Activity_setting.class);
                         startActivity(intent_setting);
                         break;
                     case R.id.waiting_oxygen_up_button:
-                        b  = (Button) view;
-                        b.setBackgroundResource(R.drawable.button_up);
+                        view.setBackgroundResource(R.drawable.button_up);
 
                         val_oxygen++;
                         if (val_oxygen > 5) val_oxygen = 5;
@@ -323,8 +319,7 @@ public class Activity_waiting extends AppCompatActivity {
                         communicator.send(communicator.get_tx());
                         break;
                     case R.id.waiting_oxygen_down_button:
-                        b  = (Button) view;
-                        b.setBackgroundResource(R.drawable.button_down);
+                        view.setBackgroundResource(R.drawable.button_down);
 
                         val_oxygen--;
                         if (val_oxygen < 0) val_oxygen = 0;
@@ -335,8 +330,7 @@ public class Activity_waiting extends AppCompatActivity {
                         communicator.send(communicator.get_tx());
                         break;
                     case R.id.waiting_pressure_up_button:
-                        b  = (Button) view;
-                        b.setBackgroundResource(R.drawable.button_up);
+                        view.setBackgroundResource(R.drawable.button_up);
 
                         val_pressure += 1;
                         if (val_pressure > 6) val_pressure = 6;
@@ -346,8 +340,7 @@ public class Activity_waiting extends AppCompatActivity {
                         communicator.send(communicator.get_tx());
                         break;
                     case R.id.waiting_pressure_down_button:
-                        b  = (Button) view;
-                        b.setBackgroundResource(R.drawable.button_down);
+                        view.setBackgroundResource(R.drawable.button_down);
 
                         val_pressure -= 1;
                         if (val_pressure < 0) val_pressure = 0;
@@ -357,25 +350,22 @@ public class Activity_waiting extends AppCompatActivity {
                         communicator.send(communicator.get_tx());
                         break;
                     case R.id.waiting_time_up_button:
-                        b  = (Button) view;
-                        b.setBackgroundResource(R.drawable.button_up);
+                        view.setBackgroundResource(R.drawable.button_up);
 
                         val_time += 1;
                         if (val_time > 90) val_time = 90;
                         time_text.setText(""+val_time);
                         break;
                     case R.id.waiting_time_down_button:
-                        b  = (Button) view;
-                        b.setBackgroundResource(R.drawable.button_down);
+                        view.setBackgroundResource(R.drawable.button_down);
 
                         val_time -= 1;
                         if (val_time < 1) val_time = 1;
                         time_text.setText(""+val_time);
                         break;
                     case R.id.waiting_dooropen_button:
-                        b  = (Button) view;
                         background = (LinearLayout)findViewById(R.id.waiting_background);
-                        b.setBackgroundResource(R.drawable.door_open_off);
+                        view.setBackgroundResource(R.drawable.door_open_off);
                         background.setBackgroundResource(R.drawable.waiting_dooropen_backimage);
 
                         val = 0x01;
@@ -385,9 +375,9 @@ public class Activity_waiting extends AppCompatActivity {
                         Application_manager.getSoundManager().play(Application_manager.ID_LANG_SOUND[Application_manager.LANGUAGE][3]);
                         break;
                     case R.id.waiting_doorclose_button:
-                        b  = (Button) view;
+                        //b  = (Button) view;
                         background = (LinearLayout)findViewById(R.id.waiting_background);
-                        b.setBackgroundResource(R.drawable.door_close_off);
+                        view.setBackgroundResource(R.drawable.door_close_off);
                         background.setBackgroundResource(R.drawable.waiting_doorclose_backimage);
 
                         val = 0x02;

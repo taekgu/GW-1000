@@ -58,15 +58,7 @@ public class Fragment_waiting extends Fragment {
                 mode[i].setOnTouchListener(mTouchEvent);
 
                 int resourceId = -1;
-                if (checked_idx[i] < 15) {
-
-                    resourceId = getResources().getIdentifier("automode_" + (checked_idx[i] + 1), "drawable", "com.sinest.gw_1000");
-                    //   Log.i("JW", "automode_" + (checked_idx[i]+1));
-                } else {
-
-                    resourceId = getResources().getIdentifier("manual_mode_" + (checked_idx[i] - 14), "drawable", "com.sinest.gw_1000");
-                    //    Log.i("JW", "manual_mode_" + (checked_idx[i]+1));
-                }
+                resourceId = getResources().getIdentifier("mode" + (checked_idx[i] + 1), "drawable", "com.sinest.gw_1000");
                 mode[i].setBackgroundResource(resourceId);
             }
         }
@@ -92,14 +84,7 @@ public class Fragment_waiting extends Fragment {
                     if (button_clicked == mode[i]) {
 
                         int resourceId = -1;
-                        if (checked_idx[i] < 15) {
-
-                            resourceId = getResources().getIdentifier("automode_on_" + (checked_idx[i]+1), "drawable", "com.sinest.gw_1000");
-                        }
-                        else {
-
-                            resourceId = getResources().getIdentifier("manual_mode_on_" + (checked_idx[i]+1), "drawable", "com.sinest.gw_1000");
-                        }
+                        resourceId = getResources().getIdentifier("mode" + (checked_idx[i]+1) + "_on", "drawable", "com.sinest.gw_1000");
                         mode[i].setBackgroundResource(resourceId);
                     }
                 }
@@ -111,14 +96,7 @@ public class Fragment_waiting extends Fragment {
                     if (button_clicked == mode[i]) {
 
                         int resourceId = -1;
-                        if (checked_idx[i] < 15) {
-
-                            resourceId = getResources().getIdentifier("automode_" + (checked_idx[i]+1), "drawable", "com.sinest.gw_1000");
-                        }
-                        else {
-
-                            resourceId = getResources().getIdentifier("manual_mode_" + (checked_idx[i]+1), "drawable", "com.sinest.gw_1000");
-                        }
+                        resourceId = getResources().getIdentifier("mode" + (checked_idx[i]+1), "drawable", "com.sinest.gw_1000");
                         mode[i].setBackgroundResource(resourceId);
                         activity.changeFragment_working(i+1);
                         Application_manager.getSoundManager().play(Application_manager.ID_LANG_SOUND[Application_manager.LANGUAGE][0]);
