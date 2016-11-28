@@ -59,7 +59,7 @@ public class Activity_setting extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        
         // 폰트 설정
         tf = Typeface.createFromAsset(getAssets(), "fonts/digital.ttf");
         TextClock clock = (TextClock) findViewById(R.id.textClock_s);

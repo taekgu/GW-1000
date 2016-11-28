@@ -32,13 +32,13 @@
             android:layout_height="match_parent"
             android:background="@drawable/button_elipse_back_off"
             android:id="@+id/rfid_back"
-            android:layout_weight="15" />
+            android:layout_weight="18" />
 
         <Button
             android:layout_width="0dp"
             android:layout_height="60dp"
             android:visibility="invisible"
-            android:layout_weight="10" />
+            android:layout_weight="7" />
 
     </LinearLayout>
 
@@ -102,7 +102,7 @@
             android:layout_weight="15">
 
             <Button
-                android:layout_width="70dp"
+                android:layout_width="110dp"
                 android:layout_height="0dp"
                 android:id="@+id/rfid_w_up"
                 android:layout_weight="50"
@@ -110,7 +110,7 @@
                 android:background="@drawable/button_up_off"/>
 
             <Button
-                android:layout_width="70dp"
+                android:layout_width="110dp"
                 android:layout_height="0dp"
                 android:id="@+id/rfid_w_down"
                 android:layout_weight="50"
@@ -162,7 +162,7 @@
             android:layout_weight="18">
 
             <Button
-                android:layout_width="70dp"
+                android:layout_width="110dp"
                 android:layout_height="0dp"
                 android:id="@+id/rfid_t_up"
                 android:layout_weight="50"
@@ -170,7 +170,7 @@
                 android:background="@drawable/button_up_off"/>
 
             <Button
-                android:layout_width="70dp"
+                android:layout_width="110dp"
                 android:layout_height="0dp"
                 android:id="@+id/rfid_t_down"
                 android:layout_weight="50"
@@ -184,7 +184,7 @@
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="20">
+        android:layout_weight="18">
 
         <Button
             android:layout_width="0dp"
@@ -194,7 +194,7 @@
 
         <Button
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:id="@+id/rfid_save"
             android:background="@drawable/save_setting_off"
             android:layout_marginTop="20dp"
@@ -203,7 +203,7 @@
 
         <Button
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:id="@+id/rfid_check"
             android:background="@drawable/check_off"
             android:layout_marginTop="20dp"
@@ -213,7 +213,7 @@
 
         <Button
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:id="@+id/rfid_off"
             android:background="@drawable/off"
             android:layout_marginTop="20dp"
@@ -232,7 +232,7 @@
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="10">
+        android:layout_weight="12">
     </LinearLayout>
 
 </LinearLayout>

@@ -110,7 +110,7 @@
 
                 <Button
                     android:layout_width="0dp"
-                    android:layout_height="42dp"
+                    android:layout_height="70dp"
                     android:id="@+id/b_language"
                     android:layout_weight="43"
                     android:layout_marginRight="15dp"
@@ -118,7 +118,7 @@
 
                 <Button
                     android:layout_width="0dp"
-                    android:layout_height="42dp"
+                    android:layout_height="70dp"
                     android:id="@+id/b_inverter"
                     android:layout_weight="17"
                     android:layout_marginRight="15dp"
@@ -127,7 +127,7 @@
 
                 <Button
                     android:layout_width="0dp"
-                    android:layout_height="42dp"
+                    android:layout_height="70dp"
                     android:id="@+id/b_emotion"
                     android:layout_weight="30"
                     android:layout_marginRight="15dp"
@@ -136,7 +136,7 @@
 
                 <Button
                     android:layout_width="0dp"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:id="@+id/b_back"
                     android:layout_weight="10"
                     android:layout_marginLeft="15dp"
@@ -175,16 +175,16 @@
                     android:layout_marginRight="8dp">
 
                     <Button
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
                         android:id="@+id/b_1m"
                         android:layout_weight="25"
                         android:layout_marginRight="5dp"
                         android:background="@drawable/sleepmode_1min"/>
 
                     <Button
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
                         android:id="@+id/b_3m"
                         android:layout_weight="25"
                         android:layout_marginRight="5dp"
@@ -192,8 +192,8 @@
                         android:background="@drawable/sleepmode_3min"/>
 
                     <Button
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
                         android:id="@+id/b_5m"
                         android:layout_weight="25"
                         android:layout_marginRight="5dp"
@@ -201,8 +201,8 @@
                         android:background="@drawable/sleepmode_5min"/>
 
                     <Button
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
                         android:id="@+id/b_coutinue"
                         android:layout_weight="25"
                         android:layout_marginLeft="5dp"
@@ -247,16 +247,16 @@
                     android:layout_marginRight="8dp">
 
                     <Button
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
                         android:id="@+id/b_rf"
                         android:layout_weight="25"
                         android:layout_marginRight="5dp"
                         android:background="@drawable/off"/>
 
                     <Button
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
                         android:id="@+id/b_ex"
                         android:layout_weight="25"
                         android:layout_marginRight="5dp"
@@ -264,8 +264,8 @@
                         android:background="@drawable/off"/>
 
                     <Button
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
                         android:id="@+id/b_wa"
                         android:layout_weight="25"
                         android:layout_marginRight="5dp"
@@ -273,8 +273,8 @@
                         android:background="@drawable/off"/>
 
                     <Button
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
                         android:id="@+id/b_pa"
                         android:layout_weight="25"
                         android:layout_marginLeft="5dp"
@@ -338,7 +338,7 @@
                             android:textSize="30dp"
                             android:layout_gravity="center"
                             android:gravity="center"
-                            android:textColor="#000000"
+                            android:textColor="#00ffff"
                             android:background="@drawable/button_off"/>
 
                         <TextView
@@ -352,7 +352,7 @@
                             android:textSize="30dp"
                             android:layout_gravity="center"
                             android:gravity="center"
-                            android:textColor="#000000"
+                            android:textColor="#00ffff"
                             android:background="@drawable/button_off"/>
 
                         <TextView
@@ -365,7 +365,7 @@
                             android:textSize="30dp"
                             android:layout_gravity="center"
                             android:gravity="center"
-                            android:textColor="#000000"
+                            android:textColor="#00ffff"
                             android:background="@drawable/button_off"/>
 
                         <TextView
@@ -377,7 +377,7 @@
                             android:textSize="30dp"
                             android:layout_gravity="center"
                             android:gravity="center"
-                            android:textColor="#000000"
+                            android:textColor="#00ffff"
                             android:background="@drawable/button_off"/>
                     </LinearLayout>
 
@@ -398,7 +398,7 @@
                             android:textSize="30dp"
                             android:layout_gravity="center"
                             android:gravity="center"
-                            android:textColor="#000000"
+                            android:textColor="#00ffff"
                             android:background="@drawable/button_off"/>
                         <TextView
                             android:layout_width="match_parent"
@@ -409,7 +409,7 @@
                             android:textSize="30dp"
                             android:layout_gravity="center"
                             android:gravity="center"
-                            android:textColor="#000000"
+                            android:textColor="#00ffff"
                             android:background="@drawable/button_off"/>
                         <TextView
                             android:layout_width="match_parent"
@@ -420,7 +420,7 @@
                             android:textSize="30dp"
                             android:layout_gravity="center"
                             android:gravity="center"
-                            android:textColor="#000000"
+                            android:textColor="#00ffff"
                             android:background="@drawable/button_off"/>
                         <TextView
                             android:layout_width="match_parent"
@@ -431,7 +431,7 @@
                             android:textSize="30dp"
                             android:layout_gravity="center"
                             android:gravity="center"
-                            android:textColor="#000000"
+                            android:textColor="#00ffff"
                             android:background="@drawable/button_off"/>
                     </LinearLayout>
 
@@ -452,7 +452,7 @@
                             android:textSize="30dp"
                             android:layout_gravity="center"
                             android:gravity="center"
-                            android:textColor="#000000"
+                            android:textColor="#00ffff"
                             android:background="@drawable/button_off"/>
                         <TextView
                             android:layout_width="match_parent"
@@ -463,7 +463,7 @@
                             android:textSize="30dp"
                             android:layout_gravity="center"
                             android:gravity="center"
-                            android:textColor="#000000"
+                            android:textColor="#00ffff"
                             android:background="@drawable/button_off"/>
                         <TextView
                             android:layout_width="match_parent"
@@ -474,7 +474,7 @@
                             android:textSize="30dp"
                             android:layout_gravity="center"
                             android:gravity="center"
-                            android:textColor="#000000"
+                            android:textColor="#00ffff"
                             android:background="@drawable/button_off"/>
                         <TextView
                             android:layout_width="match_parent"
@@ -485,7 +485,7 @@
                             android:textSize="30dp"
                             android:layout_gravity="center"
                             android:gravity="center"
-                            android:textColor="#000000"
+                            android:textColor="#00ffff"
                             android:background="@drawable/button_off"/>
                     </LinearLayout>
 
