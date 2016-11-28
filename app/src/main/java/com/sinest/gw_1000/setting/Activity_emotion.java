@@ -168,7 +168,7 @@ public class Activity_emotion extends Activity {
                         emotion_led_up.setBackgroundResource(R.drawable.button_up_off);
                         //s_buf = (String)led_mode.getText();
                         //int_buf = Integer.parseInt(s_buf) + 1;
-                        if(0 <= led_mode_num && 6 > led_mode_num)
+                        if(0 <= led_mode_num && 4 > led_mode_num)
                         {
                             led_mode_num++;
                             //s_buf = Integer.toString(int_buf);
@@ -181,7 +181,7 @@ public class Activity_emotion extends Activity {
                         emotion_led_down.setBackgroundResource(R.drawable.button_down_off);
                         //s_buf = (String)led_mode.getText();
                         //int_buf = Integer.parseInt(s_buf) - 1;
-                        if(0 < led_mode_num && 6 >= led_mode_num)
+                        if(0 < led_mode_num && 4 >= led_mode_num)
                         {
                             led_mode_num--;
                             //s_buf = Integer.toString(int_buf);
@@ -192,7 +192,7 @@ public class Activity_emotion extends Activity {
                         break;
                     case R.id.emotion_soundm_up:
                         emotion_soundm_up.setBackgroundResource(R.drawable.button_up_off);
-                        if(1 <= sound_volume_num && 10 > sound_volume_num)
+                        if(1 <= sound_volume_num && 5 > sound_volume_num)
                         {
                             sound_volume_num++;
                             sound_volume.setText(String.valueOf(sound_volume_num));
@@ -200,7 +200,7 @@ public class Activity_emotion extends Activity {
                         break;
                     case R.id.emotion_soundm_down:
                         emotion_soundm_down.setBackgroundResource(R.drawable.button_down_off);
-                        if(1 < sound_volume_num && 10 >= sound_volume_num)
+                        if(1 < sound_volume_num && 5 >= sound_volume_num)
                         {
                             sound_volume_num--;
                             sound_volume.setText(String.valueOf(sound_volume_num));
@@ -208,7 +208,7 @@ public class Activity_emotion extends Activity {
                         break;
                     case R.id.emotion_sound_up:
                         emotion_sound_up.setBackgroundResource(R.drawable.button_up_off);
-                        if(0 <= sound_mode_num && 6 > sound_mode_num)
+                        if(0 <= sound_mode_num && 5 > sound_mode_num)
                         {
                             sound_mode_num++;
                             sound_mode.setText(String.valueOf(sound_mode_num));
@@ -216,7 +216,7 @@ public class Activity_emotion extends Activity {
                         break;
                     case R.id.emotion_sound_down:
                         emotion_sound_down.setBackgroundResource(R.drawable.button_down_off);
-                        if(0 < sound_mode_num && 6 >= sound_mode_num)
+                        if(0 < sound_mode_num && 5 >= sound_mode_num)
                         {
                             sound_mode_num--;
                             sound_mode.setText(String.valueOf(sound_mode_num));

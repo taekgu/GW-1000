@@ -36,6 +36,8 @@ public class Activity_rfid extends Activity {
     String[] w_mode = {"A1","A2","A3","A4","A5","A6","A7","A8","A9","A10","A11","A12","A13","A14","A15",
             "M1","M2","M3","M4","M5","NM"};
     int w_mode_idx = 0;
+    Intent check;
+    boolean save_f = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,7 +70,7 @@ public class Activity_rfid extends Activity {
         rfid_t_c.setTypeface(tf);
         rfid_w_c.setTypeface(tf);
 
-
+        check = getIntent();
 
         View.OnClickListener listener = new View.OnClickListener() {
             public void onClick(View v) {
@@ -175,6 +177,7 @@ public class Activity_rfid extends Activity {
                     case R.id.rfid_save:
                         rfid_save.setBackgroundResource(R.drawable.save_setting_off);
                         //save -> working_mode_num, treatment_num
+                        save_f = true;
 
                         break;
                     case R.id.rfid_check:
@@ -183,7 +186,16 @@ public class Activity_rfid extends Activity {
                         break;
                     case R.id.rfid_back:
                         rfid_back.setBackgroundResource(R.drawable.button_elipse_back_off);
-                        finish();
+                        if(save_f == true)
+                        {
+                            finish();
+                        }
+                        else if(save_f == false)
+                        {
+                            check.putExtra("check","No");
+                            setResult(RESULT_OK, check);
+                            finish();
+                        }
                         break;
                 }
             }

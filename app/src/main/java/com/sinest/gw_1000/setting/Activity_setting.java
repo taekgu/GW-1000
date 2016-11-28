@@ -48,6 +48,7 @@ public class Activity_setting extends AppCompatActivity {
     Intent intent_rfid;
     Intent intent_wa;
     Intent intent_hidden;
+    Intent intent_rfid2;
 
     String check;
     String check2;
@@ -70,8 +71,7 @@ public class Activity_setting extends AppCompatActivity {
         communicator = Application_manager.getCommunicator();
 
         //communicator.send(communicator.get_tx)
-
-        TextClock textClock = (TextClock) findViewById(R.id.textClock);
+        
         //textClock.setFormat24Hour();
 
         b_11 = (TextView)findViewById(R.id.button11);
@@ -141,6 +141,9 @@ public class Activity_setting extends AppCompatActivity {
         //intent_wa.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_SINGLE_TOP);
 
         intent_hidden = new Intent(this, Activity_engine.class);
+
+        intent_rfid2 = new Intent(this, Activity_rfid.class);
+        //intent_rfid2.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_SINGLE_TOP);
 /*
         findViewById(R.id.button11).setOnClickListener(
                 new Button.OnClickListener(){
@@ -559,6 +562,9 @@ public class Activity_setting extends AppCompatActivity {
                         b_rf.setBackgroundResource(R.drawable.off);
                         button2_flag[0] = true;
                         check = "Yes";
+                    }else if(check.equals("do"))
+                    {
+                        startActivityForResult(intent_rfid2,3);
                     }
                     break;
                 case 2:
@@ -567,6 +573,14 @@ public class Activity_setting extends AppCompatActivity {
                         b_wa.setBackgroundResource(R.drawable.off);
                         button2_flag[2] = true;
                         check2 = "Yes";
+                    }
+                    break;
+                case 3:
+                    check = data.getStringExtra("check");
+                    if(check.equals("No")){
+                        b_rf.setBackgroundResource(R.drawable.off);
+                        button2_flag[0] = true;
+                        check = "Yes";
                     }
                     break;
                 default:

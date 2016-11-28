@@ -164,7 +164,8 @@ public class Activity_rfidcardpassord extends Activity {
                             password = "0000";
                         }
                         else if(ps.equals(password)){
-                            startActivity(intent_rfid);
+                            check.putExtra("check","do");
+                            setResult(RESULT_OK, check);
                             finish();
                         }
                         else{
