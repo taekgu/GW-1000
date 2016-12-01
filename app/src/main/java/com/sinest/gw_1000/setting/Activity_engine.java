@@ -2,6 +2,8 @@ package com.sinest.gw_1000.setting;
 
 import android.content.Intent;
 import android.graphics.Typeface;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -98,7 +100,6 @@ public class Activity_engine extends AppCompatActivity {
         oxygen_m = (TextView) findViewById(R.id.oxygen_m);
         oxygen_m.setTypeface(tf);
         operation_t = (TextView) findViewById(R.id.operation_t);
-        operation_t.setText(""+ Application_manager.getRunningTime()/60);
         operation_t.setTypeface(tf);
 
         hidden_e_1 = (Button)findViewById(R.id.hidden_e_1);
@@ -361,8 +362,7 @@ public class Activity_engine extends AppCompatActivity {
                             hidden[2] = false;
                             hidden[3] = false;
                             //operating time re-set
-
-
+                            operation_t.setText("0");
                         }else
                         {
                             hidden[0] = true;
@@ -393,6 +393,7 @@ public class Activity_engine extends AppCompatActivity {
                             Log.v("hidden","hidden4");
                         }
                         break;
+
                 }
             }
         };
@@ -521,6 +522,34 @@ public class Activity_engine extends AppCompatActivity {
             return true;
         }
     };
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        Thread myThread = new Thread(new Runnable() {
+            public void run() {
+                while (true) {
+                    try {
+                        handler.sendMessage(handler.obtainMessage());
+                        Thread.sleep(1000);
+                    } catch (Throwable t) {
+                    }
+                }
+            }
+        });
+        myThread.start();
+    }
+
+    Handler handler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            updateThread();
+        }
+    };
+
+    private void updateThread() {
+        operation_t.setText(""+ Application_manager.getRunningTime()/60);
+    }
 
     void setZerosWaterPressure()
     {

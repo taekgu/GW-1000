@@ -14,6 +14,7 @@ import android.widget.Button;
 import android.widget.Chronometer;
 
 import com.sinest.gw_1000.R;
+import com.sinest.gw_1000.management.Application_manager;
 
 public class Activity_starttime extends Activity {
 
@@ -47,6 +48,8 @@ public class Activity_starttime extends Activity {
         layoutParams.dimAmount = 0.7f;
         getWindow().setAttributes(layoutParams);
         setContentView(R.layout.activity_start_time);
+
+        Application_manager.setFullScreen(this);
 
         start_time1 = (Button) findViewById(R.id.start_time1);
         start_time2 = (Button) findViewById(R.id.start_time2);
