@@ -88,51 +88,67 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:id="@+id/eng_28h"
-                android:layout_weight="1"
-                android:layout_marginRight="10dp"
+                android:layout_weight="14"
                 android:background="@drawable/water_28_off"/>
 
             <Button
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
+                android:visibility="invisible"
+                android:layout_weight="4" />
+
+            <Button
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
                 android:id="@+id/eng_36h"
-                android:layout_weight="1"
-                android:layout_marginRight="10dp"
-                android:layout_marginLeft="10dp"
+                android:layout_weight="14"
                 android:background="@drawable/water_36_off"/>
+            <Button
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:visibility="invisible"
+                android:layout_weight="4" />
 
             <Button
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:id="@+id/eng_43h"
-                android:layout_weight="1"
-                android:layout_marginRight="10dp"
-                android:layout_marginLeft="10dp"
+                android:layout_weight="14"
                 android:background="@drawable/water_43_off"/>
+            <Button
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:visibility="invisible"
+                android:layout_weight="4" />
 
             <Button
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:id="@+id/eng_48h"
-                android:layout_weight="1"
-                android:layout_marginRight="10dp"
-                android:layout_marginLeft="10dp"
+                android:layout_weight="14"
                 android:background="@drawable/water_49_off"/>
             <Button
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
+                android:visibility="invisible"
+                android:layout_weight="4" />
+            <Button
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
                 android:id="@+id/eng_54h"
-                android:layout_weight="1"
-                android:layout_marginRight="10dp"
-                android:layout_marginLeft="10dp"
+                android:layout_weight="14"
                 android:background="@drawable/water_54_off"/>
+            <Button
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:visibility="invisible"
+                android:layout_weight="4" />
 
             <Button
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:id="@+id/eng_60h"
-                android:layout_weight="1"
-                android:layout_marginLeft="10dp"
+                android:layout_weight="14"
                 android:background="@drawable/water_60_off"/>
         </LinearLayout>
 
@@ -155,56 +171,67 @@
                 android:layout_height="match_parent"
                 android:id="@+id/eng_1step"
                 android:layout_weight="15"
-                android:layout_marginRight="7dp"
                 android:background="@drawable/oxygen_1step_off"/>
 
             <Button
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
+                android:visibility="invisible"
+                android:layout_weight="3" />
+            <Button
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
                 android:id="@+id/eng_2step"
                 android:layout_weight="15"
-                android:layout_marginRight="7dp"
-                android:layout_marginLeft="7dp"
                 android:background="@drawable/oxygen_2step_off"/>
 
             <Button
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
+                android:visibility="invisible"
+                android:layout_weight="3" />
+            <Button
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
                 android:id="@+id/eng_3step"
                 android:layout_weight="15"
-                android:layout_marginRight="7dp"
-                android:layout_marginLeft="7dp"
                 android:background="@drawable/oxygen_3step_off"/>
+            <Button
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:visibility="invisible"
+                android:layout_weight="3" />
             <Button
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:id="@+id/eng_4step"
                 android:layout_weight="15"
-                android:layout_marginRight="7dp"
-                android:layout_marginLeft="7dp"
                 android:background="@drawable/oxygen_4step_off"/>
+            <Button
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:visibility="invisible"
+                android:layout_weight="3" />
 
             <Button
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:id="@+id/eng_5step"
                 android:layout_weight="15"
-                android:layout_marginLeft="7dp"
                 android:background="@drawable/oxygen_5step_off"/>
 
             <Button
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:visibility="invisible"
-                android:layout_weight="5" />
+                android:layout_weight="3" />
 
             <TextView
                 android:text="00"
                 android:layout_gravity="center"
-                android:gravity="right"
+                android:gravity="right|center"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_marginTop="7dp"
                 android:id="@+id/oxygen_m"
                 android:textSize="60dp"
                 android:textColor="#00ffff"
@@ -221,7 +248,7 @@
             android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="7">
+            android:layout_weight="9">
 
         </LinearLayout>
 
@@ -234,38 +261,56 @@
             <Button
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
+                android:visibility="invisible"
+                android:layout_weight="5" />
+
+            <Button
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
                 android:id="@+id/eng_b_water"
-                android:layout_weight="1"
-                android:layout_marginLeft="35dp"
-                android:layout_marginRight="35dp"
+                android:layout_weight="10"
                 android:background="@drawable/button_gry"/>
+            <Button
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:visibility="invisible"
+                android:layout_weight="10" />
 
             <Button
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:id="@+id/eng_b_inter"
-                android:layout_weight="1"
-                android:layout_marginLeft="35dp"
-                android:layout_marginRight="35dp"
+                android:layout_weight="10"
                 android:background="@drawable/button_gry"/>
+            <Button
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:visibility="invisible"
+                android:layout_weight="10" />
 
             <Button
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:id="@+id/eng_b_sol"
-                android:layout_weight="1"
-                android:layout_marginLeft="35dp"
-                android:layout_marginRight="35dp"
+                android:layout_weight="10"
                 android:background="@drawable/button_gry"/>
+            <Button
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:visibility="invisible"
+                android:layout_weight="10" />
 
             <Button
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:id="@+id/eng_b_ven"
-                android:layout_weight="1"
-                android:layout_marginLeft="35dp"
-                android:layout_marginRight="35dp"
+                android:layout_weight="10"
                 android:background="@drawable/button_gry"/>
+            <Button
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:visibility="invisible"
+                android:layout_weight="5" />
         </LinearLayout>
 
         <LinearLayout
@@ -309,11 +354,10 @@
             <TextView
                 android:text="50"
                 android:layout_gravity="center"
-                android:gravity="right"
+                android:gravity="right|center_vertical"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:id="@+id/operation_t"
-                android:layout_marginTop="14dp"
                 android:textSize="60dp"
                 android:textColor="#00ffff"
                 android:layout_weight="37" />
@@ -378,7 +422,6 @@
                 android:textColor="#00ffff"
                 android:format12Hour="HH:mm"
                 android:layout_weight="40"
-                android:layout_marginBottom="0dp"
                 android:id="@+id/textClock_e" />
 
             <Button
@@ -407,25 +450,32 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:id="@+id/eng_b_left"
-                android:layout_weight="1"
-                android:layout_marginRight="3dp"
+                android:layout_weight="30"
                 android:background="@drawable/moving_left_off"/>
+            <Button
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:visibility="invisible"
+                android:layout_weight="2" />
 
             <Button
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:id="@+id/eng_b_right"
-                android:layout_weight="1"
-                android:layout_marginRight="18dp"
-                android:layout_marginLeft="3dp"
+                android:layout_weight="30"
                 android:background="@drawable/moving_right_off"/>
 
             <Button
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
+                android:visibility="invisible"
+                android:layout_weight="8" />
+
+            <Button
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
                 android:id="@+id/eng_b_back"
-                android:layout_weight="1"
-                android:layout_marginLeft="15dp"
+                android:layout_weight="30"
                 android:background="@drawable/button_circle_back_off"/>
         </LinearLayout>
 
@@ -448,22 +498,26 @@
                 android:layout_height="match_parent"
                 android:id="@+id/eng_r_left"
                 android:layout_weight="30"
-                android:layout_marginRight="3dp"
                 android:background="@drawable/rotation_left_off"/>
+
+            <Button
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:visibility="invisible"
+                android:layout_weight="2" />
 
             <Button
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:id="@+id/eng_r_right"
                 android:layout_weight="30"
-                android:layout_marginLeft="3dp"
                 android:background="@drawable/rotation_right_off"/>
 
             <Button
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:visibility="invisible"
-                android:layout_weight="40" />
+                android:layout_weight="38" />
 
         </LinearLayout>
 

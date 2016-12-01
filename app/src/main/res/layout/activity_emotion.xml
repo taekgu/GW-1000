@@ -24,7 +24,8 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="40"
-            android:visibility="invisible" />
+            android:visibility="invisible"
+            android:id="@+id/textView" />
 
         <TextView
             android:layout_width="match_parent"
@@ -62,71 +63,148 @@
         android:orientation="vertical"
         android:layout_width="0dp"
         android:layout_height="match_parent"
+        android:layout_weight="2"></LinearLayout>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
         android:layout_weight="10">
 
         <LinearLayout
             android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="40">
+            android:layout_height="0dp"
+            android:layout_weight="58">
 
             <Button
                 android:layout_width="60dp"
                 android:layout_height="0dp"
-                android:layout_weight="60"
+                android:layout_weight="56"
                 android:visibility="invisible"/>
 
-            <Button
-                android:layout_width="55dp"
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_weight="20"
-                android:id="@+id/emotion_led_up"
-                android:layout_marginBottom="5dp"
-                android:layout_marginLeft="5dp"
-                android:background="@drawable/button_up_off"/>
+                android:layout_weight="21">
 
-            <Button
-                android:layout_width="55dp"
+                <Button
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="70"
+                    android:id="@+id/emotion_led_up"
+                    android:background="@drawable/button_up_off"/>
+
+                <Button
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="30"
+                    android:visibility="invisible"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_weight="20"
-                android:id="@+id/emotion_led_down"
-                android:layout_marginTop="5dp"
-                android:layout_marginLeft="5dp"
-                android:background="@drawable/button_down_off"/>
+                android:layout_weight="2">
+            </LinearLayout>
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="21">
+
+                <Button
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="70"
+                    android:id="@+id/emotion_led_down"
+                    android:background="@drawable/button_down_off"/>
+
+                <Button
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="30"
+                    android:visibility="invisible"/>
+            </LinearLayout>
+
         </LinearLayout>
 
         <LinearLayout
             android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="60">
+            android:layout_height="0dp"
+            android:layout_weight="2">
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="40">
 
             <Button
                 android:layout_width="60dp"
                 android:layout_height="0dp"
-                android:layout_weight="14"
+                android:layout_weight="10"
                 android:visibility="invisible"/>
 
-            <Button
-                android:layout_width="55dp"
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_weight="33"
-                android:id="@+id/emotion_sound_up"
-                android:layout_marginBottom="5dp"
-                android:layout_marginLeft="5dp"
-                android:background="@drawable/button_up_off"/>
+                android:layout_weight="28">
+
+                <Button
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="70"
+                    android:id="@+id/emotion_sound_up"
+                    android:background="@drawable/button_up_off"/>
+
+                <Button
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="30"
+                    android:visibility="invisible"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="2">
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="28">
+
+                <Button
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="70"
+                    android:id="@+id/emotion_sound_down"
+                    android:background="@drawable/button_down_off"/>
+
+                <Button
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="30"
+                    android:visibility="invisible"/>
+
+            </LinearLayout>
+
 
             <Button
-                android:layout_width="55dp"
-                android:layout_height="0dp"
-                android:layout_weight="33"
-                android:id="@+id/emotion_sound_down"
-                android:layout_marginTop="5dp"
-                android:layout_marginLeft="5dp"
-                android:background="@drawable/button_down_off"/>
-
-            <Button
-                android:layout_width="60dp"
+                android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="20"
                 android:visibility="invisible"/>
@@ -138,7 +216,7 @@
         android:orientation="vertical"
         android:layout_width="0dp"
         android:layout_height="match_parent"
-        android:layout_weight="21"
+        android:layout_weight="19"
         android:visibility="invisible"
         ></LinearLayout>
 
@@ -208,39 +286,83 @@
         <Button
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="11"
+            android:layout_weight="9"
             android:visibility="invisible"/>
 
         <LinearLayout
             android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="30">
+            android:layout_weight="31">
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="38">
+
+                <Button
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="35"
+                    android:visibility="invisible"/>
+
+                <Button
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="40"
+                    android:layout_gravity="center"
+                    android:id="@+id/emotion_ledm_up"
+                    android:background="@drawable/button_up_off"/>
+
+                <Button
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="25"
+                    android:visibility="invisible"/>
+
+             </LinearLayout>
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="4">
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="38">
+
+                <Button
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="35"
+                    android:visibility="invisible"/>
+
+                <Button
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="40"
+                    android:layout_gravity="center"
+                    android:id="@+id/emotion_ledm_down"
+                    android:background="@drawable/button_down_off"/>
+
+                <Button
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="25"
+                    android:visibility="invisible"/>
+
+            </LinearLayout>
 
             <Button
-                android:layout_width="55dp"
+                android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_weight="40"
-                android:layout_gravity="center"
-                android:id="@+id/emotion_ledm_up"
-                android:layout_marginBottom="5dp"
-                android:layout_marginLeft="5dp"
-                android:background="@drawable/button_up_off"/>
-
-            <Button
-                android:layout_width="55dp"
-                android:layout_height="0dp"
-                android:layout_weight="40"
-                android:layout_gravity="center"
-                android:id="@+id/emotion_ledm_down"
-                android:layout_marginTop="5dp"
-                android:layout_marginLeft="5dp"
-                android:background="@drawable/button_down_off"/>
-
-            <Button
-                android:layout_width="60dp"
-                android:layout_height="0dp"
-                android:layout_weight="20"
+                android:layout_weight="15"
                 android:visibility="invisible"/>
 
 
@@ -250,32 +372,74 @@
             android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="35">
+            android:layout_weight="34">
 
-            <Button
-                android:layout_width="55dp"
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_weight="35"
-                android:layout_gravity="center"
-                android:id="@+id/emotion_soundm_up"
-                android:layout_marginBottom="5dp"
-                android:layout_marginLeft="5dp"
-                android:background="@drawable/button_up_off"/>
+                android:layout_weight="38">
 
-            <Button
-                android:layout_width="55dp"
+                <Button
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="35"
+                    android:visibility="invisible"/>
+
+                <Button
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="40"
+                    android:layout_gravity="center"
+                    android:id="@+id/emotion_soundm_up"
+                    android:background="@drawable/button_up_off"/>
+
+                <Button
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="25"
+                    android:visibility="invisible"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_weight="35"
-                android:layout_gravity="center"
-                android:id="@+id/emotion_soundm_down"
-                android:layout_marginTop="5dp"
-                android:layout_marginLeft="5dp"
-                android:background="@drawable/button_down_off"/>
+                android:layout_weight="4">
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="38">
+
+                <Button
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="35"
+                    android:visibility="invisible"/>
+
+                <Button
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="40"
+                    android:layout_gravity="center"
+                    android:id="@+id/emotion_soundm_down"
+                    android:background="@drawable/button_down_off"/>
+
+                <Button
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="25"
+                    android:visibility="invisible"/>
+            </LinearLayout>
 
             <Button
                 android:layout_width="60dp"
                 android:layout_height="0dp"
-                android:layout_weight="30"
+                android:layout_weight="25"
                 android:visibility="invisible"/>
         </LinearLayout>
 

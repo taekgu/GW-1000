@@ -112,34 +112,46 @@
                     android:layout_width="0dp"
                     android:layout_height="70dp"
                     android:id="@+id/b_language"
-                    android:layout_weight="43"
-                    android:layout_marginRight="15dp"
+                    android:layout_weight="41"
                     android:background="@drawable/language_ko"/>
+
+                <Button
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:visibility="invisible"
+                    android:layout_weight="3" />
 
                 <Button
                     android:layout_width="0dp"
                     android:layout_height="70dp"
                     android:id="@+id/b_inverter"
-                    android:layout_weight="17"
-                    android:layout_marginRight="15dp"
-                    android:layout_marginLeft="15dp"
+                    android:layout_weight="16"
                     android:background="@drawable/inverter_0"/>
+
+                <Button
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:visibility="invisible"
+                    android:layout_weight="3" />
 
                 <Button
                     android:layout_width="0dp"
                     android:layout_height="70dp"
                     android:id="@+id/b_emotion"
-                    android:layout_weight="30"
-                    android:layout_marginRight="15dp"
-                    android:layout_marginLeft="15dp"
+                    android:layout_weight="29"
                     android:background="@drawable/emotion_off"/>
+
+                <Button
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:visibility="invisible"
+                    android:layout_weight="2" />
 
                 <Button
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:id="@+id/b_back"
                     android:layout_weight="10"
-                    android:layout_marginLeft="15dp"
                     android:background="@drawable/button_circle_back_off"/>
 
 
@@ -171,41 +183,52 @@
                     android:layout_width="match_parent"
                     android:id="@+id/linearLayout3"
                     android:layout_height="0dp"
-                    android:layout_weight="25"
-                    android:layout_marginRight="8dp">
+                    android:layout_weight="25">
 
                     <Button
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:id="@+id/b_1m"
-                        android:layout_weight="25"
-                        android:layout_marginRight="10dp"
+                        android:layout_weight="23"
                         android:background="@drawable/sleepmode_1min"/>
 
                     <Button
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
+                        android:visibility="invisible"
+                        android:layout_weight="4" />
+
+                    <Button
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
                         android:id="@+id/b_3m"
-                        android:layout_weight="25"
-                        android:layout_marginRight="10dp"
-                        android:layout_marginLeft="10dp"
+                        android:layout_weight="23"
                         android:background="@drawable/sleepmode_3min"/>
 
                     <Button
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
+                        android:visibility="invisible"
+                        android:layout_weight="4" />
+
+                    <Button
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
                         android:id="@+id/b_5m"
-                        android:layout_weight="25"
-                        android:layout_marginRight="10dp"
-                        android:layout_marginLeft="10dp"
+                        android:layout_weight="23"
                         android:background="@drawable/sleepmode_5min"/>
 
                     <Button
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
+                        android:visibility="invisible"
+                        android:layout_weight="4" />
+
+                    <Button
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
                         android:id="@+id/b_coutinue"
-                        android:layout_weight="25"
-                        android:layout_marginLeft="10dp"
+                        android:layout_weight="23"
                         android:background="@drawable/sleepmode_continue_off"/>
                 </LinearLayout>
 
@@ -243,41 +266,51 @@
                     android:orientation="horizontal"
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
-                    android:layout_weight="25"
-                    android:layout_marginRight="8dp">
+                    android:layout_weight="25">
 
                     <Button
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:id="@+id/b_rf"
-                        android:layout_weight="25"
-                        android:layout_marginRight="10dp"
+                        android:layout_weight="23"
                         android:background="@drawable/off"/>
+                    <Button
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:visibility="invisible"
+                        android:layout_weight="4" />
 
                     <Button
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:id="@+id/b_ex"
-                        android:layout_weight="25"
-                        android:layout_marginRight="10dp"
-                        android:layout_marginLeft="10dp"
+                        android:layout_weight="23"
                         android:background="@drawable/off"/>
+
+                    <Button
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:visibility="invisible"
+                        android:layout_weight="4" />
 
                     <Button
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:id="@+id/b_wa"
-                        android:layout_weight="25"
-                        android:layout_marginRight="10dp"
-                        android:layout_marginLeft="10dp"
+                        android:layout_weight="23"
                         android:background="@drawable/off"/>
 
                     <Button
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
+                        android:visibility="invisible"
+                        android:layout_weight="4" />
+
+                    <Button
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
                         android:id="@+id/b_pa"
-                        android:layout_weight="25"
-                        android:layout_marginLeft="10dp"
+                        android:layout_weight="23"
                         android:background="@drawable/off"/>
                 </LinearLayout>
 
@@ -295,7 +328,7 @@
                 android:orientation="vertical"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="8">
+                android:layout_weight="10">
 
             </LinearLayout>
 
@@ -303,13 +336,13 @@
                 android:orientation="vertical"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="42">
+                android:layout_weight="38">
 
                 <LinearLayout
                     android:orientation="horizontal"
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
-                    android:layout_weight="30">
+                    android:layout_weight="28">
 
                 </LinearLayout>
 
@@ -317,71 +350,71 @@
                     android:orientation="horizontal"
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
-                    android:layout_weight="65"
-                    android:layout_marginBottom="5dp"
-                    android:layout_marginLeft="10dp">
+                    android:layout_weight="67">
 
                     <LinearLayout
                         android:orientation="vertical"
                         android:layout_width="0dp"
-                        android:layout_weight="1"
-                        android:layout_height="match_parent"
-                        android:layout_marginLeft="12dp"
-                        android:layout_marginRight="18dp">
+                        android:layout_weight="28"
+                        android:layout_height="match_parent">
 
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="0dp"
                             android:id="@+id/button11"
-                            android:layout_marginBottom="8dp"
-                            android:layout_marginLeft="8dp"
-                            android:layout_marginRight="8dp"
-                            android:layout_weight="25"
+                            android:layout_weight="20"
                             android:textSize="60dp"
                             android:layout_gravity="center"
                             android:gravity="center"
                             android:textColor="#00ffff"
                             android:background="@drawable/button_off"/>
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_weight="5"
+                            android:visibility="invisible"/>
 
                         <TextView
 
                             android:layout_width="match_parent"
                             android:layout_height="0dp"
                             android:id="@+id/button21"
-                            android:layout_marginTop="8dp"
-                            android:layout_marginBottom="8dp"
-                            android:layout_marginLeft="8dp"
-                            android:layout_marginRight="8dp"
-                            android:layout_weight="25"
+                            android:layout_weight="20"
                             android:textSize="60dp"
                             android:layout_gravity="center"
                             android:gravity="center"
                             android:textColor="#00ffff"
                             android:background="@drawable/button_off"/>
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_weight="5"
+                            android:visibility="invisible"/>
 
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="0dp"
                             android:id="@+id/button31"
-                            android:layout_marginTop="8dp"
-                            android:layout_marginBottom="8dp"
-                            android:layout_marginLeft="8dp"
-                            android:layout_marginRight="8dp"
-                            android:layout_weight="25"
+                            android:layout_weight="20"
                             android:textSize="60dp"
                             android:layout_gravity="center"
                             android:gravity="center"
                             android:textColor="#00ffff"
                             android:background="@drawable/button_off"/>
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_weight="5"
+                            android:visibility="invisible"/>
 
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="0dp"
                             android:id="@+id/button41"
-                            android:layout_marginTop="8dp"
-                            android:layout_marginLeft="8dp"
-                            android:layout_marginRight="8dp"
-                            android:layout_weight="25"
+                            android:layout_weight="20"
                             android:textSize="60dp"
                             android:layout_gravity="center"
                             android:gravity="center"
@@ -392,60 +425,71 @@
                     <LinearLayout
                         android:orientation="vertical"
                         android:layout_width="0dp"
-                        android:layout_weight="1"
                         android:layout_height="match_parent"
-                        android:layout_marginLeft="12dp"
-                        android:layout_marginRight="18dp">
+                        android:layout_weight="7">
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:orientation="vertical"
+                        android:layout_width="0dp"
+                        android:layout_weight="28"
+                        android:layout_height="match_parent">
 
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="0dp"
                             android:id="@+id/button12"
-                            android:layout_marginBottom="8dp"
-                            android:layout_marginLeft="8dp"
-                            android:layout_marginRight="8dp"
-                            android:layout_weight="25"
+                            android:layout_weight="20"
                             android:textSize="60dp"
                             android:layout_gravity="center"
                             android:gravity="center"
                             android:textColor="#00ffff"
                             android:background="@drawable/button_off"/>
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_weight="5"
+                            android:visibility="invisible"/>
+
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="0dp"
                             android:id="@+id/button22"
-                            android:layout_marginTop="8dp"
-                            android:layout_marginBottom="8dp"
-                            android:layout_marginLeft="8dp"
-                            android:layout_marginRight="8dp"
-                            android:layout_weight="25"
+                            android:layout_weight="20"
                             android:textSize="60dp"
                             android:layout_gravity="center"
                             android:gravity="center"
                             android:textColor="#00ffff"
                             android:background="@drawable/button_off"/>
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_weight="5"
+                            android:visibility="invisible"/>
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="0dp"
                             android:id="@+id/button32"
-                            android:layout_marginTop="8dp"
-                            android:layout_marginBottom="8dp"
-                            android:layout_marginLeft="8dp"
-                            android:layout_marginRight="8dp"
-                            android:layout_weight="25"
+                            android:layout_weight="20"
                             android:textSize="60dp"
                             android:layout_gravity="center"
                             android:gravity="center"
                             android:textColor="#00ffff"
                             android:background="@drawable/button_off"/>
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_weight="5"
+                            android:visibility="invisible"/>
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="0dp"
                             android:id="@+id/button42"
-                            android:layout_marginTop="8dp"
-                            android:layout_marginLeft="8dp"
-                            android:layout_marginRight="8dp"
-                            android:layout_weight="25"
+                            android:layout_weight="20"
                             android:textSize="60dp"
                             android:layout_gravity="center"
                             android:gravity="center"
@@ -456,48 +500,39 @@
                     <LinearLayout
                         android:orientation="vertical"
                         android:layout_width="0dp"
-                        android:layout_weight="1"
                         android:layout_height="match_parent"
-                        android:layout_marginLeft="12dp"
-                        android:layout_marginRight="18dp">
+                        android:layout_weight="7">
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:orientation="vertical"
+                        android:layout_width="0dp"
+                        android:layout_weight="30"
+                        android:layout_height="match_parent">
 
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="0dp"
                             android:id="@+id/button13"
-                            android:layout_weight="25"
-                            android:layout_marginBottom="8dp"
-                            android:layout_marginLeft="8dp"
-                            android:layout_marginRight="8dp"
+                            android:layout_weight="20"
                             android:textSize="60dp"
                             android:layout_gravity="center"
                             android:gravity="center"
                             android:textColor="#00ffff"
                             android:background="@drawable/button_off"/>
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_weight="5"
+                            android:visibility="invisible"/>
 
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="0dp"
                             android:id="@+id/button23"
-                            android:layout_marginTop="8dp"
-                            android:layout_marginBottom="8dp"
-                            android:layout_marginLeft="8dp"
-                            android:layout_marginRight="8dp"
-                            android:layout_weight="25"
-                            android:textSize="60dp"
-                            android:layout_gravity="center"
-                            android:gravity="center"
-                            android:textColor="#00ffff"
-                            android:background="@drawable/button_off"/>
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="0dp"
-                            android:id="@+id/button33"
-                            android:layout_marginTop="8dp"
-                            android:layout_marginBottom="8dp"
-                            android:layout_marginLeft="8dp"
-                            android:layout_marginRight="8dp"
-                            android:layout_weight="25"
+                            android:layout_weight="20"
                             android:textSize="60dp"
                             android:layout_gravity="center"
                             android:gravity="center"
@@ -507,11 +542,30 @@
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="0dp"
+                            android:layout_weight="5"
+                            android:visibility="invisible"/>
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:id="@+id/button33"
+                            android:layout_weight="20"
+                            android:textSize="60dp"
+                            android:layout_gravity="center"
+                            android:gravity="center"
+                            android:textColor="#00ffff"
+                            android:background="@drawable/button_off"/>
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_weight="5"
+                            android:visibility="invisible"/>
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
                             android:id="@+id/button43"
-                            android:layout_marginTop="8dp"
-                            android:layout_marginLeft="8dp"
-                            android:layout_marginRight="8dp"
-                            android:layout_weight="25"
+                            android:layout_weight="20"
                             android:textSize="60dp"
                             android:layout_gravity="center"
                             android:gravity="center"
@@ -528,6 +582,14 @@
                     android:layout_weight="5">
 
                 </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="2">
 
             </LinearLayout>
 
