@@ -15,6 +15,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.sinest.gw_1000.R;
+import com.sinest.gw_1000.management.Application_manager;
 import com.sinest.gw_1000.mode.Activity_library;
 
 public class Activity_rfid extends Activity {
@@ -48,6 +49,8 @@ public class Activity_rfid extends Activity {
         layoutParams.dimAmount = 0.7f;
         getWindow().setAttributes(layoutParams);
         setContentView(R.layout.activity_rfid);
+
+        Application_manager.setFullScreen(this);
 
         rfid_w_up = (Button) findViewById(R.id.rfid_w_up);
         rfid_w_down = (Button) findViewById(R.id.rfid_w_down);
@@ -99,6 +102,11 @@ public class Activity_rfid extends Activity {
         rfid_check.setOnTouchListener(mTouchEvent);
         rfid_back.setOnTouchListener(mTouchEvent);
 
+    }
+
+    @Override
+    public boolean onTouchEvent(MotionEvent event){
+        return false;
     }
 
     private View.OnTouchListener mTouchEvent = new View.OnTouchListener() {

@@ -6,6 +6,7 @@ import android.graphics.Typeface;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -14,6 +15,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.sinest.gw_1000.R;
+import com.sinest.gw_1000.management.Application_manager;
 
 public class Activity_rfidcardpassord extends Activity {
 
@@ -24,6 +26,8 @@ public class Activity_rfidcardpassord extends Activity {
 
     boolean[] r_password_kflag = {true,true,true,true,true,true,true,true,true,true};
     boolean[] r_password_flag = {true,true,true,true};
+    boolean check_c = true;
+    boolean check_m_c = false;
 
     TextView rfid_p;
     Intent intent_rfid;
@@ -48,6 +52,8 @@ public class Activity_rfidcardpassord extends Activity {
         getWindow().setAttributes(layoutParams);
         setContentView(R.layout.activity_rfid_card_passord);
 
+        Application_manager.setFullScreen(this);
+
         rfid_password_1 = (Button) findViewById(R.id.rfid_password_1);
         rfid_password_2 = (Button) findViewById(R.id.rfid_password_2);
         rfid_password_3 = (Button) findViewById(R.id.rfid_password_3);
@@ -70,8 +76,6 @@ public class Activity_rfidcardpassord extends Activity {
 
         intent_rfid = new Intent(this, Activity_rfid.class);
         intent_rfid.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_SINGLE_TOP);
-
-        intent_pscheck = new Intent(this, Activity_rfidpassword_check.class);
 
         check = this.getIntent();
 
@@ -148,8 +152,10 @@ public class Activity_rfidcardpassord extends Activity {
                         break;
                     case R.id.rfid_password_c:
                         //
-                        intent_pscheck.putExtra("pr_pass",password);
-                        startActivityForResult(intent_pscheck,17);
+                        check_c = false;
+                        rfid_p.setText("Previous password");
+                        rfid_p.setTextSize(25);
+                        setzeros();
                         break;
                     case R.id.rfid_password_b:
                         //
@@ -160,17 +166,48 @@ public class Activity_rfidcardpassord extends Activity {
                         break;
                     case R.id.rfid_password_e:
                         //
-                        if(ps.equals(mater_ps)){
-                            password = "0000";
+                        if(check_c == true)
+                        {
+                            if(ps.equals(mater_ps)){
+                                password = "0000";
+                            }
+                            else if(ps.equals(password)){
+                                check.putExtra("check","do");
+                                setResult(RESULT_OK, check);
+                                finish();
+                            }
+                            else{
+                                rfid_p.setText("!"+s_buf[0]+s_buf[1]+s_buf[2]+s_buf[3]);
+                                setzeros();
+                            }
+                        }else if(check_c == false)
+                        {
+                            // change 버튼이 눌렸을시
+                            if(check_m_c == true)
+                            {
+                                password = ps;
+                                Log.v("test",""+password);
+                                rfid_p.setText("Password Change");
+                                rfid_p.setTextSize(25);
+                                setzeros();
+                                check_m_c = false;
+                                check_c = true;
+                            }else
+                            {
+                                if(ps.equals(password))
+                                {
+                                    rfid_p.setText("New password");
+                                    rfid_p.setTextSize(25);
+                                    setzeros();
+                                    check_m_c = true;
+                                }else{
+                                    rfid_p.setText("Invalid password");
+                                    rfid_p.setTextSize(25);
+                                    setzeros();
+                                }
+                            }
                         }
-                        else if(ps.equals(password)){
-                            check.putExtra("check","do");
-                            setResult(RESULT_OK, check);
-                            finish();
-                        }
-                        else{
-                            rfid_p.setText("!"+s_buf[0]+s_buf[1]+s_buf[2]+s_buf[3]);
-                        }
+
                         break;
                 }
                 //Toast.makeText(Activity_rfidcardpassord.this, s_buf, Toast.LENGTH_SHORT).show();
@@ -192,6 +229,11 @@ public class Activity_rfidcardpassord extends Activity {
         rfid_password_e.setOnClickListener(listener);
         rfid_password_b.setOnClickListener(listener);
 
+    }
+
+    @Override
+    public boolean onTouchEvent(MotionEvent event){
+        return false;
     }
 
     void addps(char num){
@@ -217,6 +259,7 @@ public class Activity_rfidcardpassord extends Activity {
             s_buf[2] = s_buf[3];
             s_buf[3] = num;
         }
+        rfid_p.setTextSize(50);
     }
 
     void delps(){
@@ -239,5 +282,15 @@ public class Activity_rfidcardpassord extends Activity {
             s_buf[3] = ' ';
             int_c--;
         }
+    }
+
+    void setzeros()
+    {
+        int_buf = 0;
+        int_c = 0;
+        s_buf[0] = ' ';
+        s_buf[1] = ' ';
+        s_buf[2] = ' ';
+        s_buf[3] = ' ';
     }
 }

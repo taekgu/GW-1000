@@ -18,6 +18,7 @@ import com.google.android.gms.appindexing.AppIndex;
 import com.google.android.gms.appindexing.Thing;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.sinest.gw_1000.R;
+import com.sinest.gw_1000.management.Application_manager;
 
 public class Activity_water extends Activity {
 
@@ -50,6 +51,8 @@ public class Activity_water extends Activity {
         layoutParams.dimAmount = 0.7f;
         getWindow().setAttributes(layoutParams);
         setContentView(R.layout.activity_water);
+
+        Application_manager.setFullScreen(this);
 
         water_save = (Button) findViewById(R.id.water_save);
         water_off = (Button) findViewById(R.id.water_off);
@@ -105,6 +108,11 @@ public class Activity_water extends Activity {
 
         water_save.setOnTouchListener(mTouchEvent);
         water_back.setOnTouchListener(mTouchEvent);
+    }
+
+    @Override
+    public boolean onTouchEvent(MotionEvent event){
+        return false;
     }
 
     private View.OnTouchListener mTouchEvent = new View.OnTouchListener() {

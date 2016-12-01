@@ -1,12 +1,20 @@
 package com.sinest.gw_1000.setting;
 
+import android.app.admin.DevicePolicyManager;
+import android.content.BroadcastReceiver;
+import android.content.ComponentName;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.graphics.Typeface;
+import android.os.PowerManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.SeekBar;
 import android.widget.TextClock;
@@ -61,6 +69,13 @@ public class Activity_setting extends AppCompatActivity {
     SeekBar seekbar;
     int volume;
     Typeface tf;
+
+    PowerManager mPm;
+    PowerManager.WakeLock mWakeLock;
+
+    Window mywindow;
+    WindowManager.LayoutParams lp;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -136,6 +151,8 @@ public class Activity_setting extends AppCompatActivity {
             }
         });
 
+        //Application_manager.getRunningTime();
+
         intent_emotion = new Intent(this, Activity_emotion.class);
         //intent_emotion.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_SINGLE_TOP);
 
@@ -149,6 +166,11 @@ public class Activity_setting extends AppCompatActivity {
 
         intent_rfid2 = new Intent(this, Activity_rfid.class);
         //intent_rfid2.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+
+        mywindow = getWindow();
+        lp = mywindow.getAttributes();
+        //lp.screenBrightness = 0;
+
 /*
         findViewById(R.id.button11).setOnClickListener(
                 new Button.OnClickListener(){
@@ -157,6 +179,7 @@ public class Activity_setting extends AppCompatActivity {
                     }
                 }
         );
+
 */
         View.OnClickListener listener = new View.OnClickListener(){
             public void onClick(View v){
@@ -379,9 +402,14 @@ public class Activity_setting extends AppCompatActivity {
                         if(button3_flag[0] == true){
                             b_1m.setBackgroundResource(R.drawable.sleepmode_1min_on);
                             button3_flag[0] = false;
+                            lp.screenBrightness = 0;
+                            mywindow.setAttributes(lp);
+                            Log.v("test","test");
                         }else{
                             b_1m.setBackgroundResource(R.drawable.sleepmode_1min);
                             button3_flag[0] = true;
+                            lp.screenBrightness = 50;
+                            mywindow.setAttributes(lp);
                         }
                         break;
                     case R.id.b_3m:
@@ -559,6 +587,19 @@ public class Activity_setting extends AppCompatActivity {
             return true;
         }
     };
+
+    class ScreenOnReceiver extends BroadcastReceiver {
+        public void onReceive(Context context, Intent intent) {
+            String action = intent.getAction();
+            Log.d("SmartPortal", "ScreenOnReceiver, onReceive:" + action);
+            if (action.equals(Intent.ACTION_SCREEN_ON)) {
+                //
+            }
+            else if (action.equals(Intent.ACTION_SCREEN_OFF)) {
+                //
+            }
+        }
+    }
 
 
     @Override

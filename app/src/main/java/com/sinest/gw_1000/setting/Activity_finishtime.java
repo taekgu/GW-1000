@@ -6,6 +6,7 @@ import android.graphics.Typeface;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -140,6 +141,11 @@ public class Activity_finishtime extends Activity {
         finish_time0.setOnClickListener(listener);
         finish_time_enter.setOnClickListener(listener);
         finish_time_back.setOnClickListener(listener);
+    }
+
+    @Override
+    public boolean onTouchEvent(MotionEvent event){
+        return false;
     }
 
     void time_sum(int k)

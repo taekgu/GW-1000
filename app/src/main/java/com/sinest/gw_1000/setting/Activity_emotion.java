@@ -58,6 +58,8 @@ public class Activity_emotion extends Activity {
         getWindow().setAttributes(layoutParams);
         setContentView(R.layout.activity_emotion);
 
+        Application_manager.setFullScreen(this);
+
         emotion_ledm_up = (Button)findViewById(R.id.emotion_ledm_up);
         emotion_ledm_down = (Button)findViewById(R.id.emotion_ledm_down);
         emotion_led_up = (Button)findViewById(R.id.emotion_led_up);
@@ -105,6 +107,11 @@ public class Activity_emotion extends Activity {
         up = 0x00;
         down = 0x00;
 
+    }
+
+    @Override
+    public boolean onTouchEvent(MotionEvent event){
+        return false;
     }
 
     private View.OnTouchListener mTouchEvent = new View.OnTouchListener() {

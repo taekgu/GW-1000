@@ -36,7 +36,6 @@ public class Activity_engine extends AppCompatActivity {
     String check_activity;
 
     boolean[] eng_h_flag = {true,true,true,true,true,true};
-    int eng_ff = 0;
     boolean[] eng_step_flag = {true,true,true,true,true};
 
     boolean[] eng_b_flag = {true,true,true,true,true,true};
@@ -48,6 +47,7 @@ public class Activity_engine extends AppCompatActivity {
 
     int heater_f = 0;
     int w_press = 0;
+    int oxy = 0;
     Byte inverter = 0x00;
 
     Communicator communicator;
@@ -98,7 +98,7 @@ public class Activity_engine extends AppCompatActivity {
         oxygen_m = (TextView) findViewById(R.id.oxygen_m);
         oxygen_m.setTypeface(tf);
         operation_t = (TextView) findViewById(R.id.operation_t);
-        operation_t.setText(""+ Application_manager.getRunningTime());
+        operation_t.setText(""+ Application_manager.getRunningTime()/60);
         operation_t.setTypeface(tf);
 
         hidden_e_1 = (Button)findViewById(R.id.hidden_e_1);
@@ -120,90 +120,86 @@ public class Activity_engine extends AppCompatActivity {
                 switch (v.getId()) {
                     case R.id.eng_28h:
                         //
-                        if (eng_h_flag[0] == true && eng_ff == 0) {
+                        if (eng_h_flag[0] == true) {
+                            setZerosWaterPressure();
                             eng_28h.setBackgroundResource(R.drawable.water_28_on);
                             eng_h_flag[0] = false;
-                            eng_ff = 1;
                             w_press = 1;
-                        } else if (eng_h_flag[0] == false && eng_ff == 1) {
+                        } else if (eng_h_flag[0] == false) {
                             eng_28h.setBackgroundResource(R.drawable.water_28_off);
                             eng_h_flag[0] = true;
-                            eng_ff = 0;
                             w_press = 0;
                         }
+                        Log.v("test",""+w_press);
                         communicator.set_engineer(2,(byte)((byte)inverter|(byte)w_press));
                         break;
                     case R.id.eng_36h:
                         //
-                        if (eng_h_flag[1] == true && eng_ff == 0) {
+                        if (eng_h_flag[1] == true) {
+                            setZerosWaterPressure();
                             eng_36h.setBackgroundResource(R.drawable.water_36_on);
                             eng_h_flag[1] = false;
-                            eng_ff = 1;
                             w_press = 2;
-                        } else if (eng_h_flag[1] == false && eng_ff == 1){
+                        } else if (eng_h_flag[1] == false){
                             eng_36h.setBackgroundResource(R.drawable.water_36_off);
                             eng_h_flag[1] = true;
-                            eng_ff = 0;
                             w_press = 0;
                         }
+                        Log.v("test",""+w_press);
                         communicator.set_engineer(2,(byte)((byte)inverter|(byte)w_press));
                         break;
                     case R.id.eng_43h:
                         //
-                        if (eng_h_flag[2] == true && eng_ff == 0) {
+                        if (eng_h_flag[2] == true) {
+                            setZerosWaterPressure();
                             eng_43h.setBackgroundResource(R.drawable.water_43_on);
                             eng_h_flag[2] = false;
-                            eng_ff = 1;
                             w_press = 3;
-                        } else if (eng_h_flag[2] == false && eng_ff == 1){
+                        } else if (eng_h_flag[2] == false){
                             eng_43h.setBackgroundResource(R.drawable.water_43_off);
                             eng_h_flag[2] = true;
-                            eng_ff = 0;
                             w_press = 0;
                         }
                         communicator.set_engineer(2,(byte)((byte)inverter|(byte)w_press));
                         break;
                     case R.id.eng_48h:
                         //
-                        if (eng_h_flag[3] == true && eng_ff == 0) {
+                        if (eng_h_flag[3] == true) {
+                            setZerosWaterPressure();
                             eng_48h.setBackgroundResource(R.drawable.water_49_on);
                             eng_h_flag[3] = false;
-                            eng_ff = 1;
                             w_press = 4;
-                        } else if (eng_h_flag[3] == false && eng_ff == 1){
+                        } else if (eng_h_flag[3] == false){
                             eng_48h.setBackgroundResource(R.drawable.water_49_off);
                             eng_h_flag[3] = true;
-                            eng_ff = 0;
                             w_press = 0;
                         }
                         communicator.set_engineer(2,(byte)((byte)inverter|(byte)w_press));
                         break;
                     case R.id.eng_54h:
                         //
-                        if (eng_h_flag[4] == true && eng_ff == 0) {
+                        if (eng_h_flag[4] == true) {
+                            setZerosWaterPressure();
                             eng_54h.setBackgroundResource(R.drawable.water_54_on);
                             eng_h_flag[4] = false;
-                            eng_ff = 1;
                             w_press = 5;
-                        } else if (eng_h_flag[4] == false && eng_ff == 1){
+                        } else if (eng_h_flag[4] == false){
                             eng_54h.setBackgroundResource(R.drawable.water_54_off);
                             eng_h_flag[4] = true;
-                            eng_ff = 0;
                             w_press = 0;
                         }
                         communicator.set_engineer(2,(byte)((byte)inverter|(byte)w_press));
                         break;
                     case R.id.eng_60h:
                         //
-                        if (eng_h_flag[5] == true && eng_ff == 0) {
+                        if (eng_h_flag[5] == true) {
+                            setZerosWaterPressure();
                             eng_60h.setBackgroundResource(R.drawable.water_60_on);
                             eng_h_flag[5] = false;
-                            eng_ff = 1;
                             w_press = 6;
-                        } else if (eng_h_flag[5] == false && eng_ff == 1){
+                        } else if (eng_h_flag[5] == false){
                             eng_60h.setBackgroundResource(R.drawable.water_60_off);
                             eng_h_flag[5] = true;
-                            eng_ff = 0;
                             w_press = 0;
                         }
                         communicator.set_engineer(2,(byte)((byte)inverter|(byte)w_press));
@@ -211,62 +207,72 @@ public class Activity_engine extends AppCompatActivity {
                     case R.id.eng_1step:
                         //
                         if (eng_step_flag[0] == true) {
+                            setZerosOXY();
                             eng_1step.setBackgroundResource(R.drawable.oxygen_1step_on);
                             eng_step_flag[0] = false;
-                            communicator.set_engineer(5,(byte)0x01);
+                            oxy = 1;
                         } else {
                             eng_1step.setBackgroundResource(R.drawable.oxygen_1step_off);
                             eng_step_flag[0] = true;
-                            communicator.set_engineer(5,(byte)0x00);
+                            oxy = 0;
                         }
+                        communicator.set_engineer(5,(byte)oxy);
                         break;
                     case R.id.eng_2step:
                         //
                         if (eng_step_flag[1] == true) {
+                            setZerosOXY();
                             eng_2step.setBackgroundResource(R.drawable.oxygen_2step_on);
                             eng_step_flag[1] = false;
-                            communicator.set_engineer(5,(byte)0x02);
+                            oxy = 2;
                         } else {
                             eng_2step.setBackgroundResource(R.drawable.oxygen_2step_off);
                             eng_step_flag[1] = true;
-                            communicator.set_engineer(5,(byte)0x00);
+                            oxy = 0;
                         }
+                        communicator.set_engineer(5,(byte)oxy);
                         break;
                     case R.id.eng_3step:
                         //
                         if (eng_step_flag[2] == true) {
+                            setZerosOXY();
                             eng_3step.setBackgroundResource(R.drawable.oxygen_3step_on);
                             eng_step_flag[2] = false;
-                            communicator.set_engineer(5,(byte)0x03);
+                            oxy = 3;
                         } else {
                             eng_3step.setBackgroundResource(R.drawable.oxygen_3step_off);
                             eng_step_flag[2] = true;
-                            communicator.set_engineer(5,(byte)0x00);
+                            oxy = 0;
                         }
+                        communicator.set_engineer(5,(byte)oxy);
                         break;
                     case R.id.eng_4step:
                         //
                         if (eng_step_flag[3] == true) {
+                            setZerosOXY();
                             eng_4step.setBackgroundResource(R.drawable.oxygen_4step_on);
                             eng_step_flag[3] = false;
-                            communicator.set_engineer(5,(byte)0x04);
+                            oxy = 4;
                         } else {
                             eng_4step.setBackgroundResource(R.drawable.oxygen_4step_off);
                             eng_step_flag[3] = true;
-                            communicator.set_engineer(5,(byte)0x00);
+                            oxy = 0;
                         }
+                        communicator.set_engineer(5,(byte)oxy);
                         break;
                     case R.id.eng_5step:
                         //
                         if (eng_step_flag[4] == true) {
+                            setZerosOXY();
                             eng_5step.setBackgroundResource(R.drawable.oxygen_5step_on);
                             eng_step_flag[4] = false;
-                            communicator.set_engineer(5,(byte)0x05);
+                            oxy = 5;
                         } else {
                             eng_5step.setBackgroundResource(R.drawable.oxygen_5step_off);
                             eng_step_flag[4] = true;
-                            communicator.set_engineer(5,(byte)0x00);
+                            oxy = 0;
                         }
+                        communicator.set_engineer(5,(byte)oxy);
                         break;
 //----------------------------------------------------------------------------------------------------------------------------
 
@@ -515,4 +521,33 @@ public class Activity_engine extends AppCompatActivity {
             return true;
         }
     };
+
+    void setZerosWaterPressure()
+    {
+        eng_28h.setBackgroundResource(R.drawable.water_28_off);
+        eng_h_flag[0] = true;
+        eng_36h.setBackgroundResource(R.drawable.water_36_off);
+        eng_h_flag[1] = true;
+        eng_43h.setBackgroundResource(R.drawable.water_43_off);
+        eng_h_flag[2] = true;
+        eng_48h.setBackgroundResource(R.drawable.water_49_off);
+        eng_h_flag[3] = true;
+        eng_54h.setBackgroundResource(R.drawable.water_54_off);
+        eng_h_flag[4] = true;
+        eng_60h.setBackgroundResource(R.drawable.water_60_off);
+        eng_h_flag[5] = true;
+    }
+
+    void setZerosOXY(){
+        eng_1step.setBackgroundResource(R.drawable.oxygen_1step_off);
+        eng_step_flag[0] = true;
+        eng_2step.setBackgroundResource(R.drawable.oxygen_2step_off);
+        eng_step_flag[1] = true;
+        eng_3step.setBackgroundResource(R.drawable.oxygen_3step_off);
+        eng_step_flag[2] = true;
+        eng_4step.setBackgroundResource(R.drawable.oxygen_4step_off);
+        eng_step_flag[3] = true;
+        eng_5step.setBackgroundResource(R.drawable.oxygen_5step_off);
+        eng_step_flag[4] = true;
+    }
 }
