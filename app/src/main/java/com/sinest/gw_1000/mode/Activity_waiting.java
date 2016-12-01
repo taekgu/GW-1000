@@ -10,6 +10,7 @@ import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.provider.ContactsContract;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.MotionEvent;
@@ -28,8 +29,8 @@ import com.sinest.gw_1000.setting.Activity_setting;
 public class Activity_waiting extends AppCompatActivity {
 
     public static final int REQUEST_CODE_WORKINGTIME_POPUP = 1001;
-    //public static final int REQUEST_CODE_LIBRARY = 1002;
-    //public static final int REQUEST_CODE_SETTING = 1003;
+    private final static int SET_BUTTON_INVISIBLE = 1002;
+    private final static int SET_BUTTON_VISIBLE = 1003;
 
     Communicator communicator;
     Handler handler_update_data;
@@ -43,6 +44,9 @@ public class Activity_waiting extends AppCompatActivity {
     int[] checked_loc = new int[Application_manager.MAX_CHECKED];
     Fragment_waiting fragment_waiting;
     Fragment_working fragment_working;
+
+    ImageView waiting_library_button;
+    ImageView waiting_setting_button;
 
     private int mode = 0; // 0: waiting, 1: working
 
@@ -90,8 +94,8 @@ public class Activity_waiting extends AppCompatActivity {
         fragmentTransaction.add(R.id.frameLayout_fragment, fragment_waiting);
         fragmentTransaction.commit();
 
-        ImageView waiting_library_button = (ImageView)findViewById(R.id.waiting_library_button);
-        ImageView waiting_setting_button = (ImageView)findViewById(R.id.waiting_setting_button);
+        waiting_library_button = (ImageView)findViewById(R.id.waiting_library_button);
+        waiting_setting_button = (ImageView)findViewById(R.id.waiting_setting_button);
 
         ImageView waiting_oxygen_up_button = (ImageView)findViewById(R.id.waiting_oxygen_up_button);
         ImageView waiting_oxygen_down_button = (ImageView)findViewById(R.id.waiting_oxygen_down_button);
@@ -179,6 +183,7 @@ public class Activity_waiting extends AppCompatActivity {
         fragmentTransaction.commit();
 
         mode = 1;
+        handler_update_data.sendEmptyMessage(SET_BUTTON_INVISIBLE);
     }
 
     public void changeFragment_waiting() {
@@ -191,6 +196,7 @@ public class Activity_waiting extends AppCompatActivity {
         fragmentTransaction.commit();
 
         mode = 0;
+        handler_update_data.sendEmptyMessage(SET_BUTTON_VISIBLE);
     }
 
     private void registReceiver() {
@@ -244,6 +250,16 @@ public class Activity_waiting extends AppCompatActivity {
                     temp = ""+communicator.get_rx_idx(2);
                     TextView textView_temperature_bed = (TextView) findViewById(R.id.textView_temperature_below);
                     textView_temperature_bed.setText(temp);
+                }
+                else if (msg.what == SET_BUTTON_INVISIBLE) {
+
+                    waiting_library_button.setVisibility(View.INVISIBLE);
+                    waiting_setting_button.setVisibility(View.INVISIBLE);
+                }
+                else if (msg.what == SET_BUTTON_VISIBLE) {
+
+                    waiting_library_button.setVisibility(View.VISIBLE);
+                    waiting_setting_button.setVisibility(View.VISIBLE);
                 }
             }
         };

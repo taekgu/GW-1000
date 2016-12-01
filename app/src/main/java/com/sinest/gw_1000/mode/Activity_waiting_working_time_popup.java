@@ -1,6 +1,7 @@
 package com.sinest.gw_1000.mode;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -11,6 +12,7 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.sinest.gw_1000.R;
 import com.sinest.gw_1000.management.Application_manager;
@@ -19,6 +21,7 @@ public class Activity_waiting_working_time_popup extends Activity {
 
     TextView textView_workingTime;
     int workingTime;
+    Context mContext;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,6 +34,8 @@ public class Activity_waiting_working_time_popup extends Activity {
         getWindow().setAttributes(layoutParams);
         setContentView(R.layout.activity_waiting_time_popup);
         Application_manager.setFullScreen(this);
+
+        mContext = this;
 
         SharedPreferences sharedPreferences = getSharedPreferences(Application_manager.NAME_OF_SHARED_PREF, 0);
         workingTime = sharedPreferences.getInt(Application_manager.WAITING_WORKING_TIME, 10);
@@ -61,11 +66,19 @@ public class Activity_waiting_working_time_popup extends Activity {
             } else if (action == MotionEvent.ACTION_UP) {
                 switch (id) {
                     case R.id.popup_keypad_enter:
-                        SharedPreferences sharedPreferences = getSharedPreferences(Application_manager.NAME_OF_SHARED_PREF, 0);
-                        SharedPreferences.Editor editor = sharedPreferences.edit();
-                        editor.putInt(Application_manager.WAITING_WORKING_TIME, workingTime);
-                        editor.commit();
-                        finish();
+
+                        if (workingTime != 0) {
+
+                            SharedPreferences sharedPreferences = getSharedPreferences(Application_manager.NAME_OF_SHARED_PREF, 0);
+                            SharedPreferences.Editor editor = sharedPreferences.edit();
+                            editor.putInt(Application_manager.WAITING_WORKING_TIME, workingTime);
+                            editor.commit();
+                            finish();
+                        }
+                        else {
+
+                            Toast.makeText(mContext, "1~90 사이의 값을 입력해주세요", Toast.LENGTH_SHORT).show();
+                        }
                         break;
                     case R.id.popup_keypad_back:
                         finish();
