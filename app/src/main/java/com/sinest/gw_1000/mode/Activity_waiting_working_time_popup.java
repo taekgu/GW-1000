@@ -9,26 +9,37 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.sinest.gw_1000.R;
 import com.sinest.gw_1000.management.Application_manager;
 
 public class Activity_waiting_working_time_popup extends Activity {
-    int workingtime;
-    @Override
 
+    TextView textView_workingTime;
+    int workingTime;
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         WindowManager.LayoutParams  layoutParams = new WindowManager.LayoutParams();
         layoutParams.flags= WindowManager.LayoutParams.FLAG_DIM_BEHIND;
         layoutParams.dimAmount= 0.7f;
         getWindow().setAttributes(layoutParams);
-        setContentView(R.layout.activity_waiting_working_time_popup);
+        setContentView(R.layout.activity_waiting_time_popup);
+        Application_manager.setFullScreen(this);
 
-        Button popup_keypad_enter = (Button)findViewById(R.id.popup_keypad_enter);
-        Button popup_keypad_back = (Button)findViewById(R.id.popup_keypad_back);
+        SharedPreferences sharedPreferences = getSharedPreferences(Application_manager.NAME_OF_SHARED_PREF, 0);
+        workingTime = sharedPreferences.getInt(Application_manager.WAITING_WORKING_TIME, 10);
+
+        textView_workingTime = (TextView) findViewById(R.id.working_time_popup_text);
+        textView_workingTime.setText(""+workingTime);
+
+        ImageView popup_keypad_enter = (ImageView)findViewById(R.id.popup_keypad_enter);
+        ImageView popup_keypad_back = (ImageView)findViewById(R.id.popup_keypad_back);
 
         popup_keypad_enter.setOnTouchListener(mTouchEvent);
         popup_keypad_back.setOnTouchListener(mTouchEvent);
@@ -52,7 +63,7 @@ public class Activity_waiting_working_time_popup extends Activity {
                     case R.id.popup_keypad_enter:
                         SharedPreferences sharedPreferences = getSharedPreferences(Application_manager.NAME_OF_SHARED_PREF, 0);
                         SharedPreferences.Editor editor = sharedPreferences.edit();
-                        editor.putInt(Application_manager.WAITING_WORKING_TIME, workingtime);
+                        editor.putInt(Application_manager.WAITING_WORKING_TIME, workingTime);
                         editor.commit();
                         finish();
                         break;
@@ -88,7 +99,7 @@ public class Activity_waiting_working_time_popup extends Activity {
 
                 if(temp>=0 && temp>90)
                     temp = 0;
-               workingtime = temp;
+               workingTime = temp;
                 /*intent.putExtra("working_time", temp);*/
                 txt.setText(Integer.toString(temp));
                 break;
