@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -19,10 +20,10 @@ import com.sinest.gw_1000.management.Application_manager;
 
 public class Activity_rfidcardpassord extends Activity {
 
-    Button rfid_password_1; Button rfid_password_2; Button rfid_password_3;
-    Button rfid_password_4; Button rfid_password_5; Button rfid_password_6;
-    Button rfid_password_7; Button rfid_password_8; Button rfid_password_9; Button rfid_password_0;
-    Button rfid_password_d; Button rfid_password_c; Button rfid_password_e; Button rfid_password_b;
+    ImageView rfid_password_1; ImageView rfid_password_2; ImageView rfid_password_3;
+    ImageView rfid_password_4; ImageView rfid_password_5; ImageView rfid_password_6;
+    ImageView rfid_password_7; ImageView rfid_password_8; ImageView rfid_password_9; ImageView rfid_password_0;
+    ImageView rfid_password_d; ImageView rfid_password_c; ImageView rfid_password_e; ImageView rfid_password_b;
 
     boolean[] r_password_kflag = {true,true,true,true,true,true,true,true,true,true};
     boolean[] r_password_flag = {true,true,true,true};
@@ -54,20 +55,20 @@ public class Activity_rfidcardpassord extends Activity {
 
         Application_manager.setFullScreen(this);
 
-        rfid_password_1 = (Button) findViewById(R.id.rfid_password_1);
-        rfid_password_2 = (Button) findViewById(R.id.rfid_password_2);
-        rfid_password_3 = (Button) findViewById(R.id.rfid_password_3);
-        rfid_password_4 = (Button) findViewById(R.id.rfid_password_4);
-        rfid_password_5 = (Button) findViewById(R.id.rfid_password_5);
-        rfid_password_6 = (Button) findViewById(R.id.rfid_password_6);
-        rfid_password_7 = (Button) findViewById(R.id.rfid_password_7);
-        rfid_password_8 = (Button) findViewById(R.id.rfid_password_8);
-        rfid_password_9 = (Button) findViewById(R.id.rfid_password_9);
-        rfid_password_0 = (Button) findViewById(R.id.rfid_password_0);
-        rfid_password_d = (Button) findViewById(R.id.rfid_password_d);
-        rfid_password_c = (Button) findViewById(R.id.rfid_password_c);
-        rfid_password_e = (Button) findViewById(R.id.rfid_password_e);
-        rfid_password_b = (Button) findViewById(R.id.rfid_password_b);
+        rfid_password_1 = (ImageView) findViewById(R.id.rfid_password_1);
+        rfid_password_2 = (ImageView) findViewById(R.id.rfid_password_2);
+        rfid_password_3 = (ImageView) findViewById(R.id.rfid_password_3);
+        rfid_password_4 = (ImageView) findViewById(R.id.rfid_password_4);
+        rfid_password_5 = (ImageView) findViewById(R.id.rfid_password_5);
+        rfid_password_6 = (ImageView) findViewById(R.id.rfid_password_6);
+        rfid_password_7 = (ImageView) findViewById(R.id.rfid_password_7);
+        rfid_password_8 = (ImageView) findViewById(R.id.rfid_password_8);
+        rfid_password_9 = (ImageView) findViewById(R.id.rfid_password_9);
+        rfid_password_0 = (ImageView) findViewById(R.id.rfid_password_0);
+        rfid_password_d = (ImageView) findViewById(R.id.rfid_password_d);
+        rfid_password_c = (ImageView) findViewById(R.id.rfid_password_c);
+        rfid_password_e = (ImageView) findViewById(R.id.rfid_password_e);
+        rfid_password_b = (ImageView) findViewById(R.id.rfid_password_b);
 
         Typeface tf = Typeface.createFromAsset(getAssets(), "fonts/digital.ttf");
         rfid_p = (TextView) findViewById(R.id.rfid_p);

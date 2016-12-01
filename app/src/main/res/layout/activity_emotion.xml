@@ -42,6 +42,8 @@
             android:layout_weight="15"
             android:visibility="invisible" />
 
+
+
         <TextView
             android:layout_width="match_parent"
             android:layout_height="0dp"
@@ -137,20 +139,15 @@
             android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="2">
+            android:layout_weight="6">
         </LinearLayout>
 
         <LinearLayout
             android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="40">
+            android:layout_weight="35">
 
-            <Button
-                android:layout_width="60dp"
-                android:layout_height="0dp"
-                android:layout_weight="10"
-                android:visibility="invisible"/>
 
             <LinearLayout
                 android:orientation="horizontal"
@@ -271,17 +268,26 @@
         android:layout_weight="17">>
 
         <Button
-            android:layout_width="60dp"
-            android:layout_height="0dp"
-            android:layout_weight="11"
-            android:visibility="invisible"/>
-
-        <Button
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="13"
-            android:background="@drawable/button_elipse_back_off"
-            android:id="@+id/emotion_back" />
+            android:layout_weight="9"
+            android:visibility="invisible"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:gravity="center"
+            android:layout_weight="15">
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/button_elipse_back_off"
+                android:id="@+id/emotion_back" />
+
+        </LinearLayout>
+
+
 
         <Button
             android:layout_width="match_parent"
@@ -321,7 +327,7 @@
                     android:layout_weight="25"
                     android:visibility="invisible"/>
 
-             </LinearLayout>
+            </LinearLayout>
 
             <LinearLayout
                 android:orientation="horizontal"

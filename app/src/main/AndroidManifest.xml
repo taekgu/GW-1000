@@ -83,7 +83,7 @@
             android:name=".setting.Activity_rfidcardpassord"
             android:launchMode="singleInstance"
             android:screenOrientation="landscape"
-            android:theme="@style/Theme.AppCompat.Dialog" />
+            android:theme="@android:style/Theme.Translucent"/>
         <activity
             android:name=".setting.Activity_starttime"
             android:launchMode="singleInstance"
