@@ -42,8 +42,10 @@
         <activity
             android:name=".mode.Activity_library"
             android:screenOrientation="landscape" />
-        <activity android:name=".mode.Activity_waiting" />
-        <activity android:name=".mode.Activity_manual_mode_setting" />
+        <activity android:name=".mode.Activity_waiting"
+            android:screenOrientation="landscape" />
+        <activity android:name=".mode.Activity_manual_mode_setting"
+            android:screenOrientation="landscape" />
         <activity
             android:name=".mode.Activity_manual_mode_pattern_popup"
             android:screenOrientation="landscape"
