@@ -83,6 +83,11 @@ public class Application_manager extends Application {
         return runningTime;
     }
 
+    synchronized public static void setRunningTime(int sec) {
+
+        runningTime = sec;
+    }
+
     synchronized private void setThread_runningTime() {
 
         thread_runningTime = new Thread(new Runnable() {

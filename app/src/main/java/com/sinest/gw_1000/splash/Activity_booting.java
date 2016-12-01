@@ -9,6 +9,7 @@ import android.widget.ImageView;
 
 import com.sinest.gw_1000.R;
 import com.sinest.gw_1000.communication.Communicator;
+import com.sinest.gw_1000.management.Application_manager;
 import com.sinest.gw_1000.mode.Activity_waiting;
 import com.sinest.gw_1000.setting.Activity_engine;
 
@@ -26,6 +27,7 @@ public class Activity_booting extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.intro_animation);
+        Application_manager.setFullScreen(this);
 
         ImageView iv = (ImageView)findViewById(R.id.boot_animation);
         iv.setBackgroundResource(R.drawable.intro_images);
@@ -56,6 +58,13 @@ public class Activity_booting extends AppCompatActivity {
         });
         thread.start();
     }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Application_manager.setFullScreen(this);
+    }
+
     public void onClicked(View v)
     {
         int resourceId;

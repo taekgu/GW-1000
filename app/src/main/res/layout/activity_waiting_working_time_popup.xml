@@ -14,12 +14,12 @@
         android:id="@+id/working_time_popup_text"
         android:gravity="center"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="40dp"/>
+        android:layout_marginTop="50dp"/>
     <TableLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="100dp">
+        android:layout_marginTop="115dp">
 
         <TableRow
             android:layout_width="wrap_content"

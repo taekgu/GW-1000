@@ -44,6 +44,8 @@ public class Activity_waiting extends AppCompatActivity {
     Fragment_waiting fragment_waiting;
     Fragment_working fragment_working;
 
+    private int mode = 0; // 0: waiting, 1: working
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -161,8 +163,6 @@ public class Activity_waiting extends AppCompatActivity {
         editor.commit();
     }
 
-
-
     public void changeFragment_working(int modeNum) {
 
         Log.i("JW", "changeFragment");
@@ -177,6 +177,8 @@ public class Activity_waiting extends AppCompatActivity {
 
         fragmentTransaction.replace(R.id.frameLayout_fragment, fragment_working);
         fragmentTransaction.commit();
+
+        mode = 1;
     }
 
     public void changeFragment_waiting() {
@@ -187,6 +189,8 @@ public class Activity_waiting extends AppCompatActivity {
 
         fragmentTransaction.replace(R.id.frameLayout_fragment, fragment_waiting);
         fragmentTransaction.commit();
+
+        mode = 0;
     }
 
     private void registReceiver() {
@@ -310,58 +314,76 @@ public class Activity_waiting extends AppCompatActivity {
                     case R.id.waiting_oxygen_up_button:
                         view.setBackgroundResource(R.drawable.button_up);
 
-                        val_oxygen++;
-                        if (val_oxygen > 5) val_oxygen = 5;
-                        oxygen_text.setText(""+val_oxygen);
+                        if (mode == 0) {
 
-                        val = (byte) val_oxygen;
-                        communicator.set_tx(8, val);
-                        communicator.send(communicator.get_tx());
+                            val_oxygen++;
+                            if (val_oxygen > 5) val_oxygen = 5;
+                            oxygen_text.setText("" + val_oxygen);
+
+                            val = (byte) val_oxygen;
+                            communicator.set_tx(8, val);
+                            communicator.send(communicator.get_tx());
+                        }
                         break;
                     case R.id.waiting_oxygen_down_button:
                         view.setBackgroundResource(R.drawable.button_down);
 
-                        val_oxygen--;
-                        if (val_oxygen < 0) val_oxygen = 0;
-                        oxygen_text.setText(""+val_oxygen);
+                        if (mode == 0) {
 
-                        val = (byte) val_oxygen;
-                        communicator.set_tx(8, val);
-                        communicator.send(communicator.get_tx());
+                            val_oxygen--;
+                            if (val_oxygen < 0) val_oxygen = 0;
+                            oxygen_text.setText("" + val_oxygen);
+
+                            val = (byte) val_oxygen;
+                            communicator.set_tx(8, val);
+                            communicator.send(communicator.get_tx());
+                        }
                         break;
                     case R.id.waiting_pressure_up_button:
                         view.setBackgroundResource(R.drawable.button_up);
 
-                        val_pressure += 1;
-                        if (val_pressure > 6) val_pressure = 6;
-                        pressure_text.setText(""+val_pressure);
+                        if (mode == 0) {
 
-                        communicator.set_tx(5, (byte)val_pressure);
-                        communicator.send(communicator.get_tx());
+                            val_pressure += 1;
+                            if (val_pressure > 6) val_pressure = 6;
+                            pressure_text.setText("" + val_pressure);
+
+                            communicator.set_tx(5, (byte) val_pressure);
+                            communicator.send(communicator.get_tx());
+                        }
                         break;
                     case R.id.waiting_pressure_down_button:
                         view.setBackgroundResource(R.drawable.button_down);
 
-                        val_pressure -= 1;
-                        if (val_pressure < 0) val_pressure = 0;
-                        pressure_text.setText(""+val_pressure);
+                        if (mode == 0) {
 
-                        communicator.set_tx(5, (byte)val_pressure);
-                        communicator.send(communicator.get_tx());
+                            val_pressure -= 1;
+                            if (val_pressure < 0) val_pressure = 0;
+                            pressure_text.setText("" + val_pressure);
+
+                            communicator.set_tx(5, (byte) val_pressure);
+                            communicator.send(communicator.get_tx());
+                        }
                         break;
                     case R.id.waiting_time_up_button:
                         view.setBackgroundResource(R.drawable.button_up);
 
-                        val_time += 1;
-                        if (val_time > 90) val_time = 90;
-                        time_text.setText(""+val_time);
+                        if (mode == 0) {
+
+                            val_time += 1;
+                            if (val_time > 90) val_time = 90;
+                            time_text.setText("" + val_time);
+                        }
                         break;
                     case R.id.waiting_time_down_button:
                         view.setBackgroundResource(R.drawable.button_down);
 
-                        val_time -= 1;
-                        if (val_time < 1) val_time = 1;
-                        time_text.setText(""+val_time);
+                        if (mode == 0) {
+
+                            val_time -= 1;
+                            if (val_time < 1) val_time = 1;
+                            time_text.setText("" + val_time);
+                        }
                         break;
                     case R.id.waiting_dooropen_button:
                         background = (LinearLayout)findViewById(R.id.waiting_background);
@@ -387,8 +409,12 @@ public class Activity_waiting extends AppCompatActivity {
                         Application_manager.getSoundManager().play(Application_manager.ID_LANG_SOUND[Application_manager.LANGUAGE][4]);
                         break;
                     case R.id.waiting_time_text:
-                        intent = new Intent(getApplicationContext(), Activity_waiting_working_time_popup.class);
-                        startActivity(intent);
+
+                        if (mode == 0) {
+
+                            intent = new Intent(getApplicationContext(), Activity_waiting_working_time_popup.class);
+                            startActivity(intent);
+                        }
                         break;
                 }
             }

@@ -28,6 +28,7 @@
         android:theme="@style/Theme.AppCompat.NoActionBar">
         <activity
             android:name=".splash.Activity_booting"
+            android:screenOrientation="landscape"
             android:theme="@style/AppTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
