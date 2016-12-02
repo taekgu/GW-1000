@@ -2,6 +2,7 @@ package com.sinest.gw_1000.mode;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -9,6 +10,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextClock;
 import android.widget.TextView;
 
 import com.sinest.gw_1000.R;
@@ -20,15 +22,20 @@ public class Activity_manual_mode_setting extends AppCompatActivity {
     public static final int REQUEST_CODE_MANUAL_PATTERN_02 = 1012;
     public static final int REQUEST_CODE_MANUAL_PATTERN_03 = 1013;
 
+    public static final int REQUEST_CODE_MANUAL_TEXT_01 = 1021;
+    public static final int REQUEST_CODE_MANUAL_TEXT_02 = 1022;
+    public static final int REQUEST_CODE_MANUAL_TEXT_03 = 1023;
+
     private int modeNum;
     private int[] pattern = new int[3];
     private int[] time = new int[3];
-
+    private ImageView[] manual_mode_setting = new ImageView[3];
+    private TextView[] manual_mode_time = new TextView[3];
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_manual_mode_setting);
-
+        Application_manager.setFullScreen(this);
         // 선택한 매뉴얼 모드 이미지 넣기
         Button manual_setting_selected_mode = (Button) findViewById(R.id.manual_setting_selected_mode);
         Intent intent = getIntent();
@@ -36,13 +43,16 @@ public class Activity_manual_mode_setting extends AppCompatActivity {
         Button manual_mode_setting_save = (Button)findViewById(R.id.manual_mode_setting_save);
         Button manual_mode_setting_back = (Button)findViewById(R.id.manual_mode_setting_back);
 
-        ImageView[] manual_mode_setting = new ImageView[3];
-        TextView[] manual_mode_time = new TextView[3];
 
+        TextView manual_mode_total = (TextView)findViewById(R.id.manual_mode_total);
+        Typeface tf = Typeface.createFromAsset(getAssets(), "fonts/digital.ttf");
+
+        TextClock clock = (TextClock) findViewById(R.id.manual_mode_setting_clock);
+        clock.setTypeface(tf);
         modeNum = intent.getExtras().getInt("modeNum");
         if (modeNum != -1) {
 
-            int resourceId = getResources().getIdentifier("manual_mode_on_" + modeNum, "drawable", "com.sinest.gw_1000");
+            int resourceId = getResources().getIdentifier("mode" + (modeNum + 15) + "_on", "drawable", "com.sinest.gw_1000");
             manual_setting_selected_mode.setBackgroundResource(resourceId);
         }
 
@@ -56,18 +66,18 @@ public class Activity_manual_mode_setting extends AppCompatActivity {
 
             resourceId = getResources().getIdentifier("manual_mode_setting_" + (i+1), "id", "com.sinest.gw_1000");
             manual_mode_setting[i] = (ImageView)findViewById(resourceId);
-            manual_mode_setting[i].setOnTouchListener(mTouchEvent);
 
             resourceId = getResources().getIdentifier("manual_mode_time_" + (i+1), "id", "com.sinest.gw_1000");
             manual_mode_time[i] = (TextView)findViewById(resourceId);
+            manual_mode_time[i].setTypeface(tf);
 
             resourceId = getResources().getIdentifier("manual_mode_pattern_" + pattern[i], "drawable", "com.sinest.gw_1000");
             manual_mode_setting[i].setBackgroundResource(resourceId);
             manual_mode_time[i].setText(""+time[i]);
         }
-
         manual_mode_setting_save.setOnTouchListener(mTouchEvent);
         manual_mode_setting_back.setOnTouchListener(mTouchEvent);
+        manual_mode_total.setTypeface(tf);
     }
     private View.OnTouchListener mTouchEvent = new View.OnTouchListener() {
                         @Override
@@ -86,12 +96,6 @@ public class Activity_manual_mode_setting extends AppCompatActivity {
                         b = (Button) view;
                         b.setBackgroundResource(R.drawable.button_circle_back_on);
                         break;
-                    case R.id.manual_mode_setting_1:
-                        break;
-                    case R.id.manual_mode_setting_2:
-                        break;
-                    case R.id.manual_mode_setting_3:
-                        break;
 
                 }
             } else if (action == MotionEvent.ACTION_UP) {
@@ -105,7 +109,6 @@ public class Activity_manual_mode_setting extends AppCompatActivity {
                         SharedPreferences.Editor editor = sharedPreferences.edit();
 
                         for (int i=0; i<3; i++) {
-
                             editor.putInt(Application_manager.MANUAL_MODE_PATTERN_ + modeNum + "_" + i, pattern[i]);
                             editor.putInt(Application_manager.MANUAL_MODE_TIME_ + modeNum + "_" + i, time[i]);
                         }
@@ -117,65 +120,64 @@ public class Activity_manual_mode_setting extends AppCompatActivity {
                         b.setBackgroundResource(R.drawable.button_circle_back_off);
                         finish();
                         break;
-                    case R.id.manual_mode_setting_1:
-                        intent = new Intent(getApplicationContext(), Activity_manual_mode_pattern_popup.class);
-                        startActivityForResult(intent, REQUEST_CODE_MANUAL_PATTERN_01);
-                        break;
-                    case R.id.manual_mode_setting_2:
-                        intent = new Intent(getApplicationContext(), Activity_manual_mode_pattern_popup.class);
-                        startActivityForResult(intent, REQUEST_CODE_MANUAL_PATTERN_02);
-                        break;
-                    case R.id.manual_mode_setting_3:
-                        intent = new Intent(getApplicationContext(), Activity_manual_mode_pattern_popup.class);
-                        startActivityForResult(intent, REQUEST_CODE_MANUAL_PATTERN_03);
-                        break;
                 }
             }
             return true;
         }
     };
+    protected void onResume() {
+        super.onResume();
+        SharedPreferences sharedPreferences = getSharedPreferences(Application_manager.NAME_OF_SHARED_PREF, 0);
+        int resourceId;
+
+        Log.i("onResume", "onResume");
+
+        for (int i=0; i<3; i++) {
+            pattern[i] = sharedPreferences.getInt(Application_manager.MANUAL_MODE_PATTERN_ + modeNum + "_" + i, 1);
+            time[i] = sharedPreferences.getInt(Application_manager.MANUAL_MODE_TIME_ + modeNum + "_" + i, 30);
+            Log.i("pattern[i]", Integer.toString(pattern[i]));
+            resourceId = getResources().getIdentifier("manual_mode_pattern_" + pattern[i], "drawable", "com.sinest.gw_1000");
+            manual_mode_setting[i].setBackgroundResource(resourceId);
+            manual_mode_time[i].setText(""+time[i]);
+        }
+    }
     public void onClicked(View v)
     {
         Intent intent;
         int id = v.getId();
-        int resourceId;
-
-        for(int i=1; i<=4; i++)
+        Log.i("test", "onClicked");
+        if(id==R.id.manual_mode_time_1 || id==R.id.manual_mode_time_2 || id==R.id.manual_mode_time_3)
         {
-            resourceId = getResources().getIdentifier("manual_setting_text_"+i,"id","com.sinest.gw_1000");
-            if(resourceId==id){
-                intent = new Intent(getApplicationContext(), Activity_waiting_working_time_popup.class);
-                //startActivityForResult(intent, REQUEST_CODE_WORKINGTIME_POPUP);
-                break;
-            }
+            intent = new Intent(getApplicationContext(), Activity_waiting_working_time_popup.class);
+            intent.putExtra("modeNum", modeNum);
+            if(id==R.id.manual_mode_time_1)
+                intent.putExtra("i", 0);
+            else if(id==R.id.manual_mode_time_2)
+                intent.putExtra("i", 1);
+            else
+                intent.putExtra("i", 2);
+            startActivity(intent);;
         }
-    }
-    protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
-        super.onActivityResult(requestCode, resultCode, intent);
-        ImageView iv;
-        int img_resource = intent.getIntExtra("pattern_num", 0);
-        Log.i("request code : ", Integer.toString(requestCode));
-        Log.i("result code : ", Integer.toString(resultCode));
-        Log.i("RESULT OK : ", Integer.toString(RESULT_OK));
-        Log.i("RESULT CANCELED : ", Integer.toString(RESULT_CANCELED));
-        if(resultCode==RESULT_OK) {
-            switch (requestCode) {
-                case REQUEST_CODE_MANUAL_PATTERN_01:
-                    iv = (ImageView) findViewById(R.id.manual_mode_setting_1);
-                    Log.i("1",Integer.toString(img_resource));
-                    iv.setImageResource(img_resource);
-                    break;
-                case REQUEST_CODE_MANUAL_PATTERN_02:
-                    iv = (ImageView) findViewById(R.id.manual_mode_setting_2);
-                    Log.i("2",Integer.toString(img_resource));
-                    iv.setImageResource(img_resource);
-                    break;
-                case REQUEST_CODE_MANUAL_PATTERN_03:
-                    iv = (ImageView) findViewById(R.id.manual_mode_setting_3);
-                    Log.i("3",Integer.toString(img_resource));
-                    iv.setImageResource(img_resource);
-                    break;
+        else if(id==R.id.manual_mode_setting_1 || id==R.id.manual_mode_setting_2 || id==R.id.manual_mode_setting_3)
+        {
+            intent = new Intent(getApplicationContext(), Activity_manual_mode_pattern_popup.class);
+            Log.i("test", "onClicked:imageView");
+            intent.putExtra("modeNum", modeNum);
+
+            if(id==R.id.manual_mode_setting_1) {
+                intent.putExtra("i", 0);
+                intent.putExtra("currentPattern", pattern[0]);
             }
+            else if(id==R.id.manual_mode_setting_2) {
+                intent.putExtra("i", 1);
+                intent.putExtra("currentPattern", pattern[1]);
+            }
+            else{
+                intent.putExtra("i", 2);
+                intent.putExtra("currentPattern", pattern[2]);
+            }
+            startActivity(intent);
         }
+
     }
 }

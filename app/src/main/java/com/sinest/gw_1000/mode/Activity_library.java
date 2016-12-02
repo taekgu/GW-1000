@@ -131,7 +131,7 @@ public class Activity_library extends AppCompatActivity {
                         if(manual_cnt==1) {
                             // 추가해야됨
 
-                            int modeNum = -1;
+                            int modeNum = 2;
 /*
                             for (int i=15; i<=19; i++) {
 

@@ -32,7 +32,7 @@ public class Application_manager extends Application {
     public final static String LIBRARY_LOC_  = "library_location_";
 
     // 매뉴얼 모드 man_pattern_*_*
-    public final static String MANUAL_MODE_PATTERN_ = "man_pattern_";
+    public final static String MANUAL_MODE_PATTERN_ = "man_pattern_"; // man_pattern_(1-5)_(
     public final static String MANUAL_MODE_TIME_ = "man_time_";
 
     // 언어 [KOR, ENG, CHI]
