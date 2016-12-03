@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
@@ -20,6 +21,7 @@ import com.sinest.gw_1000.management.Application_manager;
 public class Activity_waiting_working_time_popup extends Activity {
 
     TextView textView_workingTime;
+    int mode, modeNum; //mode : 어느 액티비티에서 불러왔는지, modeNum 어떤 매뉴얼 모드인지
     int workingTime;
     Context mContext;
 
@@ -36,9 +38,23 @@ public class Activity_waiting_working_time_popup extends Activity {
         Application_manager.setFullScreen(this);
 
         mContext = this;
-
+        Intent intent = getIntent();
         SharedPreferences sharedPreferences = getSharedPreferences(Application_manager.NAME_OF_SHARED_PREF, 0);
-        workingTime = sharedPreferences.getInt(Application_manager.WAITING_WORKING_TIME, 10);
+        mode = intent.getIntExtra("mode", -1);
+        Log.i("mode", Integer.toString(mode));
+        if(mode==0){ // Waiting 화면에서 넘어왔을 때
+            workingTime = sharedPreferences.getInt(Application_manager.WAITING_WORKING_TIME, 10);
+        }
+        else
+        {
+            modeNum = intent.getExtras().getInt("modeNum");
+            if(mode==1) //manual mode setting에서 첫번째 text
+                workingTime = sharedPreferences.getInt(Application_manager.MANUAL_MODE_TIME_ + modeNum + "_"+"0", 10);
+            else if(mode==2) //manual mode setting에서 두번째 text
+                workingTime = sharedPreferences.getInt(Application_manager.MANUAL_MODE_TIME_ + modeNum + "_"+"1", 10);
+            else if(mode==3) //manual mode setting에서 세번째 text
+                workingTime = sharedPreferences.getInt(Application_manager.MANUAL_MODE_TIME_ + modeNum + "_"+"2", 10);
+        }
 
         textView_workingTime = (TextView) findViewById(R.id.working_time_popup_text);
         textView_workingTime.setText(""+workingTime);
@@ -66,11 +82,21 @@ public class Activity_waiting_working_time_popup extends Activity {
             } else if (action == MotionEvent.ACTION_UP) {
                 switch (id) {
                     case R.id.popup_keypad_enter:
-
                         if (workingTime != 0) {
-
                             SharedPreferences sharedPreferences = getSharedPreferences(Application_manager.NAME_OF_SHARED_PREF, 0);
                             SharedPreferences.Editor editor = sharedPreferences.edit();
+                            if(mode==0){ // Waiting 화면에서 넘어왔을 때
+                                editor.putInt(Application_manager.WAITING_WORKING_TIME, workingTime);
+                            }
+                            else
+                            {
+                                if(mode==1) //manual mode setting에서 첫번째 text
+                                    editor.putInt(Application_manager.MANUAL_MODE_TIME_ + modeNum + "_"+"0", workingTime);
+                                else if(mode==2) //manual mode setting에서 두번째 text
+                                    editor.putInt(Application_manager.MANUAL_MODE_TIME_ + modeNum + "_"+"1", workingTime);
+                                else if(mode==3) //manual mode setting에서 세번째 text
+                                    editor.putInt(Application_manager.MANUAL_MODE_TIME_ + modeNum + "_"+"2", workingTime);
+                            }
                             editor.putInt(Application_manager.WAITING_WORKING_TIME, workingTime);
                             editor.commit();
                             finish();

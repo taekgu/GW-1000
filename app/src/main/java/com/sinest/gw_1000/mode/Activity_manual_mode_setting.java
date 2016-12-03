@@ -151,11 +151,11 @@ public class Activity_manual_mode_setting extends AppCompatActivity {
             intent = new Intent(getApplicationContext(), Activity_waiting_working_time_popup.class);
             intent.putExtra("modeNum", modeNum);
             if(id==R.id.manual_mode_time_1)
-                intent.putExtra("i", 0);
+                intent.putExtra("mode", 1);
             else if(id==R.id.manual_mode_time_2)
-                intent.putExtra("i", 1);
+                intent.putExtra("mode", 2);
             else
-                intent.putExtra("i", 2);
+                intent.putExtra("mode", 3);
             startActivity(intent);;
         }
         else if(id==R.id.manual_mode_setting_1 || id==R.id.manual_mode_setting_2 || id==R.id.manual_mode_setting_3)
