@@ -18,6 +18,7 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.SeekBar;
 import android.widget.TextClock;
 import android.widget.TextView;
@@ -162,14 +163,14 @@ public class Activity_setting extends AppCompatActivity {
                     button_flag[((j-1)*4 + i - 1)] = true;
                     resource.setBackgroundResource(R.drawable.button_off);
                     resource.setText("");
-                    Log.i("JW", "button_flag[" + ((j-1)*4 + i - 1) + "] / button" + i + "" + j + " = OFF");
+                //    Log.i("JW", "button_flag[" + ((j-1)*4 + i - 1) + "] / button" + i + "" + j + " = OFF");
                 }
                 // buttonij가 ON 상태일 때
                 else {
 
                     button_flag[((j-1)*4 + i - 1)] = false;
                     resource.setBackgroundResource(R.drawable.button_on);
-                    Log.i("JW", "button_flag[" + ((j-1)*4 + i - 1) + "] / button" + i + "" + j + " = ON");
+                //    Log.i("JW", "button_flag[" + ((j-1)*4 + i - 1) + "] / button" + i + "" + j + " = ON");
                     if (j == 1) {
 
                         rx_idx = 10 + i;
@@ -189,6 +190,15 @@ public class Activity_setting extends AppCompatActivity {
         }
 
         b_rf = (Button)findViewById(R.id.b_rf);
+        button2_flag[0] = sharedPreferences.getBoolean(Application_manager.RFID_ONOFF, false);
+        if (button2_flag[0]) {
+
+            b_rf.setBackgroundResource(R.drawable.on);
+        }
+        else {
+
+            b_rf.setBackgroundResource(R.drawable.off);
+        }
         b_ex = (Button)findViewById(R.id.b_ex);
         b_wa = (Button)findViewById(R.id.b_wa);
         b_pa = (Button)findViewById(R.id.b_pa);
@@ -697,7 +707,10 @@ public class Activity_setting extends AppCompatActivity {
         SharedPreferences sharedPreferences = getSharedPreferences(Application_manager.NAME_OF_SHARED_PREF, 0);
         SharedPreferences.Editor editor = sharedPreferences.edit();
 
-        Log.i("JW", "onStop");
+        //editor.putBoolean(Application_manager.RFID_ONOFF, button2_flag[0]);
+        editor.putBoolean(Application_manager.RFID_ONOFF, false);
+        Log.i("JW", "RFID mode = " + button2_flag[0]);
+
         for (int i=1; i<=4; i++) { // 세로
 
             for (int j = 1; j <= 3; j++) { // 가로
@@ -706,12 +719,12 @@ public class Activity_setting extends AppCompatActivity {
                 if (button_flag[((j-1)*4 + i - 1)]) {
 
                     editor.putInt(Application_manager.SETTING_ONOFF_VAL_ + i + "" + j, 0);
-                    Log.i("JW", "button_flag[" + ((j-1)*4 + i - 1) + "] / button" + i + "" + j + " = OFF");
+                //    Log.i("JW", "button_flag[" + ((j-1)*4 + i - 1) + "] / button" + i + "" + j + " = OFF");
                 }
                 else {
 
                     editor.putInt(Application_manager.SETTING_ONOFF_VAL_ + i + "" + j, 1);
-                    Log.i("JW", "button_flag[" + ((j-1)*4 + i - 1) + "] / button" + i + "" + j + " = ON");
+                 //   Log.i("JW", "button_flag[" + ((j-1)*4 + i - 1) + "] / button" + i + "" + j + " = ON");
                 }
             }
         }

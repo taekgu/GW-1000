@@ -25,6 +25,8 @@ public class Activity_library extends AppCompatActivity {
     int[] checked_loc = new int[Application_manager.MAX_CHECKED];
     int[] library_map = new int[20];
 
+    int mode_setting = 0;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -82,6 +84,8 @@ public class Activity_library extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         Application_manager.setFullScreen(this);
+
+        change_mode(mode_setting);
     }
 
     private View.OnTouchListener mTouchEvent = new View.OnTouchListener() {
@@ -113,37 +117,36 @@ public class Activity_library extends AppCompatActivity {
                     case R.id.library_save_button:
                         view.setBackgroundResource(R.drawable.save_mode_off);
 
-                        if (cnt == 4) {
+                        if (mode_setting == 0) {
 
-                            SharedPreferences sharedPreferences = getSharedPreferences(Application_manager.NAME_OF_SHARED_PREF, 0);
-                            SharedPreferences.Editor editor = sharedPreferences.edit();
-                            for (int i = 0; i < Application_manager.MAX_CHECKED; i++) {
+                            if (cnt == 4) {
 
-                                editor.putInt(Application_manager.LIBRARY_LOC_ + i, checked_loc[i]);
-                                Log.i("JW", "Save checked_loc(0-19)" + i + " set " + checked_loc[i]);
+                                SharedPreferences sharedPreferences = getSharedPreferences(Application_manager.NAME_OF_SHARED_PREF, 0);
+                                SharedPreferences.Editor editor = sharedPreferences.edit();
+                                for (int i = 0; i < Application_manager.MAX_CHECKED; i++) {
+
+                                    editor.putInt(Application_manager.LIBRARY_LOC_ + i, checked_loc[i]);
+                                    Log.i("JW", "Save checked_loc(0-19)" + i + " set " + checked_loc[i]);
+                                }
+                                editor.commit();
+                                finish();
                             }
-                            editor.commit();
-                            finish();
                         }
                         break;
                     case R.id.library_set_button:
                         view.setBackgroundResource(R.drawable.library_setting_off);
-                        if(manual_cnt==1) {
-                            // 추가해야됨
 
-                            int modeNum = 2;
-/*
-                            for (int i=15; i<=19; i++) {
+                        if (mode_setting == 0) {
 
-                                if (checked_loc[i] == 1) {
+                            mode_setting = 1;
 
-                                    modeNum = i - 14;
-                                }
-                            }
-*/
-                            intent = new Intent(getApplicationContext(), Activity_manual_mode_setting.class);
-                            intent.putExtra("modeNum", modeNum);
-                            startActivity(intent);
+                            change_mode(mode_setting);
+                        }
+                        else {
+
+                            mode_setting = 0;
+
+                            change_mode(mode_setting);
                         }
                         break;
                 }
@@ -158,60 +161,126 @@ public class Activity_library extends AppCompatActivity {
 
         int imageView_id, image_id;
 
-        for (int i=0; i<20; i++) {
+        // 일반 선택모드인 경우
+        if (mode_setting == 0) {
 
-            imageView_id = getResources().getIdentifier("library_mode" + (i+1), "id", "com.sinest.gw_1000");
+            for (int i = 0; i < 20; i++) {
 
-            if (imageView_id == id) {
+                imageView_id = getResources().getIdentifier("library_mode" + (i + 1), "id", "com.sinest.gw_1000");
 
-                imageView = (ImageView) findViewById(imageView_id);
+                if (imageView_id == id) {
 
-                if (library_map[i] == 1) {
+                    imageView = (ImageView) findViewById(imageView_id);
 
-                    library_map[i] = 0;
-                    Log.i("JW", "library_mode " + (i+1) + " checked false");
-                    image_id = getResources().getIdentifier("mode" + (i+1), "drawable", "com.sinest.gw_1000");
-                    imageView.setBackgroundResource(image_id);
+                    if (library_map[i] == 1) {
 
-                    for (int j = 0; j< Application_manager.MAX_CHECKED - 1; j++) {
+                        library_map[i] = 0;
+                        Log.i("JW", "library_mode " + (i + 1) + " checked false");
+                        image_id = getResources().getIdentifier("mode" + (i + 1), "drawable", "com.sinest.gw_1000");
+                        imageView.setBackgroundResource(image_id);
 
-                        if (checked_loc[j] == i) {
+                        for (int j = 0; j < Application_manager.MAX_CHECKED - 1; j++) {
 
-                            for (int k = j; k< Application_manager.MAX_CHECKED - 1; k++) {
+                            if (checked_loc[j] == i) {
 
-                                checked_loc[k] = checked_loc[k+1];
-                                Log.i("JW", "checked_loc[" + k + "] = checked_loc[" + (k+1) + "]");
+                                for (int k = j; k < Application_manager.MAX_CHECKED - 1; k++) {
+
+                                    checked_loc[k] = checked_loc[k + 1];
+                                    Log.i("JW", "checked_loc[" + k + "] = checked_loc[" + (k + 1) + "]");
+                                }
+                            }
+                        }
+                        cnt--;
+                        checked_loc[cnt] = -1;
+                        for (int m = 0; m < Application_manager.MAX_CHECKED; m++) {
+
+                            Log.i("JW", "checked_loc[" + m + "] = " + checked_loc[m]);
+                        }
+                        if (i >= 15) {
+
+                            manual_cnt--;
+                        }
+                    } else {
+
+                        if (cnt < 4) {
+
+                            library_map[i] = 1;
+                            Log.i("JW", "library_mode " + (i + 1) + " checked true");
+                            image_id = getResources().getIdentifier("mode" + (i + 1) + "_on", "drawable", "com.sinest.gw_1000");
+                            imageView.setBackgroundResource(image_id);
+
+                            checked_loc[cnt] = i;
+                            cnt++;
+                            if (i >= 15) {
+
+                                manual_cnt++;
                             }
                         }
                     }
-                    cnt--;
-                    checked_loc[cnt] = -1;
-                    for (int m=0; m<Application_manager.MAX_CHECKED; m++) {
+                }
+            }
+        }
+        // 매뉴얼 모드 세팅일 때
+        else {
 
-                        Log.i("JW", "checked_loc[" + m + "] = " + checked_loc[m]);
-                    }
-                    if (i >= 15) {
+            for (int i = 15; i < 20; i++) {
 
-                        manual_cnt--;
-                    }
+                imageView_id = getResources().getIdentifier("library_mode" + (i + 1), "id", "com.sinest.gw_1000");
+
+                if (imageView_id == id) {
+
+                    mode_setting = 0;
+                    int modeNum = i - 14;
+                    Intent intent = new Intent(getApplicationContext(), Activity_manual_mode_setting.class);
+                    intent.putExtra("modeNum", modeNum);
+                    startActivity(intent);
+                }
+            }
+        }
+    }
+
+    private void change_mode(int mode) {
+
+        if (mode == 1) {
+
+            // 체크 모두 해제
+            int imageView_id, image_id;
+            ImageView imageView;
+            for (int i = 0; i < 15; i++) {
+
+                imageView_id = getResources().getIdentifier("library_mode" + (i + 1), "id", "com.sinest.gw_1000");
+                imageView = (ImageView) findViewById(imageView_id);
+                image_id = getResources().getIdentifier("mode" + (i + 1), "drawable", "com.sinest.gw_1000");
+                imageView.setBackgroundResource(image_id);
+                imageView.setEnabled(false);
+            }
+            for (int i = 15; i < 20; i++) {
+
+                imageView_id = getResources().getIdentifier("library_mode" + (i + 1), "id", "com.sinest.gw_1000");
+                imageView = (ImageView) findViewById(imageView_id);
+                image_id = getResources().getIdentifier("mode" + (i + 1) + "_on", "drawable", "com.sinest.gw_1000");
+                imageView.setBackgroundResource(image_id);
+            }
+        }
+        else {
+
+            // 다시 원래대로
+            int imageView_id, image_id;
+            ImageView imageView;
+            for (int i = 0; i < 20; i++) {
+
+                imageView_id = getResources().getIdentifier("library_mode" + (i + 1), "id", "com.sinest.gw_1000");
+                imageView = (ImageView) findViewById(imageView_id);
+                if (library_map[i] == 1) {
+
+                    image_id = getResources().getIdentifier("mode" + (i + 1) + "_on", "drawable", "com.sinest.gw_1000");
                 }
                 else {
 
-                    if (cnt < 4) {
-
-                        library_map[i] = 1;
-                        Log.i("JW", "library_mode " + (i+1) + " checked true");
-                        image_id = getResources().getIdentifier("mode" + (i+1) + "_on", "drawable", "com.sinest.gw_1000");
-                        imageView.setBackgroundResource(image_id);
-
-                        checked_loc[cnt] = i;
-                        cnt++;
-                        if (i >= 15) {
-
-                            manual_cnt++;
-                        }
-                    }
+                    image_id = getResources().getIdentifier("mode" + (i + 1), "drawable", "com.sinest.gw_1000");
                 }
+                imageView.setBackgroundResource(image_id);
+                imageView.setEnabled(true);
             }
         }
     }

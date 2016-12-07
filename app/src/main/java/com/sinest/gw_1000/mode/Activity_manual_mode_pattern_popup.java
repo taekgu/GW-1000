@@ -30,6 +30,7 @@ public class Activity_manual_mode_pattern_popup extends Activity {
         layoutParams.dimAmount= 0.7f;
         getWindow().setAttributes(layoutParams);
         setContentView(R.layout.activity_manual_mode_pattern_popup);
+        Application_manager.setFullScreen(this);
 
         Button manual_popup_save = (Button)findViewById(R.id.manual_popup_save);
         Button manual_popup_back = (Button)findViewById(R.id.manual_popup_back);

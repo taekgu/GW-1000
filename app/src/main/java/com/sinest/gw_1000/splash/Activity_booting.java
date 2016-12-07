@@ -1,9 +1,11 @@
 package com.sinest.gw_1000.splash;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 
@@ -11,7 +13,11 @@ import com.sinest.gw_1000.R;
 import com.sinest.gw_1000.communication.Communicator;
 import com.sinest.gw_1000.management.Application_manager;
 import com.sinest.gw_1000.mode.Activity_waiting;
+import com.sinest.gw_1000.mode.Activity_waiting_rfid;
 import com.sinest.gw_1000.setting.Activity_engine;
+import com.sinest.gw_1000.setting.Activity_rfid;
+
+import static java.lang.reflect.Array.getBoolean;
 
 public class Activity_booting extends AppCompatActivity {
 
@@ -48,7 +54,20 @@ public class Activity_booting extends AppCompatActivity {
                             time = 0;
                             isRun = false;
                             frameAnimation.stop();
-                            Intent intent = new Intent(getApplicationContext(), Activity_waiting.class);
+                            SharedPreferences sharedPreferences = getSharedPreferences(Application_manager.NAME_OF_SHARED_PREF, 0);
+                            Intent intent;
+                            // RFID 모드 ON
+                            if (sharedPreferences.getBoolean(Application_manager.RFID_ONOFF, false)) {
+
+                                intent = new Intent(getApplicationContext(), Activity_waiting_rfid.class);
+                                Log.i("JW", "Start activity_waiting_rfid");
+                            }
+                            // RFID 모드 OFF
+                            else {
+
+                                intent = new Intent(getApplicationContext(), Activity_waiting.class);
+                                Log.i("JW", "Start activity_waiting");
+                            }
                             startActivityForResult(intent, REQUEST_CODE_ANOTHER);
                             finish();
                         }

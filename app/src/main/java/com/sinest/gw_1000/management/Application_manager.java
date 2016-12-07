@@ -41,6 +41,9 @@ public class Application_manager extends Application {
     // 세팅 on/off값
     public final static String SETTING_ONOFF_VAL_ = "setting_onoff_val_";
 
+    // RFID모드 on/off값
+    public final static String RFID_ONOFF = "rfid_onoff";
+
     // 사운드 id
     public final static int NUM_OF_LANG = 3;
     public final static int NUM_OF_SOUND = 5;

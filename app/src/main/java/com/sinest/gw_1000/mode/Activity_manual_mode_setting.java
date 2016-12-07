@@ -31,6 +31,7 @@ public class Activity_manual_mode_setting extends AppCompatActivity {
     private int[] time = new int[3];
     private ImageView[] manual_mode_setting = new ImageView[3];
     private TextView[] manual_mode_time = new TextView[3];
+    private TextView manual_mode_total;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,7 +45,7 @@ public class Activity_manual_mode_setting extends AppCompatActivity {
         Button manual_mode_setting_back = (Button)findViewById(R.id.manual_mode_setting_back);
 
 
-        TextView manual_mode_total = (TextView)findViewById(R.id.manual_mode_total);
+        manual_mode_total = (TextView)findViewById(R.id.manual_mode_total);
         Typeface tf = Typeface.createFromAsset(getAssets(), "fonts/digital.ttf");
 
         TextClock clock = (TextClock) findViewById(R.id.manual_mode_setting_clock);
@@ -78,6 +79,7 @@ public class Activity_manual_mode_setting extends AppCompatActivity {
         manual_mode_setting_save.setOnTouchListener(mTouchEvent);
         manual_mode_setting_back.setOnTouchListener(mTouchEvent);
         manual_mode_total.setTypeface(tf);
+        manual_mode_total.setText(""+(time[0] + time[1] + time[2]));
     }
     private View.OnTouchListener mTouchEvent = new View.OnTouchListener() {
                         @Override
@@ -127,6 +129,8 @@ public class Activity_manual_mode_setting extends AppCompatActivity {
     };
     protected void onResume() {
         super.onResume();
+        Application_manager.setFullScreen(this);
+
         SharedPreferences sharedPreferences = getSharedPreferences(Application_manager.NAME_OF_SHARED_PREF, 0);
         int resourceId;
 
@@ -140,6 +144,7 @@ public class Activity_manual_mode_setting extends AppCompatActivity {
             manual_mode_setting[i].setBackgroundResource(resourceId);
             manual_mode_time[i].setText(""+time[i]);
         }
+        manual_mode_total.setText(""+(time[0] + time[1] + time[2]));
     }
     public void onClicked(View v)
     {

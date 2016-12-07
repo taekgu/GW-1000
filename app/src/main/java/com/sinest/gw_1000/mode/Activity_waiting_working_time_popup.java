@@ -49,11 +49,11 @@ public class Activity_waiting_working_time_popup extends Activity {
         {
             modeNum = intent.getExtras().getInt("modeNum");
             if(mode==1) //manual mode setting에서 첫번째 text
-                workingTime = sharedPreferences.getInt(Application_manager.MANUAL_MODE_TIME_ + modeNum + "_"+"0", 10);
+                workingTime = sharedPreferences.getInt(Application_manager.MANUAL_MODE_TIME_ + modeNum + "_"+"0", 30);
             else if(mode==2) //manual mode setting에서 두번째 text
-                workingTime = sharedPreferences.getInt(Application_manager.MANUAL_MODE_TIME_ + modeNum + "_"+"1", 10);
+                workingTime = sharedPreferences.getInt(Application_manager.MANUAL_MODE_TIME_ + modeNum + "_"+"1", 30);
             else if(mode==3) //manual mode setting에서 세번째 text
-                workingTime = sharedPreferences.getInt(Application_manager.MANUAL_MODE_TIME_ + modeNum + "_"+"2", 10);
+                workingTime = sharedPreferences.getInt(Application_manager.MANUAL_MODE_TIME_ + modeNum + "_"+"2", 30);
         }
 
         textView_workingTime = (TextView) findViewById(R.id.working_time_popup_text);
@@ -88,16 +88,15 @@ public class Activity_waiting_working_time_popup extends Activity {
                             if(mode==0){ // Waiting 화면에서 넘어왔을 때
                                 editor.putInt(Application_manager.WAITING_WORKING_TIME, workingTime);
                             }
-                            else
-                            {
-                                if(mode==1) //manual mode setting에서 첫번째 text
-                                    editor.putInt(Application_manager.MANUAL_MODE_TIME_ + modeNum + "_"+"0", workingTime);
-                                else if(mode==2) //manual mode setting에서 두번째 text
-                                    editor.putInt(Application_manager.MANUAL_MODE_TIME_ + modeNum + "_"+"1", workingTime);
-                                else if(mode==3) //manual mode setting에서 세번째 text
-                                    editor.putInt(Application_manager.MANUAL_MODE_TIME_ + modeNum + "_"+"2", workingTime);
+                            else {
+
+                                if (mode == 1) //manual mode setting에서 첫번째 text
+                                    editor.putInt(Application_manager.MANUAL_MODE_TIME_ + modeNum + "_" + "0", workingTime);
+                                else if (mode == 2) //manual mode setting에서 두번째 text
+                                    editor.putInt(Application_manager.MANUAL_MODE_TIME_ + modeNum + "_" + "1", workingTime);
+                                else if (mode == 3) //manual mode setting에서 세번째 text
+                                    editor.putInt(Application_manager.MANUAL_MODE_TIME_ + modeNum + "_" + "2", workingTime);
                             }
-                            editor.putInt(Application_manager.WAITING_WORKING_TIME, workingTime);
                             editor.commit();
                             finish();
                         }

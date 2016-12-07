@@ -59,10 +59,10 @@ public class Activity_waiting extends AppCompatActivity {
 
         // 폰트 설정
         Typeface tf = Typeface.createFromAsset(getAssets(), "fonts/digital.ttf");
-
         TextClock clock = (TextClock) findViewById(R.id.waiting_clock);
         clock.setTypeface(tf);
 
+        // 산소 농도, 압력, 시간 값 불러오기
         SharedPreferences sharedPreferences = getSharedPreferences(Application_manager.NAME_OF_SHARED_PREF, 0);
         val_oxygen = sharedPreferences.getInt(Application_manager.VAL_OXYGEN, 0);
         val_pressure = sharedPreferences.getInt(Application_manager.VAL_PRESSURE, 0);
@@ -234,21 +234,57 @@ public class Activity_waiting extends AppCompatActivity {
 
                 if (msg.what == 1) {
 
-                    String temp = ""+communicator.get_rx_idx(7);
+                    SharedPreferences sharedPreferences = getSharedPreferences(Application_manager.NAME_OF_SHARED_PREF, 0);
+
+                    int[] onoff_flag = new int[12];
+                    for (int i=1; i<=4; i++) { // 세로
+
+                        for (int j = 1; j <= 3; j++) { // 가로
+
+                            onoff_flag[((j-1)*4 + i - 1)] = sharedPreferences.getInt(Application_manager.RFID_ONOFF + i + "" + j, 0);
+                        }
+                    }
+
+                    // 산소농도 평균
+                    int temp = 0;
+                    for (int i=0; i<4; i++) {
+
+                        if (onoff_flag[i] == 1) {
+
+                            temp += communicator.get_rx_idx(i+7);
+                        }
+                    }
                     TextView textView_oxygen = (TextView) findViewById(R.id.textView_oxygen);
-                    textView_oxygen.setText(temp);
+                    textView_oxygen.setText(""+temp);
 
-                    temp = ""+communicator.get_rx_idx(11);
+                    // 습도 평균
+                    temp = 0;
+                    for (int i=4; i<8; i++) {
+
+                        if (onoff_flag[i] == 1) {
+
+                            temp += communicator.get_rx_idx(i+7);
+                        }
+                    }
                     TextView textView_humidity = (TextView) findViewById(R.id.textView_humidity);
-                    textView_humidity.setText(temp);
+                    textView_humidity.setText(""+temp);
 
-                    temp = ""+communicator.get_rx_idx(3);
+                    // 내부온도 평균
+                    temp = 0;
+                    for (int i=8; i<12; i++) {
+
+                        if (onoff_flag[i] == 1) {
+
+                            temp += communicator.get_rx_idx(i-5);
+                        }
+                    }
                     TextView textView_temperature = (TextView) findViewById(R.id.textView_temperature_above);
-                    textView_temperature.setText(temp);
+                    textView_temperature.setText(""+temp);
 
-                    temp = ""+communicator.get_rx_idx(2);
+                    // 수온
+                    temp = communicator.get_rx_idx(2);
                     TextView textView_temperature_bed = (TextView) findViewById(R.id.textView_temperature_below);
-                    textView_temperature_bed.setText(temp);
+                    textView_temperature_bed.setText(""+temp);
                 }
                 else if (msg.what == SET_BUTTON_INVISIBLE) {
 
@@ -267,12 +303,9 @@ public class Activity_waiting extends AppCompatActivity {
     private View.OnTouchListener mTouchEvent = new View.OnTouchListener() {
         @Override
         public boolean onTouch(View view, MotionEvent motionEvent) {
-            TextView txt;
             LinearLayout background;
             Intent intent;
             Intent intent_setting;
-            String t;
-            int temp;
             int action = motionEvent.getAction();
             int id = view.getId();
             if (action == MotionEvent.ACTION_DOWN) {
@@ -412,7 +445,6 @@ public class Activity_waiting extends AppCompatActivity {
                         Application_manager.getSoundManager().play(Application_manager.ID_LANG_SOUND[Application_manager.LANGUAGE][3]);
                         break;
                     case R.id.waiting_doorclose_button:
-                        //b  = (Button) view;
                         background = (LinearLayout)findViewById(R.id.waiting_background);
                         view.setBackgroundResource(R.drawable.door_close_off);
                         background.setBackgroundResource(R.drawable.waiting_doorclose_backimage);
