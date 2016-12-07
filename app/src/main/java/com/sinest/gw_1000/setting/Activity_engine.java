@@ -58,7 +58,6 @@ public class Activity_engine extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_engine);
-
         Application_manager.setFullScreen(this);
 
         // 폰트 설정

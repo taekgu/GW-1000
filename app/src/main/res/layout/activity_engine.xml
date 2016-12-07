@@ -327,23 +327,33 @@
             android:layout_height="0dp"
             android:layout_weight="12">
 
-            <Button
+            <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:id="@+id/eng_door_open"
                 android:layout_weight="22"
-                android:layout_marginBottom="23dp"
-                android:layout_marginRight="10dp"
-                android:background="@drawable/door_open_off"/>
+                android:gravity="center|right">
 
-            <Button
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/eng_door_open"
+                    android:background="@drawable/door_open_off"/>
+
+            </LinearLayout>
+
+            <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:id="@+id/eng_door_close"
                 android:layout_weight="22"
-                android:layout_marginTop="23dp"
-                android:layout_marginLeft="10dp"
-                android:background="@drawable/door_close_off"/>
+                android:gravity="center|left">
+
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/eng_door_close"
+                    android:background="@drawable/door_close_off"/>
+
+            </LinearLayout>
 
             <Button
                 android:layout_width="0dp"

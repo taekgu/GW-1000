@@ -10,7 +10,6 @@ import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.provider.ContactsContract;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.MotionEvent;
@@ -24,7 +23,6 @@ import com.sinest.gw_1000.R;
 import com.sinest.gw_1000.communication.Communicator;
 import com.sinest.gw_1000.management.Application_broadcast;
 import com.sinest.gw_1000.management.Application_manager;
-import com.sinest.gw_1000.setting.Activity_setting;
 
 public class Activity_waiting extends AppCompatActivity {
 
@@ -427,8 +425,8 @@ public class Activity_waiting extends AppCompatActivity {
                     case R.id.waiting_time_text:
 
                         if (mode == 0) {
-
                             intent = new Intent(getApplicationContext(), Activity_waiting_working_time_popup.class);
+                            intent.putExtra("mode", 0);
                             startActivity(intent);
                         }
                         break;

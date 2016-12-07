@@ -22,7 +22,6 @@ import com.sinest.gw_1000.R;
 import com.sinest.gw_1000.communication.Communicator;
 import com.sinest.gw_1000.management.Application_broadcast;
 import com.sinest.gw_1000.management.Application_manager;
-import com.sinest.gw_1000.setting.Activity_setting;
 
 public class Activity_waiting_rfid extends AppCompatActivity {
 

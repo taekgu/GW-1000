@@ -2,6 +2,7 @@ package com.sinest.gw_1000.mode;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MotionEvent;
@@ -13,9 +14,12 @@ import android.widget.ImageView;
 import android.widget.SeekBar;
 
 import com.sinest.gw_1000.R;
+import com.sinest.gw_1000.management.Application_manager;
 
 public class Activity_manual_mode_pattern_popup extends Activity {
-    int volume, ImageResourceId;
+    int patternNum, ImageResourceId;
+    Intent intent;
+    ImageView img;
     SeekBar seekBar;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,7 +34,13 @@ public class Activity_manual_mode_pattern_popup extends Activity {
         Button manual_popup_save = (Button)findViewById(R.id.manual_popup_save);
         Button manual_popup_back = (Button)findViewById(R.id.manual_popup_back);
 
+        intent = getIntent();
         int resourceId;
+        img = (ImageView)findViewById(R.id.manual_popup_imageview);
+        Log.i("currentPattern", Integer.toString(intent.getIntExtra("currentPattern",1)));
+        resourceId = getResources().getIdentifier("manual_mode_pattern_" + intent.getIntExtra("currentPattern",1), "drawable", "com.sinest.gw_1000");
+        img.setBackgroundResource(resourceId);
+
         for(int i=1; i<=12; i++){
             resourceId = getResources().getIdentifier("pattern_"+i,"id","com.sinest.gw_1000");
             Button btn = (Button)findViewById(resourceId);
@@ -48,7 +58,7 @@ public class Activity_manual_mode_pattern_popup extends Activity {
             Button b;
             int action = motionEvent.getAction();
             int id = view.getId();
-            Intent resultIntent= getIntent();
+
             if (action == MotionEvent.ACTION_DOWN) {
                 switch (id) {
                     case R.id.manual_popup_save:
@@ -64,17 +74,19 @@ public class Activity_manual_mode_pattern_popup extends Activity {
                 switch (id) {
                     case R.id.manual_popup_save:
                         b = (Button) view;
-                        ImageView img = (ImageView)findViewById(R.id.manual_popup_imageview);
+                        SharedPreferences sharedPreferences = getSharedPreferences(Application_manager.NAME_OF_SHARED_PREF, 0);
+                        SharedPreferences.Editor editor = sharedPreferences.edit();
+
                         b.setBackgroundResource(R.drawable.save_mode_off);
-                        resultIntent.putExtra("pattern_num", ImageResourceId);
-                        Log.i("image resource id :", Integer.toString(ImageResourceId));
-                        setResult(RESULT_OK, resultIntent);
+                        Log.i("modeNum", Integer.toString(intent.getIntExtra("modeNum",0)));
+                        Log.i("patternNum", Integer.toString(patternNum));
+                        editor.putInt(Application_manager.MANUAL_MODE_PATTERN_ + intent.getIntExtra("modeNum",0) + "_" + intent.getIntExtra("i",0), patternNum);
+                        editor.commit();
                         finish();
                         break;
                     case R.id.manual_popup_back:
                         b = (Button) view;
                         b.setBackgroundResource(R.drawable.button_circle_back_off);
-                        setResult(RESULT_CANCELED, resultIntent);
                         finish();
                         break;
                 }
@@ -85,7 +97,7 @@ public class Activity_manual_mode_pattern_popup extends Activity {
 
     private View.OnClickListener mClickListener = new View.OnClickListener() {
         public void onClick(View v) {
-            ImageView img = (ImageView)findViewById(R.id.manual_popup_imageview);
+
             int id = v.getId();
             int resourceId;
             for(int i=1; i<=12; i++)
@@ -94,7 +106,8 @@ public class Activity_manual_mode_pattern_popup extends Activity {
                 if(resourceId==id)
                 {
                     ImageResourceId = getResources().getIdentifier("manual_mode_pattern_"+i,"drawable","com.sinest.gw_1000");
-                    img.setImageResource(ImageResourceId);
+                    patternNum = i;
+                    img.setBackgroundResource(ImageResourceId);
                 }
             }
         }

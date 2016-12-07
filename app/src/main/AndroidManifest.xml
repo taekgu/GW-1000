@@ -55,10 +55,8 @@
             android:name=".mode.Activity_waiting_working_time_popup"
             android:screenOrientation="landscape"
             android:theme="@android:style/Theme.Translucent" />
-        <activity
-            android:name=".setting.Activity_setting"
-            android:screenOrientation="landscape"
-            android:theme="@style/Theme.AppCompat.NoActionBar" />
+
+
         <activity
             android:name=".setting.Activity_emotion"
             android:launchMode="singleInstance"
