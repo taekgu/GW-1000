@@ -38,6 +38,9 @@ public class Application_manager extends Application {
     // 언어 [KOR, ENG, CHI]
     public static int LANGUAGE = 0;
 
+    // 세팅 on/off값
+    public final static String SETTING_ONOFF_VAL_ = "setting_onoff_val_";
+
     // 사운드 id
     public final static int NUM_OF_LANG = 3;
     public final static int NUM_OF_SOUND = 5;

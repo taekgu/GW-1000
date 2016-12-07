@@ -6,6 +6,7 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.os.PowerManager;
 import android.support.v7.app.AppCompatActivity;
@@ -106,6 +107,30 @@ public class Activity_setting extends AppCompatActivity {
         b_23 = (TextView)findViewById(R.id.button23);
         b_33 = (TextView)findViewById(R.id.button33);
         b_43 = (TextView)findViewById(R.id.button43);
+
+        SharedPreferences sharedPreferences = getSharedPreferences(Application_manager.NAME_OF_SHARED_PREF, 0);
+        int resourceID, imageID;
+        for (int i=1; i<=3; i++) {
+
+            for (int j=1; j<=3; j++) {
+
+                resourceID = getResources().getIdentifier("button" + i + "" + j, "id", "com.sinest.gw_1000");
+                TextView resource = (TextView) findViewById(resourceID);
+
+                // buttonij가 OFF 상태일 때
+                if (sharedPreferences.getInt((Application_manager.SETTING_ONOFF_VAL_ + i + "" + j), 0) == 0) {
+
+                    resource.setBackgroundResource(R.drawable.button_off);
+                }
+                // buttonij가 ON 상태일 때
+                else {
+
+                    resource.setBackgroundResource(R.drawable.button_on);
+                    b_11.setText(""+communicator.get_rx_idx(11));
+                    b_11.setTypeface(tf);
+                }
+            }
+        }
 
         b_rf = (Button)findViewById(R.id.b_rf);
         b_ex = (Button)findViewById(R.id.b_ex);
