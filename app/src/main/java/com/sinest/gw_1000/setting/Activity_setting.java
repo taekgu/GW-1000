@@ -66,7 +66,7 @@ public class Activity_setting extends AppCompatActivity {
     Button hidden_s_3;
     Button hidden_s_4;
 
-    boolean[] button_flag = {true, true, true, true, true, true, true, true, true, true, true, true};
+    boolean[] button_flag = new boolean[12];
     boolean[] button2_flag = {true, true, true, true};
     boolean[] button3_flag = {true, true, true, true};
 
@@ -146,10 +146,12 @@ public class Activity_setting extends AppCompatActivity {
         b_43 = (TextView)findViewById(R.id.button43);
 
         SharedPreferences sharedPreferences = getSharedPreferences(Application_manager.NAME_OF_SHARED_PREF, 0);
-        int resourceID, imageID;
-        for (int i=1; i<=3; i++) {
+        int resourceID;
+        int rx_idx = -1;
+        Log.i("JW", "onCreate");
+        for (int i=1; i<=4; i++) { // 세로
 
-            for (int j=1; j<=3; j++) {
+            for (int j=1; j<=3; j++) { // 가로
 
                 resourceID = getResources().getIdentifier("button" + i + "" + j, "id", "com.sinest.gw_1000");
                 TextView resource = (TextView) findViewById(resourceID);
@@ -157,14 +159,31 @@ public class Activity_setting extends AppCompatActivity {
                 // buttonij가 OFF 상태일 때
                 if (sharedPreferences.getInt((Application_manager.SETTING_ONOFF_VAL_ + i + "" + j), 0) == 0) {
 
+                    button_flag[((j-1)*4 + i - 1)] = true;
                     resource.setBackgroundResource(R.drawable.button_off);
+                    resource.setText("");
+                    Log.i("JW", "button_flag[" + ((j-1)*4 + i - 1) + "] / button" + i + "" + j + " = OFF");
                 }
                 // buttonij가 ON 상태일 때
                 else {
 
+                    button_flag[((j-1)*4 + i - 1)] = false;
                     resource.setBackgroundResource(R.drawable.button_on);
-                    b_11.setText(""+communicator.get_rx_idx(11));
-                    b_11.setTypeface(tf);
+                    Log.i("JW", "button_flag[" + ((j-1)*4 + i - 1) + "] / button" + i + "" + j + " = ON");
+                    if (j == 1) {
+
+                        rx_idx = 10 + i;
+                    }
+                    else if (j == 2) {
+
+                        rx_idx = 2 + i;
+                    }
+                    else if (j == 3) {
+
+                        rx_idx = 6 + i;
+                    }
+                    resource.setText(""+communicator.get_rx_idx(rx_idx));
+                    resource.setTypeface(tf);
                 }
             }
         }
@@ -670,6 +689,34 @@ public class Activity_setting extends AppCompatActivity {
         // ATTENTION: This was auto-generated to implement the App Indexing API.
         // See https://g.co/AppIndexing/AndroidStudio for more information.
         client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        SharedPreferences sharedPreferences = getSharedPreferences(Application_manager.NAME_OF_SHARED_PREF, 0);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+
+        Log.i("JW", "onStop");
+        for (int i=1; i<=4; i++) { // 세로
+
+            for (int j = 1; j <= 3; j++) { // 가로
+
+                // 버튼 플래그가 true(OFF)일 때
+                if (button_flag[((j-1)*4 + i - 1)]) {
+
+                    editor.putInt(Application_manager.SETTING_ONOFF_VAL_ + i + "" + j, 0);
+                    Log.i("JW", "button_flag[" + ((j-1)*4 + i - 1) + "] / button" + i + "" + j + " = OFF");
+                }
+                else {
+
+                    editor.putInt(Application_manager.SETTING_ONOFF_VAL_ + i + "" + j, 1);
+                    Log.i("JW", "button_flag[" + ((j-1)*4 + i - 1) + "] / button" + i + "" + j + " = ON");
+                }
+            }
+        }
+
+        editor.commit();
     }
 
     private View.OnTouchListener mTouchEvent = new View.OnTouchListener() {
