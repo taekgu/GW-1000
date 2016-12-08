@@ -99,7 +99,6 @@ public class Fragment_waiting extends Fragment {
                         resourceId = getResources().getIdentifier("mode" + (checked_idx[i]+1), "drawable", "com.sinest.gw_1000");
                         mode[i].setBackgroundResource(resourceId);
                         activity.changeFragment_working(i+1);
-                        Application_manager.getSoundManager().play(Application_manager.ID_LANG_SOUND[Application_manager.LANGUAGE][0]);
                     }
                 }
             }

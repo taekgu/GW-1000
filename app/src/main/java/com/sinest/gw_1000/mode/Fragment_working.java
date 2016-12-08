@@ -3,6 +3,7 @@ package com.sinest.gw_1000.mode;
 import android.app.Fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -23,13 +24,66 @@ public class Fragment_working extends Fragment {
     Button play, stop;
     private int state = 0; // 0:pause, 1:play
 
+    private int time_m_left;
+    private int time_s;
+
+    private Thread thread_timer;
+    private boolean isRun = false;
+    private boolean isPause = false;
+
     public Fragment_working() {
 
     }
 
-    public void setModeNum (int _modeNum) {
+    public void init (int _modeNum, final int _time) {
 
         this.modeNum = _modeNum;
+        this.time_m_left = _time;
+        this.time_s = 0;
+
+        thread_timer = new Thread(new Runnable() {
+            @Override
+            public void run() {
+
+                while (isRun) {
+
+                    while(isPause);
+
+                    try {
+
+                        Thread.sleep(1000);
+                        time_s++;
+                        Log.i("JW", "time - " + time_s);
+
+                        if (time_s == 60) {
+
+                            time_s = 0;
+                            time_m_left--;
+
+                            Activity_waiting activity_waiting = (Activity_waiting) getActivity();
+                            activity_waiting.setTimeLeft(time_m_left);
+
+                            if (time_m_left == 0) {
+
+                                isRun = false;
+                                break;
+                            }
+                        }
+                    }
+                    catch (Exception e) {
+
+                        Log.i("JW", "Exception was caught on timer thread");
+                    }
+                }
+                if (time_m_left == 0) {
+
+                    Log.i("JW", "치료 종료");
+                    Application_manager.getSoundManager().play(Application_manager.ID_LANG_SOUND[Application_manager.LANGUAGE][2]);
+                    Activity_waiting activity_waiting = (Activity_waiting) getActivity();
+                    activity_waiting.changeFragment_waiting();
+                }
+            }
+        });
     }
 
     @Nullable
@@ -46,6 +100,9 @@ public class Fragment_working extends Fragment {
         play.setOnTouchListener(mTouchEvent);
         stop.setOnTouchListener(mTouchEvent);
 
+        isRun = true;
+        thread_timer.start();
+
         return view;
     }
 
@@ -53,7 +110,7 @@ public class Fragment_working extends Fragment {
         @Override
         public boolean onTouch(View view, MotionEvent motionEvent) {
 
-            Activity_waiting activity_waiting = (Activity_waiting) getActivity();
+      //      Activity_waiting activity_waiting = (Activity_waiting) getActivity();
             Button button_clicked = (Button) view;
             int id = button_clicked.getId();
 
@@ -88,24 +145,28 @@ public class Fragment_working extends Fragment {
                         if (state == 1) {
 
                             state = 0;
+                            isPause = true;
                             button_clicked.setBackgroundResource(R.drawable.button_play_off);
                             communicator.set_tx(1, (byte)0x02);
-                            Application_manager.getSoundManager().play(Application_manager.ID_LANG_SOUND[Application_manager.LANGUAGE][1]);
+                        //    Application_manager.getSoundManager().play(Application_manager.ID_LANG_SOUND[Application_manager.LANGUAGE][1]);
                         }
                         // pause 중이면
                         else {
 
                             state = 1;
+                            isPause = false;
                             button_clicked.setBackgroundResource(R.drawable.button_pause_off);
                             communicator.set_tx(1, (byte)0x01);
-                            Application_manager.getSoundManager().play(Application_manager.ID_LANG_SOUND[Application_manager.LANGUAGE][0]);
+                        //    Application_manager.getSoundManager().play(Application_manager.ID_LANG_SOUND[Application_manager.LANGUAGE][0]);
                         }
                         break;
                     case R.id.button_stop:
 
+                        isRun = false;
                         button_clicked.setBackgroundResource(R.drawable.button_stop_off);
                         communicator.set_tx(1, (byte)0x00);
-                        Application_manager.getSoundManager().play(Application_manager.ID_LANG_SOUND[Application_manager.LANGUAGE][2]);
+                        Application_manager.getSoundManager().play(Application_manager.ID_LANG_SOUND[Application_manager.LANGUAGE][1]);
+                        Activity_waiting activity_waiting = (Activity_waiting) getActivity();
                         activity_waiting.changeFragment_waiting();
                         break;
                 }

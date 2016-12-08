@@ -22,6 +22,7 @@ import android.widget.ImageView;
 import android.widget.SeekBar;
 import android.widget.TextClock;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.appindexing.Action;
 import com.google.android.gms.appindexing.AppIndex;
@@ -33,6 +34,8 @@ import com.sinest.gw_1000.management.Application_manager;
 
 public class Activity_setting extends AppCompatActivity {
     public static final String TAG = "SCREEN";
+
+    private boolean rfid_state = false;
 
     Communicator communicator;
 
@@ -190,8 +193,9 @@ public class Activity_setting extends AppCompatActivity {
         }
 
         b_rf = (Button)findViewById(R.id.b_rf);
-        button2_flag[0] = sharedPreferences.getBoolean(Application_manager.RFID_ONOFF, false);
-        if (button2_flag[0]) {
+        rfid_state = sharedPreferences.getBoolean(Application_manager.RFID_ONOFF, false);
+        button2_flag[0] = !rfid_state;
+        if (rfid_state) {
 
             b_rf.setBackgroundResource(R.drawable.on);
         }
@@ -707,9 +711,10 @@ public class Activity_setting extends AppCompatActivity {
         SharedPreferences sharedPreferences = getSharedPreferences(Application_manager.NAME_OF_SHARED_PREF, 0);
         SharedPreferences.Editor editor = sharedPreferences.edit();
 
-        //editor.putBoolean(Application_manager.RFID_ONOFF, button2_flag[0]);
-        editor.putBoolean(Application_manager.RFID_ONOFF, false);
-        Log.i("JW", "RFID mode = " + button2_flag[0]);
+        rfid_state = !button2_flag[0];
+        editor.putBoolean(Application_manager.RFID_ONOFF, rfid_state);
+        //editor.putBoolean(Application_manager.RFID_ONOFF, false);
+        Log.i("JW", "RFID mode = " + rfid_state);
 
         for (int i=1; i<=4; i++) { // 세로
 
@@ -801,6 +806,13 @@ public class Activity_setting extends AppCompatActivity {
                         b_rf.setBackgroundResource(R.drawable.off);
                         button2_flag[0] = true;
                         check = "Yes";
+                        Log.i("JW", "RFID OFF");
+                        Toast.makeText(this, "RFID OFF", Toast.LENGTH_SHORT).show();
+                    }
+                    else {
+
+                        Log.i("JW", "RFID ON");
+                        Toast.makeText(this, "RFID ON", Toast.LENGTH_SHORT).show();
                     }
                     break;
                 case 4:

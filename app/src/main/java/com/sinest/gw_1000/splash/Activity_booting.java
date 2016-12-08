@@ -57,16 +57,16 @@ public class Activity_booting extends AppCompatActivity {
                             SharedPreferences sharedPreferences = getSharedPreferences(Application_manager.NAME_OF_SHARED_PREF, 0);
                             Intent intent;
                             // RFID 모드 ON
-                            if (sharedPreferences.getBoolean(Application_manager.RFID_ONOFF, false)) {
+                            if (!sharedPreferences.getBoolean(Application_manager.RFID_ONOFF, false)) {
 
-                                intent = new Intent(getApplicationContext(), Activity_waiting_rfid.class);
-                                Log.i("JW", "Start activity_waiting_rfid");
+                                intent = new Intent(getApplicationContext(), Activity_waiting.class);
+                                Log.i("JW", "Start activity_waiting");
                             }
                             // RFID 모드 OFF
                             else {
 
-                                intent = new Intent(getApplicationContext(), Activity_waiting.class);
-                                Log.i("JW", "Start activity_waiting");
+                                intent = new Intent(getApplicationContext(), Activity_waiting_rfid.class);
+                                Log.i("JW", "Start activity_waiting_rfid");
                             }
                             startActivityForResult(intent, REQUEST_CODE_ANOTHER);
                             finish();

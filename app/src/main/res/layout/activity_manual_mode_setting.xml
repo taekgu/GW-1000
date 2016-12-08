@@ -59,17 +59,19 @@
                 android:layout_marginTop="150dp"
                 android:onClick="onClicked"
                 android:id="@+id/manual_mode_setting_1"/>
+
             <TextView
                 android:layout_width="70dp"
                 android:layout_height="50dp"
                 android:gravity="center_horizontal"
-                android:layout_marginBottom="80dp"
-                android:layout_alignParentBottom="true"
+                android:layout_marginBottom="78dp"
                 android:textSize="45dp"
                 android:text="00"
                 android:textColor="#00FFFF"
                 android:onClick="onClicked"
-                android:id="@+id/manual_mode_time_1" />
+                android:id="@+id/manual_mode_time_1"
+                android:layout_alignParentBottom="true"
+                android:layout_alignEnd="@+id/manual_mode_setting_1" />
         </RelativeLayout>
         <RelativeLayout
             android:layout_width="0dp"
@@ -82,6 +84,7 @@
                 android:layout_height="wrap_content"
                 android:background="@drawable/manual_mode_pattern_1"
                 android:layout_marginTop="150dp"
+                android:layout_marginLeft="3dp"
                 android:onClick="onClicked"
                 android:id="@+id/manual_mode_setting_2" />
             <TextView
@@ -107,7 +110,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@drawable/manual_mode_pattern_1"
-                android:layout_marginRight="41dp"
+                android:layout_marginRight="29dp"
                 android:layout_marginTop="150dp"
                 android:onClick="onClicked"
                 android:id="@+id/manual_mode_setting_3" />

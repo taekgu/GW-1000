@@ -10,6 +10,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextClock;
+import android.widget.Toast;
 
 import com.sinest.gw_1000.R;
 import com.sinest.gw_1000.management.Application_manager;
@@ -215,6 +216,11 @@ public class Activity_library extends AppCompatActivity {
 
                                 manual_cnt++;
                             }
+                        }
+                        // 라이브러리 4개 이상 선택 시
+                        else {
+
+                            Toast.makeText(this, "4개 초과 선택할 수 없습니다", Toast.LENGTH_SHORT).show();
                         }
                     }
                 }

@@ -54,6 +54,8 @@ public class Activity_engine extends AppCompatActivity {
 
     Communicator communicator;
 
+    private boolean isRun = false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -362,6 +364,7 @@ public class Activity_engine extends AppCompatActivity {
                             hidden[3] = false;
                             //operating time re-set
                             operation_t.setText("0");
+                            Application_manager.setRunningTime(0);
                         }else
                         {
                             hidden[0] = true;
@@ -525,6 +528,7 @@ public class Activity_engine extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
+        isRun = true;
         Thread myThread = new Thread(new Runnable() {
             public void run() {
                 while (true) {
@@ -537,6 +541,12 @@ public class Activity_engine extends AppCompatActivity {
             }
         });
         myThread.start();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        isRun = false;
     }
 
     Handler handler = new Handler() {

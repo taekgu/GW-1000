@@ -18,6 +18,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextClock;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.sinest.gw_1000.R;
 import com.sinest.gw_1000.communication.Communicator;
@@ -27,9 +28,9 @@ import com.sinest.gw_1000.setting.Activity_setting;
 
 public class Activity_waiting extends AppCompatActivity {
 
-    public static final int REQUEST_CODE_WORKINGTIME_POPUP = 1001;
-    private final static int SET_BUTTON_INVISIBLE = 1002;
-    private final static int SET_BUTTON_VISIBLE = 1003;
+    public static final int REQUEST_CODE_WORKINGTIME_POPUP  = 1001;
+    private final static int SET_BUTTON_INVISIBLE           = 1002;
+    private final static int SET_BUTTON_VISIBLE             = 1003;
 
     Communicator communicator;
     Handler handler_update_data;
@@ -168,26 +169,35 @@ public class Activity_waiting extends AppCompatActivity {
 
     public void changeFragment_working(int modeNum) {
 
-        Log.i("JW", "changeFragment");
-        FragmentManager fm = getFragmentManager();
-        FragmentTransaction fragmentTransaction = fm.beginTransaction();
+        if (val_time > 0) {
+            Log.i("JW", "changeFragment (waiting -> working)");
+            Application_manager.getSoundManager().play(Application_manager.ID_LANG_SOUND[Application_manager.LANGUAGE][0]);
+            FragmentManager fm = getFragmentManager();
+            FragmentTransaction fragmentTransaction = fm.beginTransaction();
 
-        if (fragment_working == null) {
+            if (fragment_working == null) {
 
-            fragment_working = new Fragment_working();
+                fragment_working = new Fragment_working();
+            }
+            fragment_working.init(modeNum, val_time);
+
+            fragmentTransaction.replace(R.id.frameLayout_fragment, fragment_working);
+            fragmentTransaction.commit();
+
+            mode = 1;
+            handler_update_data.sendEmptyMessage(SET_BUTTON_INVISIBLE);
         }
-        fragment_working.setModeNum(modeNum);
+        else {
 
-        fragmentTransaction.replace(R.id.frameLayout_fragment, fragment_working);
-        fragmentTransaction.commit();
-
-        mode = 1;
-        handler_update_data.sendEmptyMessage(SET_BUTTON_INVISIBLE);
+            Toast.makeText(this, "동작 시간을 1~90분 사이로 설정해야합니다", Toast.LENGTH_SHORT).show();
+        }
     }
 
     public void changeFragment_waiting() {
 
-        Log.i("JW", "changeFragment");
+
+        Log.i("JW", "changeFragment (working -> waiting)");
+        setTimeLeft(val_time);
         FragmentManager fm = getFragmentManager();
         FragmentTransaction fragmentTransaction = fm.beginTransaction();
 
@@ -196,6 +206,17 @@ public class Activity_waiting extends AppCompatActivity {
 
         mode = 0;
         handler_update_data.sendEmptyMessage(SET_BUTTON_VISIBLE);
+    }
+
+    public void setTimeLeft(final int min) {
+
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+
+                time_text.setText("" + min);
+            }
+        });
     }
 
     private void registReceiver() {
