@@ -124,6 +124,7 @@ public class Application_manager extends Application {
         s_time = n_time;
         doCalculation_gap();
     }
+    // 시간 차이 계산 및 DB 저장
     public static void doCalculation_gap()
     {
         // 시간차 구하기
