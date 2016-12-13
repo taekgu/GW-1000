@@ -526,15 +526,15 @@ public class Activity_setting extends AppCompatActivity {
                     case R.id.b_ex:
                         //
                         if (ex_f == 0) {
-                            b_ex.setBackgroundResource(R.drawable.off);
+                            b_ex.setBackgroundResource(R.drawable.on);
                             ex_f = 1;
                             communicator.set_setting(2, (byte) 0x01);
                         } else if (ex_f == 1) {
-                            b_ex.setBackgroundResource(R.drawable.on);
+                            b_ex.setBackgroundResource(R.drawable.button_play_on);
                             ex_f = 2;
                             communicator.set_setting(2, (byte) 0x02);
                         } else if (ex_f == 2) {
-                            b_ex.setBackgroundResource(R.drawable.button_play_on);
+                            b_ex.setBackgroundResource(R.drawable.off);
                             ex_f = 0;
                             communicator.set_setting(2, (byte) 0x00);
                         }
