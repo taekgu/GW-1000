@@ -75,6 +75,7 @@ public class Communicator {
 
     private void setHandler() {
 
+        // SocketReceiver에서 수신한 메시지 byte 단위로 쪼개어 msg_rx에 저장
         handler_data = new Handler() {
 
             @Override

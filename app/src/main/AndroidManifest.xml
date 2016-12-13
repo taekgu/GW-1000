@@ -19,6 +19,10 @@
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
+    <uses-permission android:name="android.permission.NFC" />
+    <uses-feature android:name="android.hardware.nfc" android:required="true" />
+
+
     <application
         android:name=".management.Application_manager"
         android:allowBackup="true"
@@ -39,7 +43,13 @@
         <activity
             android:name=".mode.Activity_waiting_rfid"
             android:screenOrientation="landscape"
-            android:theme="@style/AppTheme" />
+            android:theme="@style/AppTheme">
+            <intent-filter>
+                <action android:name="android.nfc.action.TAG_DISCOVERED"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+             </intent-filter>
+
+        </activity>
         <activity
             android:name=".mode.Activity_library"
             android:screenOrientation="landscape" />

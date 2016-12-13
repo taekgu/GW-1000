@@ -1,11 +1,19 @@
 package com.sinest.gw_1000.mode;
 
+import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.graphics.Typeface;
+import android.nfc.NdefMessage;
+import android.nfc.NdefRecord;
+import android.nfc.NfcAdapter;
+import android.nfc.Tag;
+import android.nfc.tech.Ndef;
+import android.nfc.tech.NfcA;
 import android.os.Handler;
 import android.os.Message;
+import android.os.Parcelable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -39,6 +47,10 @@ public class Activity_waiting_rfid extends AppCompatActivity {
 
     private int mode = 0; // 0: waiting, 1: working
 
+    // Variables for NFC tag
+    private NfcAdapter mAdapter;
+    private PendingIntent mPendingIntent;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,6 +64,7 @@ public class Activity_waiting_rfid extends AppCompatActivity {
         TextClock clock = (TextClock) findViewById(R.id.waiting_rfid_clock);
         clock.setTypeface(tf);
 
+        // 산소 농도, 압력, 시간 값 불러오기
         SharedPreferences sharedPreferences = getSharedPreferences(Application_manager.NAME_OF_SHARED_PREF, 0);
         val_oxygen = sharedPreferences.getInt(Application_manager.VAL_OXYGEN, 0);
         val_pressure = sharedPreferences.getInt(Application_manager.VAL_PRESSURE, 0);
@@ -93,6 +106,12 @@ public class Activity_waiting_rfid extends AppCompatActivity {
         waiting_door_close_button.setOnTouchListener(mTouchEvent);
 
         time_text.setOnTouchListener(mTouchEvent);
+
+
+        resolveIntent(getIntent());
+        mAdapter = NfcAdapter.getDefaultAdapter(this);
+        mPendingIntent = PendingIntent.getActivity(this, 0,
+                new Intent(this, getClass()).addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP), 0);
     }
 
     @Override
@@ -104,14 +123,26 @@ public class Activity_waiting_rfid extends AppCompatActivity {
 
         SharedPreferences sharedPreferences = getSharedPreferences(Application_manager.NAME_OF_SHARED_PREF, 0);
 
-        val_time = sharedPreferences.getInt(Application_manager.WAITING_WORKING_TIME, 0);
+        val_time = sharedPreferences.getInt(Application_manager.WAITING_WORKING_TIME, 10);
         time_text.setText(Integer.toString(val_time));
+        Log.i("JW", "onResume time = " + val_time);
+
+        // 앱이 실행될때 NFC 어댑터를 활성화 한다
+        if (mAdapter != null) {
+
+            mAdapter.enableForegroundDispatch(this, mPendingIntent, null, null);
+        }
     }
 
     @Override
     protected void onPause() {
         super.onPause();
         unregistReceiver();
+
+        // 앱이 종료될때 NFC 어댑터를 비활성화 한다
+        if (mAdapter != null) {
+            mAdapter.disableForegroundDispatch(this);
+        }
     }
 
     @Override
@@ -122,8 +153,66 @@ public class Activity_waiting_rfid extends AppCompatActivity {
         editor.putInt(Application_manager.VAL_OXYGEN, val_oxygen);
         editor.putInt(Application_manager.VAL_PRESSURE, val_pressure);
         editor.putInt(Application_manager.VAL_TIME, val_time);
-        Log.i("JW", ""+val_time);
         editor.commit();
+        Log.i("JW", "onStop time = " + val_time);
+    }
+
+    private void resolveIntent(Intent intent) {
+        String action = intent.getAction();
+        if (NfcAdapter.ACTION_TAG_DISCOVERED.equals(action)
+                || NfcAdapter.ACTION_TECH_DISCOVERED.equals(action)
+                || NfcAdapter.ACTION_NDEF_DISCOVERED.equals(action)) {
+
+            byte[] id = intent.getByteArrayExtra(NfcAdapter.EXTRA_ID);
+
+            Log.i("JW", "NFC tag is detected");
+            Log.i("JW", "ID: " + getHex(id));
+
+            /*
+            Parcelable[] rawMsgs = intent.getParcelableArrayExtra(NfcAdapter.EXTRA_NDEF_MESSAGES);
+            NdefMessage[] msgs;
+            if (rawMsgs != null) {
+                msgs = new NdefMessage[rawMsgs.length];
+                for (int i = 0; i < rawMsgs.length; i++) {
+                    msgs[i] = (NdefMessage) rawMsgs[i];
+                }
+            } else {
+                // Unknown tag type
+                byte[] empty = new byte[0];
+                byte[] id = intent.getByteArrayExtra(NfcAdapter.EXTRA_ID);
+                Parcelable tag = intent.getParcelableExtra(NfcAdapter.EXTRA_TAG);
+                byte[] payload = dumpTagData(tag).getBytes();
+                NdefRecord record = new NdefRecord(NdefRecord.TNF_UNKNOWN, empty, id, payload);
+                NdefMessage msg = new NdefMessage(new NdefRecord[] { record });
+                msgs = new NdefMessage[] { msg };
+            }
+            */
+        }
+    }
+
+    // 버퍼 데이터를 디코딩해서 String 으로 변환
+    private String getHex(byte[] bytes) {
+
+        StringBuilder sb = new StringBuilder();
+        for (int i = bytes.length - 1; i >= 0; --i) {
+
+            int b = bytes[i] & 0xff;
+            if (b < 0x10)
+
+                sb.append('0');
+            sb.append(Integer.toHexString(b));
+            if (i > 0) {
+                sb.append(" ");
+            }
+        }
+        return sb.toString();
+    }
+
+    // NFC 태그 정보 수신 함수. 인텐트에 포함된 정보를 분석해서 화면에 표시
+    @Override
+    public void onNewIntent(Intent intent) {
+        setIntent(intent);
+        resolveIntent(intent);
     }
 
     private void registReceiver() {
@@ -271,8 +360,6 @@ public class Activity_waiting_rfid extends AppCompatActivity {
                     case R.id.waiting_rfid_oxygen_up_button:
                         view.setBackgroundResource(R.drawable.button_up);
 
-                        if (mode == 0) {
-
                             val_oxygen++;
                             if (val_oxygen > 5) val_oxygen = 5;
                             oxygen_text.setText("" + val_oxygen);
@@ -280,12 +367,9 @@ public class Activity_waiting_rfid extends AppCompatActivity {
                             val = (byte) val_oxygen;
                             communicator.set_tx(8, val);
                             communicator.send(communicator.get_tx());
-                        }
                         break;
                     case R.id.waiting_rfid_oxygen_down_button:
                         view.setBackgroundResource(R.drawable.button_down);
-
-                        if (mode == 0) {
 
                             val_oxygen--;
                             if (val_oxygen < 0) val_oxygen = 0;
@@ -294,12 +378,9 @@ public class Activity_waiting_rfid extends AppCompatActivity {
                             val = (byte) val_oxygen;
                             communicator.set_tx(8, val);
                             communicator.send(communicator.get_tx());
-                        }
                         break;
                     case R.id.waiting_rfid_pressure_up_button:
                         view.setBackgroundResource(R.drawable.button_up);
-
-                        if (mode == 0) {
 
                             val_pressure += 1;
                             if (val_pressure > 6) val_pressure = 6;
@@ -307,12 +388,9 @@ public class Activity_waiting_rfid extends AppCompatActivity {
 
                             communicator.set_tx(5, (byte) val_pressure);
                             communicator.send(communicator.get_tx());
-                        }
                         break;
                     case R.id.waiting_rfid_pressure_down_button:
                         view.setBackgroundResource(R.drawable.button_down);
-
-                        if (mode == 0) {
 
                             val_pressure -= 1;
                             if (val_pressure < 0) val_pressure = 0;
@@ -320,27 +398,20 @@ public class Activity_waiting_rfid extends AppCompatActivity {
 
                             communicator.set_tx(5, (byte) val_pressure);
                             communicator.send(communicator.get_tx());
-                        }
                         break;
                     case R.id.waiting_rfid_time_up_button:
                         view.setBackgroundResource(R.drawable.button_up);
 
-                        if (mode == 0) {
-
                             val_time += 1;
                             if (val_time > 90) val_time = 90;
                             time_text.setText("" + val_time);
-                        }
                         break;
                     case R.id.waiting_rfid_time_down_button:
                         view.setBackgroundResource(R.drawable.button_down);
 
-                        if (mode == 0) {
-
                             val_time -= 1;
                             if (val_time < 1) val_time = 1;
                             time_text.setText("" + val_time);
-                        }
                         break;
                     case R.id.waiting_rfid_dooropen_button:
                         background = (LinearLayout)findViewById(R.id.waiting_rfid_background);
@@ -370,6 +441,7 @@ public class Activity_waiting_rfid extends AppCompatActivity {
                             intent = new Intent(getApplicationContext(), Activity_waiting_working_time_popup.class);
                             intent.putExtra("mode", 0);
                             startActivity(intent);
+                            Log.i("JW", "click up time = " + val_time);
                         }
                         break;
                 }
