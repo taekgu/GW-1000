@@ -104,6 +104,8 @@ public class Activity_setting extends AppCompatActivity {
     int led_bright_num = 1;
     int sound_volume_num = 1;
 
+    String t_buf;
+
     SeekBar seekbar;
     int volume;
     Typeface tf;
@@ -779,6 +781,9 @@ public class Activity_setting extends AppCompatActivity {
 
                         break;
                     case R.id.textClock_s:
+                        //t_buf = (String)clock.getText();
+                        Log.v("sb",(String)clock.getText());
+                        Application_manager.setTime_gap_n((String)clock.getText());
                         startActivity(time);
                 }
             } else if (action == MotionEvent.ACTION_UP) {
