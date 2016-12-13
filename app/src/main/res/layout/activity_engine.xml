@@ -423,15 +423,17 @@
                 android:visibility="invisible"
                 android:layout_weight="55" />
 
-            <TextClock
-                android:gravity="center"
+            <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:textSize="40sp"
-                android:textColor="#00ffff"
-                android:format12Hour="HH:mm"
                 android:layout_weight="40"
-                android:id="@+id/textClock_e" />
+                android:gravity="center">
+
+                <com.sinest.gw_1000.mode.utils.CustomTextClock
+                    android:id="@+id/waiting_clock"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"/>
+            </LinearLayout>
 
             <Button
                 android:layout_width="0dp"
