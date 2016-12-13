@@ -487,9 +487,11 @@ public class Activity_engine extends AppCompatActivity {
                         eng_b_back.setBackgroundResource(R.drawable.button_circle_back_off);
                         Log.v("test","check_activity : " + check_activity);
                         if(check_activity.equals("setting")){
+                            onStop();
                             finish();
                         }
                         else{
+                            onStop();
                             startActivity(main_intent);
                         }
 

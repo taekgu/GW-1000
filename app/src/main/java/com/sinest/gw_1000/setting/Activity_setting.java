@@ -360,21 +360,6 @@ public class Activity_setting extends AppCompatActivity {
                             b_11.setText("" + communicator.get_rx_idx(11));
                             b_11.setTypeface(tf);
                             button_flag[0] = false;
-
-                            isRun = true;
-                            Thread myThread = new Thread(new Runnable() {
-                                public void run() {
-                                    while (isRun) {
-                                        try {
-                                            handler.sendMessage(handler.obtainMessage());
-                                            Thread.sleep(1000);
-                                        } catch (Throwable t) {
-                                        }
-                                    }
-                                }
-                            });
-                            myThread.start();
-
                         } else {
                             b_11.setBackgroundResource(R.drawable.button_off);
                             b_11.setText("");

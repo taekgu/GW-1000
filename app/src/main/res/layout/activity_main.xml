@@ -266,29 +266,34 @@
                     android:orientation="horizontal"
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
-                    android:layout_weight="14">
+                    android:layout_weight="13">
 
                 </LinearLayout>
-
-                <SeekBar
-                    android:layout_width="match_parent"
-                    android:id="@+id/seekBar"
-                    android:maxHeight="50dp"
-                    android:minHeight="50dp"
-                    android:max = "100"
-                    android:background="@drawable/alarm_bar_1"
-                    android:thumb="@drawable/alarm_bar_control"
-                    android:foregroundGravity="center"
-                    android:layout_height="0dp"
-                    android:layout_weight="12">
-
-                </SeekBar>
 
                 <LinearLayout
                     android:orientation="horizontal"
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
-                    android:layout_weight="15">
+                    android:layout_weight="14">
+
+                    <SeekBar
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/seekBar"
+                        android:maxHeight="50dp"
+                        android:minHeight="50dp"
+                        android:max = "100"
+                        android:background="@drawable/alarm_bar_1"
+                        android:thumb="@drawable/alarm_bar_control"
+                        android:foregroundGravity="center">
+                    </SeekBar>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="14">
 
                 </LinearLayout>
 
