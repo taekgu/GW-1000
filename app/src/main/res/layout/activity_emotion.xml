@@ -61,11 +61,7 @@
 
     </LinearLayout>
 
-    <LinearLayout
-        android:orientation="vertical"
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="2"></LinearLayout>
+
 
     <LinearLayout
         android:orientation="vertical"
@@ -80,29 +76,23 @@
             android:layout_weight="58">
 
             <Button
-                android:layout_width="60dp"
+                android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_weight="56"
+                android:layout_weight="60"
                 android:visibility="invisible"/>
 
             <LinearLayout
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_weight="21">
+                android:layout_weight="19"
+                android:gravity="left|bottom">
 
-                <Button
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="70"
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:id="@+id/emotion_led_up"
                     android:background="@drawable/button_up_off"/>
-
-                <Button
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="30"
-                    android:visibility="invisible"/>
 
             </LinearLayout>
 
@@ -117,20 +107,15 @@
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_weight="21">
+                android:layout_weight="19"
+                android:gravity="left|top">
 
-                <Button
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="70"
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:id="@+id/emotion_led_down"
                     android:background="@drawable/button_down_off"/>
 
-                <Button
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="30"
-                    android:visibility="invisible"/>
             </LinearLayout>
 
         </LinearLayout>
@@ -153,20 +138,14 @@
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_weight="28">
+                android:layout_weight="28"
+                android:gravity="left|bottom">
 
-                <Button
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="70"
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:id="@+id/emotion_sound_up"
                     android:background="@drawable/button_up_off"/>
-
-                <Button
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="30"
-                    android:visibility="invisible"/>
 
             </LinearLayout>
 
@@ -182,20 +161,15 @@
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_weight="28">
+                android:layout_weight="28"
+                android:gravity="left|top">
 
-                <Button
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="70"
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:id="@+id/emotion_sound_down"
                     android:background="@drawable/button_down_off"/>
 
-                <Button
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="30"
-                    android:visibility="invisible"/>
 
             </LinearLayout>
 
@@ -213,7 +187,7 @@
         android:orientation="vertical"
         android:layout_width="0dp"
         android:layout_height="match_parent"
-        android:layout_weight="19"
+        android:layout_weight="20"
         android:visibility="invisible"
         ></LinearLayout>
 
@@ -265,7 +239,15 @@
         android:orientation="vertical"
         android:layout_width="0dp"
         android:layout_height="match_parent"
-        android:layout_weight="17">>
+        android:layout_weight="5">
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="12">>
 
         <Button
             android:layout_width="match_parent"
@@ -305,27 +287,14 @@
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_weight="38">
+                android:layout_weight="38"
+                android:gravity="left|bottom">
 
-                <Button
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="35"
-                    android:visibility="invisible"/>
-
-                <Button
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="40"
-                    android:layout_gravity="center"
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:id="@+id/emotion_ledm_up"
                     android:background="@drawable/button_up_off"/>
-
-                <Button
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="25"
-                    android:visibility="invisible"/>
 
             </LinearLayout>
 
@@ -341,27 +310,16 @@
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_weight="38">
+                android:layout_weight="38"
+                android:gravity="left|top">
 
-                <Button
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="35"
-                    android:visibility="invisible"/>
 
-                <Button
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="40"
-                    android:layout_gravity="center"
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:id="@+id/emotion_ledm_down"
                     android:background="@drawable/button_down_off"/>
 
-                <Button
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="25"
-                    android:visibility="invisible"/>
 
             </LinearLayout>
 
@@ -384,27 +342,15 @@
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_weight="38">
+                android:layout_weight="38"
+                android:gravity="left|bottom">
 
-                <Button
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="35"
-                    android:visibility="invisible"/>
-
-                <Button
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="40"
-                    android:layout_gravity="center"
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:id="@+id/emotion_soundm_up"
                     android:background="@drawable/button_up_off"/>
 
-                <Button
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="25"
-                    android:visibility="invisible"/>
             </LinearLayout>
 
             <LinearLayout
@@ -419,31 +365,19 @@
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_weight="38">
+                android:layout_weight="38"
+                android:gravity="left|top">
 
-                <Button
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="35"
-                    android:visibility="invisible"/>
-
-                <Button
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="40"
-                    android:layout_gravity="center"
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:id="@+id/emotion_soundm_down"
                     android:background="@drawable/button_down_off"/>
 
-                <Button
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="25"
-                    android:visibility="invisible"/>
             </LinearLayout>
 
             <Button
-                android:layout_width="60dp"
+                android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="25"
                 android:visibility="invisible"/>

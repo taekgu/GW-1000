@@ -233,7 +233,7 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:id="@+id/oxygen_m"
-                android:textSize="60dp"
+                android:textSize="40sp"
                 android:textColor="#00ffff"
                 android:layout_weight="10" />
 
@@ -357,24 +357,23 @@
 
             <Button
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:visibility="invisible"
                 android:layout_weight="16" />
 
             <TextView
-                android:text="50"
-                android:layout_gravity="center"
+                android:text="0"
                 android:gravity="right|center_vertical"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:id="@+id/operation_t"
-                android:textSize="60dp"
+                android:textSize="40sp"
                 android:textColor="#00ffff"
                 android:layout_weight="37" />
 
             <Button
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:visibility="invisible"
                 android:layout_weight="3" />
 
@@ -428,7 +427,7 @@
                 android:gravity="center"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:textSize="60dp"
+                android:textSize="40sp"
                 android:textColor="#00ffff"
                 android:format12Hour="HH:mm"
                 android:layout_weight="40"

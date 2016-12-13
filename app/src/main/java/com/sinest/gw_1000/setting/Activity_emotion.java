@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.sinest.gw_1000.R;
@@ -20,10 +21,10 @@ public class Activity_emotion extends Activity {
 
     Communicator communicator;
 
-    Button emotion_ledm_up; Button emotion_ledm_down;
-    Button emotion_led_up; Button emotion_led_down;
-    Button emotion_soundm_up; Button emotion_soundm_down;
-    Button emotion_sound_up; Button emotion_sound_down;
+    ImageView emotion_ledm_up; ImageView emotion_ledm_down;
+    ImageView emotion_led_up; ImageView emotion_led_down;
+    ImageView emotion_soundm_up; ImageView emotion_soundm_down;
+    ImageView emotion_sound_up; ImageView emotion_sound_down;
     Button emotion_back;
 
     boolean[] emotion_ledm_flag = {true,true};
@@ -60,14 +61,14 @@ public class Activity_emotion extends Activity {
 
         Application_manager.setFullScreen(this);
 
-        emotion_ledm_up = (Button)findViewById(R.id.emotion_ledm_up);
-        emotion_ledm_down = (Button)findViewById(R.id.emotion_ledm_down);
-        emotion_led_up = (Button)findViewById(R.id.emotion_led_up);
-        emotion_led_down = (Button)findViewById(R.id.emotion_led_down);
-        emotion_soundm_up = (Button)findViewById(R.id.emotion_soundm_up);
-        emotion_soundm_down = (Button)findViewById(R.id.emotion_soundm_down);
-        emotion_sound_up = (Button)findViewById(R.id.emotion_sound_up);
-        emotion_sound_down = (Button)findViewById(R.id.emotion_sound_down);
+        emotion_ledm_up = (ImageView)findViewById(R.id.emotion_ledm_up);
+        emotion_ledm_down = (ImageView)findViewById(R.id.emotion_ledm_down);
+        emotion_led_up = (ImageView)findViewById(R.id.emotion_led_up);
+        emotion_led_down = (ImageView)findViewById(R.id.emotion_led_down);
+        emotion_soundm_up = (ImageView)findViewById(R.id.emotion_soundm_up);
+        emotion_soundm_down = (ImageView)findViewById(R.id.emotion_soundm_down);
+        emotion_sound_up = (ImageView)findViewById(R.id.emotion_sound_up);
+        emotion_sound_down = (ImageView)findViewById(R.id.emotion_sound_down);
         emotion_back = (Button)findViewById(R.id.emotion_back);
 
         led_mode = (TextView)findViewById(R.id.led_mode);
