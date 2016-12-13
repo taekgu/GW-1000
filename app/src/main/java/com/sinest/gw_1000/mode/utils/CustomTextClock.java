@@ -37,6 +37,7 @@ public class CustomTextClock extends LinearLayout {
 
     private int cnt_t;
     private int cnt_m;
+    private String p_time;
 
     public CustomTextClock(Context context) {
         super(context);
@@ -72,6 +73,7 @@ public class CustomTextClock extends LinearLayout {
         textClock = (TextClock) findViewById(R.id.custom_textClock);
         Typeface tf = Typeface.createFromAsset(context.getAssets(), "fonts/digital.ttf");
         textClock.setTypeface(tf);
+        p_time = (String)textClock.getText();
         cnt_t = 0;
         cnt_m = 0;
 
@@ -83,16 +85,15 @@ public class CustomTextClock extends LinearLayout {
         cnt_t = 0;
         cnt_m = 0;
 
-        String p_time = (String)textClock.getText();
         if(p_time.isEmpty())
         {
             return;
         }
 
-        String a = p_time.substring(0,2);
-        String b = p_time.substring(3,5);
-        int p_time_t = Integer.parseInt(a);
-        int p_time_m = Integer.parseInt(b);
+        String aa = p_time.substring(0,2);
+        String bb = p_time.substring(3,5);
+        int p_time_t = Integer.parseInt(aa);
+        int p_time_m = Integer.parseInt(bb);
 
         int t = p_time_t + getTime_gap_tt() + cnt_t;
         int m = p_time_m + getTime_gap_mm() + cnt_m;
@@ -142,7 +143,7 @@ public class CustomTextClock extends LinearLayout {
                 final String action = intent.getAction();
 
                 if (action.equals(Intent.ACTION_TIME_TICK)) {
-                    String p_time = (String)textClock.getText();
+                    p_time = (String)textClock.getText();
 
                     String a = p_time.substring(0,2);
                     String b = p_time.substring(3,5);
