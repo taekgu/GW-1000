@@ -28,7 +28,7 @@ public class Activity_time extends Activity {
 
     Chronometer time;
 
-    String s_buf;
+    String s_buf = "00:00";
     int int_buf;
     int int_c = 0;
 

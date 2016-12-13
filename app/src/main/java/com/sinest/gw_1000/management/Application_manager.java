@@ -198,7 +198,7 @@ public class Application_manager extends Application {
             g_buf = -(gap_t*60)+gap_m;
         }
         editor.putInt(Application_manager.TIME_GAP, g_buf);
-
+        editor.commit();
     }
 
     synchronized public static int getRunningTime() {
