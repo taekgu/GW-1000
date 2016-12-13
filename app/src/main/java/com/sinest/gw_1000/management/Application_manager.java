@@ -16,6 +16,9 @@ import com.sinest.gw_1000.communication.Communicator;
 
 public class Application_manager extends Application {
 
+    // time
+    public static String s_time = "00:00";
+
     // DB name
     public final static String NAME_OF_SHARED_PREF = "myData";
 
@@ -82,6 +85,14 @@ public class Application_manager extends Application {
         WindowManager mgr = (WindowManager)context.getSystemService(Context.WINDOW_SERVICE);
         mgr.getDefaultDisplay().getMetrics(metrics);
         Log.i("JW", "densityDPI = " + metrics.densityDpi);
+    }
+
+    synchronized public static String getTime(){
+        return s_time;
+    }
+
+    synchronized public static void setTime(String n_time){
+        s_time = n_time;
     }
 
     synchronized public static int getRunningTime() {

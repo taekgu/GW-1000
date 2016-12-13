@@ -9,6 +9,8 @@ import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.net.Uri;
+import android.os.Handler;
+import android.os.Message;
 import android.os.PowerManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -70,11 +72,15 @@ public class Activity_setting extends AppCompatActivity {
     Button hidden_s_3;
     Button hidden_s_4;
 
+    TextClock clock;
+
     boolean[] button_flag = new boolean[12];
     boolean[] button2_flag = {true, true, true, true};
     boolean[] button3_flag = {true, true, true, true};
 
     boolean[] hidden = {false, false, false, false};
+
+    private boolean isRun = false;
 
     int ex_f = 0;
 
@@ -88,6 +94,7 @@ public class Activity_setting extends AppCompatActivity {
     Intent intent_wa;
     Intent intent_hidden;
     Intent intent_rfid2;
+    Intent time;
 
     String check;
     String check2;
@@ -128,13 +135,10 @@ public class Activity_setting extends AppCompatActivity {
 
         // 폰트 설정
         tf = Typeface.createFromAsset(getAssets(), "fonts/digital.ttf");
-        TextClock clock = (TextClock) findViewById(R.id.textClock_s);
+        clock = (TextClock) findViewById(R.id.textClock_s);
         clock.setTypeface(tf);
 
         communicator = Application_manager.getCommunicator();
-
-        //communicator.send(communicator.get_tx)
-        //textClock.setFormat24Hour();
 
         b_11 = (TextView)findViewById(R.id.button11);
         b_21 = (TextView)findViewById(R.id.button21);
@@ -222,11 +226,12 @@ public class Activity_setting extends AppCompatActivity {
         hidden_s_4 = (Button)findViewById(R.id.hidden_s_4);
 
         seekbar = (SeekBar)findViewById(R.id.seekBar);
-
+/*
         scrOnReceiver = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
                 Log.v("test", "on");
+                clock.setText(""+ Application_manager.getTime());
             }
         };
 
@@ -242,7 +247,7 @@ public class Activity_setting extends AppCompatActivity {
 
         registerReceiver(scrOnReceiver, scrOnFilter);
         registerReceiver(scrOffReceiver, scrOffFilter);
-
+*/
         b_11 = (TextView) findViewById(R.id.button11);
         b_21 = (TextView) findViewById(R.id.button21);
         b_31 = (TextView) findViewById(R.id.button31);
@@ -316,6 +321,8 @@ public class Activity_setting extends AppCompatActivity {
         intent_rfid2 = new Intent(this, Activity_rfid.class);
         //intent_rfid2.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_SINGLE_TOP);
 
+        time = new Intent(this, Activity_time.class);
+
         mywindow = getWindow();
         lp = mywindow.getAttributes();
         //lp.screenBrightness = 0;
@@ -340,6 +347,7 @@ public class Activity_setting extends AppCompatActivity {
         }
 
 
+
         View.OnClickListener listener = new View.OnClickListener() {
             public void onClick(View v) {
                 switch (v.getId()) {
@@ -350,6 +358,21 @@ public class Activity_setting extends AppCompatActivity {
                             b_11.setText("" + communicator.get_rx_idx(11));
                             b_11.setTypeface(tf);
                             button_flag[0] = false;
+
+                            isRun = true;
+                            Thread myThread = new Thread(new Runnable() {
+                                public void run() {
+                                    while (isRun) {
+                                        try {
+                                            handler.sendMessage(handler.obtainMessage());
+                                            Thread.sleep(1000);
+                                        } catch (Throwable t) {
+                                        }
+                                    }
+                                }
+                            });
+                            myThread.start();
+
                         } else {
                             b_11.setBackgroundResource(R.drawable.button_off);
                             b_11.setText("");
@@ -700,6 +723,7 @@ public class Activity_setting extends AppCompatActivity {
 
         b_emotion.setOnTouchListener(mTouchEvent);
         b_back.setOnTouchListener(mTouchEvent);
+        clock.setOnTouchListener(mTouchEvent);
         // ATTENTION: This was auto-generated to implement the App Indexing API.
         // See https://g.co/AppIndexing/AndroidStudio for more information.
         client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
@@ -710,6 +734,8 @@ public class Activity_setting extends AppCompatActivity {
         super.onStop();
         SharedPreferences sharedPreferences = getSharedPreferences(Application_manager.NAME_OF_SHARED_PREF, 0);
         SharedPreferences.Editor editor = sharedPreferences.edit();
+
+        isRun = false;
 
         rfid_state = !button2_flag[0];
         editor.putBoolean(Application_manager.RFID_ONOFF, rfid_state);
@@ -752,6 +778,8 @@ public class Activity_setting extends AppCompatActivity {
                         b_back.setBackgroundResource(R.drawable.button_circle_back_on);
 
                         break;
+                    case R.id.textClock_s:
+                        startActivity(time);
                 }
             } else if (action == MotionEvent.ACTION_UP) {
                 byte val = 0x00;
@@ -768,6 +796,7 @@ public class Activity_setting extends AppCompatActivity {
                         break;
                     case R.id.b_back:
                         b_back.setBackgroundResource(R.drawable.button_circle_back_off);
+                        isRun = false;
                         finish();
                         break;
                 }
@@ -775,6 +804,36 @@ public class Activity_setting extends AppCompatActivity {
             return true;
         }
     };
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        isRun = false;
+        Thread myThread = new Thread(new Runnable() {
+            public void run() {
+                while (isRun) {
+                    try {
+                        handler.sendMessage(handler.obtainMessage());
+                        Thread.sleep(1000);
+                    } catch (Throwable t) {
+                    }
+                }
+            }
+        });
+        myThread.start();
+    }
+
+    Handler handler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            updateThread();
+        }
+    };
+
+    private void updateThread() {
+        clock.setText(""+ Application_manager.getTime());
+        Log.v("test","test");
+    }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
