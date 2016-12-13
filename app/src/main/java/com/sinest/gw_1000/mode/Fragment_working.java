@@ -30,6 +30,7 @@ public class Fragment_working extends Fragment {
     private Thread thread_timer;
     private boolean isRun = false;
     private boolean isPause = false;
+    private boolean isAlive = false;
 
     public Fragment_working() {
 
@@ -45,6 +46,8 @@ public class Fragment_working extends Fragment {
             @Override
             public void run() {
 
+                isAlive = true;
+
                 while (isRun) {
 
                     while(isPause);
@@ -58,7 +61,8 @@ public class Fragment_working extends Fragment {
                         if (time_s == 60) {
 
                             time_s = 0;
-                            time_m_left--;
+                            setTime_m_left(time_m_left-1);
+                            //time_m_left--;
 
                             Activity_waiting activity_waiting = (Activity_waiting) getActivity();
                             activity_waiting.setTimeLeft(time_m_left);
@@ -82,6 +86,7 @@ public class Fragment_working extends Fragment {
                     Activity_waiting activity_waiting = (Activity_waiting) getActivity();
                     activity_waiting.changeFragment_waiting();
                 }
+                isAlive = false;
             }
         });
     }
@@ -104,6 +109,17 @@ public class Fragment_working extends Fragment {
         thread_timer.start();
 
         return view;
+    }
+
+    public boolean getIsAlive() {
+
+        return isAlive;
+    }
+
+    synchronized public void setTime_m_left(int val) {
+
+        time_m_left = val;
+        Log.i("JW", "남은 동작 시간: " + time_m_left + "분");
     }
 
     View.OnTouchListener mTouchEvent = new View.OnTouchListener() {
@@ -163,6 +179,8 @@ public class Fragment_working extends Fragment {
                     case R.id.button_stop:
 
                         isRun = false;
+                        isPause = false;
+                        state = 1;
                         button_clicked.setBackgroundResource(R.drawable.button_stop_off);
                         communicator.set_tx(1, (byte)0x00);
                         Application_manager.getSoundManager().play(Application_manager.ID_LANG_SOUND[Application_manager.LANGUAGE][1]);

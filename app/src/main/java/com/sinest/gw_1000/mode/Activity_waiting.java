@@ -24,6 +24,7 @@ import com.sinest.gw_1000.R;
 import com.sinest.gw_1000.communication.Communicator;
 import com.sinest.gw_1000.management.Application_broadcast;
 import com.sinest.gw_1000.management.Application_manager;
+import com.sinest.gw_1000.mode.utils.CustomTextClock;
 import com.sinest.gw_1000.setting.Activity_setting;
 
 public class Activity_waiting extends AppCompatActivity {
@@ -48,6 +49,8 @@ public class Activity_waiting extends AppCompatActivity {
     ImageView waiting_library_button;
     ImageView waiting_setting_button;
 
+    CustomTextClock clock;
+
     private int mode = 0; // 0: waiting, 1: working
 
     @Override
@@ -60,8 +63,9 @@ public class Activity_waiting extends AppCompatActivity {
 
         // 폰트 설정
         Typeface tf = Typeface.createFromAsset(getAssets(), "fonts/digital.ttf");
-        TextClock clock = (TextClock) findViewById(R.id.waiting_clock);
-        clock.setTypeface(tf);
+        //TextClock clock = (TextClock) findViewById(R.id.waiting_clock);
+        //clock.setTypeface(tf);
+        clock = (CustomTextClock) findViewById(R.id.waiting_clock);
 
         // 산소 농도, 압력, 시간 값 불러오기
         SharedPreferences sharedPreferences = getSharedPreferences(Application_manager.NAME_OF_SHARED_PREF, 0);
@@ -129,6 +133,7 @@ public class Activity_waiting extends AppCompatActivity {
         Application_manager.setFullScreen(this);
 
         registReceiver();
+        clock.registReceiver();
 
         SharedPreferences sharedPreferences = getSharedPreferences(Application_manager.NAME_OF_SHARED_PREF, 0);
 
@@ -154,6 +159,7 @@ public class Activity_waiting extends AppCompatActivity {
     protected void onPause() {
         super.onPause();
         unregistReceiver();
+        clock.unregistReceiver();
     }
 
     @Override
@@ -170,22 +176,42 @@ public class Activity_waiting extends AppCompatActivity {
     public void changeFragment_working(int modeNum) {
 
         if (val_time > 0) {
-            Log.i("JW", "changeFragment (waiting -> working)");
-            Application_manager.getSoundManager().play(Application_manager.ID_LANG_SOUND[Application_manager.LANGUAGE][0]);
-            FragmentManager fm = getFragmentManager();
-            FragmentTransaction fragmentTransaction = fm.beginTransaction();
 
             if (fragment_working == null) {
 
                 fragment_working = new Fragment_working();
             }
-            fragment_working.init(modeNum, val_time);
 
-            fragmentTransaction.replace(R.id.frameLayout_fragment, fragment_working);
-            fragmentTransaction.commit();
+            // 타이머 스레드가 동작중이지 않은 경우
+            if (!fragment_working.getIsAlive()) {
 
-            mode = 1;
-            handler_update_data.sendEmptyMessage(SET_BUTTON_INVISIBLE);
+                Log.i("JW", "changeFragment (waiting -> working)");
+                Application_manager.getSoundManager().play(Application_manager.ID_LANG_SOUND[Application_manager.LANGUAGE][0]);
+                FragmentManager fm = getFragmentManager();
+                FragmentTransaction fragmentTransaction = fm.beginTransaction();
+
+                fragment_working.init(modeNum, val_time);
+
+                fragmentTransaction.replace(R.id.frameLayout_fragment, fragment_working);
+                fragmentTransaction.commit();
+
+                mode = 1;
+                handler_update_data.sendEmptyMessage(SET_BUTTON_INVISIBLE);
+
+                // 동작 모드로 바뀌기 이전 산소농도, 수압, 시간 값 저장
+                SharedPreferences sharedPreferences = getSharedPreferences(Application_manager.NAME_OF_SHARED_PREF, 0);
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                editor.putInt(Application_manager.VAL_OXYGEN, val_oxygen);
+                editor.putInt(Application_manager.VAL_PRESSURE, val_pressure);
+                editor.putInt(Application_manager.VAL_TIME, val_time);
+                editor.commit();
+            }
+            // 타이머 스레드가 아직 동작중인 경우
+            else {
+
+                Log.i("JW", "changeFragment (waiting -> working) is failed");
+                Toast.makeText(this, "잠시 후 다시 시도해주세요", Toast.LENGTH_SHORT).show();
+            }
         }
         else {
 
@@ -206,6 +232,22 @@ public class Activity_waiting extends AppCompatActivity {
 
         mode = 0;
         handler_update_data.sendEmptyMessage(SET_BUTTON_VISIBLE);
+
+        // 동작 시작 전 산소 농도, 압력, 시간 값 불러오기
+        SharedPreferences sharedPreferences = getSharedPreferences(Application_manager.NAME_OF_SHARED_PREF, 0);
+        val_oxygen = sharedPreferences.getInt(Application_manager.VAL_OXYGEN, 0);
+        val_pressure = sharedPreferences.getInt(Application_manager.VAL_PRESSURE, 0);
+        val_time = sharedPreferences.getInt(Application_manager.VAL_TIME, 10);
+
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+
+                oxygen_text.setText(""+val_oxygen);
+                pressure_text.setText(""+val_pressure);
+                time_text.setText(""+val_time);
+            }
+        });
     }
 
     public void setTimeLeft(final int min) {
@@ -383,7 +425,7 @@ public class Activity_waiting extends AppCompatActivity {
                     case R.id.waiting_oxygen_up_button:
                         view.setBackgroundResource(R.drawable.button_up);
 
-                        if (mode == 0) {
+                        //if (mode == 0) {
 
                             val_oxygen++;
                             if (val_oxygen > 5) val_oxygen = 5;
@@ -392,12 +434,12 @@ public class Activity_waiting extends AppCompatActivity {
                             val = (byte) val_oxygen;
                             communicator.set_tx(8, val);
                             communicator.send(communicator.get_tx());
-                        }
+                        //}
                         break;
                     case R.id.waiting_oxygen_down_button:
                         view.setBackgroundResource(R.drawable.button_down);
 
-                        if (mode == 0) {
+                        //if (mode == 0) {
 
                             val_oxygen--;
                             if (val_oxygen < 0) val_oxygen = 0;
@@ -406,12 +448,12 @@ public class Activity_waiting extends AppCompatActivity {
                             val = (byte) val_oxygen;
                             communicator.set_tx(8, val);
                             communicator.send(communicator.get_tx());
-                        }
+                        //}
                         break;
                     case R.id.waiting_pressure_up_button:
                         view.setBackgroundResource(R.drawable.button_up);
 
-                        if (mode == 0) {
+                        //if (mode == 0) {
 
                             val_pressure += 1;
                             if (val_pressure > 6) val_pressure = 6;
@@ -419,12 +461,12 @@ public class Activity_waiting extends AppCompatActivity {
 
                             communicator.set_tx(5, (byte) val_pressure);
                             communicator.send(communicator.get_tx());
-                        }
+                        //}
                         break;
                     case R.id.waiting_pressure_down_button:
                         view.setBackgroundResource(R.drawable.button_down);
 
-                        if (mode == 0) {
+                        //if (mode == 0) {
 
                             val_pressure -= 1;
                             if (val_pressure < 0) val_pressure = 0;
@@ -432,26 +474,30 @@ public class Activity_waiting extends AppCompatActivity {
 
                             communicator.set_tx(5, (byte) val_pressure);
                             communicator.send(communicator.get_tx());
-                        }
+                        //}
                         break;
                     case R.id.waiting_time_up_button:
                         view.setBackgroundResource(R.drawable.button_up);
 
-                        if (mode == 0) {
+                        val_time += 1;
+                        if (val_time > 90) val_time = 90;
+                        time_text.setText("" + val_time);
 
-                            val_time += 1;
-                            if (val_time > 90) val_time = 90;
-                            time_text.setText("" + val_time);
+                        if (mode == 1) {
+
+                            fragment_working.setTime_m_left(val_time);
                         }
                         break;
                     case R.id.waiting_time_down_button:
                         view.setBackgroundResource(R.drawable.button_down);
 
-                        if (mode == 0) {
+                        val_time -= 1;
+                        if (val_time < 1) val_time = 1;
+                        time_text.setText("" + val_time);
 
-                            val_time -= 1;
-                            if (val_time < 1) val_time = 1;
-                            time_text.setText("" + val_time);
+                        if (mode == 1) {
+
+                            fragment_working.setTime_m_left(val_time);
                         }
                         break;
                     case R.id.waiting_dooropen_button:

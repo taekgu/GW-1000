@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MotionEvent;
@@ -12,6 +13,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextClock;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -56,8 +58,11 @@ public class Activity_waiting_working_time_popup extends Activity {
                 workingTime = sharedPreferences.getInt(Application_manager.MANUAL_MODE_TIME_ + modeNum + "_"+"2", 30);
         }
 
+        // 폰트 설정
+        Typeface tf = Typeface.createFromAsset(getAssets(), "fonts/digital.ttf");
         textView_workingTime = (TextView) findViewById(R.id.working_time_popup_text);
         textView_workingTime.setText(""+workingTime);
+        textView_workingTime.setTypeface(tf);
 
         ImageView popup_keypad_enter = (ImageView)findViewById(R.id.popup_keypad_enter);
         ImageView popup_keypad_back = (ImageView)findViewById(R.id.popup_keypad_back);

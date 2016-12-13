@@ -95,6 +95,8 @@ public class Application_manager extends Application {
         WindowManager mgr = (WindowManager)context.getSystemService(Context.WINDOW_SERVICE);
         mgr.getDefaultDisplay().getMetrics(metrics);
         Log.i("JW", "densityDPI = " + metrics.densityDpi);
+
+        // 어플 시작 시 이전 time gap 가져와서 변수에 넣기
     }
 
     synchronized public static String getTime_gap_t(){
