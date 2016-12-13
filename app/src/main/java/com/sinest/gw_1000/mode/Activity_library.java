@@ -14,8 +14,9 @@ import android.widget.Toast;
 
 import com.sinest.gw_1000.R;
 import com.sinest.gw_1000.management.Application_manager;
+import com.sinest.gw_1000.mode.utils.CustomSeekBar;
 
-public class Activity_library extends AppCompatActivity {
+public class Activity_library extends AppCompatActivity{
 
     public static final int REQUEST_CODE_LIBRARY = 1002;
     public static final int REQUEST_CODE_MANUAL_MODE_SETTING = 1003;
@@ -27,6 +28,8 @@ public class Activity_library extends AppCompatActivity {
     int[] library_map = new int[20];
 
     int mode_setting = 0;
+
+    private CustomSeekBar customSeekBar = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,6 +78,8 @@ public class Activity_library extends AppCompatActivity {
         ImageView library_back_button = (ImageView)findViewById(R.id.library_back_button);
         ImageView library_save_button = (ImageView)findViewById(R.id.library_save_button);
         ImageView library_set_button = (ImageView)findViewById(R.id.library_set_button);
+
+        customSeekBar = (CustomSeekBar)findViewById(R.id.customSeekBar);
 
         library_back_button.setOnTouchListener(mTouchEvent);
         library_save_button.setOnTouchListener(mTouchEvent);
@@ -290,4 +295,5 @@ public class Activity_library extends AppCompatActivity {
             }
         }
     }
+
 }

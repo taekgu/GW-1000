@@ -15,8 +15,9 @@ import android.widget.SeekBar;
 
 import com.sinest.gw_1000.R;
 import com.sinest.gw_1000.management.Application_manager;
+import com.sinest.gw_1000.mode.utils.CustomSeekBar;
 
-public class Activity_manual_mode_pattern_popup extends Activity {
+public class Activity_manual_mode_pattern_popup extends Activity implements CustomSeekBar.OnRangeBarChangeListener  {
     int patternNum, ImageResourceId;
     Intent intent;
     ImageView img;
@@ -113,4 +114,10 @@ public class Activity_manual_mode_pattern_popup extends Activity {
             }
         }
     };
+
+    @Override
+    public void onRangeBarChange(int min, int max) {
+        Log.d("TAG","min:"+min);
+        Log.d("TAG","max:"+max);
+    }
 }

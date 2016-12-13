@@ -43,9 +43,11 @@
         <activity
             android:name=".mode.Activity_library"
             android:screenOrientation="landscape" />
-        <activity android:name=".mode.Activity_waiting"
+        <activity
+            android:name=".mode.Activity_waiting"
             android:screenOrientation="landscape" />
-        <activity android:name=".mode.Activity_manual_mode_setting"
+        <activity
+            android:name=".mode.Activity_manual_mode_setting"
             android:screenOrientation="landscape" />
         <activity
             android:name=".mode.Activity_manual_mode_pattern_popup"
@@ -83,7 +85,7 @@
             android:name=".setting.Activity_rfidcardpassord"
             android:launchMode="singleInstance"
             android:screenOrientation="landscape"
-            android:theme="@android:style/Theme.Translucent"/>
+            android:theme="@android:style/Theme.Translucent" />
         <activity
             android:name=".setting.Activity_starttime"
             android:launchMode="singleInstance"
@@ -102,6 +104,7 @@
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
 
+        <activity android:name=".SeekBarTestActivity"></activity>
     </application>
 
 </manifest>
