@@ -94,7 +94,7 @@ public class CustomTextClock extends LinearLayout {
         int p_time_t = Integer.parseInt(a);
         int p_time_m = Integer.parseInt(b);
 
-        int t = p_time_t +  getTime_gap_tt() + cnt_t;
+        int t = p_time_t + getTime_gap_tt() + cnt_t;
         int m = p_time_m + getTime_gap_mm() + cnt_m;
 
         if(m > 60){
