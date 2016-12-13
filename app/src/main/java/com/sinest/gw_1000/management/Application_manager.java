@@ -42,7 +42,7 @@ public class Application_manager extends Application {
     public final static String TIME_GAP = "time_gap";
 
     // 대기모드 동작시간
-    public final static String WAITING_WORKING_TIME = "waiting_working_time";
+   // public final static String WAITING_WORKING_TIME = "waiting_working_time";
 
     // 라이브러리 20개중 선택된 값
     public final static int MAX_CHECKED = 4;

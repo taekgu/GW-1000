@@ -45,7 +45,8 @@ public class Activity_waiting_working_time_popup extends Activity {
         mode = intent.getIntExtra("mode", -1);
         Log.i("mode", Integer.toString(mode));
         if(mode==0){ // Waiting 화면에서 넘어왔을 때
-            workingTime = sharedPreferences.getInt(Application_manager.WAITING_WORKING_TIME, 10);
+            workingTime = sharedPreferences.getInt(Application_manager.VAL_TIME, 10);
+            //workingTime = intent.getIntExtra("time", -1);
         }
         else
         {
@@ -91,7 +92,7 @@ public class Activity_waiting_working_time_popup extends Activity {
                             SharedPreferences sharedPreferences = getSharedPreferences(Application_manager.NAME_OF_SHARED_PREF, 0);
                             SharedPreferences.Editor editor = sharedPreferences.edit();
                             if(mode==0){ // Waiting 화면에서 넘어왔을 때
-                                editor.putInt(Application_manager.WAITING_WORKING_TIME, workingTime);
+                                editor.putInt(Application_manager.VAL_TIME, workingTime);
                             }
                             else {
 

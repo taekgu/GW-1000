@@ -147,7 +147,7 @@ public class Activity_waiting extends AppCompatActivity {
         }
         fragment_waiting.refresh();
 
-        val_time = sharedPreferences.getInt(Application_manager.WAITING_WORKING_TIME, 10);
+        val_time = sharedPreferences.getInt(Application_manager.VAL_TIME, 10);
         time_text.setText(Integer.toString(val_time));
         /*
         FragmentManager fragmentManager = getFragmentManager();
@@ -526,6 +526,7 @@ public class Activity_waiting extends AppCompatActivity {
                     case R.id.waiting_time_text:
 
                         if (mode == 0) {
+
                             intent = new Intent(getApplicationContext(), Activity_waiting_working_time_popup.class);
                             intent.putExtra("mode", 0);
                             startActivity(intent);

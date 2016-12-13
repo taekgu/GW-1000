@@ -123,7 +123,7 @@ public class Activity_waiting_rfid extends AppCompatActivity {
 
         SharedPreferences sharedPreferences = getSharedPreferences(Application_manager.NAME_OF_SHARED_PREF, 0);
 
-        val_time = sharedPreferences.getInt(Application_manager.WAITING_WORKING_TIME, 10);
+        val_time = sharedPreferences.getInt(Application_manager.VAL_TIME, 10);
         time_text.setText(Integer.toString(val_time));
         Log.i("JW", "onResume time = " + val_time);
 
