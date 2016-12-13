@@ -21,6 +21,10 @@ public class Application_manager extends Application {
     public static String s_time = "00:00";
     public static String s_time_gap_t = "00:00";
     public static String s_time_gap_n = "00:00";
+
+    public static int gap_t = 0;
+    public static int gap_m = 0;
+
     public static boolean up = true;
     // 설정한 시간이 크면 true 작으면 false
 
@@ -103,6 +107,13 @@ public class Application_manager extends Application {
         return s_time_gap_t;
     }
 
+    synchronized public static int getTime_gap_tt(){
+        return gap_t;
+    }
+    synchronized public static int getTime_gap_mm(){
+        return gap_m;
+    }
+
     // 설정한 시간이 크면 true 작으면 false
     synchronized public static boolean getTime_gap_up(){
         return up;
@@ -139,8 +150,6 @@ public class Application_manager extends Application {
         int aa_ = Integer.parseInt(aa);
         int bb_ = Integer.parseInt(bb);
 
-        int gap_t = 0;
-        int gap_m = 0;
         String gap_buf_t;
         String gap_buf_m;
 
