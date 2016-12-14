@@ -53,6 +53,8 @@ public class Activity_waiting extends AppCompatActivity {
 
     private int mode = 0; // 0: waiting, 1: working
 
+    boolean flag = false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -134,7 +136,9 @@ public class Activity_waiting extends AppCompatActivity {
 
         registReceiver();
         clock.registReceiver();
+
         clock.doInit_time();
+
 
         SharedPreferences sharedPreferences = getSharedPreferences(Application_manager.NAME_OF_SHARED_PREF, 0);
 

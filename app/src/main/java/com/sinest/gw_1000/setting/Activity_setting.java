@@ -1,35 +1,18 @@
 package com.sinest.gw_1000.setting;
 
-import android.app.admin.DevicePolicyManager;
-import android.content.BroadcastReceiver;
-import android.content.ComponentName;
-import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.graphics.Typeface;
-import android.net.Uri;
-import android.os.Handler;
-import android.os.Message;
-import android.os.PowerManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.SeekBar;
-import android.widget.TextClock;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.gms.appindexing.Action;
-import com.google.android.gms.appindexing.AppIndex;
-import com.google.android.gms.appindexing.Thing;
-import com.google.android.gms.common.api.GoogleApiClient;
 import com.sinest.gw_1000.R;
 import com.sinest.gw_1000.communication.Communicator;
 import com.sinest.gw_1000.management.Application_manager;
@@ -73,7 +56,7 @@ public class Activity_setting extends AppCompatActivity {
     Button hidden_s_3;
     Button hidden_s_4;
 
-    CustomTextClock clock;
+    CustomTextClock s_clock;
 
     boolean[] button_flag = new boolean[12];
     boolean[] button2_flag = {true, true, true, true};
@@ -87,6 +70,9 @@ public class Activity_setting extends AppCompatActivity {
 
     boolean b_back_f = true;
     boolean b_emotion_f = true;
+
+    boolean flag = false;
+
     int b_language_f = 0;
     int b_inverter_f = 0;
 
@@ -121,7 +107,9 @@ public class Activity_setting extends AppCompatActivity {
 
         // 폰트 설정
         tf = Typeface.createFromAsset(getAssets(), "fonts/digital.ttf");
-        clock = (CustomTextClock) findViewById(R.id.textClock_s);
+        s_clock = (CustomTextClock) findViewById(R.id.textClock_s);
+
+        flag = true;
 
         communicator = Application_manager.getCommunicator();
 
@@ -216,7 +204,7 @@ public class Activity_setting extends AppCompatActivity {
             @Override
             public void onReceive(Context context, Intent intent) {
                 Log.v("test", "on");
-                clock.setText(""+ Application_manager.getTime());
+                s_clock.setText(""+ Application_manager.getTime());
             }
         };
 
@@ -307,6 +295,8 @@ public class Activity_setting extends AppCompatActivity {
         //intent_rfid2.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_SINGLE_TOP);
 
         time = new Intent(this, Activity_time.class);
+
+        //flag = true;
 
         //lp.screenBrightness = 0;
 
@@ -670,7 +660,7 @@ public class Activity_setting extends AppCompatActivity {
 
         b_emotion.setOnTouchListener(mTouchEvent);
         b_back.setOnTouchListener(mTouchEvent);
-        clock.setOnTouchListener(mTouchEvent);
+        s_clock.setOnTouchListener(mTouchEvent);
         // ATTENTION: This was auto-generated to implement the App Indexing API.
         // See https://g.co/AppIndexing/AndroidStudio for more information.
     }
@@ -725,7 +715,8 @@ public class Activity_setting extends AppCompatActivity {
 
                         break;
                     case R.id.textClock_s:
-                        Application_manager.setTime_gap_n((String)clock.getText());
+                        Application_manager.setTime_gap_n((String) s_clock.getText());
+                        Log.v("sb","s_clock : "+ s_clock.getText());
                         startActivity(time);
                 }
             } else if (action == MotionEvent.ACTION_UP) {
@@ -757,14 +748,17 @@ public class Activity_setting extends AppCompatActivity {
         super.onResume();
         Application_manager.setFullScreen(this);
 
-        clock.registReceiver();
-        clock.doInit_time();
+        s_clock.registReceiver();
+
+        Log.v("sb","sss");
+        s_clock.doInit_time();
+
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        clock.unregistReceiver();
+        s_clock.unregistReceiver();
     }
 
     @Override

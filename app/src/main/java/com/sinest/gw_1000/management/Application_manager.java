@@ -83,6 +83,8 @@ public class Application_manager extends Application {
     private static int runningTime = 0;
     private Thread thread_runningTime;
 
+    public static String m_time = "start";
+
     public void onCreate() {
 
         Application_manager.context = getApplicationContext();
@@ -135,6 +137,8 @@ public class Application_manager extends Application {
 
     synchronized public static void setTime(String n_time){
         s_time = n_time;
+        Log.v("sb","n_time : "+n_time);
+        Log.v("sb","s_time_gap_n : "+s_time_gap_n);
         doCalculation_gap();
     }
     // 시간 차이 계산 및 DB 저장

@@ -546,6 +546,17 @@ public class Activity_engine extends AppCompatActivity {
         myThread.start();
     }
 
+    Handler handler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            updateThread();
+        }
+    };
+
+    private void updateThread() {
+        operation_t.setText(""+ Application_manager.getRunningTime()/60);
+    }
+
     @Override
     protected void onStop() {
         super.onStop();
@@ -565,17 +576,6 @@ public class Activity_engine extends AppCompatActivity {
     protected void onPause() {
         super.onPause();
         clock.unregistReceiver();
-    }
-
-    Handler handler = new Handler() {
-        @Override
-        public void handleMessage(Message msg) {
-            updateThread();
-        }
-    };
-
-    private void updateThread() {
-        operation_t.setText(""+ Application_manager.getRunningTime()/60);
     }
 
     void setZerosWaterPressure()
