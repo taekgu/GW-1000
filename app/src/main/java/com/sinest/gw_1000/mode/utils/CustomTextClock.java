@@ -7,6 +7,7 @@ import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.icu.text.DateFormatSymbols;
+import android.icu.text.SimpleDateFormat;
 import android.icu.util.Calendar;
 import android.os.Handler;
 import android.os.Message;
