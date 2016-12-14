@@ -749,9 +749,11 @@ public class Activity_setting extends AppCompatActivity {
         Application_manager.setFullScreen(this);
 
         s_clock.registReceiver();
-
-        Log.v("sb","sss");
-        s_clock.doInit_time();
+        if(Application_manager.t_flag[2]== 1)
+        {
+            s_clock.doInit_time();
+            Application_manager.t_flag[2] = 0;
+        }
 
     }
 

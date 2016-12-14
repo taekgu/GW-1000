@@ -89,14 +89,14 @@ public class CustomTextClock extends LinearLayout {
         cnt_t = 0;
         cnt_m = 0;
 
-        if(Application_manager.m_time.equals("start") ){
-            p_time = getText();
-            Log.v("sb","test1 : "+ p_time);
-        }
-        else{
-            p_time = Application_manager.m_time;
-            Log.v("sb","test2 : " +p_time);
-        }
+        //if(Application_manager.m_time.equals("start") ){
+        p_time = (String)textClock.getText();
+        //    Log.v("sb","test1 : "+ p_time);
+        //}
+        //else{
+          //  p_time = Application_manager.m_time;
+         //   Log.v("sb","test2 : " +p_time);
+        //}
 
         String aa = p_time.substring(0,2);
         String bb = p_time.substring(3,5);

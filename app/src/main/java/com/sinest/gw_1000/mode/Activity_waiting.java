@@ -137,8 +137,11 @@ public class Activity_waiting extends AppCompatActivity {
         registReceiver();
         clock.registReceiver();
 
-        clock.doInit_time();
-
+        if(Application_manager.t_flag[1] == 1)
+        {
+            clock.doInit_time();
+            Application_manager.t_flag[1] = 0;
+        }
 
         SharedPreferences sharedPreferences = getSharedPreferences(Application_manager.NAME_OF_SHARED_PREF, 0);
 

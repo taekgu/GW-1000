@@ -69,6 +69,8 @@ public class Application_manager extends Application {
     public final static int[] ID_CHI = new int[5];
     public final static int[][] ID_LANG_SOUND = new int[NUM_OF_LANG][NUM_OF_SOUND];
 
+    public static int[] t_flag = {0,0,0,0};
+
     // App context
     private static Context context;
 
@@ -127,6 +129,10 @@ public class Application_manager extends Application {
     }
 
     synchronized public static void setTime_gap_n(String n_time){
+        t_flag[0] = 1;
+        t_flag[1] = 1;
+        t_flag[2] = 1;
+        t_flag[3] = 1;
         s_time_gap_n = n_time;
     }
 
