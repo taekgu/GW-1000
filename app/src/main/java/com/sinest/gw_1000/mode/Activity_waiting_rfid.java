@@ -168,6 +168,8 @@ public class Activity_waiting_rfid extends AppCompatActivity {
             Log.i("JW", "NFC tag is detected");
             Log.i("JW", "ID: " + getHex(id));
 
+            // nfc 태그 감지되면 동작 모드로 전환
+
             /*
             Parcelable[] rawMsgs = intent.getParcelableArrayExtra(NfcAdapter.EXTRA_NDEF_MESSAGES);
             NdefMessage[] msgs;
