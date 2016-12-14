@@ -33,6 +33,7 @@ import com.google.android.gms.common.api.GoogleApiClient;
 import com.sinest.gw_1000.R;
 import com.sinest.gw_1000.communication.Communicator;
 import com.sinest.gw_1000.management.Application_manager;
+import com.sinest.gw_1000.mode.utils.CustomTextClock;
 
 public class Activity_setting extends AppCompatActivity {
     public static final String TAG = "SCREEN";
@@ -72,7 +73,7 @@ public class Activity_setting extends AppCompatActivity {
     Button hidden_s_3;
     Button hidden_s_4;
 
-    TextClock clock;
+    CustomTextClock clock;
 
     boolean[] button_flag = new boolean[12];
     boolean[] button2_flag = {true, true, true, true};
@@ -110,23 +111,6 @@ public class Activity_setting extends AppCompatActivity {
     int volume;
     Typeface tf;
 
-    PowerManager mPm;
-    PowerManager.WakeLock mWakeLock;
-
-    Window mywindow;
-    WindowManager.LayoutParams lp;
-
-    private BroadcastReceiver scrOnReceiver;
-    private BroadcastReceiver scrOffReceiver;
-    private IntentFilter scrOnFilter;
-    private IntentFilter scrOffFilter;
-    /**
-     * ATTENTION: This was auto-generated to implement the App Indexing API.
-     * See https://g.co/AppIndexing/AndroidStudio for more information.
-     */
-    private GoogleApiClient client;
-    DevicePolicyManager devicePolicyManager;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -137,8 +121,7 @@ public class Activity_setting extends AppCompatActivity {
 
         // 폰트 설정
         tf = Typeface.createFromAsset(getAssets(), "fonts/digital.ttf");
-        clock = (TextClock) findViewById(R.id.textClock_s);
-        clock.setTypeface(tf);
+        clock = (CustomTextClock) findViewById(R.id.textClock_s);
 
         communicator = Application_manager.getCommunicator();
 
@@ -325,30 +308,7 @@ public class Activity_setting extends AppCompatActivity {
 
         time = new Intent(this, Activity_time.class);
 
-        mywindow = getWindow();
-        lp = mywindow.getAttributes();
         //lp.screenBrightness = 0;
-
-/*
-        findViewById(R.id.button11).setOnClickListener(
-                new Button.OnClickListener(){
-                    public void onClick(View v){
-
-                    }
-                }
-        );
-
-*/
-        devicePolicyManager = (DevicePolicyManager) getApplicationContext().getSystemService(Context.DEVICE_POLICY_SERVICE);
-        ComponentName componentName = new ComponentName(getApplicationContext(), ShutdownAdminReceiver.class);
-
-        if(!devicePolicyManager.isAdminActive(componentName)) {
-            Intent intent = new Intent(DevicePolicyManager.ACTION_ADD_DEVICE_ADMIN);
-            intent.putExtra(DevicePolicyManager.EXTRA_DEVICE_ADMIN, componentName);
-            startActivityForResult(intent, 0);
-        }
-
-
 
         View.OnClickListener listener = new View.OnClickListener() {
             public void onClick(View v) {
@@ -713,7 +673,6 @@ public class Activity_setting extends AppCompatActivity {
         clock.setOnTouchListener(mTouchEvent);
         // ATTENTION: This was auto-generated to implement the App Indexing API.
         // See https://g.co/AppIndexing/AndroidStudio for more information.
-        client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
     }
 
     @Override
@@ -766,8 +725,6 @@ public class Activity_setting extends AppCompatActivity {
 
                         break;
                     case R.id.textClock_s:
-                        //t_buf = (String)clock.getText();
-                        Log.v("sb",(String)clock.getText());
                         Application_manager.setTime_gap_n((String)clock.getText());
                         startActivity(time);
                 }
@@ -796,33 +753,18 @@ public class Activity_setting extends AppCompatActivity {
     };
 
     @Override
-    protected void onStart() {
-        super.onStart();
-        isRun = false;
-        Thread myThread = new Thread(new Runnable() {
-            public void run() {
-                while (isRun) {
-                    try {
-                        handler.sendMessage(handler.obtainMessage());
-                        Thread.sleep(1000);
-                    } catch (Throwable t) {
-                    }
-                }
-            }
-        });
-        myThread.start();
+    protected void onResume() {
+        super.onResume();
+        Application_manager.setFullScreen(this);
+
+        clock.registReceiver();
+        clock.doInit_time();
     }
 
-    Handler handler = new Handler() {
-        @Override
-        public void handleMessage(Message msg) {
-            updateThread();
-        }
-    };
-
-    private void updateThread() {
-        clock.setText(""+ Application_manager.getTime());
-        Log.v("test","test");
+    @Override
+    protected void onPause() {
+        super.onPause();
+        clock.unregistReceiver();
     }
 
     @Override

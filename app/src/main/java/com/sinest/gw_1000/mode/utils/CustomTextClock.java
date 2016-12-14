@@ -39,6 +39,8 @@ public class CustomTextClock extends LinearLayout {
     private int cnt_m;
     private String p_time;
 
+    private String doTime;
+
     public CustomTextClock(Context context) {
         super(context);
 
@@ -126,10 +128,14 @@ public class CustomTextClock extends LinearLayout {
             doTime_m = String.valueOf(m);
         }
 
-        String doTime = doTime_t+":"+doTime_m;
+        doTime = doTime_t+":"+doTime_m;
 
         textClock.setText(doTime);
 
+    }
+
+    public String getText(){
+        return doTime;
     }
 
     private void setBroadcastReceiver() {

@@ -17,6 +17,7 @@ import com.sinest.gw_1000.R;
 import com.sinest.gw_1000.communication.Communicator;
 import com.sinest.gw_1000.management.Application_manager;
 import com.sinest.gw_1000.mode.Activity_waiting;
+import com.sinest.gw_1000.mode.utils.CustomTextClock;
 
 public class Activity_engine extends AppCompatActivity {
 
@@ -53,6 +54,7 @@ public class Activity_engine extends AppCompatActivity {
     Byte inverter = 0x00;
 
     Communicator communicator;
+    CustomTextClock clock;
 
     private boolean isRun = false;
 
@@ -64,8 +66,7 @@ public class Activity_engine extends AppCompatActivity {
 
         // 폰트 설정
         Typeface tf = Typeface.createFromAsset(getAssets(), "fonts/digital.ttf");
-        TextClock clock = (TextClock) findViewById(R.id.textClock_e);
-        clock.setTypeface(tf);
+        clock = (CustomTextClock) findViewById(R.id.textClock_e);
 
         check = getIntent();
         check_activity = check.getStringExtra("activity");
@@ -549,6 +550,21 @@ public class Activity_engine extends AppCompatActivity {
     protected void onStop() {
         super.onStop();
         isRun = false;
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Application_manager.setFullScreen(this);
+
+        clock.registReceiver();
+        clock.doInit_time();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        clock.unregistReceiver();
     }
 
     Handler handler = new Handler() {

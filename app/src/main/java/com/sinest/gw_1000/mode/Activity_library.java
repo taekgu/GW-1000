@@ -15,6 +15,7 @@ import android.widget.Toast;
 import com.sinest.gw_1000.R;
 import com.sinest.gw_1000.management.Application_manager;
 import com.sinest.gw_1000.mode.utils.CustomSeekBar;
+import com.sinest.gw_1000.mode.utils.CustomTextClock;
 
 public class Activity_library extends AppCompatActivity{
 
@@ -29,6 +30,7 @@ public class Activity_library extends AppCompatActivity{
 
     int mode_setting = 0;
 
+    CustomTextClock clock;
     private CustomSeekBar customSeekBar = null;
 
     @Override
@@ -39,8 +41,7 @@ public class Activity_library extends AppCompatActivity{
 
         // 폰트 설정
         Typeface tf = Typeface.createFromAsset(getAssets(), "fonts/digital.ttf");
-        TextClock clock = (TextClock) findViewById(R.id.library_clock);
-        clock.setTypeface(tf);
+        clock = (CustomTextClock) findViewById(R.id.library_clock);
 
         for (int i=0; i<20; i++) {
 
@@ -91,7 +92,15 @@ public class Activity_library extends AppCompatActivity{
         super.onResume();
         Application_manager.setFullScreen(this);
 
+        clock.registReceiver();
+        clock.doInit_time();
         change_mode(mode_setting);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        clock.unregistReceiver();
     }
 
     private View.OnTouchListener mTouchEvent = new View.OnTouchListener() {
@@ -250,6 +259,7 @@ public class Activity_library extends AppCompatActivity{
         }
     }
 
+
     private void change_mode(int mode) {
 
         if (mode == 1) {
@@ -294,6 +304,10 @@ public class Activity_library extends AppCompatActivity{
                 imageView.setEnabled(true);
             }
         }
+
+
     }
+
+
 
 }
