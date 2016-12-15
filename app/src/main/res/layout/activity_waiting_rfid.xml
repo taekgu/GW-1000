@@ -343,6 +343,14 @@
                 android:layout_weight="45"
                 android:weightSum="100">
 
+                <FrameLayout
+                    android:id="@+id/frameLayout_rfid_fragment"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal"
+                    android:layout_weight="87">
+                </FrameLayout>
+
             </LinearLayout>
 
             <LinearLayout

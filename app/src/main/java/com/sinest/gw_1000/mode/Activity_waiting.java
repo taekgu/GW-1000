@@ -161,6 +161,25 @@ public class Activity_waiting extends AppCompatActivity {
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.add(R.id.frameLayout_fragment, fragment_waiting);
         fragmentTransaction.commit();*/
+
+        // 화면에 보여질 때 센서값 불러오기
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+
+                TextView textView_oxygen = (TextView) findViewById(R.id.textView_oxygen);
+                textView_oxygen.setText(""+Application_manager.SENSOR_OXYGEN);
+
+                TextView textView_humidity = (TextView) findViewById(R.id.textView_humidity);
+                textView_humidity.setText(""+Application_manager.SENSOR_HUMIDITY);
+
+                TextView textView_temperature = (TextView) findViewById(R.id.textView_temperature_above);
+                textView_temperature.setText(""+Application_manager.SENSOR_TEMP);
+
+                TextView textView_temperature_bed = (TextView) findViewById(R.id.textView_temperature_below);
+                textView_temperature_bed.setText(""+Application_manager.SENSOR_TEMP_BED);
+            }
+        });
     }
 
     @Override
@@ -168,17 +187,18 @@ public class Activity_waiting extends AppCompatActivity {
         super.onPause();
         unregistReceiver();
         clock.unregistReceiver();
-    }
 
-    @Override
-    protected void onStop() {
-        super.onStop();
         SharedPreferences sharedPreferences = getSharedPreferences(Application_manager.NAME_OF_SHARED_PREF, 0);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putInt(Application_manager.VAL_OXYGEN, val_oxygen);
         editor.putInt(Application_manager.VAL_PRESSURE, val_pressure);
         editor.putInt(Application_manager.VAL_TIME, val_time);
         editor.commit();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
     }
 
     public void changeFragment_working(int modeNum) {
@@ -228,7 +248,6 @@ public class Activity_waiting extends AppCompatActivity {
     }
 
     public void changeFragment_waiting() {
-
 
         Log.i("JW", "changeFragment (working -> waiting)");
         setTimeLeft(val_time);
@@ -327,6 +346,7 @@ public class Activity_waiting extends AppCompatActivity {
                     }
                     TextView textView_oxygen = (TextView) findViewById(R.id.textView_oxygen);
                     textView_oxygen.setText(""+temp);
+                    Application_manager.SENSOR_OXYGEN = temp;
 
                     // 습도 평균
                     temp = 0;
@@ -339,6 +359,7 @@ public class Activity_waiting extends AppCompatActivity {
                     }
                     TextView textView_humidity = (TextView) findViewById(R.id.textView_humidity);
                     textView_humidity.setText(""+temp);
+                    Application_manager.SENSOR_HUMIDITY = temp;
 
                     // 내부온도 평균
                     temp = 0;
@@ -351,11 +372,13 @@ public class Activity_waiting extends AppCompatActivity {
                     }
                     TextView textView_temperature = (TextView) findViewById(R.id.textView_temperature_above);
                     textView_temperature.setText(""+temp);
+                    Application_manager.SENSOR_TEMP = temp;
 
                     // 수온
                     temp = communicator.get_rx_idx(2);
                     TextView textView_temperature_bed = (TextView) findViewById(R.id.textView_temperature_below);
                     textView_temperature_bed.setText(""+temp);
+                    Application_manager.SENSOR_TEMP_BED = temp;
                 }
                 else if (msg.what == SET_BUTTON_INVISIBLE) {
 
@@ -429,6 +452,7 @@ public class Activity_waiting extends AppCompatActivity {
                         //setting
                         intent_setting = new Intent(getApplicationContext(), Activity_setting.class);
                         startActivity(intent_setting);
+                        finish();
                         break;
                     case R.id.waiting_oxygen_up_button:
                         view.setBackgroundResource(R.drawable.button_up);

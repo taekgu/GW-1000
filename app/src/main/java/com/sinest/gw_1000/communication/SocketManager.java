@@ -134,5 +134,6 @@ class SocketReceiver extends Thread{
 
             stop_thread();
         }
+        Log.i("JW", "SocketReceiver is stopped");
     }
 }

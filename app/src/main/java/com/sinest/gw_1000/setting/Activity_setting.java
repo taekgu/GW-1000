@@ -16,6 +16,8 @@ import android.widget.Toast;
 import com.sinest.gw_1000.R;
 import com.sinest.gw_1000.communication.Communicator;
 import com.sinest.gw_1000.management.Application_manager;
+import com.sinest.gw_1000.mode.Activity_waiting;
+import com.sinest.gw_1000.mode.Activity_waiting_rfid;
 import com.sinest.gw_1000.mode.utils.CustomTextClock;
 
 public class Activity_setting extends AppCompatActivity {
@@ -735,6 +737,20 @@ public class Activity_setting extends AppCompatActivity {
                     case R.id.b_back:
                         b_back.setBackgroundResource(R.drawable.button_circle_back_off);
                         isRun = false;
+
+                        // Modified by Jinwook
+                        Intent intent = null;
+                        rfid_state = !button2_flag[0];
+
+                        if (rfid_state) {
+
+                            intent = new Intent(getApplicationContext(), Activity_waiting_rfid.class);
+                        }
+                        else {
+
+                            intent = new Intent(getApplicationContext(), Activity_waiting.class);
+                        }
+                        startActivity(intent);
                         finish();
                         break;
                 }

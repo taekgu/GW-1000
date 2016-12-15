@@ -44,6 +44,7 @@ public class Communicator {
     // Wifi direct
     private Context mContext;
     private WifiDirectWrapper mWidiWrapper;
+    private WifiConnector wifiConnector;
 
     // Socket
 
@@ -69,8 +70,10 @@ public class Communicator {
 
         initMessages();
 
-        mWidiWrapper = new WifiDirectWrapper(mContext, handler_data);
-        mWidiWrapper.start();
+        //mWidiWrapper = new WifiDirectWrapper(mContext, handler_data);
+        //mWidiWrapper.start();
+        wifiConnector = new WifiConnector(mContext, handler_data);
+        wifiConnector.registReceiver();
     }
 
     private void setHandler() {
@@ -153,7 +156,7 @@ public class Communicator {
     public int send(byte[] msg) {
 
         calcCheckSum(msg);
-        return mWidiWrapper.send(msg);
+        return wifiConnector.send(msg);
     }
 
     synchronized public void set_tx(int idx, byte val) {

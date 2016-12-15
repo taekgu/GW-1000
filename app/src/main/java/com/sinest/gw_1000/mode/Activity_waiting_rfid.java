@@ -1,5 +1,7 @@
 package com.sinest.gw_1000.mode;
 
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.IntentFilter;
@@ -26,6 +28,7 @@ import android.widget.TextClock;
 import android.widget.TextView;
 import android.view.View;
 import android.content.Intent;
+import android.widget.Toast;
 
 import com.sinest.gw_1000.R;
 import com.sinest.gw_1000.communication.Communicator;
@@ -34,6 +37,9 @@ import com.sinest.gw_1000.management.Application_manager;
 import com.sinest.gw_1000.setting.Activity_setting;
 
 public class Activity_waiting_rfid extends AppCompatActivity {
+
+    private final static int SET_BUTTON_INVISIBLE           = 1002;
+    private final static int SET_BUTTON_VISIBLE             = 1003;
 
     Communicator communicator;
     Handler handler_update_data;
@@ -44,6 +50,8 @@ public class Activity_waiting_rfid extends AppCompatActivity {
     private int val_time = 0;
 
     TextView time_text, oxygen_text, pressure_text;
+
+    Fragment_working fragment_working;
 
     private int mode = 0; // 0: waiting, 1: working
 
@@ -132,6 +140,25 @@ public class Activity_waiting_rfid extends AppCompatActivity {
 
             mAdapter.enableForegroundDispatch(this, mPendingIntent, null, null);
         }
+
+        // 화면에 보여질 때 센서값 불러오기
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+
+                TextView textView_oxygen = (TextView) findViewById(R.id.textView_rfid_oxygen);
+                textView_oxygen.setText(""+Application_manager.SENSOR_OXYGEN);
+
+                TextView textView_humidity = (TextView) findViewById(R.id.textView_rfid_humidity);
+                textView_humidity.setText(""+Application_manager.SENSOR_HUMIDITY);
+
+                TextView textView_temperature = (TextView) findViewById(R.id.textView_rfid_temperature_above);
+                textView_temperature.setText(""+Application_manager.SENSOR_TEMP);
+
+                TextView textView_temperature_bed = (TextView) findViewById(R.id.textView_rfid_temperature_below);
+                textView_temperature_bed.setText(""+Application_manager.SENSOR_TEMP_BED);
+            }
+        });
     }
 
     @Override
@@ -143,18 +170,18 @@ public class Activity_waiting_rfid extends AppCompatActivity {
         if (mAdapter != null) {
             mAdapter.disableForegroundDispatch(this);
         }
-    }
 
-    @Override
-    protected void onStop() {
-        super.onStop();
         SharedPreferences sharedPreferences = getSharedPreferences(Application_manager.NAME_OF_SHARED_PREF, 0);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putInt(Application_manager.VAL_OXYGEN, val_oxygen);
         editor.putInt(Application_manager.VAL_PRESSURE, val_pressure);
         editor.putInt(Application_manager.VAL_TIME, val_time);
         editor.commit();
-        Log.i("JW", "onStop time = " + val_time);
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
     }
 
     private void resolveIntent(Intent intent) {
@@ -169,6 +196,7 @@ public class Activity_waiting_rfid extends AppCompatActivity {
             Log.i("JW", "ID: " + getHex(id));
 
             // nfc 태그 감지되면 동작 모드로 전환
+
 
             /*
             Parcelable[] rawMsgs = intent.getParcelableArrayExtra(NfcAdapter.EXTRA_NDEF_MESSAGES);
@@ -189,6 +217,52 @@ public class Activity_waiting_rfid extends AppCompatActivity {
                 msgs = new NdefMessage[] { msg };
             }
             */
+        }
+    }
+
+    public void changeFragment_working(int modeNum) {
+
+        if (val_time > 0) {
+
+            if (fragment_working == null) {
+
+                fragment_working = new Fragment_working();
+            }
+
+            // 타이머 스레드가 동작중이지 않은 경우
+            if (!fragment_working.getIsAlive()) {
+
+                Log.i("JW", "changeFragment (waiting -> working)");
+                Application_manager.getSoundManager().play(Application_manager.ID_LANG_SOUND[Application_manager.LANGUAGE][0]);
+                FragmentManager fm = getFragmentManager();
+                FragmentTransaction fragmentTransaction = fm.beginTransaction();
+
+                fragment_working.init(modeNum, val_time);
+
+                fragmentTransaction.replace(R.id.frameLayout_fragment, fragment_working);
+                fragmentTransaction.commit();
+
+                mode = 1;
+                handler_update_data.sendEmptyMessage(SET_BUTTON_INVISIBLE);
+
+                // 동작 모드로 바뀌기 이전 산소농도, 수압, 시간 값 저장
+                SharedPreferences sharedPreferences = getSharedPreferences(Application_manager.NAME_OF_SHARED_PREF, 0);
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                editor.putInt(Application_manager.VAL_OXYGEN, val_oxygen);
+                editor.putInt(Application_manager.VAL_PRESSURE, val_pressure);
+                editor.putInt(Application_manager.VAL_TIME, val_time);
+                editor.commit();
+            }
+            // 타이머 스레드가 아직 동작중인 경우
+            else {
+
+                Log.i("JW", "changeFragment (waiting -> working) is failed");
+                Toast.makeText(this, "잠시 후 다시 시도해주세요", Toast.LENGTH_SHORT).show();
+            }
+        }
+        else {
+
+            Toast.makeText(this, "동작 시간을 1~90분 사이로 설정해야합니다", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -275,6 +349,7 @@ public class Activity_waiting_rfid extends AppCompatActivity {
                     }
                     TextView textView_oxygen = (TextView) findViewById(R.id.textView_rfid_oxygen);
                     textView_oxygen.setText(""+temp);
+                    Application_manager.SENSOR_OXYGEN = temp;
 
                     // 습도 평균
                     temp = 0;
@@ -287,6 +362,7 @@ public class Activity_waiting_rfid extends AppCompatActivity {
                     }
                     TextView textView_humidity = (TextView) findViewById(R.id.textView_rfid_humidity);
                     textView_humidity.setText(""+temp);
+                    Application_manager.SENSOR_HUMIDITY = temp;
 
                     // 내부온도 평균
                     temp = 0;
@@ -299,11 +375,18 @@ public class Activity_waiting_rfid extends AppCompatActivity {
                     }
                     TextView textView_temperature = (TextView) findViewById(R.id.textView_rfid_temperature_above);
                     textView_temperature.setText(""+temp);
+                    Application_manager.SENSOR_TEMP = temp;
 
                     // 수온
                     temp = communicator.get_rx_idx(2);
                     TextView textView_temperature_bed = (TextView) findViewById(R.id.textView_rfid_temperature_below);
                     textView_temperature_bed.setText(""+temp);
+                    Application_manager.SENSOR_TEMP_BED = temp;
+                }
+                else if (msg.what == SET_BUTTON_INVISIBLE) {
+                }
+                else if (msg.what == SET_BUTTON_VISIBLE) {
+
                 }
             }
         };
@@ -358,6 +441,7 @@ public class Activity_waiting_rfid extends AppCompatActivity {
                         //setting
                         intent_setting = new Intent(getApplicationContext(), Activity_setting.class);
                         startActivity(intent_setting);
+                        finish();
                         break;
                     case R.id.waiting_rfid_oxygen_up_button:
                         view.setBackgroundResource(R.drawable.button_up);

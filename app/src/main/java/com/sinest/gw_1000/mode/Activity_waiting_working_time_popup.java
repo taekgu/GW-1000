@@ -46,6 +46,7 @@ public class Activity_waiting_working_time_popup extends Activity {
         Log.i("mode", Integer.toString(mode));
         if(mode==0){ // Waiting 화면에서 넘어왔을 때
             workingTime = sharedPreferences.getInt(Application_manager.VAL_TIME, 10);
+            //Log.i("JW", "onCreate / val_time = " + workingTime);
             //workingTime = intent.getIntExtra("time", -1);
         }
         else

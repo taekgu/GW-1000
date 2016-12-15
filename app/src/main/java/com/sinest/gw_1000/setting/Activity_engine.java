@@ -569,7 +569,11 @@ public class Activity_engine extends AppCompatActivity {
         Application_manager.setFullScreen(this);
 
         clock.registReceiver();
-        clock.doInit_time();
+        if(Application_manager.t_flag[1] == 1)
+        {
+            clock.doInit_time();
+            Application_manager.t_flag[1] = 0;
+        }
     }
 
     @Override

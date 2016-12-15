@@ -17,6 +17,12 @@ import com.sinest.gw_1000.communication.Communicator;
 
 public class Application_manager extends Application {
 
+    // RFID - 일반 대기 모드 전환시 센서값 저장
+    public static int SENSOR_HUMIDITY   = 0;
+    public static int SENSOR_OXYGEN     = 0;
+    public static int SENSOR_TEMP       = 0;
+    public static int SENSOR_TEMP_BED   = 0;
+
     // time
     public static String s_time = "00:00";
     public static String s_time_gap_t = "00:00";
