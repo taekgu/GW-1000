@@ -23,6 +23,7 @@ public class Fragment_working extends Fragment {
     private int modeNum = -1;
     Button play, stop;
     private int state = 0; // 0:pause, 1:play
+    private int parent = -1; // 0:waiting, 1:waiting_rfid
 
     private int time_m_left;
     private int time_s;
@@ -36,11 +37,12 @@ public class Fragment_working extends Fragment {
 
     }
 
-    public void init (int _modeNum, final int _time) {
+    public void init (int _modeNum, final int _time, final int _parent) {
 
         this.modeNum = _modeNum;
         this.time_m_left = _time;
         this.time_s = 0;
+        this.parent = _parent;
 
         thread_timer = new Thread(new Runnable() {
             @Override
@@ -64,8 +66,16 @@ public class Fragment_working extends Fragment {
                             setTime_m_left(time_m_left-1);
                             //time_m_left--;
 
-                            Activity_waiting activity_waiting = (Activity_waiting) getActivity();
-                            activity_waiting.setTimeLeft(time_m_left);
+                            if (parent == 0) {
+
+                                Activity_waiting activity_waiting = (Activity_waiting) getActivity();
+                                activity_waiting.setTimeLeft(time_m_left);
+                            }
+                            else {
+
+                                Activity_waiting_rfid activity_waiting_rfid = (Activity_waiting_rfid) getActivity();
+                                activity_waiting_rfid.setTimeLeft(time_m_left);
+                            }
 
                             if (time_m_left == 0) {
 
@@ -126,7 +136,6 @@ public class Fragment_working extends Fragment {
         @Override
         public boolean onTouch(View view, MotionEvent motionEvent) {
 
-      //      Activity_waiting activity_waiting = (Activity_waiting) getActivity();
             Button button_clicked = (Button) view;
             int id = button_clicked.getId();
 
@@ -184,8 +193,16 @@ public class Fragment_working extends Fragment {
                         button_clicked.setBackgroundResource(R.drawable.button_stop_off);
                         communicator.set_tx(1, (byte)0x00);
                         Application_manager.getSoundManager().play(Application_manager.ID_LANG_SOUND[Application_manager.LANGUAGE][1]);
-                        Activity_waiting activity_waiting = (Activity_waiting) getActivity();
-                        activity_waiting.changeFragment_waiting();
+
+                        if (parent == 0) {
+                            Activity_waiting activity_waiting = (Activity_waiting) getActivity();
+                            activity_waiting.changeFragment_waiting();
+                        }
+                        else {
+
+                            Activity_waiting_rfid activity_waiting_rfid = (Activity_waiting_rfid) getActivity();
+                            activity_waiting_rfid.changeFragment_waiting();
+                        }
                         break;
                 }
                 communicator.send(communicator.get_tx());

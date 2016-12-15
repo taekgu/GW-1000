@@ -218,7 +218,7 @@ public class Activity_waiting extends AppCompatActivity {
                 FragmentManager fm = getFragmentManager();
                 FragmentTransaction fragmentTransaction = fm.beginTransaction();
 
-                fragment_working.init(modeNum, val_time);
+                fragment_working.init(modeNum, val_time, 0);
 
                 fragmentTransaction.replace(R.id.frameLayout_fragment, fragment_working);
                 fragmentTransaction.commit();
