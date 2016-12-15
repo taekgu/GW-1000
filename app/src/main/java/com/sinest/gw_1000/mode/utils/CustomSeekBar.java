@@ -37,7 +37,7 @@ public class CustomSeekBar extends RelativeLayout{
     private float dTopMin, dTopMax;
     private int currentHeightMin, currentHeightMax;
     private double resultMin = 0.0;
-    private double resultMax = 100.0;
+    private double resultMax = 14.0;
     private View viewParent;
     private TextView tvFilterMin, tvFilterMax;
     private Context context;
@@ -57,7 +57,7 @@ public class CustomSeekBar extends RelativeLayout{
         this.context = context;
         TypedArray a = context.obtainStyledAttributes(attrs, com.opalox.rangebarvertical.R.styleable.RangeBarVertical, 0, 0);
         System.out.println(a.getIndexCount());
-        activeColor = a.getColor(com.opalox.rangebarvertical.R.styleable.RangeBarVertical_activeColor, Color.parseColor("#007FFF"));
+        activeColor = a.getColor(com.opalox.rangebarvertical.R.styleable.RangeBarVertical_activeColor, Color.parseColor("#00FFFF"));
         inactiveColor = a.getColor(com.opalox.rangebarvertical.R.styleable.RangeBarVertical_inactiveColor, Color.parseColor("#808080"));
         a.recycle();
         initialize(context);
@@ -168,7 +168,7 @@ public class CustomSeekBar extends RelativeLayout{
     }
 
     private void init() {
-        ViewCompat.setElevation(tvFilterMin, 100f);
+        ViewCompat.setElevation(tvFilterMin, 14f);
         viewFilterMain.setBackgroundColor(activeColor);
         viewInActiveBottom.setBackgroundColor(inactiveColor);
         viewInActiveTop.setBackgroundColor(inactiveColor);
@@ -196,15 +196,15 @@ public class CustomSeekBar extends RelativeLayout{
 
     public void getResultMin() {
         //Max
-        resultMin = Math.floor(100 * (Math.abs(currentHeightMin - initialHeightMin)) / heightParent);
+        resultMin = Math.floor(14 * (Math.abs(currentHeightMin - initialHeightMin)) / heightParent);
         tvFilterMin.setText((int) resultMin + "");
         onRangeBarChangeListener.onRangeBarChange((int) resultMin, (int) resultMax);
 
     }
 
     public void getResultMax() {
-        resultMax = Math.floor(100 * (Math.abs(currentHeightMax - initialHeightMin)) / heightParent);
-        resultMax = Math.abs(resultMax - 100);
+        resultMax = Math.floor(14 * (Math.abs(currentHeightMax - initialHeightMin)) / heightParent);
+        resultMax = Math.abs(resultMax - 14);
         tvFilterMax.setText(((int) resultMax + ""));
         onRangeBarChangeListener.onRangeBarChange((int) resultMin, (int) resultMax);
     }
@@ -214,7 +214,7 @@ public class CustomSeekBar extends RelativeLayout{
     }
 
     public void setMinimumProgress(final int minProgress) {
-        if (minProgress >= 0 && minProgress < 100 && minProgress < resultMax) {
+        if (minProgress >= 0 && minProgress < 14 && minProgress < resultMax) {
             resultMin = minProgress;
             viewParent.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
                 @Override
@@ -224,7 +224,7 @@ public class CustomSeekBar extends RelativeLayout{
                     } else {
                         viewParent.getViewTreeObserver().removeGlobalOnLayoutListener(this);
                     }
-                    currentHeightMin = ((minProgress * (viewParent.getHeight() - 2 * initialHeightMin) / 100) + initialHeightMin);
+                    currentHeightMin = ((minProgress * (viewParent.getHeight() - 2 * initialHeightMin) / 14) + initialHeightMin);
                     ViewGroup.LayoutParams layoutParams = relFilterMin.getLayoutParams();
                     layoutParams.height = currentHeightMin;
                     relFilterMin.setLayoutParams(layoutParams);
@@ -240,7 +240,7 @@ public class CustomSeekBar extends RelativeLayout{
     }
 
     public void setMaximumProgress(final int maxProgress) {
-        if (maxProgress >= 0 && maxProgress <= 100 && maxProgress > resultMin) {
+        if (maxProgress >= 0 && maxProgress <= 14 && maxProgress > resultMin) {
             resultMax = maxProgress;
             viewParent.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
                 @Override
@@ -250,7 +250,7 @@ public class CustomSeekBar extends RelativeLayout{
                     } else {
                         viewParent.getViewTreeObserver().removeGlobalOnLayoutListener(this);
                     }
-                    currentHeightMax = ((Math.abs(maxProgress - 100) * (viewParent.getHeight() - 2 * initialHeightMin) / 100) + initialHeightMin);
+                    currentHeightMax = ((Math.abs(maxProgress - 14) * (viewParent.getHeight() - 2 * initialHeightMin) / 14) + initialHeightMin);
                     ViewGroup.LayoutParams layoutParams = relFilterMax.getLayoutParams();
                     layoutParams.height = currentHeightMax;
                     relFilterMax.setLayoutParams(layoutParams);

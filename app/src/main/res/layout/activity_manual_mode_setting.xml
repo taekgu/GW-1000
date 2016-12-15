@@ -30,36 +30,47 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="horizontal"
-        android:layout_marginRight="45dp"
         android:layout_weight="0.2"
         android:weightSum="1">
         <RelativeLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:orientation="vertical"
-            android:layout_weight="0.17">
+            android:layout_weight="0.16">
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/manual_setting_selected_mode"
                 android:layout_marginLeft="50dp"
                 android:layout_marginTop="40dp"/>
+
         </RelativeLayout>
 
-        <RelativeLayout
+        <LinearLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:orientation="vertical"
             android:gravity="center_horizontal"
-            android:layout_weight="0.223">
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@drawable/manual_mode_pattern_1"
-                android:layout_marginTop="150dp"
-                android:onClick="onClicked"
-                android:id="@+id/manual_mode_setting_1"/>
+            android:layout_weight="0.223"
+            android:weightSum="100">
 
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="70">
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/manual_mode_pattern_1"
+                    android:layout_centerInParent="true"
+                    android:onClick="onClicked"
+                    android:id="@+id/manual_mode_setting_1"/>
+            </RelativeLayout>
+
+            <RelativeLayout
+               android:layout_width="match_parent"
+               android:layout_height="0dp"
+               android:layout_weight="30">
             <TextView
                 android:layout_width="70dp"
                 android:layout_height="50dp"
@@ -70,93 +81,129 @@
                 android:textColor="#00FFFF"
                 android:onClick="onClicked"
                 android:id="@+id/manual_mode_time_1"
-                android:layout_alignParentBottom="true"
-                android:layout_alignEnd="@+id/manual_mode_setting_1" />
-        </RelativeLayout>
-        <RelativeLayout
+                android:layout_centerInParent="true"/>
+           </RelativeLayout>
+        </LinearLayout>
+        <LinearLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:orientation="vertical"
             android:gravity="center_horizontal"
-            android:layout_weight="0.223">
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@drawable/manual_mode_pattern_1"
-                android:layout_marginTop="150dp"
-                android:layout_marginLeft="3dp"
-                android:onClick="onClicked"
-                android:id="@+id/manual_mode_setting_2" />
-            <TextView
-                android:layout_width="70dp"
-                android:layout_height="50dp"
-                android:gravity="center_horizontal"
-                android:layout_marginBottom="80dp"
-                android:layout_alignParentBottom="true"
-                android:layout_marginRight="5dp"
-                android:textSize="45dp"
-                android:text="00"
-                android:textColor="#00FFFF"
-                android:onClick="onClicked"
-                android:id="@+id/manual_mode_time_2" />
-        </RelativeLayout>
-        <RelativeLayout
+            android:layout_weight="0.206"
+            android:weightSum="100">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="70">
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/manual_mode_pattern_1"
+                    android:layout_centerInParent="true"
+                    android:onClick="onClicked"
+                    android:id="@+id/manual_mode_setting_2"/>
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="30">
+                <TextView
+                    android:layout_width="70dp"
+                    android:layout_height="50dp"
+                    android:gravity="center_horizontal"
+                    android:layout_marginBottom="78dp"
+                    android:textSize="45dp"
+                    android:text="00"
+                    android:textColor="#00FFFF"
+                    android:onClick="onClicked"
+                    android:id="@+id/manual_mode_time_2"
+                    android:layout_centerInParent="true"/>
+            </RelativeLayout>
+        </LinearLayout>
+        <LinearLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:orientation="vertical"
             android:gravity="center_horizontal"
-            android:layout_weight="0.223">
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@drawable/manual_mode_pattern_1"
-                android:layout_marginRight="29dp"
-                android:layout_marginTop="150dp"
-                android:onClick="onClicked"
-                android:id="@+id/manual_mode_setting_3" />
-            <TextView
-                android:layout_width="70dp"
-                android:layout_height="50dp"
-                android:gravity="center_horizontal"
-                android:layout_marginBottom="80dp"
-                android:layout_alignParentBottom="true"
-                android:textSize="45dp"
-                android:text="00"
-                android:textColor="#00FFFF"
-                android:onClick="onClicked"
-                android:id="@+id/manual_mode_time_3" />
-        </RelativeLayout>
-        <RelativeLayout
+            android:layout_weight="0.204"
+            android:weightSum="100">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="70">
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/manual_mode_pattern_1"
+                    android:layout_centerInParent="true"
+                    android:onClick="onClicked"
+                    android:id="@+id/manual_mode_setting_3"/>
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="30">
+
+                <TextView
+                    android:layout_width="70dp"
+                    android:layout_height="50dp"
+                    android:gravity="center_horizontal"
+                    android:textSize="45dp"
+                    android:text="00"
+                    android:textColor="#00FFFF"
+                    android:onClick="onClicked"
+                    android:id="@+id/manual_mode_time_3"
+                    android:layout_centerVertical="true"
+                    android:layout_centerHorizontal="true" />
+            </RelativeLayout>
+        </LinearLayout>
+        <LinearLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:orientation="vertical"
             android:gravity="center_horizontal"
-            android:layout_weight="0.161">
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/manual_mode_setting_save"
-                android:layout_marginTop="100dp"
-                android:background="@drawable/save_mode_off"/>
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
-                android:layout_below="@id/manual_mode_setting_save"
-                android:id="@+id/manual_mode_setting_back"
-                android:background="@drawable/button_circle_back_off"/>
-            <TextView
-                android:layout_width="70dp"
-                android:layout_height="50dp"
-                android:gravity="center_horizontal"
-                android:layout_alignParentBottom="true"
-                android:layout_marginBottom="80dp"
-                android:layout_marginLeft="10dp"
-                android:textSize="45dp"
-                android:text="00"
-                android:onClick="onClicked"
-                android:textColor="#00FFFF"
-                android:id="@+id/manual_mode_total" />
-        </RelativeLayout>
+            android:layout_weight="0.207">
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="70">
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="15dp"
+                    android:layout_below="@id/manual_mode_setting_save"
+                    android:id="@+id/manual_mode_setting_back"
+                    android:background="@drawable/button_circle_back_off"/>
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:id="@+id/manual_mode_setting_save"
+                    android:layout_marginTop="100dp"
+                    android:background="@drawable/save_mode_off"/>
+            </RelativeLayout>
+           <RelativeLayout
+               android:layout_width="match_parent"
+               android:layout_height="0dp"
+               android:layout_weight="30">
+               <TextView
+                   android:layout_width="70dp"
+                   android:layout_height="50dp"
+                   android:gravity="center_horizontal"
+                   android:textSize="45dp"
+                   android:text="00"
+                   android:onClick="onClicked"
+                   android:textColor="#00FFFF"
+                   android:id="@+id/manual_mode_total"
+                   android:layout_centerInParent="true"/>
+           </RelativeLayout>
+        </LinearLayout>
     </LinearLayout>
 </LinearLayout>

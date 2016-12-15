@@ -1,18 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/rel_main"
-    android:layout_width="match_parent"
+    android:layout_width="100dp"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:background="@android:color/transparent"
-    android:padding="20dp">
-
-    <View
-        android:id="@+id/view_filter_parent"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@android:color/transparent"
-        android:clickable="false" />
+    android:gravity="center"
+    android:background="@android:color/transparent">
 
     <View
         android:id="@+id/filter_main_view"
@@ -21,7 +13,7 @@
         android:layout_centerInParent="true"
         android:layout_marginBottom="20dp"
         android:layout_marginTop="20dp"
-        android:background="#2196f3" />
+        android:background="#00ffff" />
 
     <RelativeLayout
         android:id="@+id/rel_filter_min"
@@ -30,22 +22,18 @@
         android:layout_alignEnd="@+id/filter_main_view"
         android:layout_alignParentTop="true"
         android:layout_alignRight="@+id/filter_main_view"
-        android:layout_gravity="bottom"
-        android:layout_marginEnd="-11dp"
-        android:layout_marginRight="-11dp">
+        android:layout_marginRight="-11dp"
+        android:layout_marginEnd="-25dp"
+        android:layout_gravity="bottom">
 
 
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
             android:layout_alignParentBottom="true"
-            android:layout_marginEnd="10dp"
-            android:layout_marginRight="10dp"
-            android:layout_toLeftOf="@+id/oval_thumb_min"
-            android:layout_toStartOf="@+id/oval_thumb_min"
             android:background="@color/blue"
-            android:padding="6dp"
             android:text="00"
+            android:visibility="invisible"
             android:id="@+id/tv_filter_min" />
 
         <View
@@ -54,22 +42,20 @@
             android:layout_height="match_parent"
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
-            android:layout_marginEnd="10.5dp"
-            android:layout_marginRight="10.5dp"
-            android:layout_marginTop="10dp"
+            android:layout_marginRight="23.8dp"
+            android:layout_marginTop="20dp"
             android:background="@color/grey" />
 
 
         <View
             android:id="@+id/oval_thumb_min"
-            android:layout_width="22dp"
-            android:layout_height="22dp"
+            android:layout_width="50dp"
+            android:layout_height="20dp"
+            android:layout_marginLeft="11dp"
             android:layout_alignParentBottom="true"
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
-            android:layout_centerInParent="true"
-            android:background="@drawable/oval_shape"
-
+            android:background="@drawable/range_bar_thumb"
             />
 
     </RelativeLayout>
@@ -84,43 +70,48 @@
         android:layout_alignStart="@+id/filter_main_view"
         android:layout_gravity="bottom"
         android:layout_marginLeft="-11dp"
-        android:layout_marginStart="-11dp">
+        android:layout_marginStart="-25dp">
 
 
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:layout_marginStart="10dp"
-            android:layout_toEndOf="@+id/oval_thumb_max"
-            android:layout_toRightOf="@+id/oval_thumb_max"
-            android:background="@color/blue"
-            android:padding="6dp"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
             android:text="100"
+            android:visibility="invisible"
             android:id="@+id/tv_filter_max" />
 
         <View
             android:id="@+id/view_inactive_line_bottom"
             android:layout_width="2dp"
             android:layout_height="match_parent"
-            android:layout_marginBottom="10dp"
-            android:layout_marginLeft="10.5dp"
-            android:layout_marginStart="10.5dp"
+            android:layout_marginBottom="20dp"
+            android:layout_marginLeft="23.8dp"
             android:layout_marginTop="11dp"
             android:background="@color/grey" />
 
 
         <View
             android:id="@+id/oval_thumb_max"
-            android:layout_width="22dp"
-            android:layout_height="22dp"
+            android:layout_width="50dp"
+            android:layout_height="20dp"
+            android:layout_marginRight="11dp"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
-            android:background="@drawable/alarm_bar_control"
+            android:background="@drawable/range_bar_thumb"
 
             />
 
+
     </RelativeLayout>
+
+    <View
+        android:id="@+id/view_filter_parent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@android:color/transparent"
+        android:clickable="false"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true" />
 
 </RelativeLayout>

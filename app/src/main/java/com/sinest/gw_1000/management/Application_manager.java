@@ -57,7 +57,8 @@ public class Application_manager extends Application {
     // 매뉴얼 모드 man_pattern_*_*
     public final static String MANUAL_MODE_PATTERN_ = "man_pattern_"; // man_pattern_(1-5)_(
     public final static String MANUAL_MODE_TIME_ = "man_time_";
-
+    public final static String MANUAL_MODE_SECTION_MIN_ = "man_section_min_";
+    public final static String MANUAL_MODE_SECTION_MAX_ = "man_section_max_"; //man
     // 언어 [KOR, ENG, CHI]
     public static int LANGUAGE = 0;
 

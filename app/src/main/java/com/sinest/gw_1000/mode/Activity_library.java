@@ -9,12 +9,10 @@ import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.TextClock;
 import android.widget.Toast;
 
 import com.sinest.gw_1000.R;
 import com.sinest.gw_1000.management.Application_manager;
-import com.sinest.gw_1000.mode.utils.CustomSeekBar;
 import com.sinest.gw_1000.mode.utils.CustomTextClock;
 
 public class Activity_library extends AppCompatActivity{
@@ -31,7 +29,6 @@ public class Activity_library extends AppCompatActivity{
     int mode_setting = 0;
 
     CustomTextClock clock;
-    private CustomSeekBar customSeekBar = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,7 +77,6 @@ public class Activity_library extends AppCompatActivity{
         ImageView library_save_button = (ImageView)findViewById(R.id.library_save_button);
         ImageView library_set_button = (ImageView)findViewById(R.id.library_set_button);
 
-        customSeekBar = (CustomSeekBar)findViewById(R.id.customSeekBar);
 
         library_back_button.setOnTouchListener(mTouchEvent);
         library_save_button.setOnTouchListener(mTouchEvent);

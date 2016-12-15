@@ -9,7 +9,6 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.SeekBar;
 
@@ -19,6 +18,7 @@ import com.sinest.gw_1000.mode.utils.CustomSeekBar;
 
 public class Activity_manual_mode_pattern_popup extends Activity implements CustomSeekBar.OnRangeBarChangeListener  {
     int patternNum, ImageResourceId;
+    int section_min, section_max;
     Intent intent;
     ImageView img;
     SeekBar seekBar;
@@ -33,8 +33,8 @@ public class Activity_manual_mode_pattern_popup extends Activity implements Cust
         setContentView(R.layout.activity_manual_mode_pattern_popup);
         Application_manager.setFullScreen(this);
 
-        Button manual_popup_save = (Button)findViewById(R.id.manual_popup_save);
-        Button manual_popup_back = (Button)findViewById(R.id.manual_popup_back);
+        ImageView manual_popup_save = (ImageView) findViewById(R.id.manual_popup_save);
+        ImageView manual_popup_back = (ImageView) findViewById(R.id.manual_popup_back);
 
         intent = getIntent();
         int resourceId;
@@ -45,7 +45,7 @@ public class Activity_manual_mode_pattern_popup extends Activity implements Cust
 
         for(int i=1; i<=12; i++){
             resourceId = getResources().getIdentifier("pattern_"+i,"id","com.sinest.gw_1000");
-            Button btn = (Button)findViewById(resourceId);
+            ImageView btn = (ImageView) findViewById(resourceId);
             btn.setOnClickListener(mClickListener);
         }
 
@@ -57,25 +57,25 @@ public class Activity_manual_mode_pattern_popup extends Activity implements Cust
     private View.OnTouchListener mTouchEvent = new View.OnTouchListener() {
         @Override
         public boolean onTouch(View view, MotionEvent motionEvent) {
-            Button b;
+            ImageView b;
             int action = motionEvent.getAction();
             int id = view.getId();
 
             if (action == MotionEvent.ACTION_DOWN) {
                 switch (id) {
                     case R.id.manual_popup_save:
-                        b = (Button) view;
+                        b = (ImageView) view;
                         b.setBackgroundResource(R.drawable.save_mode_on);
                         break;
                     case R.id.manual_popup_back:
-                        b = (Button) view;
+                        b = (ImageView) view;
                         b.setBackgroundResource(R.drawable.button_circle_back_on);
                         break;
                 }
             } else if (action == MotionEvent.ACTION_UP) {
                 switch (id) {
                     case R.id.manual_popup_save:
-                        b = (Button) view;
+                        b = (ImageView) view;
                         SharedPreferences sharedPreferences = getSharedPreferences(Application_manager.NAME_OF_SHARED_PREF, 0);
                         SharedPreferences.Editor editor = sharedPreferences.edit();
 
@@ -83,11 +83,13 @@ public class Activity_manual_mode_pattern_popup extends Activity implements Cust
                         Log.i("modeNum", Integer.toString(intent.getIntExtra("modeNum",0)));
                         Log.i("patternNum", Integer.toString(patternNum));
                         editor.putInt(Application_manager.MANUAL_MODE_PATTERN_ + intent.getIntExtra("modeNum",0) + "_" + intent.getIntExtra("i",0), patternNum);
+                        editor.putInt(Application_manager.MANUAL_MODE_SECTION_MIN_ + intent.getIntExtra("modeNum",0) + "_" + intent.getIntExtra("i",0), section_min);
+                        editor.putInt(Application_manager.MANUAL_MODE_SECTION_MAX_ + intent.getIntExtra("modeNum",0) + "_" + intent.getIntExtra("i",0), section_max);
                         editor.commit();
                         finish();
                         break;
                     case R.id.manual_popup_back:
-                        b = (Button) view;
+                        b = (ImageView) view;
                         b.setBackgroundResource(R.drawable.button_circle_back_off);
                         finish();
                         break;
@@ -117,6 +119,8 @@ public class Activity_manual_mode_pattern_popup extends Activity implements Cust
 
     @Override
     public void onRangeBarChange(int min, int max) {
+        section_min = min;
+        section_max = max;
         Log.d("TAG","min:"+min);
         Log.d("TAG","max:"+max);
     }
