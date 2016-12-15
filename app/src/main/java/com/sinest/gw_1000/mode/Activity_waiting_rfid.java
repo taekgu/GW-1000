@@ -569,7 +569,7 @@ public class Activity_waiting_rfid extends AppCompatActivity {
                     case R.id.waiting_rfid_dooropen_button:
                         background = (LinearLayout)findViewById(R.id.waiting_rfid_background);
                         view.setBackgroundResource(R.drawable.door_open_off);
-                        background.setBackgroundResource(R.drawable.waiting_dooropen_backimage);
+                        background.setBackgroundResource(R.drawable.waiting_rfid_dooropen_back);
                         isDoorOpened = true;
 
                         val = 0x01;
@@ -581,7 +581,7 @@ public class Activity_waiting_rfid extends AppCompatActivity {
                     case R.id.waiting_rfid_doorclose_button:
                         background = (LinearLayout)findViewById(R.id.waiting_rfid_background);
                         view.setBackgroundResource(R.drawable.door_close_off);
-                        background.setBackgroundResource(R.drawable.waiting_doorclose_backimage);
+                        background.setBackgroundResource(R.drawable.waiting_rfid_doorclose_back);
                         isDoorOpened = false;
 
                         val = 0x02;
