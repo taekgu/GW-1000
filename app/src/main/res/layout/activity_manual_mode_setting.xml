@@ -177,17 +177,18 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerHorizontal="true"
-                    android:layout_marginTop="15dp"
-                    android:layout_below="@id/manual_mode_setting_save"
-                    android:id="@+id/manual_mode_setting_back"
-                    android:background="@drawable/button_circle_back_off"/>
+                    android:id="@+id/manual_mode_setting_save"
+                    android:layout_marginTop="100dp"
+                    android:background="@drawable/save_mode_off"/>
                 <Button
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerHorizontal="true"
-                    android:id="@+id/manual_mode_setting_save"
-                    android:layout_marginTop="100dp"
-                    android:background="@drawable/save_mode_off"/>
+                    android:layout_marginTop="15dp"
+                    android:layout_below="@id/manual_mode_setting_save"
+                    android:id="@+id/manual_mode_setting_back"
+                    android:background="@drawable/button_circle_back_off"/>
+
             </RelativeLayout>
            <RelativeLayout
                android:layout_width="match_parent"
