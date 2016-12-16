@@ -1,9 +1,14 @@
 package com.sinest.gw_1000.splash;
 
+import android.Manifest;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
+import android.os.Handler;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -21,6 +26,7 @@ import static java.lang.reflect.Array.getBoolean;
 
 public class Activity_booting extends AppCompatActivity {
 
+    private final static int MY_PERMISSIONS_ACCESS_COARSE_LOCATION = 1000;
     public static final int REQUEST_CODE_ANOTHER = 1001;
     Communicator communicator;
 
@@ -41,6 +47,7 @@ public class Activity_booting extends AppCompatActivity {
         frameAnimation = (AnimationDrawable) iv.getBackground();
         frameAnimation.start();
 
+        permissionCheck();
 
         thread = new Thread(new Runnable() {
             @Override
@@ -100,6 +107,50 @@ public class Activity_booting extends AppCompatActivity {
                 startActivityForResult(intent, REQUEST_CODE_ANOTHER);
                 finish();
             }
+        }
+    }
+
+    public void permissionCheck() {
+
+        // Assume thisActivity is the current activity
+        int permissionCheck = ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION);
+
+        // 권한 없음
+        if (permissionCheck == PackageManager.PERMISSION_DENIED) {
+
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_COARSE_LOCATION}, MY_PERMISSIONS_ACCESS_COARSE_LOCATION);
+        }
+        // 권한 있음
+        else {
+
+            Application_manager.getCommunicator().getWifiConnector().permission = 1;
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode,
+                                           String permissions[], int[] grantResults) {
+        switch (requestCode) {
+            case MY_PERMISSIONS_ACCESS_COARSE_LOCATION: {
+                // If request is cancelled, the result arrays are empty.
+                if (grantResults.length > 0
+                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+
+                    // permission was granted, yay! Do the
+                    // contacts-related task you need to do.
+                    Application_manager.getCommunicator().getWifiConnector().permission = 1;
+
+                } else {
+
+                    // permission denied, boo! Disable the
+                    // functionality that depends on this permission.
+                    Application_manager.getCommunicator().getWifiConnector().permission = 0;
+                }
+                return;
+            }
+
+            // other 'case' lines to check for other
+            // permissions this app might request
         }
     }
 }

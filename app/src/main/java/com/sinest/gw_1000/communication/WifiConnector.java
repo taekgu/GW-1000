@@ -1,9 +1,11 @@
 package com.sinest.gw_1000.communication;
 
+import android.Manifest;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.pm.PackageManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.wifi.ScanResult;
@@ -11,12 +13,17 @@ import android.net.wifi.WifiConfiguration;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
 import android.os.Handler;
+import android.os.Message;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.sinest.gw_1000.management.Application_manager;
+import com.sinest.gw_1000.mode.Activity_waiting;
+
 import java.io.IOException;
 import java.net.Socket;
-import java.nio.channels.SocketChannel;
 import java.util.List;
 
 /**
@@ -25,15 +32,25 @@ import java.util.List;
 
 public class WifiConnector {
 
+    private final static int SERVER_CONNECTED     = 1001;
+    private final static int SERVER_DISCONNECTED  = 1002;
+    private final static int WIFI_CONNECTED       = 1003;
+    private final static int WIFI_DISCONNECTED    = 1004;
+
     private static final String AP_KEYWORD  = "MALAB";
     private static final String AP_PSWD     = "malab123";
+    private static final String IP_ADDRESS  = "192.168.0.22";
+    private static final int PORT           = 5005;
 
-    private static final String IP_ADDRESS  = "192.168.0.1";
-    private static final int PORT           = 20002;
+    //private static final String AP_KEYWORD  = "GW1000";
+    //private static final String AP_PSWD     = "1234567890";
+    //private static final String IP_ADDRESS  = "192.168.0.1";
+    //private static final int PORT           = 20002;
     private SocketManager socketManager;
     private Handler handler_data;
 
     private Context context;
+    private Handler handler_for_toast;
 
     private boolean isRun = false; // 반복 위한 플래그
     private boolean isSet = true; // 스레드가 정상 종료 되었는지
@@ -49,6 +66,8 @@ public class WifiConnector {
 
     private Thread thread;
 
+    public int permission = 0;
+
     public WifiConnector(Context _context, Handler _handler_data) {
 
         context = _context;
@@ -58,7 +77,10 @@ public class WifiConnector {
 
     private void init() {
 
+        setHandler_for_toast();
+
         Log.i("JW", "WifiConnector - init()");
+
         wifiManager = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);
 
         // 와이파이 사용가능여부
@@ -74,9 +96,59 @@ public class WifiConnector {
                 wifiManager.setWifiEnabled(true);
             }
         }
+        else {
+
+            // 와이파이 연결되어있으면 바로 서버에 연결
+            ConnectivityManager connectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+            isConnected = connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI).isConnected();
+
+            if (isConnected) {
+
+                if (!isConnected_server && isSet) {
+
+                    setThread();
+                    isRun = true;
+                    thread.start();
+                    isSet = false;
+                }
+            }
+        }
 
         // 스캔 시작
         wifiManager.startScan();
+    }
+
+    private void setHandler_for_toast() {
+
+        handler_for_toast = new Handler() {
+
+            @Override
+            public void handleMessage(Message msg) {
+                super.handleMessage(msg);
+
+                switch (msg.what) {
+
+                    case SERVER_CONNECTED:
+
+                        Log.i("JW", "Socket is connected");
+                        Toast.makeText(context, "서버 연결 완료", Toast.LENGTH_SHORT).show();
+                        break;
+                    case SERVER_DISCONNECTED:
+
+                        break;
+                    case WIFI_CONNECTED:
+
+                        Log.i("JW", "WIFI 연결 완료");
+                        Toast.makeText(context, "WIFI 연결 완료", Toast.LENGTH_SHORT).show();
+                        break;
+                    case WIFI_DISCONNECTED:
+
+                        Log.i("JW", "WIFI 연결 해제");
+                        Toast.makeText(context, "WIFI 연결 해제", Toast.LENGTH_SHORT).show();
+                        break;
+                }
+            }
+        };
     }
 
     private void setThread() {
@@ -98,7 +170,8 @@ public class WifiConnector {
 
                                 if (socket.isConnected()) {
 
-                                    Log.i("JW", "Socket is connected");
+                                    handler_for_toast.sendEmptyMessage(SERVER_CONNECTED);
+
                                     isConnected_server = true;
                                     isRun = false;
 
@@ -116,7 +189,7 @@ public class WifiConnector {
 
                         } catch (IOException e) {
 
-                            //Log.i("JW", "서버에 연결 실패 :" + e.getMessage() + ", " + e.getCause());
+                            Log.i("JW", "서버에 연결 실패 :" + e.getMessage() + ", " + e.getCause());
                         }
                     }
                 }
@@ -154,23 +227,26 @@ public class WifiConnector {
                         // 와이파이 스캔 결과 감지 시: 리스트에서 지정 AP SSID 검색해 저장
                         case WifiManager.SCAN_RESULTS_AVAILABLE_ACTION:
 
-                            if (!isConnected) {
+                            if (permission == 1) {
 
-                                List<ScanResult> scanResults = wifiManager.getScanResults();
-                                Log.i("JW", "와이파이 목록 스캔");
+                                if (!isConnected) {
 
-                                for (int i = 0; i < scanResults.size(); i++) {
+                                    List<ScanResult> scanResults = wifiManager.getScanResults();
+                                    Log.i("JW", "와이파이 목록 스캔");
 
-                                    if (scanResults.get(i).SSID.contains(AP_KEYWORD)) {
+                                    for (int i = 0; i < scanResults.size(); i++) {
 
-                                        Log.i("JW", "지정 AP 탐색 완료");
-                                        ScanResult ap = scanResults.get(i);
+                                        if (scanResults.get(i).SSID.contains(AP_KEYWORD)) {
 
-                                        ssid = ap.SSID;
-                                        bssid = ap.BSSID;
+                                            Log.i("JW", "지정 AP 탐색 완료");
+                                            ScanResult ap = scanResults.get(i);
 
-                                        tryToConnect();
-                                        break;
+                                            ssid = ap.SSID;
+                                            bssid = ap.BSSID;
+
+                                            tryToConnect();
+                                            break;
+                                        }
                                     }
                                 }
                             }
@@ -184,8 +260,7 @@ public class WifiConnector {
                             // 와이파이 연결 되면 서버 소켓에 연결 시도
                             if (isConnected) {
 
-                                Log.i("JW", "WIFI 연결 완료");
-                                Toast.makeText(context, "WIFI 연결 완료", Toast.LENGTH_SHORT).show();
+                                handler_for_toast.sendEmptyMessage(WIFI_CONNECTED);
 
                                 if (!isConnected_server && isSet) {
 
@@ -198,8 +273,8 @@ public class WifiConnector {
                             // 와이파이 연결 끊어지면 서버 소켓 플래그 비활성화
                             else {
 
-                                Log.i("JW", "WIFI 연결 해제");
-                                Toast.makeText(context, "WIFI 연결 해제", Toast.LENGTH_SHORT).show();
+                                handler_for_toast.sendEmptyMessage(WIFI_DISCONNECTED);
+
                                 isConnected_server = false;
                                 isRun = false;
 
@@ -247,20 +322,21 @@ public class WifiConnector {
             wfc.SSID = "\"" + ssid + "\"";
 
             // web 사용 시
-/*
-        wfc.hiddenSSID = true;
-        wfc.wepKeys[0]= "\""+AP_PSWD+"\"";
-        wfc.allowedAuthAlgorithms.set(WifiConfiguration.AuthAlgorithm.SHARED);
-        wfc.allowedGroupCiphers.set(WifiConfiguration.GroupCipher.CCMP);
-        wfc.allowedGroupCiphers.set(WifiConfiguration.GroupCipher.TKIP);
-        wfc.allowedGroupCiphers.set(WifiConfiguration.GroupCipher.WEP40);
-        wfc.allowedGroupCiphers.set(WifiConfiguration.GroupCipher.WEP104);
-        wfc.allowedKeyManagement.set(WifiConfiguration.KeyMgmt.NONE);
-        wfc.wepTxKeyIndex = 0;
-        wfc.priority = 40;
-        wfc.BSSID = bssid;
-*/
+            wfc.hiddenSSID = true;
+            wfc.wepKeys[0] = "\"" + AP_PSWD + "\"";
+            wfc.allowedAuthAlgorithms.set(WifiConfiguration.AuthAlgorithm.SHARED);
+            wfc.allowedGroupCiphers.set(WifiConfiguration.GroupCipher.CCMP);
+            wfc.allowedGroupCiphers.set(WifiConfiguration.GroupCipher.TKIP);
+            wfc.allowedGroupCiphers.set(WifiConfiguration.GroupCipher.WEP40);
+            wfc.allowedGroupCiphers.set(WifiConfiguration.GroupCipher.WEP104);
+            wfc.allowedKeyManagement.set(WifiConfiguration.KeyMgmt.NONE);
+            wfc.wepTxKeyIndex = 0;
+            wfc.priority = 40;
+            wfc.BSSID = bssid;
 
+
+            // WSK 사용 시
+            /*
             wfc.preSharedKey = "\"" + AP_PSWD + "\"";
             wfc.hiddenSSID = true;
             wfc.allowedAuthAlgorithms.set(WifiConfiguration.AuthAlgorithm.OPEN);
@@ -272,6 +348,7 @@ public class WifiConnector {
             wfc.allowedPairwiseCiphers.set(WifiConfiguration.PairwiseCipher.CCMP);
             wfc.status = WifiConfiguration.Status.ENABLED;
             wfc.BSSID = bssid;
+            */
         }
 
         int networkId = wifiManager.addNetwork(wfc);

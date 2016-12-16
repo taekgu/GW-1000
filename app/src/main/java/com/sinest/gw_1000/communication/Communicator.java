@@ -52,6 +52,11 @@ public class Communicator {
 
         init(context);
     }
+
+    public WifiConnector getWifiConnector() {
+
+        return wifiConnector;
+    }
 /*
     public static Communicator getInstance() {
 
