@@ -85,7 +85,7 @@ public class CustomTextClock extends LinearLayout {
 
     public void doInit_time()
     {
-        p_time = Application_manager.getText();
+        String p_time = Application_manager.getText();
         String g_time = Application_manager.m_gap_clock;
         boolean t_f = Application_manager.m_gap_clock_f;
 

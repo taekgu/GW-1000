@@ -49,11 +49,12 @@ public class Activity_waiting extends AppCompatActivity {
     ImageView waiting_library_button;
     ImageView waiting_setting_button;
 
-    CustomTextClock clock;
+    TextView clock;
 
     private int mode = 0; // 0: waiting, 1: working
 
     boolean flag = false;
+    boolean isRun;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,10 +66,10 @@ public class Activity_waiting extends AppCompatActivity {
 
         // 폰트 설정
         Typeface tf = Typeface.createFromAsset(getAssets(), "fonts/digital.ttf");
-        //TextClock clock = (TextClock) findViewById(R.id.waiting_clock);
-        //clock.setTypeface(tf);
-        clock = (CustomTextClock) findViewById(R.id.waiting_clock);
+        clock = (TextView) findViewById(R.id.waiting_clock);
+        clock.setTypeface(tf);
         Log.v("sb","back_clock : " + Application_manager.getText());
+        clock.setText(Application_manager.doInit_time());
 
         // 산소 농도, 압력, 시간 값 불러오기
         SharedPreferences sharedPreferences = getSharedPreferences(Application_manager.NAME_OF_SHARED_PREF, 0);
@@ -136,7 +137,9 @@ public class Activity_waiting extends AppCompatActivity {
         Application_manager.setFullScreen(this);
 
         registReceiver();
-        clock.registReceiver();
+        //clock.registReceiver();
+        isRun = true;
+        //doInit_time();
 
         SharedPreferences sharedPreferences = getSharedPreferences(Application_manager.NAME_OF_SHARED_PREF, 0);
 
@@ -181,7 +184,8 @@ public class Activity_waiting extends AppCompatActivity {
     protected void onPause() {
         super.onPause();
         unregistReceiver();
-        clock.unregistReceiver();
+        isRun = false;
+        //clock.unregistReceiver();
 
         SharedPreferences sharedPreferences = getSharedPreferences(Application_manager.NAME_OF_SHARED_PREF, 0);
         SharedPreferences.Editor editor = sharedPreferences.edit();
@@ -387,6 +391,35 @@ public class Activity_waiting extends AppCompatActivity {
                 }
             }
         };
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        isRun = true;
+        Thread myThread = new Thread(new Runnable() {
+            public void run() {
+                while (true) {
+                    try {
+                        handler.sendMessage(handler.obtainMessage());
+                        Thread.sleep(1000);
+                    } catch (Throwable t) {
+                    }
+                }
+            }
+        });
+        myThread.start();
+    }
+
+    Handler handler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            updateThread();
+        }
+    };
+
+    private void updateThread() {
+        clock.setText(Application_manager.doInit_time());
     }
 
     private View.OnTouchListener mTouchEvent = new View.OnTouchListener() {

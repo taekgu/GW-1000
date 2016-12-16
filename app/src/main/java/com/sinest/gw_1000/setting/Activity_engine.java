@@ -54,7 +54,7 @@ public class Activity_engine extends AppCompatActivity {
     Byte inverter = 0x00;
 
     Communicator communicator;
-    CustomTextClock clock;
+    TextView clock;
 
     private boolean isRun = false;
 
@@ -66,7 +66,8 @@ public class Activity_engine extends AppCompatActivity {
 
         // 폰트 설정
         Typeface tf = Typeface.createFromAsset(getAssets(), "fonts/digital.ttf");
-        clock = (CustomTextClock) findViewById(R.id.textClock_e);
+        clock = (TextView) findViewById(R.id.textClock_e);
+        clock.setTypeface(tf);
 
         check = getIntent();
         check_activity = check.getStringExtra("activity");
@@ -425,16 +426,6 @@ public class Activity_engine extends AppCompatActivity {
         hidden_e_3.setOnClickListener(listener);
         hidden_e_4.setOnClickListener(listener);
 
-        /*
-        eng_door_open.setOnClickListener(listener);
-        eng_door_close.setOnClickListener(listener);
-
-        eng_b_left.setOnClickListener(listener);
-        eng_b_right.setOnClickListener(listener);
-        eng_b_back.setOnClickListener(listener);
-        eng_r_left.setOnClickListener(listener);
-        eng_r_right.setOnClickListener(listener);
-*/
         eng_b_back.setOnTouchListener(mTouchEvent);
         eng_b_left.setOnTouchListener(mTouchEvent);
         eng_b_right.setOnTouchListener(mTouchEvent);
@@ -554,6 +545,7 @@ public class Activity_engine extends AppCompatActivity {
     };
 
     private void updateThread() {
+        clock.setText(Application_manager.doInit_time());
         operation_t.setText(""+ Application_manager.getRunningTime()/60);
     }
 
@@ -567,19 +559,13 @@ public class Activity_engine extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         Application_manager.setFullScreen(this);
-
-        clock.registReceiver();
-        if(Application_manager.t_flag[1] == 1)
-        {
-            clock.doInit_time();
-            Application_manager.t_flag[1] = 0;
-        }
+        isRun = true;
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        clock.unregistReceiver();
+        isRun = false;
     }
 
     void setZerosWaterPressure()

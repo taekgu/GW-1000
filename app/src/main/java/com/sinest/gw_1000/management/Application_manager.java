@@ -278,6 +278,78 @@ public class Application_manager extends Application {
         editor.commit();
     }
 
+
+    public static String doInit_time()
+    {
+        String p_time = Application_manager.getText();
+        String g_time = Application_manager.m_gap_clock;
+        boolean t_f = Application_manager.m_gap_clock_f;
+
+        Log.v("ss","p_time : "+p_time);
+        Log.v("ss","g_time : "+g_time);
+
+        String aa = p_time.substring(0,2);
+        String bb = p_time.substring(3,5);
+        int p_time_t = Integer.parseInt(aa);
+        int p_time_m = Integer.parseInt(bb);
+
+        String ga = g_time.substring(0,2);
+        String gb = g_time.substring(3,5);
+        int g_time_t = Integer.parseInt(ga);
+        int g_time_m = Integer.parseInt(gb);
+
+        int t = 0;
+        int m = 0;
+
+        // +
+        if(t_f){
+            t = p_time_t + g_time_t;
+            m = p_time_m + g_time_m;
+            // -
+        }else{
+            if(p_time_t > g_time_t & p_time_m < g_time_m){
+                t = (p_time_t - g_time_t) - 1;
+                m = 60 + p_time_m - g_time_m;
+            }
+            else{
+                t = p_time_t - g_time_t;
+                m = p_time_m - g_time_m;
+            }
+        }
+
+        if(m > 60){
+            t = t + 1;
+            m = m - 60;
+        }
+        if(t > 24 ){
+            t = t - 24;
+        }
+
+        String doTime_t;
+        String doTime_m;
+
+        if(t < 10){
+            doTime_t = "0"+String.valueOf(t);
+        }
+        else{
+            doTime_t = String.valueOf(t);
+        }
+
+        if(m < 10){
+            doTime_m = "0"+String.valueOf(m);
+        }
+        else{
+            doTime_m = String.valueOf(m);
+        }
+
+        String doTime = doTime_t+":"+doTime_m;
+
+        Log.v("ss","doTime : "+ doTime);
+
+        return doTime;
+        //clock.setText(doTime);
+    }
+
     synchronized public static int getRunningTime() {
 
         return runningTime;

@@ -3,6 +3,8 @@ package com.sinest.gw_1000.setting;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Typeface;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -10,6 +12,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.SeekBar;
+import android.widget.TextClock;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -58,7 +61,7 @@ public class Activity_setting extends AppCompatActivity {
     Button hidden_s_3;
     Button hidden_s_4;
 
-    CustomTextClock s_clock;
+    TextView s_clock;
 
     boolean[] button_flag = new boolean[12];
     boolean[] button2_flag = {true, true, true, true};
@@ -109,7 +112,9 @@ public class Activity_setting extends AppCompatActivity {
 
         // 폰트 설정
         tf = Typeface.createFromAsset(getAssets(), "fonts/digital.ttf");
-        s_clock = (CustomTextClock) findViewById(R.id.textClock_s);
+        s_clock = (TextView) findViewById(R.id.textClock_s);
+        s_clock.setTypeface(tf);
+        s_clock.setText(Application_manager.doInit_time());
 
         flag = true;
 
@@ -297,6 +302,7 @@ public class Activity_setting extends AppCompatActivity {
         //intent_rfid2.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_SINGLE_TOP);
 
         time = new Intent(this, Activity_time.class);
+
 
         //flag = true;
 
@@ -761,14 +767,44 @@ public class Activity_setting extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         Application_manager.setFullScreen(this);
+        isRun = true;
 
-        s_clock.registReceiver();
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        s_clock.unregistReceiver();
+        isRun = false;
+
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        isRun = true;
+        Thread myThread = new Thread(new Runnable() {
+            public void run() {
+                while (true) {
+                    try {
+                        handler.sendMessage(handler.obtainMessage());
+                        Thread.sleep(1000);
+                    } catch (Throwable t) {
+                    }
+                }
+            }
+        });
+        myThread.start();
+    }
+
+    Handler handler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            updateThread();
+        }
+    };
+
+    private void updateThread() {
+        s_clock.setText(Application_manager.doInit_time());
     }
 
     @Override

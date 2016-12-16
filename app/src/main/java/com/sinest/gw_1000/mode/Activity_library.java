@@ -4,11 +4,14 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.sinest.gw_1000.R;
@@ -27,8 +30,9 @@ public class Activity_library extends AppCompatActivity{
     int[] library_map = new int[20];
 
     int mode_setting = 0;
+    boolean isRun;
 
-    CustomTextClock clock;
+    TextView clock;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,7 +42,9 @@ public class Activity_library extends AppCompatActivity{
 
         // 폰트 설정
         Typeface tf = Typeface.createFromAsset(getAssets(), "fonts/digital.ttf");
-        clock = (CustomTextClock) findViewById(R.id.library_clock);
+        clock = (TextView) findViewById(R.id.library_clock);
+        clock.setTypeface(tf);
+        clock.setText(Application_manager.doInit_time());
 
         for (int i=0; i<20; i++) {
 
@@ -88,19 +94,42 @@ public class Activity_library extends AppCompatActivity{
         super.onResume();
         Application_manager.setFullScreen(this);
 
-        clock.registReceiver();
-        if(Application_manager.t_flag[1] == 1)
-        {
-            clock.doInit_time();
-            Application_manager.t_flag[1] = 0;
-        }
         change_mode(mode_setting);
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        clock.unregistReceiver();
+
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        isRun = true;
+        Thread myThread = new Thread(new Runnable() {
+            public void run() {
+                while (true) {
+                    try {
+                        handler.sendMessage(handler.obtainMessage());
+                        Thread.sleep(1000);
+                    } catch (Throwable t) {
+                    }
+                }
+            }
+        });
+        myThread.start();
+    }
+
+    Handler handler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            updateThread();
+        }
+    };
+
+    private void updateThread() {
+        clock.setText(Application_manager.doInit_time());
     }
 
     private View.OnTouchListener mTouchEvent = new View.OnTouchListener() {
