@@ -37,15 +37,15 @@ public class WifiConnector {
     private final static int WIFI_CONNECTED       = 1003;
     private final static int WIFI_DISCONNECTED    = 1004;
 
-    private static final String AP_KEYWORD  = "MALAB";
-    private static final String AP_PSWD     = "malab123";
-    private static final String IP_ADDRESS  = "192.168.0.22";
-    private static final int PORT           = 5005;
+    //private static final String AP_KEYWORD  = "MALAB";
+    //private static final String AP_PSWD     = "malab123";
+    //private static final String IP_ADDRESS  = "192.168.0.22";
+    //private static final int PORT           = 5005;
 
-    //private static final String AP_KEYWORD  = "GW1000";
-    //private static final String AP_PSWD     = "1234567890";
-    //private static final String IP_ADDRESS  = "192.168.0.1";
-    //private static final int PORT           = 20002;
+    private static final String AP_KEYWORD  = "GW1000";
+    private static final String AP_PSWD     = "1234567890";
+    private static final String IP_ADDRESS  = "192.168.0.1";
+    private static final int PORT           = 20002;
     private SocketManager socketManager;
     private Handler handler_data;
 
