@@ -717,8 +717,6 @@ public class Activity_setting extends AppCompatActivity {
 
                         break;
                     case R.id.textClock_s:
-                        Application_manager.setTime_gap_n((String) s_clock.getText());
-                        Log.v("sb","s_clock : "+ s_clock.getText());
                         startActivity(time);
                 }
             } else if (action == MotionEvent.ACTION_UP) {
@@ -765,12 +763,6 @@ public class Activity_setting extends AppCompatActivity {
         Application_manager.setFullScreen(this);
 
         s_clock.registReceiver();
-        if(Application_manager.t_flag[2]== 1)
-        {
-            s_clock.doInit_time();
-            Application_manager.t_flag[2] = 0;
-        }
-
     }
 
     @Override

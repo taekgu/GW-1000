@@ -26,7 +26,11 @@ public class Application_manager extends Application {
     // time
     public static String s_time = "00:00";
     public static String s_time_gap_t = "00:00";
+
     public static String s_time_gap_n = "00:00";
+    public static String m_back_clock = "00:00";
+    public static String m_gap_clock = "00:00";
+    public static boolean m_gap_clock_f = true;
 
     public static int gap_t = 0;
     public static int gap_m = 0;
@@ -46,6 +50,7 @@ public class Application_manager extends Application {
 
     // 시간차이
     public final static String TIME_GAP = "time_gap";
+    public final static String TIME_GAP_F = "time_gap_f";
 
     // 대기모드 동작시간
    // public final static String WAITING_WORKING_TIME = "waiting_working_time";
@@ -111,6 +116,14 @@ public class Application_manager extends Application {
         mgr.getDefaultDisplay().getMetrics(metrics);
         Log.i("JW", "densityDPI = " + metrics.densityDpi);
 
+        //시간차 저장
+        SharedPreferences sharedPreferences = context.getSharedPreferences(NAME_OF_SHARED_PREF, 0);
+        m_gap_clock = sharedPreferences.getString(TIME_GAP,"00:00");
+        m_gap_clock_f = sharedPreferences.getBoolean(TIME_GAP_F,true);
+        Log.v("ss","m_gap_clock : "+m_gap_clock);
+        Log.v("ss","m_gap_clock_f : "+m_gap_clock_f);
+
+
         // 어플 시작 시 이전 time gap 가져와서 변수에 넣기
     }
 
@@ -135,12 +148,40 @@ public class Application_manager extends Application {
         return s_time_gap_n;
     }
 
-    synchronized public static void setTime_gap_n(String n_time){
-        t_flag[0] = 1;
-        t_flag[1] = 1;
-        t_flag[2] = 1;
-        t_flag[3] = 1;
-        s_time_gap_n = n_time;
+    synchronized public static String getText(){
+
+        String doTime_tt;
+        String doTime_mm;
+
+        long r_time = System.currentTimeMillis();
+        //DateFormat df = new SimpleDateFormat("HH:mm:ss");
+        int r_t = (int)((r_time/1000/60/60)%24)+9;
+        int r_m = (int)((r_time/1000/60)%60);
+        if(r_t >= 24)
+        {
+            r_t = r_t-24;
+        }
+
+        Log.v("sb","r_t : "+r_t);
+        Log.v("sb","r_m : "+r_m);
+
+        if(r_t < 10){
+            doTime_tt = "0"+String.valueOf(r_t);
+        }
+        else{
+            doTime_tt = String.valueOf(r_t);
+        }
+
+        if(r_m < 10){
+            doTime_mm = "0"+String.valueOf(r_m);
+        }
+        else{
+            doTime_mm = String.valueOf(r_m);
+        }
+
+        m_back_clock = doTime_tt+":"+doTime_mm;
+
+        return m_back_clock;
     }
 
     // 설정 시간
@@ -151,19 +192,23 @@ public class Application_manager extends Application {
     synchronized public static void setTime(String n_time){
         s_time = n_time;
         Log.v("sb","n_time : "+n_time);
-        Log.v("sb","s_time_gap_n : "+s_time_gap_n);
+        Log.v("sb","s_time : "+s_time);
         doCalculation_gap();
     }
     // 시간 차이 계산 및 DB 저장
     public static void doCalculation_gap()
     {
+        String ss_time = getText();
         // 시간차 구하기
+        Log.v("ss","s_time : "+s_time);
+        Log.v("ss","ss_time : "+ss_time);
         String a = s_time.substring(0,2);
         String b = s_time.substring(3,5);
         int a_ = Integer.parseInt(a);
         int b_ = Integer.parseInt(b);
-        String aa = s_time_gap_n.substring(0,2);
-        String bb = s_time_gap_n.substring(3,5);
+
+        String aa = ss_time.substring(0,2);
+        String bb = ss_time.substring(3,5);
         int aa_ = Integer.parseInt(aa);
         int bb_ = Integer.parseInt(bb);
 
@@ -210,7 +255,7 @@ public class Application_manager extends Application {
         }
 
         s_time_gap_t = gap_buf_t+":"+gap_buf_m;
-        Log.v("sb","gap_buf : "+s_time_gap_t + up);
+        Log.v("ss","gap_buf : "+s_time_gap_t + up);
 
         int g_buf;
 
@@ -225,7 +270,11 @@ public class Application_manager extends Application {
         {
             g_buf = -(gap_t*60)+gap_m;
         }
-        editor.putInt(Application_manager.TIME_GAP, g_buf);
+
+        m_gap_clock = s_time_gap_t;
+        m_gap_clock_f = up;
+        editor.putString(TIME_GAP, s_time_gap_t);
+        editor.putBoolean(TIME_GAP_F, up);
         editor.commit();
     }
 

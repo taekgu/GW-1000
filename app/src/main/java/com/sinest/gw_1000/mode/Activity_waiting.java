@@ -68,6 +68,7 @@ public class Activity_waiting extends AppCompatActivity {
         //TextClock clock = (TextClock) findViewById(R.id.waiting_clock);
         //clock.setTypeface(tf);
         clock = (CustomTextClock) findViewById(R.id.waiting_clock);
+        Log.v("sb","back_clock : " + Application_manager.getText());
 
         // 산소 농도, 압력, 시간 값 불러오기
         SharedPreferences sharedPreferences = getSharedPreferences(Application_manager.NAME_OF_SHARED_PREF, 0);
@@ -136,12 +137,6 @@ public class Activity_waiting extends AppCompatActivity {
 
         registReceiver();
         clock.registReceiver();
-
-        if(Application_manager.t_flag[1] == 1)
-        {
-            clock.doInit_time();
-            Application_manager.t_flag[1] = 0;
-        }
 
         SharedPreferences sharedPreferences = getSharedPreferences(Application_manager.NAME_OF_SHARED_PREF, 0);
 
