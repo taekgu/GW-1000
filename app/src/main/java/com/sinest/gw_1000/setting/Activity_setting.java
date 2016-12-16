@@ -104,8 +104,8 @@ public class Activity_setting extends AppCompatActivity {
     int volume;
     Typeface tf;
 
-    PowerManager powerManager;
-    PowerManager.WakeLock wakeLock;
+    //PowerManager powerManager;
+    //PowerManager.WakeLock wakeLock;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -114,8 +114,8 @@ public class Activity_setting extends AppCompatActivity {
 
         Application_manager.setFullScreen(this);
 
-        powerManager = (PowerManager)getSystemService(Context.POWER_SERVICE);
-        wakeLock = powerManager.newWakeLock(powerManager.PARTIAL_WAKE_LOCK,"My Tag");
+        //powerManager = (PowerManager)getSystemService(Context.POWER_SERVICE);
+        //wakeLock = powerManager.newWakeLock(powerManager.PARTIAL_WAKE_LOCK,"My Tag");
 
         // 폰트 설정
         tf = Typeface.createFromAsset(getAssets(), "fonts/digital.ttf");
@@ -310,11 +310,6 @@ public class Activity_setting extends AppCompatActivity {
 
         time = new Intent(this, Activity_time.class);
 
-
-        //flag = true;
-
-        //lp.screenBrightness = 0;
-
         View.OnClickListener listener = new View.OnClickListener() {
             public void onClick(View v) {
                 switch (v.getId()) {
@@ -325,12 +320,13 @@ public class Activity_setting extends AppCompatActivity {
                             b_11.setText("" + communicator.get_rx_idx(11));
                             b_11.setTypeface(tf);
                             button_flag[0] = false;
-                            wakeLock.acquire();
-                            Log.v("mm","mm");
+                            Application_manager.wakeLock(getApplicationContext());
+
                         } else {
                             b_11.setBackgroundResource(R.drawable.button_off);
                             b_11.setText("");
                             button_flag[0] = true;
+                            Application_manager.releaseWakeLock();
                         }
                         break;
                     case R.id.button21:

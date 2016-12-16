@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.Application;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.os.PowerManager;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
@@ -32,6 +33,8 @@ public class Application_manager extends Application {
     public static String m_gap_clock = "00:00";
     public static boolean m_gap_clock_f = true;
 
+    public static String m_password = "0000";
+
     public static int gap_t = 0;
     public static int gap_m = 0;
 
@@ -51,6 +54,9 @@ public class Application_manager extends Application {
     // 시간차이
     public final static String TIME_GAP = "time_gap";
     public final static String TIME_GAP_F = "time_gap_f";
+
+    //비밀번호
+    public final static String PASSWORD = "password";
 
     // 대기모드 동작시간
    // public final static String WAITING_WORKING_TIME = "waiting_working_time";
@@ -99,6 +105,9 @@ public class Application_manager extends Application {
 
     public static String m_time = "start";
 
+    private static final String TAG = "AlarmWakeLock";
+    public static PowerManager.WakeLock mWakeLock;
+
     public void onCreate() {
 
         Application_manager.context = getApplicationContext();
@@ -123,8 +132,22 @@ public class Application_manager extends Application {
         Log.v("ss","m_gap_clock : "+m_gap_clock);
         Log.v("ss","m_gap_clock_f : "+m_gap_clock_f);
 
+        m_password = sharedPreferences.getString(PASSWORD,"0000");
 
         // 어플 시작 시 이전 time gap 가져와서 변수에 넣기
+    }
+
+    synchronized public static String get_m_password(){
+        SharedPreferences sharedPreferences = context.getSharedPreferences(NAME_OF_SHARED_PREF, 0);
+        m_password = sharedPreferences.getString(PASSWORD,"0000");
+        return m_password;
+    }
+
+    synchronized public static void set_m_password(String pw){
+        sharedPreferences = context.getSharedPreferences(Application_manager.NAME_OF_SHARED_PREF, 0);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString(PASSWORD, pw);
+        editor.commit();
     }
 
     synchronized public static String getTime_gap_t(){
@@ -349,6 +372,26 @@ public class Application_manager extends Application {
         return doTime;
         //clock.setText(doTime);
     }
+
+
+    synchronized public static void wakeLock(Context context){
+        if(mWakeLock != null){
+            return;
+        }
+        PowerManager powerManager = (PowerManager)context.getSystemService(Context.POWER_SERVICE);
+        mWakeLock = powerManager.newWakeLock(PowerManager.FULL_WAKE_LOCK,TAG);
+        mWakeLock.acquire();
+        Log.v("mm","2");
+    }
+
+    synchronized public static void releaseWakeLock() {
+        if(mWakeLock != null){
+            mWakeLock.release();
+            mWakeLock = null;
+            Log.v("mm","1");
+        }
+    }
+
 
     synchronized public static int getRunningTime() {
 

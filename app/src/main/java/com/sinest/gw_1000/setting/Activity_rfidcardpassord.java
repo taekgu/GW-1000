@@ -1,7 +1,9 @@
 package com.sinest.gw_1000.setting;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -17,6 +19,12 @@ import android.widget.Toast;
 
 import com.sinest.gw_1000.R;
 import com.sinest.gw_1000.management.Application_manager;
+
+import static com.sinest.gw_1000.management.Application_manager.NAME_OF_SHARED_PREF;
+import static com.sinest.gw_1000.management.Application_manager.TIME_GAP_F;
+import static com.sinest.gw_1000.management.Application_manager.up;
+
+
 
 public class Activity_rfidcardpassord extends Activity {
 
@@ -43,6 +51,8 @@ public class Activity_rfidcardpassord extends Activity {
 
     Intent check;
 
+    private static Context context;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,6 +64,8 @@ public class Activity_rfidcardpassord extends Activity {
         setContentView(R.layout.activity_rfid_card_passord);
 
         Application_manager.setFullScreen(this);
+
+        password = Application_manager.get_m_password();
 
         rfid_password_1 = (ImageView) findViewById(R.id.rfid_password_1);
         rfid_password_2 = (ImageView) findViewById(R.id.rfid_password_2);
@@ -187,6 +199,7 @@ public class Activity_rfidcardpassord extends Activity {
                             if(check_m_c == true)
                             {
                                 password = ps;
+                                Application_manager.set_m_password(password);
                                 Log.v("test",""+password);
                                 rfid_p.setText("Password Change");
                                 rfid_p.setTextSize(25);
