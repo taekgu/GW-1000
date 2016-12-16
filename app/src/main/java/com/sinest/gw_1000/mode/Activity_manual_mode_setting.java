@@ -4,6 +4,8 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.MotionEvent;
@@ -32,6 +34,10 @@ public class Activity_manual_mode_setting extends AppCompatActivity {
     private ImageView[] manual_mode_setting = new ImageView[3];
     private TextView[] manual_mode_time = new TextView[3];
     private TextView manual_mode_total;
+
+    boolean isRun;
+    TextView clock;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,8 +54,9 @@ public class Activity_manual_mode_setting extends AppCompatActivity {
         manual_mode_total = (TextView)findViewById(R.id.manual_mode_total);
         Typeface tf = Typeface.createFromAsset(getAssets(), "fonts/digital.ttf");
 
-        TextClock clock = (TextClock) findViewById(R.id.manual_mode_setting_clock);
+        clock = (TextView) findViewById(R.id.manual_mode_setting_clock);
         clock.setTypeface(tf);
+
         modeNum = intent.getExtras().getInt("modeNum");
         if (modeNum != -1) {
 
@@ -130,6 +137,7 @@ public class Activity_manual_mode_setting extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         Application_manager.setFullScreen(this);
+        isRun = true;
 
         SharedPreferences sharedPreferences = getSharedPreferences(Application_manager.NAME_OF_SHARED_PREF, 0);
         int resourceId;
@@ -146,6 +154,43 @@ public class Activity_manual_mode_setting extends AppCompatActivity {
         }
         manual_mode_total.setText(""+(time[0] + time[1] + time[2]));
     }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        isRun = false;
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        isRun = true;
+        Thread myThread = new Thread(new Runnable() {
+            public void run() {
+                while (true) {
+                    try {
+                        handler.sendMessage(handler.obtainMessage());
+                        Thread.sleep(1000);
+                    } catch (Throwable t) {
+                    }
+                }
+            }
+        });
+        myThread.start();
+    }
+
+    Handler handler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            updateThread();
+        }
+    };
+
+    private void updateThread() {
+        clock.setText(Application_manager.doInit_time());
+    }
+
+
     public void onClicked(View v)
     {
         Intent intent;

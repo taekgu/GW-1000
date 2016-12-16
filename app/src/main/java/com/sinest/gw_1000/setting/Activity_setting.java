@@ -1,10 +1,12 @@
 package com.sinest.gw_1000.setting;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.os.Handler;
 import android.os.Message;
+import android.os.PowerManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -102,6 +104,8 @@ public class Activity_setting extends AppCompatActivity {
     int volume;
     Typeface tf;
 
+    PowerManager powerManager;
+    PowerManager.WakeLock wakeLock;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -109,6 +113,9 @@ public class Activity_setting extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         Application_manager.setFullScreen(this);
+
+        powerManager = (PowerManager)getSystemService(Context.POWER_SERVICE);
+        wakeLock = powerManager.newWakeLock(powerManager.PARTIAL_WAKE_LOCK,"My Tag");
 
         // 폰트 설정
         tf = Typeface.createFromAsset(getAssets(), "fonts/digital.ttf");
@@ -318,6 +325,8 @@ public class Activity_setting extends AppCompatActivity {
                             b_11.setText("" + communicator.get_rx_idx(11));
                             b_11.setTypeface(tf);
                             button_flag[0] = false;
+                            wakeLock.acquire();
+                            Log.v("mm","mm");
                         } else {
                             b_11.setBackgroundResource(R.drawable.button_off);
                             b_11.setText("");
