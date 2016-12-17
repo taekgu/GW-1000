@@ -58,6 +58,26 @@ public class Application_manager extends Application {
     //비밀번호
     public final static String PASSWORD = "password";
 
+    //EMOTION
+    public final static String EMOTION1 = "emotion1";
+    public final static String EMOTION2 = "emotion2";
+    public final static String EMOTION3 = "emotion3";
+    public final static String EMOTION4 = "emotion4";
+
+    //WATER
+    public final static String WATER_F = "water_f";
+    public final static String WATER_ST = "water_st";
+    public final static String WATER_FT = "water_ft";
+
+    //Extern_led
+    public final static String EXTERN_LED = "extern_led";
+
+    //PAUSE
+    public final static String PAUSE = "pause";
+
+    //LANGUEAGE
+    public final static String LANGUEAGE = "language";
+
     // 대기모드 동작시간
    // public final static String WAITING_WORKING_TIME = "waiting_working_time";
 
@@ -108,6 +128,32 @@ public class Application_manager extends Application {
     private static final String TAG = "AlarmWakeLock";
     public static PowerManager.WakeLock mWakeLock;
 
+    //emotion
+    public static int led_mode_num = 0;
+    public static int led_bright_num = 1;
+    public static int sound_mode_num = 0;
+    public static int sound_volume_num = 1;
+
+    //Volume
+    public static int m_volume = 0;
+
+    //Language
+    public static int m_language = 0;
+
+    //External_led
+    public static int m_external_led = 0;
+
+    //Water HeaterTimer
+    public static boolean m_water_heater_time_save = false;
+    public static String m_water_heater_time_stime = "00:00";
+    public static String m_water_heater_time_ftime = "00:00";
+
+    //Pause Rotation
+    public static boolean m_pause_rotation = false;
+
+    //Operation time
+    public static int m_operation_time = 0;
+
     public void onCreate() {
 
         Application_manager.context = getApplicationContext();
@@ -132,9 +178,90 @@ public class Application_manager extends Application {
         Log.v("ss","m_gap_clock : "+m_gap_clock);
         Log.v("ss","m_gap_clock_f : "+m_gap_clock_f);
 
-        m_password = sharedPreferences.getString(PASSWORD,"0000");
+        //emotion 저장
+        led_mode_num = sharedPreferences.getInt(EMOTION1,0);
+        led_bright_num = sharedPreferences.getInt(EMOTION2,1);
+        sound_mode_num = sharedPreferences.getInt(EMOTION3,0);
+        sound_volume_num = sharedPreferences.getInt(EMOTION4,1);
+
+        //water_heater_time_save
+        m_water_heater_time_save = sharedPreferences.getBoolean(WATER_F,false);
+        m_water_heater_time_stime = sharedPreferences.getString(WATER_ST,"00:00");
+        m_water_heater_time_ftime = sharedPreferences.getString(WATER_FT,"00:00");
+
+        //External_led
+        m_external_led = sharedPreferences.getInt(EXTERN_LED,0);
+
+        //Rause Rotation
+        m_pause_rotation = sharedPreferences.getBoolean(PAUSE,false);
+
+        //LANGUEAGE
+        m_language = sharedPreferences.getInt(LANGUEAGE,0);
+
 
         // 어플 시작 시 이전 time gap 가져와서 변수에 넣기
+    }
+
+    synchronized public static void set_m_language(int i){
+        sharedPreferences = context.getSharedPreferences(Application_manager.NAME_OF_SHARED_PREF, 0);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putInt(LANGUEAGE, i);
+        editor.commit();
+        m_language = i;
+    }
+
+    synchronized public static void set_m_pause_rotation(boolean i){
+        sharedPreferences = context.getSharedPreferences(Application_manager.NAME_OF_SHARED_PREF, 0);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putBoolean(PAUSE, i);
+        editor.commit();
+        m_pause_rotation = i;
+    }
+
+    synchronized public static void set_m_external_led(int i){
+        sharedPreferences = context.getSharedPreferences(Application_manager.NAME_OF_SHARED_PREF, 0);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putInt(EXTERN_LED, i);
+        editor.commit();
+        m_external_led = i;
+    }
+
+    synchronized public static void set_m_water_ftime(String ft){
+        sharedPreferences = context.getSharedPreferences(Application_manager.NAME_OF_SHARED_PREF, 0);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString(WATER_FT, ft);
+        editor.commit();
+        m_water_heater_time_ftime = ft;
+    }
+
+    synchronized public static void set_m_water_stime(String st){
+        sharedPreferences = context.getSharedPreferences(Application_manager.NAME_OF_SHARED_PREF, 0);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString(WATER_ST, st);
+        editor.commit();
+        m_water_heater_time_stime = st;
+    }
+
+    synchronized public static void set_m_water_f(boolean flag){
+        sharedPreferences = context.getSharedPreferences(Application_manager.NAME_OF_SHARED_PREF, 0);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putBoolean(WATER_F, flag);
+        editor.commit();
+        m_water_heater_time_save = flag;
+    }
+
+    synchronized public static void set_m_emotion(int e1,int e2,int e3,int e4){
+        sharedPreferences = context.getSharedPreferences(Application_manager.NAME_OF_SHARED_PREF, 0);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putInt(EMOTION1, e1);
+        editor.putInt(EMOTION2, e2);
+        editor.putInt(EMOTION3, e3);
+        editor.putInt(EMOTION4, e4);
+        editor.commit();
+        led_mode_num = e1;
+        led_bright_num = e2;
+        sound_mode_num = e3;
+        sound_volume_num = e4;
     }
 
     synchronized public static String get_m_password(){

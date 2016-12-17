@@ -119,6 +119,8 @@ public class Activity_finishtime extends Activity {
 
                     case R.id.finish_time_enter:
                         //
+                        //change
+                        //Application_manager.set_m_water_ftime(s_buf);
                         finish_result.putExtra("finish",s_buf);
                         setResult(RESULT_OK, finish_result);
                         finish();

@@ -90,12 +90,20 @@ public class Activity_emotion extends Activity {
 
         get_intent = getIntent();
 
+        /*change
+        led_mode_num = Application_manager.led_mode_num;
+        led_bright_num = Application_manager.led_bright_num;
+        sound_mode_num = Application_manager.sound_mode_num;
+        sound_volume_num = Application_manager.sound_volume_num;
+*/
+
         led_mode_num = (int)get_intent.getSerializableExtra("LED_M");
         led_bright_num = (int)get_intent.getSerializableExtra("LED");
         sound_mode_num = (int)get_intent.getSerializableExtra("SOUND_M");
         sound_volume_num = (int)get_intent.getSerializableExtra("SOUND");
 ;
         Typeface tf = Typeface.createFromAsset(getAssets(), "fonts/digital.ttf");
+
         led_mode .setText(Integer.toString(led_mode_num));
         sound_mode .setText(Integer.toString(sound_mode_num));
         led_bright  .setText(Integer.toString(led_bright_num));
@@ -238,6 +246,8 @@ public class Activity_emotion extends Activity {
                         break;
                     case R.id.emotion_back:
                         emotion_back.setBackgroundResource(R.drawable.button_elipse_back_off);
+                        //change
+                        //Application_manager.set_m_emotion(led_mode_num,led_bright_num,sound_mode_num,sound_volume_num);
                         get_intent.putExtra("LED_M",led_mode_num);
                         get_intent.putExtra("LED",led_bright_num);
                         get_intent.putExtra("SOUND_M",sound_mode_num);

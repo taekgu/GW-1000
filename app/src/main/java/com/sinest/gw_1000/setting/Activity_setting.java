@@ -774,6 +774,9 @@ public class Activity_setting extends AppCompatActivity {
         Application_manager.setFullScreen(this);
         isRun = true;
 
+        //chagne
+        //button_init();
+
     }
 
     @Override
@@ -781,7 +784,72 @@ public class Activity_setting extends AppCompatActivity {
         super.onPause();
         isRun = false;
 
+        Application_manager.m_water_heater_time_save = button2_flag[2];
+        Application_manager.set_m_water_f(button2_flag[2]);
+
+        Application_manager.m_external_led = ex_f;
+        Application_manager.set_m_external_led(ex_f);
+
+        Application_manager.m_pause_rotation = button2_flag[3];
+        Application_manager.set_m_pause_rotation(button2_flag[3]);
+
+        Application_manager.m_language = b_language_f;
+        Application_manager.set_m_language(b_language_f);
+
     }
+
+    private void button_init(){
+
+        ex_f = Application_manager.m_external_led;
+        if (ex_f == 0) {
+            b_ex.setBackgroundResource(R.drawable.on);
+            ex_f = 1;
+            communicator.set_setting(2, (byte) 0x01);
+        } else if (ex_f == 1) {
+            b_ex.setBackgroundResource(R.drawable.button_play_on);
+            ex_f = 2;
+            communicator.set_setting(2, (byte) 0x02);
+        } else if (ex_f == 2) {
+            b_ex.setBackgroundResource(R.drawable.off);
+            ex_f = 0;
+            communicator.set_setting(2, (byte) 0x00);
+        }
+
+        button2_flag[2] = Application_manager.m_water_heater_time_save;
+        if (button2_flag[2] == true) {
+            b_wa.setBackgroundResource(R.drawable.on);
+            button2_flag[2] = false;
+        } else {
+            b_wa.setBackgroundResource(R.drawable.off);
+            button2_flag[2] = true;
+        }
+
+        button2_flag[3] = Application_manager.m_pause_rotation;
+        if (button2_flag[3] == true) {
+            b_pa.setBackgroundResource(R.drawable.on);
+            button2_flag[3] = false;
+            communicator.set_setting(4, (byte) 0x01);
+        } else {
+            b_pa.setBackgroundResource(R.drawable.off);
+            button2_flag[3] = true;
+            communicator.set_setting(4, (byte) 0x00);
+        }
+
+        b_language_f = Application_manager.m_language;
+        if (b_language_f == 0) {
+            b_language.setBackgroundResource(R.drawable.language_en);
+            b_language_f = 1;
+        } else if (b_language_f == 1) {
+            b_language.setBackgroundResource(R.drawable.language_ch);
+            b_language_f = 2;
+        } else if (b_language_f == 2) {
+            b_language.setBackgroundResource(R.drawable.language_ko);
+            b_language_f = 0;
+        }
+
+    }
+
+
 
     @Override
     protected void onStart() {
