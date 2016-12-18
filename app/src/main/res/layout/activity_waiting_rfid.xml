@@ -26,13 +26,13 @@
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="69">
+            android:layout_weight="64">
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="5"
+            android:layout_weight="8"
             android:gravity="center">
 
         </LinearLayout>
@@ -40,8 +40,14 @@
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="5"
-            android:gravity="center">
+            android:layout_weight="1">
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="8"
+            android:gravity="center|left">
 
             <ImageView
                 android:id="@+id/waiting_rfid_setting_button"
@@ -49,12 +55,6 @@
                 android:layout_height="wrap_content"
                 android:background="@drawable/setting"/>
 
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="2">
         </LinearLayout>
 
         <LinearLayout
@@ -292,14 +292,14 @@
                     <LinearLayout
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
-                        android:layout_weight="30">
+                        android:layout_weight="23">
                     </LinearLayout>
 
                     <LinearLayout
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
-                        android:layout_weight="20"
-                        android:gravity="center">
+                        android:layout_weight="25"
+                        android:gravity="center|right">
 
                         <ImageView
                             android:id="@+id/waiting_rfid_dooropen_button"
@@ -312,8 +312,15 @@
                     <LinearLayout
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
-                        android:layout_weight="20"
-                        android:gravity="center">
+                        android:layout_weight="4">
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="25"
+                        android:gravity="center|left">
 
                         <ImageView
                             android:id="@+id/waiting_rfid_doorclose_button"
@@ -356,14 +363,14 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_weight="15">
+                android:layout_weight="13">
             </LinearLayout>
 
             <LinearLayout
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_weight="40"
+                android:layout_weight="42"
                 android:weightSum="100">
 
                 <LinearLayout
@@ -377,7 +384,7 @@
                         android:orientation="horizontal"
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
-                        android:layout_weight="35"
+                        android:layout_weight="40"
                         android:weightSum="100">
 
                         <LinearLayout
@@ -390,14 +397,14 @@
                             android:orientation="vertical"
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
-                            android:layout_weight="38"
+                            android:layout_weight="40"
                             android:weightSum="100">
 
                             <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="0dp"
-                                android:layout_weight="50"
-                                android:gravity="center">
+                                android:layout_weight="48"
+                                android:gravity="center|bottom">
 
                                 <ImageView
                                     android:id="@+id/waiting_rfid_oxygen_up_button"
@@ -410,8 +417,14 @@
                             <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="0dp"
-                                android:layout_weight="50"
-                                android:gravity="center">
+                                android:layout_weight="4">
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="0dp"
+                                android:layout_weight="48"
+                                android:gravity="center|top">
 
                                 <ImageView
                                     android:id="@+id/waiting_rfid_oxygen_down_button"
@@ -428,7 +441,7 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
-                        android:layout_weight="15">
+                        android:layout_weight="10">
                     </LinearLayout>
 
                     <LinearLayout
@@ -467,7 +480,7 @@
                         android:orientation="horizontal"
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
-                        android:layout_weight="35"
+                        android:layout_weight="40"
                         android:weightSum="100">
 
                         <LinearLayout
@@ -480,14 +493,14 @@
                             android:orientation="vertical"
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
-                            android:layout_weight="38"
+                            android:layout_weight="40"
                             android:weightSum="100">
 
                             <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="0dp"
-                                android:layout_weight="50"
-                                android:gravity="center">
+                                android:layout_weight="48"
+                                android:gravity="center|bottom">
 
                                 <ImageView
                                     android:id="@+id/waiting_rfid_pressure_up_button"
@@ -500,8 +513,14 @@
                             <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="0dp"
-                                android:layout_weight="50"
-                                android:gravity="center">
+                                android:layout_weight="4">
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="0dp"
+                                android:layout_weight="48"
+                                android:gravity="center|top">
 
                                 <ImageView
                                     android:id="@+id/waiting_rfid_pressure_down_button"
@@ -518,7 +537,7 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
-                        android:layout_weight="15">
+                        android:layout_weight="10">
                     </LinearLayout>
 
                     <LinearLayout
@@ -557,7 +576,7 @@
                         android:orientation="horizontal"
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
-                        android:layout_weight="35"
+                        android:layout_weight="40"
                         android:weightSum="100">
 
                         <LinearLayout
@@ -570,14 +589,14 @@
                             android:orientation="vertical"
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
-                            android:layout_weight="38"
+                            android:layout_weight="40"
                             android:weightSum="100">
 
                             <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="0dp"
-                                android:layout_weight="50"
-                                android:gravity="center">
+                                android:layout_weight="48"
+                                android:gravity="center|bottom">
 
                                 <ImageView
                                     android:id="@+id/waiting_rfid_time_up_button"
@@ -590,8 +609,14 @@
                             <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="0dp"
-                                android:layout_weight="50"
-                                android:gravity="center">
+                                android:layout_weight="4">
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="0dp"
+                                android:layout_weight="48"
+                                android:gravity="center|top">
 
                                 <ImageView
                                     android:id="@+id/waiting_rfid_time_down_button"
@@ -608,7 +633,7 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
-                        android:layout_weight="15">
+                        android:layout_weight="10">
                     </LinearLayout>
 
                     <LinearLayout

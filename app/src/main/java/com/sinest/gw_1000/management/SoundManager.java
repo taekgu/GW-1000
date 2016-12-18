@@ -13,14 +13,14 @@ import java.io.IOException;
 
 public class SoundManager {
 
-    private final static int NUM_OF_STREAMS = 15;
+    private final static int MAX_STREAMS = 1; // 동시 재생 가능한 음원 수
 
     private SoundPool soundPool;
     private Context context;
 
     public SoundManager(Context _context) {
 
-        soundPool = new SoundPool(NUM_OF_STREAMS, AudioManager.STREAM_MUSIC, 0);
+        soundPool = new SoundPool(MAX_STREAMS, AudioManager.STREAM_MUSIC, 0);
         context = _context;
 
         loadSounds();
