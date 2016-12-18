@@ -182,6 +182,7 @@ public class Application_manager extends Application {
 
         // 러닝타임 측정
         runningTime = sharedPreferences.getInt(RUNNING_TIME,0);
+        Log.v("sss","START : "+runningTime);
         setThread_runningTime();
         isRun = true;
         thread_runningTime.start();
@@ -558,6 +559,9 @@ public class Application_manager extends Application {
 
                         Thread.sleep(1000);
                         runningTime++;
+                        save_Running_time();
+                        Log.v("sss","STOP : "+runningTime);
+
                     }
                     catch (Exception e) {
 
