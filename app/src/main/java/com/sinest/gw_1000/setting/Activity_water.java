@@ -70,8 +70,6 @@ public class Activity_water extends Activity {
         intent_finish = new Intent(this, Activity_finishtime.class);
         //intent_finish.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_SINGLE_TOP);
 
-        //change
-        //do_init_time();
         water_s_c.setText(start_time);
         water_f_c.setText(finish_time);
 
@@ -135,8 +133,6 @@ public class Activity_water extends Activity {
                 switch (id) {
                     case R.id.water_save:
                         water_save.setBackgroundResource(R.drawable.save_setting_off);
-                        //change
-                        //Application_manager.set_m_water_f(true);
                         check_h = 1;
                         finish();
                         break;
@@ -155,20 +151,6 @@ public class Activity_water extends Activity {
         }
     };
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        Application_manager.setFullScreen(this);
-        //change
-        //do_init_time();
-    }
-
-    private void do_init_time(){
-        start_time = Application_manager.m_water_heater_time_stime;
-        water_s_c.setText(start_time);
-        finish_time = Application_manager.m_water_heater_time_ftime;
-        water_f_c.setText(finish_time);
-    }
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode,resultCode,data);
