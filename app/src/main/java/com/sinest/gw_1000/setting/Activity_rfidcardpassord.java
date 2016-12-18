@@ -90,7 +90,6 @@ public class Activity_rfidcardpassord extends Activity {
         intent_rfid = new Intent(this, Activity_rfid.class);
         intent_rfid.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_SINGLE_TOP);
 
-        check = this.getIntent();
 
         View.OnClickListener listener = new View.OnClickListener() {
             public void onClick(View v) {
@@ -172,9 +171,7 @@ public class Activity_rfidcardpassord extends Activity {
                         break;
                     case R.id.rfid_password_b:
                         //
-                        check.putExtra("check","No");
-                        setResult(RESULT_OK, check);
-                        Log.v("tttt","ttttt");
+                        Application_manager.rfid_pass_f = false;
                         finish();
                         break;
                     case R.id.rfid_password_e:
@@ -185,8 +182,8 @@ public class Activity_rfidcardpassord extends Activity {
                                 password = "0000";
                             }
                             else if(ps.equals(password)){
-                                check.putExtra("check","do");
-                                setResult(RESULT_OK, check);
+                                Application_manager.rfid_pass_f = true;
+                                Application_manager.rfid_pass_f2 = true;
                                 finish();
                             }
                             else{

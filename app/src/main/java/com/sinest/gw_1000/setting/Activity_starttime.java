@@ -118,8 +118,10 @@ public class Activity_starttime extends Activity {
 
                     case R.id.start_time_enter:
                         //
-                        start_result.putExtra("start",s_buf);
-                        setResult(RESULT_OK, start_result);
+                        //change
+                        Application_manager.set_m_water_stime(s_buf);
+                        //start_result.putExtra("start",s_buf);
+                        //setResult(RESULT_OK, start_result);
                         finish();
                         break;
                     case R.id.start_time_back:

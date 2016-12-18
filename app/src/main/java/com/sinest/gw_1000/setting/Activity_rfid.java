@@ -194,14 +194,15 @@ public class Activity_rfid extends Activity {
                         break;
                     case R.id.rfid_back:
                         rfid_back.setBackgroundResource(R.drawable.button_elipse_back_off);
+                        Application_manager.rfid_pass_f2 = false;
                         if(save_f == true)
                         {
+                            Application_manager.rfid_pass_f = false;
                             finish();
                         }
                         else if(save_f == false)
                         {
-                            check.putExtra("check","No");
-                            setResult(RESULT_OK, check);
+                            Application_manager.rfid_pass_f = true;
                             finish();
                         }
                         break;

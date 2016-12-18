@@ -157,14 +157,14 @@ public class Activity_setting extends AppCompatActivity {
                     button_flag[((j-1)*4 + i - 1)] = true;
                     resource.setBackgroundResource(R.drawable.button_off);
                     resource.setText("");
-                //    Log.i("JW", "button_flag[" + ((j-1)*4 + i - 1) + "] / button" + i + "" + j + " = OFF");
+                    //    Log.i("JW", "button_flag[" + ((j-1)*4 + i - 1) + "] / button" + i + "" + j + " = OFF");
                 }
                 // buttonij가 ON 상태일 때
                 else {
 
                     button_flag[((j-1)*4 + i - 1)] = false;
                     resource.setBackgroundResource(R.drawable.button_on);
-                //    Log.i("JW", "button_flag[" + ((j-1)*4 + i - 1) + "] / button" + i + "" + j + " = ON");
+                    //    Log.i("JW", "button_flag[" + ((j-1)*4 + i - 1) + "] / button" + i + "" + j + " = ON");
                     if (j == 1) {
 
                         rx_idx = 10 + i;
@@ -221,9 +221,7 @@ public class Activity_setting extends AppCompatActivity {
                 s_clock.setText(""+ Application_manager.getTime());
             }
         };
-
         scrOnFilter = new IntentFilter(Intent.ACTION_SCREEN_ON);
-
         scrOffReceiver = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
@@ -231,7 +229,6 @@ public class Activity_setting extends AppCompatActivity {
             }
         };
         scrOffFilter = new IntentFilter(Intent.ACTION_SCREEN_OFF);
-
         registerReceiver(scrOnReceiver, scrOnFilter);
         registerReceiver(scrOffReceiver, scrOffFilter);
 */
@@ -478,11 +475,10 @@ public class Activity_setting extends AppCompatActivity {
                         if (button2_flag[0] == true) {
                             b_rf.setBackgroundResource(R.drawable.on);
                             button2_flag[0] = false;
-                            intent_rfid.putExtra("check", "ok");
-                            startActivityForResult(intent_rfid, 1);
-                            //startActivity(intent_rfid);
+                            startActivity(intent_rfid);
                         } else {
                             b_rf.setBackgroundResource(R.drawable.off);
+                            Application_manager.rfid_pass_f = false;
                             button2_flag[0] = true;
                         }
                         break;
@@ -507,11 +503,12 @@ public class Activity_setting extends AppCompatActivity {
                         if (button2_flag[2] == true) {
                             b_wa.setBackgroundResource(R.drawable.on);
                             button2_flag[2] = false;
-                            intent_wa.putExtra("check", "ok");
-                            startActivityForResult(intent_wa, 2);
-                            //startActivity(intent_wa);
+                            startActivity(intent_wa);
                         } else {
                             b_wa.setBackgroundResource(R.drawable.off);
+                            Application_manager.set_m_water_f(false);
+                            Application_manager.set_m_water_stime("00:00");
+                            Application_manager.set_m_water_ftime("00:00");
                             button2_flag[2] = true;
                         }
                         break;
@@ -521,6 +518,7 @@ public class Activity_setting extends AppCompatActivity {
                             b_pa.setBackgroundResource(R.drawable.on);
                             button2_flag[3] = false;
                             communicator.set_setting(4, (byte) 0x01);
+                            Application_manager.set_m_pause_rotation(button2_flag[3]);
                         } else {
                             b_pa.setBackgroundResource(R.drawable.off);
                             button2_flag[3] = true;
@@ -699,12 +697,12 @@ public class Activity_setting extends AppCompatActivity {
                 if (button_flag[((j-1)*4 + i - 1)]) {
 
                     editor.putInt(Application_manager.SETTING_ONOFF_VAL_ + i + "" + j, 0);
-                //    Log.i("JW", "button_flag[" + ((j-1)*4 + i - 1) + "] / button" + i + "" + j + " = OFF");
+                    //    Log.i("JW", "button_flag[" + ((j-1)*4 + i - 1) + "] / button" + i + "" + j + " = OFF");
                 }
                 else {
 
                     editor.putInt(Application_manager.SETTING_ONOFF_VAL_ + i + "" + j, 1);
-                 //   Log.i("JW", "button_flag[" + ((j-1)*4 + i - 1) + "] / button" + i + "" + j + " = ON");
+                    //   Log.i("JW", "button_flag[" + ((j-1)*4 + i - 1) + "] / button" + i + "" + j + " = ON");
                 }
             }
         }
@@ -735,13 +733,7 @@ public class Activity_setting extends AppCompatActivity {
                 switch (id) {
                     case R.id.b_emotion:
                         b_emotion.setBackgroundResource(R.drawable.emotion_off);
-                        //startActivity(intent_emotion);
-                        intent_emotion.putExtra("LED_M", led_mode_num);
-                        intent_emotion.putExtra("LED", led_bright_num);
-                        intent_emotion.putExtra("SOUND_M", sound_mode_num);
-                        intent_emotion.putExtra("SOUND", sound_volume_num);
-
-                        startActivityForResult(intent_emotion, 4);
+                        startActivity(intent_emotion);
                         break;
                     case R.id.b_back:
                         b_back.setBackgroundResource(R.drawable.button_circle_back_off);
@@ -774,6 +766,20 @@ public class Activity_setting extends AppCompatActivity {
         Application_manager.setFullScreen(this);
         isRun = true;
 
+        //change
+        button_init();
+
+        if(Application_manager.rfid_pass_f == false){
+            b_rf.setBackgroundResource(R.drawable.on);
+            button2_flag[0] = false;
+        }else{
+            b_rf.setBackgroundResource(R.drawable.off);
+            button2_flag[0] = true;
+            if(Application_manager.rfid_pass_f2 == true)
+            {
+                startActivity(intent_rfid2);
+            }
+        }
     }
 
     @Override
@@ -781,7 +787,62 @@ public class Activity_setting extends AppCompatActivity {
         super.onPause();
         isRun = false;
 
+        Application_manager.m_water_heater_time_save = button2_flag[2];
+        Application_manager.set_m_water_f(button2_flag[2]);
+
+        Application_manager.m_external_led = ex_f;
+        Application_manager.set_m_external_led(ex_f);
+
+        Application_manager.m_pause_rotation = button2_flag[3];
+        Application_manager.set_m_pause_rotation(button2_flag[3]);
+
+        Application_manager.m_language = b_language_f;
+        Application_manager.set_m_language(b_language_f);
+
     }
+
+    private void button_init(){
+
+        ex_f = Application_manager.m_external_led;
+        if (ex_f == 0) {
+            b_ex.setBackgroundResource(R.drawable.off);
+            communicator.set_setting(2, (byte) 0x00);
+        } else if (ex_f == 1) {
+            b_ex.setBackgroundResource(R.drawable.on);
+            communicator.set_setting(2, (byte) 0x01);
+        } else if (ex_f == 2) {
+            b_ex.setBackgroundResource(R.drawable.button_play_on);
+            communicator.set_setting(2, (byte) 0x02);
+        }
+
+        button2_flag[2] = Application_manager.m_water_heater_time_save;
+        if (button2_flag[2] == true) {
+            b_wa.setBackgroundResource(R.drawable.off);
+        } else {
+            b_wa.setBackgroundResource(R.drawable.on);
+        }
+
+        button2_flag[3] = Application_manager.m_pause_rotation;
+        if (button2_flag[3] == true) {
+            b_pa.setBackgroundResource(R.drawable.off);
+            communicator.set_setting(4, (byte) 0x00);
+        } else {
+            b_pa.setBackgroundResource(R.drawable.on);
+            communicator.set_setting(4, (byte) 0x01);
+        }
+
+        b_language_f = Application_manager.m_language;
+        if (b_language_f == 0) {
+            b_language.setBackgroundResource(R.drawable.language_ko);
+        } else if (b_language_f == 1) {
+            b_language.setBackgroundResource(R.drawable.language_en);
+        } else if (b_language_f == 2) {
+            b_language.setBackgroundResource(R.drawable.language_ch);
+        }
+
+    }
+
+
 
     @Override
     protected void onStart() {
@@ -811,7 +872,7 @@ public class Activity_setting extends AppCompatActivity {
     private void updateThread() {
         s_clock.setText(Application_manager.doInit_time());
     }
-
+/*
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -866,4 +927,5 @@ public class Activity_setting extends AppCompatActivity {
             }
         }
     }
+    */
 }
