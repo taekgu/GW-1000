@@ -78,6 +78,9 @@ public class Application_manager extends Application {
     //LANGUEAGE
     public final static String LANGUEAGE = "language";
 
+    //RUNNING_TIME
+    public final static String RUNNING_TIME = "runnig_time";
+
     // 대기모드 동작시간
     // public final static String WAITING_WORKING_TIME = "waiting_working_time";
 
@@ -155,7 +158,7 @@ public class Application_manager extends Application {
     public static int m_operation_time = 0;
 
     // rfid_pass_f
-    public static boolean rfid_pass_f = false;
+    public static boolean rfid_pass_f = true;
     public static boolean rfid_pass_f2 = false;
 
     public void onCreate() {
@@ -163,11 +166,6 @@ public class Application_manager extends Application {
         Application_manager.context = getApplicationContext();
         Application_manager.communicator = new Communicator(context);
         Application_manager.soundManager = new SoundManager(context);
-
-        // 러닝타임 측정
-        setThread_runningTime();
-        isRun = true;
-        thread_runningTime.start();
 
         // 기기 DPI 출력
         DisplayMetrics metrics = new DisplayMetrics();
@@ -181,6 +179,13 @@ public class Application_manager extends Application {
         m_gap_clock_f = sharedPreferences.getBoolean(TIME_GAP_F,true);
         Log.v("ss","m_gap_clock : "+m_gap_clock);
         Log.v("ss","m_gap_clock_f : "+m_gap_clock_f);
+
+        // 러닝타임 측정
+        runningTime = sharedPreferences.getInt(RUNNING_TIME,0);
+        setThread_runningTime();
+        isRun = true;
+        thread_runningTime.start();
+
 
         //emotion 저장
         led_mode_num = sharedPreferences.getInt(EMOTION1,0);
@@ -521,6 +526,13 @@ public class Application_manager extends Application {
             mWakeLock = null;
             Log.v("mm","1");
         }
+    }
+
+    synchronized public static void save_Running_time(){
+        sharedPreferences = context.getSharedPreferences(Application_manager.NAME_OF_SHARED_PREF, 0);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putInt(RUNNING_TIME, runningTime);
+        editor.commit();
     }
 
 

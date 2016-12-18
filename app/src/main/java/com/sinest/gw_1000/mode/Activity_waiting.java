@@ -198,6 +198,7 @@ public class Activity_waiting extends AppCompatActivity {
     @Override
     protected void onStop() {
         super.onStop();
+        Application_manager.save_Running_time();
     }
 
     public void changeFragment_working(int modeNum) {

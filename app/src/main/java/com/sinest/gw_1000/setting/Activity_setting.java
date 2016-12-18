@@ -478,7 +478,7 @@ public class Activity_setting extends AppCompatActivity {
                             startActivity(intent_rfid);
                         } else {
                             b_rf.setBackgroundResource(R.drawable.off);
-                            Application_manager.rfid_pass_f = false;
+                            Application_manager.rfid_pass_f = true;
                             button2_flag[0] = true;
                         }
                         break;
@@ -769,12 +769,13 @@ public class Activity_setting extends AppCompatActivity {
         //change
         button_init();
 
-        if(Application_manager.rfid_pass_f == false){
+        button2_flag[0] = Application_manager.rfid_pass_f;
+        if(button2_flag[0] == false){
             b_rf.setBackgroundResource(R.drawable.on);
-            button2_flag[0] = false;
+            //button2_flag[0] = false;
         }else{
             b_rf.setBackgroundResource(R.drawable.off);
-            button2_flag[0] = true;
+            //button2_flag[0] = true;
             if(Application_manager.rfid_pass_f2 == true)
             {
                 startActivity(intent_rfid2);
