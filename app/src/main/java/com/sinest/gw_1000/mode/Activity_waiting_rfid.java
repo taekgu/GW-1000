@@ -60,6 +60,8 @@ public class Activity_waiting_rfid extends AppCompatActivity {
     // Variables for NFC tag
     private NfcAdapter mAdapter;
     private PendingIntent mPendingIntent;
+    boolean isRun = false;
+    TextView clock;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,7 +73,7 @@ public class Activity_waiting_rfid extends AppCompatActivity {
 
         // 폰트 설정
         Typeface tf = Typeface.createFromAsset(getAssets(), "fonts/digital.ttf");
-        TextClock clock = (TextClock) findViewById(R.id.waiting_rfid_clock);
+        clock = (TextView) findViewById(R.id.waiting_rfid_clock);
         clock.setTypeface(tf);
 
         // 산소 농도, 압력, 시간 값 불러오기
@@ -131,6 +133,8 @@ public class Activity_waiting_rfid extends AppCompatActivity {
 
         registReceiver();
 
+        isRun = true;
+
         SharedPreferences sharedPreferences = getSharedPreferences(Application_manager.NAME_OF_SHARED_PREF, 0);
 
         val_time = sharedPreferences.getInt(Application_manager.VAL_TIME, 10);
@@ -167,6 +171,7 @@ public class Activity_waiting_rfid extends AppCompatActivity {
     protected void onPause() {
         super.onPause();
         unregistReceiver();
+        isRun = false;
 
         // 앱이 종료될때 NFC 어댑터를 비활성화 한다
         if (mAdapter != null) {
@@ -184,6 +189,35 @@ public class Activity_waiting_rfid extends AppCompatActivity {
     @Override
     protected void onStop() {
         super.onStop();
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        isRun = true;
+        Thread myThread = new Thread(new Runnable() {
+            public void run() {
+                while (true) {
+                    try {
+                        handler.sendMessage(handler.obtainMessage());
+                        Thread.sleep(1000);
+                    } catch (Throwable t) {
+                    }
+                }
+            }
+        });
+        myThread.start();
+    }
+
+    Handler handler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            updateThread();
+        }
+    };
+
+    private void updateThread() {
+        clock.setText(Application_manager.doInit_time());
     }
 
     private void resolveIntent(Intent intent) {
