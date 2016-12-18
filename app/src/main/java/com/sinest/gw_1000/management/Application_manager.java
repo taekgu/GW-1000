@@ -81,6 +81,9 @@ public class Application_manager extends Application {
     //RUNNING_TIME
     public final static String RUNNING_TIME = "runnig_time";
 
+    //VOLUME
+    public final static String VOLUME = "volume";
+
     // 대기모드 동작시간
     // public final static String WAITING_WORKING_TIME = "waiting_working_time";
 
@@ -208,8 +211,18 @@ public class Application_manager extends Application {
         //LANGUEAGE
         m_language = sharedPreferences.getInt(LANGUEAGE,0);
 
+        //VOLUME
+        m_volume = sharedPreferences.getInt(VOLUME,0);
 
         // 어플 시작 시 이전 time gap 가져와서 변수에 넣기
+    }
+
+    synchronized public static void set_m_volume(int i){
+        sharedPreferences = context.getSharedPreferences(Application_manager.NAME_OF_SHARED_PREF, 0);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putInt(VOLUME, i);
+        editor.commit();
+        m_volume = i;
     }
 
     synchronized public static void set_m_language(int i){

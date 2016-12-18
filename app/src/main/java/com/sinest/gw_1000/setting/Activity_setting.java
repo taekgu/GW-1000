@@ -265,6 +265,7 @@ public class Activity_setting extends AppCompatActivity {
         hidden_s_4 = (Button) findViewById(R.id.hidden_s_4);
 
         seekbar = (SeekBar) findViewById(R.id.seekBar);
+        seekbar.setProgress(Application_manager.m_volume);
         seekbar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onStartTrackingTouch(SeekBar seekBar) {
@@ -278,6 +279,7 @@ public class Activity_setting extends AppCompatActivity {
                 // 메소드 이름대로 사용자가 SeekBar를 손에서 땠을때 실행됩니다
                 // TODO Auto-generated method stub
                 Log.v("test2", "v : " + volume);
+                Application_manager.set_m_volume(volume);
             }
 
             @Override
