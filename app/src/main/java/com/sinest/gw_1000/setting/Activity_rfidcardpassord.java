@@ -171,7 +171,7 @@ public class Activity_rfidcardpassord extends Activity {
                         break;
                     case R.id.rfid_password_b:
                         //
-                        Application_manager.rfid_pass_f = false;
+                        Application_manager.rfid_pass_f = true;
                         finish();
                         break;
                     case R.id.rfid_password_e:

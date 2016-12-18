@@ -63,7 +63,7 @@
             android:layout_weight="13"
             android:gravity="center">
 
-            <TextClock
+            <TextView
                 android:id="@+id/waiting_rfid_clock"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
