@@ -477,11 +477,11 @@ public class Application_manager extends Application {
             }
         }
 
-        if(m > 60){
+        if(m >= 60){
             t = t + 1;
             m = m - 60;
         }
-        if(t > 24 ){
+        if(t >= 24 ){
             t = t - 24;
         }
 
