@@ -39,6 +39,7 @@ public class Activity_manual_mode_pattern_popup extends Activity implements Cust
         intent = getIntent();
         int resourceId;
         img = (ImageView)findViewById(R.id.manual_popup_imageview);
+        patternNum = intent.getIntExtra("currentPattern",1);
         Log.i("currentPattern", Integer.toString(intent.getIntExtra("currentPattern",1)));
         resourceId = getResources().getIdentifier("manual_mode_pattern_" + intent.getIntExtra("currentPattern",1), "drawable", "com.sinest.gw_1000");
         img.setBackgroundResource(resourceId);

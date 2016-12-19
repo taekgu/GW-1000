@@ -469,7 +469,7 @@
                                 android:textSize="45dp"
                                 android:text="0"
                                 android:textColor="#00FFFF"
-                                android:gravity="right"/>
+                                android:gravity="right|bottom"/>
                         </LinearLayout>
 
                     </LinearLayout>
@@ -565,7 +565,7 @@
                                 android:textSize="45dp"
                                 android:text="0"
                                 android:textColor="#00FFFF"
-                                android:gravity="right"/>
+                                android:gravity="right|bottom"/>
                         </LinearLayout>
 
                     </LinearLayout>
@@ -661,7 +661,7 @@
                                 android:textSize="45dp"
                                 android:text="0"
                                 android:textColor="#00FFFF"
-                                android:gravity="right"/>
+                                android:gravity="right|bottom"/>
                         </LinearLayout>
 
                     </LinearLayout>

@@ -58,8 +58,8 @@ public class WifiConnector {
     private WifiManager wifiManager;
     private BroadcastReceiver broadcastReceiver;
     private IntentFilter intentFilter;
-    private String ssid;
-    private String bssid;
+    private String ssid = null;
+    private String bssid = null;
     private boolean isConnected = false;
     private boolean isConnected_server = false;
     private WifiConfiguration wfc;
@@ -138,8 +138,12 @@ public class WifiConnector {
                         break;
                     case WIFI_CONNECTED:
 
+                        if (ssid == null) {
+
+                            ssid = wifiManager.getConnectionInfo().getSSID();
+                        }
                         Log.i("JW", "WIFI 연결 완료");
-                        Toast.makeText(context, "WIFI 연결 완료", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(context, "WIFI 연결 완료: " + ssid, Toast.LENGTH_SHORT).show();
                         break;
                     case WIFI_DISCONNECTED:
 

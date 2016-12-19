@@ -96,8 +96,6 @@ public class Application_manager extends Application {
     public final static String MANUAL_MODE_TIME_ = "man_time_";
     public final static String MANUAL_MODE_SECTION_MIN_ = "man_section_min_";
     public final static String MANUAL_MODE_SECTION_MAX_ = "man_section_max_"; //man
-    // 언어 [KOR, ENG, CHI]
-    public static int LANGUAGE = 0;
 
     // 세팅 on/off값
     public final static String SETTING_ONOFF_VAL_ = "setting_onoff_val_";
@@ -143,7 +141,7 @@ public class Application_manager extends Application {
     //Volume
     public static int m_volume = 0;
 
-    //Language
+    // 언어 [KOR, ENG, CHI]
     public static int m_language = 0;
 
     //External_led

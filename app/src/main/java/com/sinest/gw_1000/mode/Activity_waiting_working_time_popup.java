@@ -89,13 +89,29 @@ public class Activity_waiting_working_time_popup extends Activity {
             } else if (action == MotionEvent.ACTION_UP) {
                 switch (id) {
                     case R.id.popup_keypad_enter:
-                        if (workingTime != 0) {
-                            SharedPreferences sharedPreferences = getSharedPreferences(Application_manager.NAME_OF_SHARED_PREF, 0);
-                            SharedPreferences.Editor editor = sharedPreferences.edit();
-                            if(mode==0){ // Waiting 화면에서 넘어왔을 때
+                        SharedPreferences sharedPreferences = getSharedPreferences(Application_manager.NAME_OF_SHARED_PREF, 0);
+                        SharedPreferences.Editor editor = sharedPreferences.edit();
+                        if (mode == 0) { // Waiting 화면에서 넘어왔을 때
+
+                            if (workingTime != 0) {
+
                                 editor.putInt(Application_manager.VAL_TIME, workingTime);
                             }
                             else {
+
+                                Toast.makeText(mContext, "1~90 사이의 값을 입력해주세요", Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                        else { // 매뉴얼 모드 세팅에서 넘어왔을 때
+
+                            if (mode == 1) //manual mode setting에서 첫번째 text
+                                editor.putInt(Application_manager.MANUAL_MODE_TIME_ + modeNum + "_" + "0", workingTime);
+                            else if (mode == 2) //manual mode setting에서 두번째 text
+                                editor.putInt(Application_manager.MANUAL_MODE_TIME_ + modeNum + "_" + "1", workingTime);
+                            else if (mode == 3) //manual mode setting에서 세번째 text
+                                editor.putInt(Application_manager.MANUAL_MODE_TIME_ + modeNum + "_" + "2", workingTime);
+                            /*
+                            if (workingTime >= 0 && workingTime <= 90) { // 0 ~ 90
 
                                 if (mode == 1) //manual mode setting에서 첫번째 text
                                     editor.putInt(Application_manager.MANUAL_MODE_TIME_ + modeNum + "_" + "0", workingTime);
@@ -103,14 +119,15 @@ public class Activity_waiting_working_time_popup extends Activity {
                                     editor.putInt(Application_manager.MANUAL_MODE_TIME_ + modeNum + "_" + "1", workingTime);
                                 else if (mode == 3) //manual mode setting에서 세번째 text
                                     editor.putInt(Application_manager.MANUAL_MODE_TIME_ + modeNum + "_" + "2", workingTime);
-                            }
-                            editor.commit();
-                            finish();
-                        }
-                        else {
 
-                            Toast.makeText(mContext, "1~90 사이의 값을 입력해주세요", Toast.LENGTH_SHORT).show();
+                            }
+                            else { // 범위 초과
+
+                                Toast.makeText(mContext, "0~90 사이의 값을 입력해주세요", Toast.LENGTH_SHORT).show();
+                            }*/
                         }
+                        editor.commit();
+                        finish();
                         break;
                     case R.id.popup_keypad_back:
                         finish();

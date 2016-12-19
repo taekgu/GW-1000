@@ -92,7 +92,7 @@ public class Fragment_working extends Fragment {
                 if (time_m_left == 0) {
 
                     Log.i("JW", "치료 종료");
-                    Application_manager.getSoundManager().play(Application_manager.ID_LANG_SOUND[Application_manager.LANGUAGE][2]);
+                    Application_manager.getSoundManager().play(Application_manager.ID_LANG_SOUND[Application_manager.m_language][2]);
                     Activity_waiting activity_waiting = (Activity_waiting) getActivity();
                     activity_waiting.changeFragment_waiting();
                 }
@@ -173,7 +173,7 @@ public class Fragment_working extends Fragment {
                             isPause = true;
                             button_clicked.setBackgroundResource(R.drawable.button_play_off);
                             communicator.set_tx(1, (byte)0x02);
-                        //    Application_manager.getSoundManager().play(Application_manager.ID_LANG_SOUND[Application_manager.LANGUAGE][1]);
+                        //    Application_manager.getSoundManager().play(Application_manager.ID_LANG_SOUND[Application_manager.m_language][1]);
                         }
                         // pause 중이면
                         else {
@@ -182,7 +182,7 @@ public class Fragment_working extends Fragment {
                             isPause = false;
                             button_clicked.setBackgroundResource(R.drawable.button_pause_off);
                             communicator.set_tx(1, (byte)0x01);
-                        //    Application_manager.getSoundManager().play(Application_manager.ID_LANG_SOUND[Application_manager.LANGUAGE][0]);
+                        //    Application_manager.getSoundManager().play(Application_manager.ID_LANG_SOUND[Application_manager.m_language][0]);
                         }
                         break;
                     case R.id.button_stop:
@@ -192,7 +192,7 @@ public class Fragment_working extends Fragment {
                         state = 1;
                         button_clicked.setBackgroundResource(R.drawable.button_stop_off);
                         communicator.set_tx(1, (byte)0x00);
-                        Application_manager.getSoundManager().play(Application_manager.ID_LANG_SOUND[Application_manager.LANGUAGE][1]);
+                        Application_manager.getSoundManager().play(Application_manager.ID_LANG_SOUND[Application_manager.m_language][1]);
 
                         if (parent == 0) {
                             Activity_waiting activity_waiting = (Activity_waiting) getActivity();

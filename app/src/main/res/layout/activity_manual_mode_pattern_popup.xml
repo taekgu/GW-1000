@@ -38,16 +38,18 @@
                 android:background="@drawable/manual_mode_pattern_1" />
         </RelativeLayout>
 
-        <RelativeLayout
+        <LinearLayout
             android:layout_weight="15"
             android:layout_width="0dp"
-            android:layout_height="match_parent">
-            <com.sinest.gw_1000.mode.utils.CustomSeekBar
+            android:layout_height="match_parent"
+            android:gravity="center">
+            <com.sinest.gw_1000.mode.utils.CustomSeekBar_made_by_Jinwook
                 android:layout_width="100dp"
                 android:layout_height="240dp"
                 android:layout_centerInParent="true">
-            </com.sinest.gw_1000.mode.utils.CustomSeekBar>
-        </RelativeLayout>
+            </com.sinest.gw_1000.mode.utils.CustomSeekBar_made_by_Jinwook>
+        </LinearLayout>
+
         <TableLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"

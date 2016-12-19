@@ -8,6 +8,7 @@ import android.os.Build;
 import android.support.v4.view.ViewCompat;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -126,6 +127,7 @@ public class CustomSeekBar extends RelativeLayout{
                         dTopMin = v.getY();
                         currentHeightMin = v.getHeight();
                         getResultMin();
+                        Log.i("JW", "MAX = " + v.getHeight());
                         break;
                     default:
                         return false;
@@ -156,6 +158,7 @@ public class CustomSeekBar extends RelativeLayout{
                         dTopMax = v.getY();
                         currentHeightMax = v.getHeight();
                         getResultMax();
+                        Log.i("JW", "MIN = " + v.getHeight());
                         break;
                     default:
                         return false;
@@ -173,6 +176,7 @@ public class CustomSeekBar extends RelativeLayout{
         viewInActiveBottom.setBackgroundColor(inactiveColor);
         viewInActiveTop.setBackgroundColor(inactiveColor);
         initialHeightMin = (int) convertDpToPixel(30, context);
+        Log.i("JW", "Initial height min = " + initialHeightMin);
         final ViewTreeObserver viewTreeObserver = relativeLayout.getViewTreeObserver();
         //  if (viewTreeObserver.isAlive())
         viewTreeObserver.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {

@@ -271,7 +271,7 @@ public class Activity_waiting_rfid extends AppCompatActivity {
             if (!fragment_working.getIsAlive()) {
 
                 Log.i("JW", "changeFragment (waiting_rfid -> working)");
-                Application_manager.getSoundManager().play(Application_manager.ID_LANG_SOUND[Application_manager.LANGUAGE][0]);
+                Application_manager.getSoundManager().play(Application_manager.ID_LANG_SOUND[Application_manager.m_language][0]);
                 FragmentManager fm = getFragmentManager();
                 FragmentTransaction fragmentTransaction = fm.beginTransaction();
 
@@ -610,7 +610,8 @@ public class Activity_waiting_rfid extends AppCompatActivity {
                         communicator.set_tx(11, val);
                         communicator.send(communicator.get_tx());
 
-                        Application_manager.getSoundManager().play(Application_manager.ID_LANG_SOUND[Application_manager.LANGUAGE][3]);
+                        //Application_manager.getSoundManager().play(Application_manager.ID_LANG_SOUND[Application_manager.m_language][3]);
+                        Application_manager.getSoundManager().play_door_open(Application_manager.m_language);
                         break;
                     case R.id.waiting_rfid_doorclose_button:
                         background = (LinearLayout)findViewById(R.id.waiting_rfid_background);
@@ -622,7 +623,8 @@ public class Activity_waiting_rfid extends AppCompatActivity {
                         communicator.set_tx(11, val);
                         communicator.send(communicator.get_tx());
 
-                        Application_manager.getSoundManager().play(Application_manager.ID_LANG_SOUND[Application_manager.LANGUAGE][4]);
+                        //Application_manager.getSoundManager().play(Application_manager.ID_LANG_SOUND[Application_manager.m_language][4]);
+                        Application_manager.getSoundManager().play_door_close(Application_manager.m_language);
                         break;
                     case R.id.waiting_rfid_time_text:
 
