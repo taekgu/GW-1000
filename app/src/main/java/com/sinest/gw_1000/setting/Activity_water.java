@@ -34,8 +34,6 @@ public class Activity_water extends Activity {
 
     Intent intent_start;
     Intent intent_finish;
-    Intent check;
-    int check_h = 0;
 
     String start_time = "00:00";
     String finish_time = "00:00";
@@ -72,10 +70,9 @@ public class Activity_water extends Activity {
 
         //change
         do_init_time();
-        water_s_c.setText(start_time);
-        water_f_c.setText(finish_time);
+        //water_s_c.setText(start_time);
+        //water_f_c.setText(finish_time);
 
-        check = getIntent();
 
         View.OnClickListener listener = new View.OnClickListener() {
             public void onClick(View v) {
@@ -93,12 +90,10 @@ public class Activity_water extends Activity {
                         }
                         break;
                     case R.id.water_s_c:
-                        intent_start.putExtra("start", start_time);
-                        startActivityForResult(intent_start, 11);
+                        startActivity(intent_start);
                         break;
                     case R.id.water_f_c:
-                        intent_finish.putExtra("finish", finish_time);
-                        startActivityForResult(intent_finish, 22);
+                        startActivity(intent_finish);
                         break;
                 }
             }
@@ -167,23 +162,5 @@ public class Activity_water extends Activity {
         water_f_c.setText(finish_time);
 
         water_flag[1] = Application_manager.m_water_heater_f;
-    }
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode,resultCode,data);
-        if(resultCode == RESULT_OK){
-            switch (requestCode) {
-                case 11:
-                    start_time = data.getStringExtra("start");
-                    water_s_c.setText(start_time);
-                    break;
-                case 22:
-                    finish_time = data.getStringExtra("finish");
-                    water_f_c.setText(finish_time);
-                    break;
-                default:
-                    break;
-            }
-        }
     }
 }

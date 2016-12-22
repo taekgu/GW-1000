@@ -79,6 +79,9 @@ public class Application_manager extends Application {
     //LANGUEAGE
     public final static String LANGUEAGE = "language";
 
+    //INVERTER
+    public final static String INVERTER = "inverter";
+
     //RUNNING_TIME
     public final static String RUNNING_TIME = "runnig_time";
 
@@ -144,6 +147,9 @@ public class Application_manager extends Application {
 
     // 언어 [KOR, ENG, CHI]
     public static int m_language = 0;
+
+    //Inverter 0-> 0 1-> 50 2-> 100
+    public static int m_inverter = 0;
 
     //External_led
     public static int m_external_led = 0;
@@ -212,6 +218,9 @@ public class Application_manager extends Application {
         //LANGUEAGE
         m_language = sharedPreferences.getInt(LANGUEAGE,0);
 
+        //INVERTER
+        m_inverter = sharedPreferences.getInt(INVERTER,0);
+
         //VOLUME
         m_volume = sharedPreferences.getInt(VOLUME,0);
 
@@ -232,6 +241,14 @@ public class Application_manager extends Application {
         editor.putInt(LANGUEAGE, i);
         editor.commit();
         m_language = i;
+    }
+
+    synchronized public static void set_m_inverter(int i){
+        sharedPreferences = context.getSharedPreferences(Application_manager.NAME_OF_SHARED_PREF, 0);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putInt(INVERTER, i);
+        editor.commit();
+        m_inverter = i;
     }
 
     synchronized public static void set_m_pause_rotation(boolean i){

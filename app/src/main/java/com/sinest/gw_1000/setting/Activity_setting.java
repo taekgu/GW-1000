@@ -503,14 +503,15 @@ public class Activity_setting extends AppCompatActivity {
                     case R.id.b_wa:
                         //
                         if (button2_flag[2] == true) {
-                            b_wa.setBackgroundResource(R.drawable.on);
-                            button2_flag[2] = false;
+                            //b_wa.setBackgroundResource(R.drawable.on);
+                            //b_wa.setBackgroundResource(R.drawable.on);
+                            //button2_flag[2] = false;
                             startActivity(intent_wa);
                         } else {
                             b_wa.setBackgroundResource(R.drawable.off);
                             Application_manager.set_m_water_f(false);
-                            Application_manager.set_m_water_stime("00:00");
-                            Application_manager.set_m_water_ftime("00:00");
+                            //Application_manager.set_m_water_stime("00:00");
+                            //Application_manager.set_m_water_ftime("00:00");
                             button2_flag[2] = true;
                         }
                         break;
@@ -802,6 +803,9 @@ public class Activity_setting extends AppCompatActivity {
         Application_manager.m_language = b_language_f;
         Application_manager.set_m_language(b_language_f);
 
+        Application_manager.m_inverter = b_inverter_f;
+        Application_manager.set_m_inverter(b_inverter_f);
+
     }
 
     private void button_init(){
@@ -842,6 +846,16 @@ public class Activity_setting extends AppCompatActivity {
         } else if (b_language_f == 2) {
             b_language.setBackgroundResource(R.drawable.language_ch);
         }
+
+        b_inverter_f = Application_manager.m_inverter;
+        if (b_inverter_f == 0) {
+            b_inverter.setBackgroundResource(R.drawable.inverter_0);
+        } else if (b_inverter_f == 1) {
+            b_inverter.setBackgroundResource(R.drawable.inverter_50);
+        } else if (b_inverter_f == 2) {
+            b_inverter.setBackgroundResource(R.drawable.inverter_100);
+        }
+
 
     }
 
