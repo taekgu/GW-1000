@@ -228,8 +228,8 @@
                         android:gravity="center">
 
                         <Button
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
                             android:id="@+id/b_1m"
                             android:background="@drawable/sleepmode_1min"/>
 
@@ -249,8 +249,8 @@
                         android:gravity="center">
 
                         <Button
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
                             android:id="@+id/b_3m"
                             android:background="@drawable/sleepmode_3min"/>
                     </LinearLayout>
@@ -268,8 +268,8 @@
                         android:gravity="center">
 
                         <Button
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
                             android:id="@+id/b_5m"
                             android:background="@drawable/sleepmode_5min"/>
                     </LinearLayout>
@@ -287,8 +287,8 @@
                         android:gravity="center">
 
                         <Button
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
                             android:id="@+id/b_coutinue"
                             android:background="@drawable/sleepmode_continue_off"/>
                     </LinearLayout>
@@ -339,14 +339,14 @@
                     <LinearLayout
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
-                        android:layout_weight="23"
+                        android:layout_weight="24"
                         android:gravity="center">
 
                         <Button
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
                             android:id="@+id/b_rf"
-                            android:background="@drawable/off"/>
+                            android:background="@drawable/off" />
 
                     </LinearLayout>
 
@@ -355,17 +355,17 @@
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:visibility="invisible"
-                        android:layout_weight="4" />
+                        android:layout_weight="3" />
 
                     <LinearLayout
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
-                        android:layout_weight="23"
+                        android:layout_weight="24"
                         android:gravity="center">
 
                         <Button
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
                             android:id="@+id/b_ex"
                             android:background="@drawable/off"/>
 
@@ -376,17 +376,17 @@
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:visibility="invisible"
-                        android:layout_weight="4" />
+                        android:layout_weight="3" />
 
                     <LinearLayout
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
-                        android:layout_weight="23"
+                        android:layout_weight="24"
                         android:gravity="center">
 
                         <Button
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
                             android:id="@+id/b_wa"
                             android:background="@drawable/off"/>
 
@@ -396,17 +396,17 @@
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:visibility="invisible"
-                        android:layout_weight="4" />
+                        android:layout_weight="3" />
 
                     <LinearLayout
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
-                        android:layout_weight="23"
+                        android:layout_weight="24"
                         android:gravity="center">
 
                         <Button
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
                             android:id="@+id/b_pa"
                             android:background="@drawable/off"/>
 
