@@ -5,7 +5,7 @@
     android:id="@+id/waiting_rfid_background"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/waiting_rfid_dooropen_back"
+    android:background="@drawable/waiting_rfid_doorclose_back"
     android:orientation="vertical"
     tools:context="com.sinest.gw_1000.mode.Activity_waiting_rfid"
     android:weightSum="100">
