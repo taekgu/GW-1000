@@ -192,7 +192,8 @@ public class Activity_finishtime extends Activity {
             finish_time.setText(s_buf);
 
         }else if(int_c == 0) {
-            finish_time.setText("00:0"+Integer.toString(k));
+            s_buf = "00:0"+(String)Integer.toString(k);
+            finish_time.setText(s_buf);
             int_c++;
         }
         else {

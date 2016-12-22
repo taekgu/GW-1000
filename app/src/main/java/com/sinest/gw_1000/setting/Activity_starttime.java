@@ -120,8 +120,6 @@ public class Activity_starttime extends Activity {
                         //
                         //change
                         Application_manager.set_m_water_stime(s_buf);
-                        //start_result.putExtra("start",s_buf);
-                        //setResult(RESULT_OK, start_result);
                         finish();
                         break;
                     case R.id.start_time_back:
@@ -176,14 +174,7 @@ public class Activity_starttime extends Activity {
             }else{
                 buf_l = Integer.toString(int_l);
             }
-            /*
-            if(k == 0)
-            {
-                buf_r = "00";
-            }else{
-                buf_r = Integer.toString(int_r);
-            }
-*/
+
             if(int_r == 0)
             {
                 buf_r = "00";
@@ -198,7 +189,8 @@ public class Activity_starttime extends Activity {
             start_time.setText(s_buf);
 
         }else if(int_c == 0) {
-            start_time.setText("00:0"+Integer.toString(k));
+            s_buf = "00:0"+(String)Integer.toString(k);
+            start_time.setText(s_buf);
             int_c++;
         }
         else {

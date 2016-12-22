@@ -66,6 +66,7 @@ public class Application_manager extends Application {
 
     //WATER
     public final static String WATER_F = "water_f";
+    public final static String WATER_FF = "water_ff";
     public final static String WATER_ST = "water_st";
     public final static String WATER_FT = "water_ft";
 
@@ -149,6 +150,7 @@ public class Application_manager extends Application {
 
     //Water HeaterTimer
     public static boolean m_water_heater_time_save = false;
+    public static boolean m_water_heater_f = false;
     public static String m_water_heater_time_stime = "00:00";
     public static String m_water_heater_time_ftime = "00:00";
 
@@ -176,7 +178,7 @@ public class Application_manager extends Application {
 
         //시간차 저장
         SharedPreferences sharedPreferences = context.getSharedPreferences(NAME_OF_SHARED_PREF, 0);
-        m_gap_clock = sharedPreferences.getString(TIME_GAP,"00:00");
+        //m_gap_clock = sharedPreferences.getString(TIME_GAP,"00:00");
         m_gap_clock_f = sharedPreferences.getBoolean(TIME_GAP_F,true);
         Log.v("ss","m_gap_clock : "+m_gap_clock);
         Log.v("ss","m_gap_clock_f : "+m_gap_clock_f);
@@ -197,6 +199,7 @@ public class Application_manager extends Application {
 
         //water_heater_time_save
         m_water_heater_time_save = sharedPreferences.getBoolean(WATER_F,false);
+        m_water_heater_f = sharedPreferences.getBoolean(WATER_FF,false);
         m_water_heater_time_stime = sharedPreferences.getString(WATER_ST,"00:00");
         m_water_heater_time_ftime = sharedPreferences.getString(WATER_FT,"00:00");
 
@@ -261,6 +264,14 @@ public class Application_manager extends Application {
         editor.putString(WATER_ST, st);
         editor.commit();
         m_water_heater_time_stime = st;
+    }
+
+    synchronized public static void set_m_water_ff(boolean flag){
+        sharedPreferences = context.getSharedPreferences(Application_manager.NAME_OF_SHARED_PREF, 0);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putBoolean(WATER_FF, flag);
+        editor.commit();
+        m_water_heater_f = flag;
     }
 
     synchronized public static void set_m_water_f(boolean flag){

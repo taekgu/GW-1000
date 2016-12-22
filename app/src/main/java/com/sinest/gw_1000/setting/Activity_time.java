@@ -7,6 +7,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
@@ -178,14 +179,7 @@ public class Activity_time extends Activity {
             }else{
                 buf_l = Integer.toString(int_l);
             }
-            /*
-            if(k == 0)
-            {
-                buf_r = "00";
-            }else{
-                buf_r = Integer.toString(int_r);
-            }
-*/
+
             if(int_r == 0)
             {
                 buf_r = "00";
@@ -200,10 +194,10 @@ public class Activity_time extends Activity {
             time.setText(s_buf);
 
         }else if(int_c == 0) {
-            time.setText("00:0"+Integer.toString(k));
+            s_buf = "00:0"+(String)Integer.toString(k);
+            time.setText(s_buf);
             int_c++;
-        }
-        else {
+        }else {
             s_buf = (String)time.getText();
             check = s_buf.indexOf(":");
             buf_l = s_buf.substring(0,check);

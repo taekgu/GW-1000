@@ -791,7 +791,7 @@ public class Activity_setting extends AppCompatActivity {
         isRun = false;
 
         Application_manager.m_water_heater_time_save = button2_flag[2];
-        Application_manager.set_m_water_f(button2_flag[2]);
+        Application_manager.set_m_water_ff(button2_flag[2]);
 
         Application_manager.m_external_led = ex_f;
         Application_manager.set_m_external_led(ex_f);
@@ -818,7 +818,7 @@ public class Activity_setting extends AppCompatActivity {
             communicator.set_setting(2, (byte) 0x02);
         }
 
-        button2_flag[2] = Application_manager.m_water_heater_time_save;
+        button2_flag[2] = Application_manager.m_water_heater_f;
         if (button2_flag[2] == true) {
             b_wa.setBackgroundResource(R.drawable.off);
         } else {

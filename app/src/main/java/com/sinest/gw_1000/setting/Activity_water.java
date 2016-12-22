@@ -85,9 +85,11 @@ public class Activity_water extends Activity {
                         if (water_flag[1] == true) {
                             water_off.setBackgroundResource(R.drawable.on);
                             water_flag[1] = false;
+                            Application_manager.set_m_water_ff(water_flag[1]);
                         } else {
                             water_off.setBackgroundResource(R.drawable.off);
                             water_flag[1] = true;
+                            Application_manager.set_m_water_ff(water_flag[1]);
                         }
                         break;
                     case R.id.water_s_c:
@@ -163,6 +165,8 @@ public class Activity_water extends Activity {
         water_s_c.setText(start_time);
         finish_time = Application_manager.m_water_heater_time_ftime;
         water_f_c.setText(finish_time);
+
+        water_flag[1] = Application_manager.m_water_heater_f;
     }
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
