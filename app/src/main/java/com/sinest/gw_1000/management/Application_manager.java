@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.WindowManager;
 
 import com.sinest.gw_1000.communication.Communicator;
+import com.sinest.gw_1000.setting.Activity_setting;
 
 /**
  * Created by Jinwook on 2016-11-20.
@@ -107,6 +108,9 @@ public class Application_manager extends Application {
     // RFID모드 on/off값
     public final static String RFID_ONOFF = "rfid_onoff";
 
+    //sleep mode flag
+    public final static String SLEEP_M = "sleep_m";
+
     // 사운드 id
     public final static int NUM_OF_LANG = 3;
     public final static int NUM_OF_SOUND = 5;
@@ -170,6 +174,11 @@ public class Application_manager extends Application {
     public static boolean rfid_pass_f = true;
     public static boolean rfid_pass_f2 = false;
 
+    private static int start_m = 0;
+    private static int end_m = 0;
+    private static boolean m_sleep_f = false;
+    public static int m_sleep_ff = 3;
+
     public void onCreate() {
 
         Application_manager.context = getApplicationContext();
@@ -225,6 +234,17 @@ public class Application_manager extends Application {
         m_volume = sharedPreferences.getInt(VOLUME,0);
 
         // 어플 시작 시 이전 time gap 가져와서 변수에 넣기
+
+        //sleep mode flag
+        m_sleep_ff = sharedPreferences.getInt(SLEEP_M,3);
+    }
+
+    synchronized public static void set_m_sleep_m(int i){
+        sharedPreferences = context.getSharedPreferences(Application_manager.NAME_OF_SHARED_PREF, 0);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putInt(SLEEP_M, i);
+        editor.commit();
+        m_sleep_ff = i;
     }
 
     synchronized public static void set_m_volume(int i){
@@ -601,6 +621,12 @@ public class Application_manager extends Application {
                         save_Running_time();
                         Log.v("sss","STOP : "+runningTime);
 
+                        if(m_sleep_f == true){
+                            start_m++;
+                            if(start_m == end_m){
+                                Activity_setting.devicePolicyManager.lockNow();
+                            }
+                        }
                     }
                     catch (Exception e) {
 
@@ -608,6 +634,12 @@ public class Application_manager extends Application {
                 }
             }
         });
+    }
+
+    synchronized public static void setSleep(int start, int end, boolean f) {
+        m_sleep_f = f;
+        start_m = start;
+        end_m = end;
     }
 
     public static Communicator getCommunicator() {

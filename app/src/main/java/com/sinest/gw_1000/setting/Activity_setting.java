@@ -100,13 +100,17 @@ public class Activity_setting extends AppCompatActivity {
     int led_bright_num = 1;
     int sound_volume_num = 1;
 
+    boolean sleep_f = false;
+    int sleep_cnt = 0;
+    int sleep_cnt_end = 1000;
+
     String t_buf;
 
     SeekBar seekbar;
     int volume;
     Typeface tf;
 
-    DevicePolicyManager devicePolicyManager;
+    public static DevicePolicyManager devicePolicyManager;
     ComponentName componentName;
 
     @Override
@@ -147,6 +151,10 @@ public class Activity_setting extends AppCompatActivity {
         b_23 = (TextView)findViewById(R.id.button23);
         b_33 = (TextView)findViewById(R.id.button33);
         b_43 = (TextView)findViewById(R.id.button43);
+
+        sleep_f = false;
+        sleep_cnt = 0;
+        sleep_cnt_end = 1000;
 
         SharedPreferences sharedPreferences = getSharedPreferences(Application_manager.NAME_OF_SHARED_PREF, 0);
         int resourceID;
@@ -523,46 +531,96 @@ public class Activity_setting extends AppCompatActivity {
                     case R.id.b_1m:
                         //
                         if (button3_flag[0] == true) {
+                            setZerosSleep();
                             b_1m.setBackgroundResource(R.drawable.sleepmode_1min_on);
                             button3_flag[0] = false;
 
                             //----screen off----
+                            sleep_f = true;
+                            sleep_cnt = 0;
+                            sleep_cnt_end = 60;
+                            Application_manager.setSleep(sleep_cnt,sleep_cnt_end,sleep_f);
 
-                            devicePolicyManager.lockNow();
+                            Application_manager.set_m_sleep_m(0);
 
                             Log.v("test", "test");
                         } else {
                             b_1m.setBackgroundResource(R.drawable.sleepmode_1min);
+                            sleep_f = false;
+                            sleep_cnt = 0;
+                            sleep_cnt_end = 1000;
+                            Application_manager.setSleep(sleep_cnt,sleep_cnt_end,sleep_f);
                             button3_flag[0] = true;
                         }
                         break;
                     case R.id.b_3m:
                         //
                         if (button3_flag[1] == true) {
+                            setZerosSleep();
                             b_3m.setBackgroundResource(R.drawable.sleepmode_3min_on);
+
+                            sleep_f = true;
+                            sleep_cnt = 0;
+                            sleep_cnt_end = 3*60;
+
+                            Application_manager.setSleep(sleep_cnt,sleep_cnt_end,sleep_f);
+
+                            Application_manager.set_m_sleep_m(1);
+
                             button3_flag[1] = false;
                         } else {
                             b_3m.setBackgroundResource(R.drawable.sleepmode_3min);
+                            sleep_f = false;
+                            sleep_cnt = 0;
+                            sleep_cnt_end = 1000;
+
+                            Application_manager.setSleep(sleep_cnt,sleep_cnt_end,sleep_f);
                             button3_flag[1] = true;
                         }
                         break;
                     case R.id.b_5m:
                         //
                         if (button3_flag[2] == true) {
+                            setZerosSleep();
                             b_5m.setBackgroundResource(R.drawable.sleepmode_5min_on);
+                            sleep_f = true;
+                            sleep_cnt = 0;
+                            sleep_cnt_end = 5*60;
+
+                            Application_manager.setSleep(sleep_cnt,sleep_cnt_end,sleep_f);
+
+                            Application_manager.set_m_sleep_m(2);
                             button3_flag[2] = false;
                         } else {
                             b_5m.setBackgroundResource(R.drawable.sleepmode_5min);
+                            sleep_f = false;
+                            sleep_cnt = 0;
+                            sleep_cnt_end = 1000;
+
+                            Application_manager.setSleep(sleep_cnt,sleep_cnt_end,sleep_f);
                             button3_flag[2] = true;
                         }
                         break;
                     case R.id.b_coutinue:
                         //
                         if (button3_flag[3] == true) {
+                            setZerosSleep();
                             b_coutinue.setBackgroundResource(R.drawable.sleepmode_continue_on);
+                            sleep_f = false;
+                            sleep_cnt = 0;
+                            sleep_cnt_end = 1000;
+
+                            Application_manager.setSleep(sleep_cnt,sleep_cnt_end,sleep_f);
+
+                            Application_manager.set_m_sleep_m(3);
                             button3_flag[3] = false;
                         } else {
                             b_coutinue.setBackgroundResource(R.drawable.sleepmode_continue_off);
+                            sleep_f = false;
+                            sleep_cnt = 0;
+                            sleep_cnt_end = 1000;
+
+                            Application_manager.setSleep(sleep_cnt,sleep_cnt_end,sleep_f);
                             button3_flag[3] = true;
                         }
                         break;
@@ -669,6 +727,19 @@ public class Activity_setting extends AppCompatActivity {
         s_clock.setOnTouchListener(mTouchEvent);
         // ATTENTION: This was auto-generated to implement the App Indexing API.
         // See https://g.co/AppIndexing/AndroidStudio for more information.
+    }
+
+    void setZerosSleep()
+    {
+        b_1m.setBackgroundResource(R.drawable.sleepmode_1min);
+        button3_flag[0] = true;
+        b_3m.setBackgroundResource(R.drawable.sleepmode_3min);
+        button3_flag[1] = true;
+        b_5m.setBackgroundResource(R.drawable.sleepmode_5min);
+        button3_flag[2] = true;
+        b_coutinue.setBackgroundResource(R.drawable.sleepmode_continue_off);
+        button3_flag[3] = true;
+
     }
 
     @Override
@@ -802,6 +873,22 @@ public class Activity_setting extends AppCompatActivity {
 
     private void button_init(){
 
+        int sleep_ff = Application_manager.m_sleep_ff;
+        if (sleep_ff == 0) {
+            setZerosSleep();
+            b_1m.setBackgroundResource(R.drawable.sleepmode_1min_on);
+
+        }else if (sleep_ff == 1) {
+            setZerosSleep();
+            b_3m.setBackgroundResource(R.drawable.sleepmode_3min_on);
+        }else if (sleep_ff == 2) {
+            setZerosSleep();
+            b_5m.setBackgroundResource(R.drawable.sleepmode_5min_on);
+        }else if (sleep_ff == 3) {
+            setZerosSleep();
+            b_coutinue.setBackgroundResource(R.drawable.sleepmode_continue_on);
+        }
+
         ex_f = Application_manager.m_external_led;
         if (ex_f == 0) {
             b_ex.setBackgroundResource(R.drawable.off);
@@ -851,8 +938,6 @@ public class Activity_setting extends AppCompatActivity {
 
     }
 
-
-
     @Override
     protected void onStart() {
         super.onStart();
@@ -881,60 +966,5 @@ public class Activity_setting extends AppCompatActivity {
     private void updateThread() {
         s_clock.setText(Application_manager.doInit_time());
     }
-/*
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == RESULT_OK) {
-            switch (requestCode) {
-                case 1:
-                    check = data.getStringExtra("check");
-                    Log.v("test", check);
-                    if (check.equals("No")) {
-                        b_rf.setBackgroundResource(R.drawable.off);
-                        button2_flag[0] = true;
-                        check = "Yes";
-                    } else if (check.equals("do")) {
-                        startActivityForResult(intent_rfid2, 3);
-                    }
-                    break;
-                case 2:
-                    check2 = data.getStringExtra("check");
-                    if (check2.equals("No")) {
-                        b_wa.setBackgroundResource(R.drawable.off);
-                        button2_flag[2] = true;
-                        check2 = "Yes";
-                    }
-                    break;
-                case 3:
-                    check = data.getStringExtra("check");
-                    if (check.equals("No")) {
-                        b_rf.setBackgroundResource(R.drawable.off);
-                        button2_flag[0] = true;
-                        check = "Yes";
-                        Log.i("JW", "RFID OFF");
-                        Toast.makeText(this, "RFID OFF", Toast.LENGTH_SHORT).show();
-                    }
-                    else {
 
-                        Log.i("JW", "RFID ON");
-                        Toast.makeText(this, "RFID ON", Toast.LENGTH_SHORT).show();
-                    }
-                    break;
-                case 4:
-                    check = data.getStringExtra("emotion");
-                    if (check.equals("OK")) {
-                        led_mode_num = (int) data.getSerializableExtra("LED_M");
-                        led_bright_num = (int) data.getSerializableExtra("LED");
-                        sound_mode_num = (int) data.getSerializableExtra("SOUND_M");
-                        sound_volume_num = (int) data.getSerializableExtra("SOUND");
-                        Log.v("test", "" + led_mode_num);
-                    }
-                    break;
-                default:
-                    break;
-            }
-        }
-    }
-    */
 }
