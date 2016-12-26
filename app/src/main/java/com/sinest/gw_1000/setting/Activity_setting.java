@@ -1,5 +1,7 @@
 package com.sinest.gw_1000.setting;
 
+import android.app.admin.DevicePolicyManager;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -104,8 +106,8 @@ public class Activity_setting extends AppCompatActivity {
     int volume;
     Typeface tf;
 
-    //PowerManager powerManager;
-    //PowerManager.WakeLock wakeLock;
+    DevicePolicyManager devicePolicyManager;
+    ComponentName componentName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -114,8 +116,14 @@ public class Activity_setting extends AppCompatActivity {
 
         Application_manager.setFullScreen(this);
 
-        //powerManager = (PowerManager)getSystemService(Context.POWER_SERVICE);
-        //wakeLock = powerManager.newWakeLock(powerManager.PARTIAL_WAKE_LOCK,"My Tag");
+        devicePolicyManager = (DevicePolicyManager) getApplicationContext().getSystemService(Context.DEVICE_POLICY_SERVICE);
+        componentName = new ComponentName(getApplicationContext(), ShutdownAdminReceiver.class);
+
+        if(!devicePolicyManager.isAdminActive(componentName)) {
+            Intent intent = new Intent(DevicePolicyManager.ACTION_ADD_DEVICE_ADMIN);
+            intent.putExtra(DevicePolicyManager.EXTRA_DEVICE_ADMIN, componentName);
+            startActivityForResult(intent, 0);
+        }
 
         // 폰트 설정
         tf = Typeface.createFromAsset(getAssets(), "fonts/digital.ttf");
@@ -213,25 +221,7 @@ public class Activity_setting extends AppCompatActivity {
         hidden_s_4 = (Button)findViewById(R.id.hidden_s_4);
 
         seekbar = (SeekBar)findViewById(R.id.seekBar);
-/*
-        scrOnReceiver = new BroadcastReceiver() {
-            @Override
-            public void onReceive(Context context, Intent intent) {
-                Log.v("test", "on");
-                s_clock.setText(""+ Application_manager.getTime());
-            }
-        };
-        scrOnFilter = new IntentFilter(Intent.ACTION_SCREEN_ON);
-        scrOffReceiver = new BroadcastReceiver() {
-            @Override
-            public void onReceive(Context context, Intent intent) {
-                Log.v("test", "off");
-            }
-        };
-        scrOffFilter = new IntentFilter(Intent.ACTION_SCREEN_OFF);
-        registerReceiver(scrOnReceiver, scrOnFilter);
-        registerReceiver(scrOffReceiver, scrOffFilter);
-*/
+
         b_11 = (TextView) findViewById(R.id.button11);
         b_21 = (TextView) findViewById(R.id.button21);
         b_31 = (TextView) findViewById(R.id.button31);
@@ -536,7 +526,9 @@ public class Activity_setting extends AppCompatActivity {
                             b_1m.setBackgroundResource(R.drawable.sleepmode_1min_on);
                             button3_flag[0] = false;
 
-                            //devicePolicyManager.lockNow();
+                            //----screen off----
+
+                            devicePolicyManager.lockNow();
 
                             Log.v("test", "test");
                         } else {
