@@ -94,20 +94,29 @@ public class CustomSeekBar_made_by_Jinwook extends RelativeLayout {
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent) {
 
+                View layout_view = layout_top;
+                ViewGroup.LayoutParams layoutParams = layout_view.getLayoutParams();
+
                 switch (motionEvent.getAction()) {
                     case MotionEvent.ACTION_DOWN:
                         start = motionEvent.getRawY();
                         break;
                     case MotionEvent.ACTION_UP:
 
+                        /*
+                        layout_view = layout_top;
+                        layoutParams = layout_view.getLayoutParams();
+                        layoutParams.height = (val_max - (real_top * divider)) + init_val;
+                        layout_view.setLayoutParams(layoutParams);
+                        */
                         break;
                     case MotionEvent.ACTION_MOVE:
 
                         moved = motionEvent.getRawY() - start;
                         start = motionEvent.getRawY();
 
-                        View layout_view = layout_top;
-                        ViewGroup.LayoutParams layoutParams = layout_view.getLayoutParams();
+                        layout_view = layout_top;
+                        layoutParams = layout_view.getLayoutParams();
                         if (layoutParams.height + moved < init_val) {
 
                             layoutParams.height = init_val;
@@ -137,20 +146,29 @@ public class CustomSeekBar_made_by_Jinwook extends RelativeLayout {
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent) {
 
+                View layout_view = layout_bottom;
+                ViewGroup.LayoutParams layoutParams = layout_view.getLayoutParams();
+
                 switch (motionEvent.getAction()) {
                     case MotionEvent.ACTION_DOWN:
                         start = motionEvent.getRawY();
                         break;
                     case MotionEvent.ACTION_UP:
 
+                        /*
+                        layout_view = layout_bottom;
+                        layoutParams = layout_view.getLayoutParams();
+                        layoutParams.height = real_bottom * divider + init_val;
+                        layout_view.setLayoutParams(layoutParams);
+                        */
                         break;
                     case MotionEvent.ACTION_MOVE:
 
                         moved = start - motionEvent.getRawY();
                         start = motionEvent.getRawY();
 
-                        View layout_view = layout_bottom;
-                        ViewGroup.LayoutParams layoutParams = layout_view.getLayoutParams();
+                        layout_view = layout_bottom;
+                        layoutParams = layout_view.getLayoutParams();
                         if (layoutParams.height + moved < init_val) {
 
                             layoutParams.height = init_val;
