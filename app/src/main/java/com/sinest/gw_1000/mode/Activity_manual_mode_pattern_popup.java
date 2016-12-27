@@ -10,7 +10,6 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageView;
-import android.widget.SeekBar;
 
 import com.sinest.gw_1000.R;
 import com.sinest.gw_1000.management.Application_manager;
@@ -21,7 +20,7 @@ public class Activity_manual_mode_pattern_popup extends Activity implements Cust
     int section_min, section_max;
     Intent intent;
     ImageView img;
-    SeekBar seekBar;
+    CustomSeekBar customSeekBar;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,8 +34,19 @@ public class Activity_manual_mode_pattern_popup extends Activity implements Cust
 
         ImageView manual_popup_save = (ImageView) findViewById(R.id.manual_popup_save);
         ImageView manual_popup_back = (ImageView) findViewById(R.id.manual_popup_back);
+        customSeekBar = (CustomSeekBar) findViewById(R.id.custom_seek_bar);
 
         intent = getIntent();
+        section_min = intent.getIntExtra("seekbar_min", 0);
+        section_max = intent.getIntExtra("seekbar_max", 14);
+
+        Log.i("RR", "rr_section_min : " + section_min);
+        Log.i("RR", "rr_section_max : " + section_max);
+
+        customSeekBar.setSectionInit(section_min, section_max);
+
+
+
         int resourceId;
         img = (ImageView)findViewById(R.id.manual_popup_imageview);
         patternNum = intent.getIntExtra("currentPattern",1);

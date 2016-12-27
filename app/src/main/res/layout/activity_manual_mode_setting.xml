@@ -187,8 +187,8 @@
                 android:gravity="center">
 
                 <com.sinest.gw_1000.mode.utils.CustomProgressBar
-                    android:layout_width="50dp"
-                    android:layout_height="240dp"
+                    android:layout_width="20dp"
+                    android:layout_height="300dp"
                     android:gravity="center"
                     android:id="@+id/manual_mode_progress_bar_1">
                 </com.sinest.gw_1000.mode.utils.CustomProgressBar>
@@ -278,8 +278,8 @@
                 android:gravity="center">
 
                 <com.sinest.gw_1000.mode.utils.CustomProgressBar
-                    android:layout_width="50dp"
-                    android:layout_height="240dp"
+                    android:layout_width="20dp"
+                    android:layout_height="300dp"
                     android:gravity="center"
                     android:id="@+id/manual_mode_progress_bar_2">
                 </com.sinest.gw_1000.mode.utils.CustomProgressBar>
@@ -369,8 +369,8 @@
                 android:gravity="center">
 
                 <com.sinest.gw_1000.mode.utils.CustomProgressBar
-                    android:layout_width="50dp"
-                    android:layout_height="240dp"
+                    android:layout_width="20dp"
+                    android:layout_height="300dp"
                     android:gravity="center"
                     android:id="@+id/manual_mode_progress_bar_3">
                 </com.sinest.gw_1000.mode.utils.CustomProgressBar>

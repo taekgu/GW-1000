@@ -43,11 +43,12 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:gravity="center">
-            <com.sinest.gw_1000.mode.utils.CustomSeekBar_made_by_Jinwook
+            <com.sinest.gw_1000.mode.utils.CustomSeekBar
                 android:layout_width="wrap_content"
-                android:layout_height="300dp"
-                android:layout_centerInParent="true">
-            </com.sinest.gw_1000.mode.utils.CustomSeekBar_made_by_Jinwook>
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:id="@+id/custom_seek_bar">
+            </com.sinest.gw_1000.mode.utils.CustomSeekBar>
         </LinearLayout>
 
         <TableLayout

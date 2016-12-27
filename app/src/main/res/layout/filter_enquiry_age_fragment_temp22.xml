@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="40dp"
-    android:layout_height="300dp"
-    android:gravity="center"
     android:id="@+id/rel_main"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:gravity="center"
     android:background="@android:color/transparent">
 
     <View
         android:id="@+id/filter_main_view"
-        android:layout_width="20dp"
+        android:layout_width="50dp"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
         android:layout_marginBottom="20dp"
@@ -17,60 +17,72 @@
 
     <RelativeLayout
         android:id="@+id/rel_filter_min"
-        android:layout_width="wrap_content"
-        android:layout_height="20dp"
-        android:layout_alignEnd="@+id/progress_main_view"
+        android:layout_width="50dp"
+        android:layout_height="30dp"
+        android:layout_marginTop="40dp"
         android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="29dp"
         android:layout_gravity="bottom">
+
+
         <TextView
-            android:layout_width="20dp"
-            android:layout_height="10dp"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
             android:text="00"
             android:visibility="invisible"
             android:id="@+id/tv_filter_min" />
+
         <View
             android:id="@+id/view_inactive_line_top"
-            android:layout_width="6dp"
+            android:layout_width="5dp"
             android:layout_height="match_parent"
-            android:layout_marginRight="16.5dp"
             android:layout_alignParentEnd="true"
+            android:layout_marginRight="45dp"
+            android:layout_marginTop="20dp"
             android:background="@color/grey" />
+
+
         <View
             android:id="@+id/oval_thumb_min"
-            android:layout_width="match_parent"
-            android:layout_height="20dp"
+            android:layout_width="50dp"
+            android:layout_height="40dp"
             android:layout_alignParentBottom="true"
             android:background="@drawable/range_bar_thumb"
             />
+
     </RelativeLayout>
+
 
     <RelativeLayout
         android:id="@+id/rel_filter_max"
-        android:layout_width="wrap_content"
-        android:layout_height="20dp"
+        android:layout_width="50dp"
+        android:layout_height="30dp"
+        android:layout_marginBottom="40dp"
         android:layout_alignParentBottom="true"
-        android:layout_alignStart="@+id/progress_main_view"
-        android:layout_marginBottom="27dp"
-        android:layout_gravity="bottom">
+        android:layout_gravity="bottom"
+>
+
 
         <TextView
-            android:layout_width="20dp"
-            android:layout_height="10dp"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
             android:text="100"
             android:visibility="invisible"
             android:id="@+id/tv_filter_max" />
+
         <View
             android:id="@+id/view_inactive_line_bottom"
-            android:layout_width="6dp"
+            android:layout_width="5dp"
             android:layout_height="match_parent"
-            android:background="@color/grey"
-            android:layout_marginLeft="17.5dp" />
+            android:layout_marginBottom="20dp"
+            android:layout_marginLeft="50dp"
+            android:layout_marginTop="11dp"
+            android:background="@color/grey" />
+
+
         <View
             android:id="@+id/oval_thumb_max"
-            android:layout_width="match_parent"
-            android:layout_height="20dp"
+            android:layout_width="50dp"
+            android:layout_height="40dp"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
@@ -78,14 +90,16 @@
 
             />
 
+
     </RelativeLayout>
 
     <View
         android:id="@+id/view_filter_parent"
-        android:layout_width="wrap_content"
+        android:layout_width="50dp"
         android:layout_height="wrap_content"
         android:background="@android:color/transparent"
         android:clickable="false"
         android:layout_alignParentTop="true"
         android:layout_alignParentStart="true" />
+
 </RelativeLayout>
