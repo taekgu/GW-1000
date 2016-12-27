@@ -43,7 +43,7 @@ public class Communicator {
 
     // Wifi direct
     private Context mContext;
-    private WifiDirectWrapper mWidiWrapper;
+//    private WifiDirectWrapper mWidiWrapper;
     private WifiConnector wifiConnector;
 
     // Socket
@@ -57,17 +57,7 @@ public class Communicator {
 
         return wifiConnector;
     }
-/*
-    public static Communicator getInstance() {
 
-        if (instance ==null) {
-
-            instance = new Communicator();
-        }
-
-        return instance;
-    }
-*/
     public void init(Context context) {
 
         this.mContext = context;
@@ -101,12 +91,12 @@ public class Communicator {
                 send(temp);
                 if (!checkCheckSum(msg_rx)) {
 
-                    Log.i("WIFI", "Rx data is wrong (checkSum error)");
+                    Log.i("JW", "Rx data is wrong (checkSum error)");
                     calcCheckSum(msg_rx);
                 }
                 Intent intent = new Intent("update.data");
                 mContext.sendBroadcast(intent);
-                Log.i("WIFI", "sendBroadcast");
+                Log.i("jW", "sendBroadcast");
             }
         };
     }

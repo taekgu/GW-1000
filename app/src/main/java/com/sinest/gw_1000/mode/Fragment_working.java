@@ -92,7 +92,7 @@ public class Fragment_working extends Fragment {
                 if (time_m_left == 0) {
 
                     Log.i("JW", "치료 종료");
-                    Application_manager.getSoundManager().play(Application_manager.ID_LANG_SOUND[Application_manager.m_language][2]);
+                    Application_manager.getSoundManager().play(Application_manager.m_language, 2);
                     Activity_waiting activity_waiting = (Activity_waiting) getActivity();
                     activity_waiting.changeFragment_waiting();
                 }
@@ -187,21 +187,22 @@ public class Fragment_working extends Fragment {
                         break;
                     case R.id.button_stop:
 
-                        isRun = false;
-                        isPause = false;
-                        state = 1;
                         button_clicked.setBackgroundResource(R.drawable.button_stop_off);
-                        communicator.set_tx(1, (byte)0x00);
-                        Application_manager.getSoundManager().play(Application_manager.ID_LANG_SOUND[Application_manager.m_language][1]);
 
-                        if (parent == 0) {
-                            Activity_waiting activity_waiting = (Activity_waiting) getActivity();
-                            activity_waiting.changeFragment_waiting();
-                        }
-                        else {
+                        if (Application_manager.getSoundManager().play(Application_manager.m_language, 1) == 0) {
+                            isRun = false;
+                            isPause = false;
+                            state = 1;
+                            communicator.set_tx(1, (byte) 0x00);
 
-                            Activity_waiting_rfid activity_waiting_rfid = (Activity_waiting_rfid) getActivity();
-                            activity_waiting_rfid.changeFragment_waiting();
+                            if (parent == 0) {
+                                Activity_waiting activity_waiting = (Activity_waiting) getActivity();
+                                activity_waiting.changeFragment_waiting();
+                            } else {
+
+                                Activity_waiting_rfid activity_waiting_rfid = (Activity_waiting_rfid) getActivity();
+                                activity_waiting_rfid.changeFragment_waiting();
+                            }
                         }
                         break;
                 }

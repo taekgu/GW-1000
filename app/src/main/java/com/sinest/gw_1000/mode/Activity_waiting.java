@@ -7,6 +7,8 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.graphics.Typeface;
+import android.graphics.drawable.AnimationDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -55,6 +57,9 @@ public class Activity_waiting extends AppCompatActivity {
 
     boolean flag = false;
     boolean isRun;
+
+    private ImageView background;
+    private AnimationDrawable frameAnimation;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -129,6 +134,8 @@ public class Activity_waiting extends AppCompatActivity {
         waiting_door_close_button.setOnTouchListener(mTouchEvent);
 
         time_text.setOnTouchListener(mTouchEvent);
+
+        background = (ImageView) findViewById(R.id.activity_waiting_background);
     }
 
     @Override
@@ -217,26 +224,32 @@ public class Activity_waiting extends AppCompatActivity {
             // 타이머 스레드가 동작중이지 않은 경우
             if (!fragment_working.getIsAlive()) {
 
-                Log.i("JW", "changeFragment (waiting -> working)");
-                Application_manager.getSoundManager().play(Application_manager.ID_LANG_SOUND[Application_manager.m_language][0]);
-                FragmentManager fm = getFragmentManager();
-                FragmentTransaction fragmentTransaction = fm.beginTransaction();
+                if (Application_manager.getSoundManager().play(Application_manager.m_language, 0) == 0) {
 
-                fragment_working.init(modeNum, val_time, 0);
+                    Log.i("JW", "changeFragment (waiting -> working)");
 
-                fragmentTransaction.replace(R.id.frameLayout_fragment, fragment_working);
-                fragmentTransaction.commit();
+                    FragmentManager fm = getFragmentManager();
+                    FragmentTransaction fragmentTransaction = fm.beginTransaction();
 
-                mode = 1;
-                handler_update_data.sendEmptyMessage(SET_BUTTON_INVISIBLE);
+                    fragment_working.init(modeNum, val_time, 0);
 
-                // 동작 모드로 바뀌기 이전 산소농도, 수압, 시간 값 저장
-                SharedPreferences sharedPreferences = getSharedPreferences(Application_manager.NAME_OF_SHARED_PREF, 0);
-                SharedPreferences.Editor editor = sharedPreferences.edit();
-                editor.putInt(Application_manager.VAL_OXYGEN, val_oxygen);
-                editor.putInt(Application_manager.VAL_PRESSURE, val_pressure);
-                editor.putInt(Application_manager.VAL_TIME, val_time);
-                editor.commit();
+                    fragmentTransaction.replace(R.id.frameLayout_fragment, fragment_working);
+                    fragmentTransaction.commit();
+
+                    mode = 1;
+                    handler_update_data.sendEmptyMessage(SET_BUTTON_INVISIBLE);
+
+                    // 동작 모드로 바뀌기 이전 산소농도, 수압, 시간 값 저장
+                    SharedPreferences sharedPreferences = getSharedPreferences(Application_manager.NAME_OF_SHARED_PREF, 0);
+                    SharedPreferences.Editor editor = sharedPreferences.edit();
+                    editor.putInt(Application_manager.VAL_OXYGEN, val_oxygen);
+                    editor.putInt(Application_manager.VAL_PRESSURE, val_pressure);
+                    editor.putInt(Application_manager.VAL_TIME, val_time);
+                    editor.commit();
+
+                    // 애니메이션 시작
+                    start_animation();
+                }
             }
             // 타이머 스레드가 아직 동작중인 경우
             else {
@@ -248,6 +261,31 @@ public class Activity_waiting extends AppCompatActivity {
         else {
 
             Toast.makeText(this, "동작 시간을 1~90분 사이로 설정해야합니다", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    private void start_animation() {
+
+        background.setBackgroundResource(R.drawable.animation_working);
+        frameAnimation = (AnimationDrawable) background.getBackground();
+        frameAnimation.start();
+    }
+
+    private void stop_animation() {
+
+        if (frameAnimation != null) {
+
+            frameAnimation.stop();
+            // 도어 열림
+            if (Application_manager.getCommunicator().get_tx_idx(11) == 0x01) {
+
+                background.setBackgroundResource(R.drawable.waiting_dooropen_backimage);
+            }
+            // 도어 닫힘
+            else {
+
+                background.setBackgroundResource(R.drawable.waiting_doorclose_backimage);
+            }
         }
     }
 
@@ -279,6 +317,9 @@ public class Activity_waiting extends AppCompatActivity {
                 time_text.setText(""+val_time);
             }
         });
+
+        // 애니메이션 정지
+        stop_animation();
     }
 
     public void setTimeLeft(final int min) {
@@ -430,7 +471,7 @@ public class Activity_waiting extends AppCompatActivity {
     private View.OnTouchListener mTouchEvent = new View.OnTouchListener() {
         @Override
         public boolean onTouch(View view, MotionEvent motionEvent) {
-            LinearLayout background;
+            ImageView background;
             Intent intent;
             Intent intent_setting;
             int action = motionEvent.getAction();
@@ -566,28 +607,32 @@ public class Activity_waiting extends AppCompatActivity {
                         }
                         break;
                     case R.id.waiting_dooropen_button:
-                        background = (LinearLayout)findViewById(R.id.waiting_background);
+
                         view.setBackgroundResource(R.drawable.door_open_off);
-                        background.setBackgroundResource(R.drawable.waiting_dooropen_backimage);
 
-                        val = 0x01;
-                        communicator.set_tx(11, val);
-                        communicator.send(communicator.get_tx());
+                        if (Application_manager.getSoundManager().play(Application_manager.m_language, 3) == 0) {
 
-                        //Application_manager.getSoundManager().play(Application_manager.ID_LANG_SOUND[Application_manager.m_language][3]);
-                        Application_manager.getSoundManager().play_door_open(Application_manager.m_language);
+                            background = (ImageView) findViewById(R.id.activity_waiting_background);
+                            background.setBackgroundResource(R.drawable.waiting_dooropen_backimage);
+
+                            val = 0x01;
+                            communicator.set_tx(11, val);
+                            communicator.send(communicator.get_tx());
+                        }
                         break;
                     case R.id.waiting_doorclose_button:
-                        background = (LinearLayout)findViewById(R.id.waiting_background);
+
                         view.setBackgroundResource(R.drawable.door_close_off);
-                        background.setBackgroundResource(R.drawable.waiting_doorclose_backimage);
 
-                        val = 0x02;
-                        communicator.set_tx(11, val);
-                        communicator.send(communicator.get_tx());
+                        if (Application_manager.getSoundManager().play(Application_manager.m_language, 4) == 0) {
 
-                        //Application_manager.getSoundManager().play(Application_manager.ID_LANG_SOUND[Application_manager.m_language][4]);
-                        Application_manager.getSoundManager().play_door_close(Application_manager.m_language);
+                            background = (ImageView) findViewById(R.id.activity_waiting_background);
+                            background.setBackgroundResource(R.drawable.waiting_doorclose_backimage);
+
+                            val = 0x02;
+                            communicator.set_tx(11, val);
+                            communicator.send(communicator.get_tx());
+                        }
                         break;
                     case R.id.waiting_time_text:
 

@@ -17,11 +17,12 @@ public class SoundManager {
 
     private final static int MAX_STREAMS = 1; // 동시 재생 가능한 음원 수
 
+    private MediaPlayer latest_player;
     private MediaPlayer[] mediaPlayer_open;
     private MediaPlayer[] mediaPlayer_close;
     private MediaPlayer.OnPreparedListener preparedListener;
     private int prepare_cnt = 0;
-    private final static int TOTAL_CNT = 6;
+    private final static int TOTAL_CNT = Application_manager.NUM_OF_LANG * Application_manager.NUM_OF_SOUND;
 
     private SoundPool soundPool;
     private Context context;
@@ -33,9 +34,94 @@ public class SoundManager {
         soundPool = new SoundPool(MAX_STREAMS, AudioManager.STREAM_MUSIC, 0);
         context = _context;
 
-        loadSounds();
+        loadSounds2();
     }
 
+    private void loadSounds2() {
+
+        try {
+
+            for (int lang=0; lang<Application_manager.NUM_OF_LANG; lang++) {
+
+                for (int sound=0; sound<Application_manager.NUM_OF_SOUND; sound++) {
+
+                    Application_manager.mediaPlayer[lang][sound] = new MediaPlayer();
+                    Application_manager.mediaPlayer[lang][sound].setAudioStreamType(AudioManager.STREAM_MUSIC);
+                }
+            }
+
+            AssetFileDescriptor afd;
+            afd = context.getAssets().openFd("sounds/korean_start.wav");
+            Application_manager.mediaPlayer[0][0].setDataSource(afd.getFileDescriptor(), afd.getStartOffset(), afd.getLength());
+            afd.close();
+            afd = context.getAssets().openFd("sounds/korean_pause.wav");
+            Application_manager.mediaPlayer[0][1].setDataSource(afd.getFileDescriptor(), afd.getStartOffset(), afd.getLength());
+            afd.close();
+            afd = context.getAssets().openFd("sounds/korean_stop.wav");
+            Application_manager.mediaPlayer[0][2].setDataSource(afd.getFileDescriptor(), afd.getStartOffset(), afd.getLength());
+            afd.close();
+            afd = context.getAssets().openFd("sounds/korean_dooropen.wav");
+            Application_manager.mediaPlayer[0][3].setDataSource(afd.getFileDescriptor(), afd.getStartOffset(), afd.getLength());
+            afd.close();
+            afd = context.getAssets().openFd("sounds/korean_doorclose.wav");
+            Application_manager.mediaPlayer[0][4].setDataSource(afd.getFileDescriptor(), afd.getStartOffset(), afd.getLength());
+            afd.close();
+
+            afd = context.getAssets().openFd("sounds/english_start.wav");
+            Application_manager.mediaPlayer[1][0].setDataSource(afd.getFileDescriptor(), afd.getStartOffset(), afd.getLength());
+            afd.close();
+            afd = context.getAssets().openFd("sounds/english_pause.wav");
+            Application_manager.mediaPlayer[1][1].setDataSource(afd.getFileDescriptor(), afd.getStartOffset(), afd.getLength());
+            afd.close();
+            afd = context.getAssets().openFd("sounds/english_stop.wav");
+            Application_manager.mediaPlayer[1][2].setDataSource(afd.getFileDescriptor(), afd.getStartOffset(), afd.getLength());
+            afd.close();
+            afd = context.getAssets().openFd("sounds/english_dooropen.wav");
+            Application_manager.mediaPlayer[1][3].setDataSource(afd.getFileDescriptor(), afd.getStartOffset(), afd.getLength());
+            afd.close();
+            afd = context.getAssets().openFd("sounds/english_doorclose.wav");
+            Application_manager.mediaPlayer[1][4].setDataSource(afd.getFileDescriptor(), afd.getStartOffset(), afd.getLength());
+            afd.close();
+
+            afd = context.getAssets().openFd("sounds/chinese_start.wav");
+            Application_manager.mediaPlayer[2][0].setDataSource(afd.getFileDescriptor(), afd.getStartOffset(), afd.getLength());
+            afd.close();
+            afd = context.getAssets().openFd("sounds/chinese_pause.wav");
+            Application_manager.mediaPlayer[2][1].setDataSource(afd.getFileDescriptor(), afd.getStartOffset(), afd.getLength());
+            afd.close();
+            afd = context.getAssets().openFd("sounds/chinese_stop.wav");
+            Application_manager.mediaPlayer[2][2].setDataSource(afd.getFileDescriptor(), afd.getStartOffset(), afd.getLength());
+            afd.close();
+            afd = context.getAssets().openFd("sounds/chinese_dooropen.wav");
+            Application_manager.mediaPlayer[2][3].setDataSource(afd.getFileDescriptor(), afd.getStartOffset(), afd.getLength());
+            afd.close();
+            afd = context.getAssets().openFd("sounds/chinese_doorclose.wav");
+            Application_manager.mediaPlayer[2][4].setDataSource(afd.getFileDescriptor(), afd.getStartOffset(), afd.getLength());
+            afd.close();
+
+            preparedListener = new MediaPlayer.OnPreparedListener() {
+                @Override
+                public void onPrepared(MediaPlayer mediaPlayer) {
+
+                    prepare_cnt++;
+                }
+            };
+
+            for (int lang=0; lang<Application_manager.NUM_OF_LANG; lang++) {
+
+                for (int sound=0; sound<Application_manager.NUM_OF_SOUND; sound++) {
+
+                    Application_manager.mediaPlayer[lang][sound].setOnPreparedListener(preparedListener);
+                    Application_manager.mediaPlayer[lang][sound].prepare();
+                }
+            }
+
+        } catch (IOException e) {
+
+            Log.i("JW", "Sound file load error");
+        }
+    }
+/*
     private void loadSounds() {
 
         try {
@@ -118,7 +204,35 @@ public class SoundManager {
 
         return soundPool.play(soundID, 1.0f, 1.0f, 1, 0, 1.0f);
     }
+*/
+    public int play(int lang, int sound) {
 
+        if (prepare_cnt == TOTAL_CNT) {
+
+            if (latest_player == null) {
+
+                Application_manager.mediaPlayer[lang][sound].start();
+                latest_player = Application_manager.mediaPlayer[lang][sound];
+                return 0;
+            }
+            else {
+
+                if (!latest_player.isPlaying()) {
+
+                    Application_manager.mediaPlayer[lang][sound].start();
+                    latest_player = Application_manager.mediaPlayer[lang][sound];
+                    return 0;
+                }
+                return -1;
+            }
+        }
+        else {
+
+            Log.i("JW", "음원 파일이 아직 준비되지 않았습니다. prepared_cnt = " + prepare_cnt);
+            return -1;
+        }
+    }
+/*
     public void play_door_open(int lang) {
 
         if (prepare_cnt == TOTAL_CNT) {
@@ -148,4 +262,5 @@ public class SoundManager {
             Log.i("JW", "음원 파일이 아직 준비되지 않았습니다. prepared_cnt = " + prepare_cnt);
         }
     }
+    */
 }

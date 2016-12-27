@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.Application;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.media.MediaPlayer;
 import android.os.PowerManager;
 import android.util.DisplayMetrics;
 import android.util.Log;
@@ -118,6 +119,7 @@ public class Application_manager extends Application {
     public final static int[] ID_ENG = new int[5];
     public final static int[] ID_CHI = new int[5];
     public final static int[][] ID_LANG_SOUND = new int[NUM_OF_LANG][NUM_OF_SOUND];
+    public final static MediaPlayer[][] mediaPlayer = new MediaPlayer[NUM_OF_LANG][NUM_OF_SOUND];
 
     public static int[] t_flag = {0,0,0,0};
 

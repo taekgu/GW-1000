@@ -7,6 +7,7 @@ import android.content.BroadcastReceiver;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.graphics.Typeface;
+import android.graphics.drawable.AnimationDrawable;
 import android.nfc.NdefMessage;
 import android.nfc.NdefRecord;
 import android.nfc.NfcAdapter;
@@ -62,6 +63,9 @@ public class Activity_waiting_rfid extends AppCompatActivity {
     private PendingIntent mPendingIntent;
     boolean isRun = false;
     TextView clock;
+
+    private ImageView background;
+    private AnimationDrawable frameAnimation;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -124,6 +128,8 @@ public class Activity_waiting_rfid extends AppCompatActivity {
         mAdapter = NfcAdapter.getDefaultAdapter(this);
         mPendingIntent = PendingIntent.getActivity(this, 0,
                 new Intent(this, getClass()).addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP), 0);
+
+        background = (ImageView) findViewById(R.id.activity_waiting_rfid_background);
     }
 
     @Override
@@ -270,27 +276,32 @@ public class Activity_waiting_rfid extends AppCompatActivity {
             // 타이머 스레드가 동작중이지 않은 경우
             if (!fragment_working.getIsAlive()) {
 
-                Log.i("JW", "changeFragment (waiting_rfid -> working)");
-                Application_manager.getSoundManager().play(Application_manager.ID_LANG_SOUND[Application_manager.m_language][0]);
-                FragmentManager fm = getFragmentManager();
-                FragmentTransaction fragmentTransaction = fm.beginTransaction();
+                if (Application_manager.getSoundManager().play(Application_manager.m_language, 0) == 0) {
 
-                fragment_working.init(modeNum, val_time, 1);
+                    Log.i("JW", "changeFragment (waiting_rfid -> working)");
+                    FragmentManager fm = getFragmentManager();
+                    FragmentTransaction fragmentTransaction = fm.beginTransaction();
 
-                fragmentTransaction.replace(R.id.frameLayout_rfid_fragment, fragment_working);
-                fragmentTransaction.show(fragment_working);
-                fragmentTransaction.commit();
+                    fragment_working.init(modeNum, val_time, 1);
 
-                mode = 1;
-                handler_update_data.sendEmptyMessage(SET_BUTTON_INVISIBLE);
+                    fragmentTransaction.replace(R.id.frameLayout_rfid_fragment, fragment_working);
+                    fragmentTransaction.show(fragment_working);
+                    fragmentTransaction.commit();
 
-                // 동작 모드로 바뀌기 이전 산소농도, 수압, 시간 값 저장
-                SharedPreferences sharedPreferences = getSharedPreferences(Application_manager.NAME_OF_SHARED_PREF, 0);
-                SharedPreferences.Editor editor = sharedPreferences.edit();
-                editor.putInt(Application_manager.VAL_OXYGEN, val_oxygen);
-                editor.putInt(Application_manager.VAL_PRESSURE, val_pressure);
-                editor.putInt(Application_manager.VAL_TIME, val_time);
-                editor.commit();
+                    mode = 1;
+                    handler_update_data.sendEmptyMessage(SET_BUTTON_INVISIBLE);
+
+                    // 동작 모드로 바뀌기 이전 산소농도, 수압, 시간 값 저장
+                    SharedPreferences sharedPreferences = getSharedPreferences(Application_manager.NAME_OF_SHARED_PREF, 0);
+                    SharedPreferences.Editor editor = sharedPreferences.edit();
+                    editor.putInt(Application_manager.VAL_OXYGEN, val_oxygen);
+                    editor.putInt(Application_manager.VAL_PRESSURE, val_pressure);
+                    editor.putInt(Application_manager.VAL_TIME, val_time);
+                    editor.commit();
+
+                    // 애니메이션 시작
+                    start_animation();
+                }
             }
             // 타이머 스레드가 아직 동작중인 경우
             else {
@@ -333,6 +344,34 @@ public class Activity_waiting_rfid extends AppCompatActivity {
                 time_text.setText(""+val_time);
             }
         });
+
+        // 애니메이션 정지
+        stop_animation();
+    }
+
+    private void start_animation() {
+
+        background.setBackgroundResource(R.drawable.animation_working);
+        frameAnimation = (AnimationDrawable) background.getBackground();
+        frameAnimation.start();
+    }
+
+    private void stop_animation() {
+
+        if (frameAnimation != null) {
+
+            frameAnimation.stop();
+            // 도어 열림
+            if (Application_manager.getCommunicator().get_tx_idx(11) == 0x01) {
+
+                background.setBackgroundResource(R.drawable.waiting_dooropen_backimage);
+            }
+            // 도어 닫힘
+            else {
+
+                background.setBackgroundResource(R.drawable.waiting_doorclose_backimage);
+            }
+        }
     }
 
     public void setTimeLeft(final int min) {
@@ -601,30 +640,31 @@ public class Activity_waiting_rfid extends AppCompatActivity {
                             time_text.setText("" + val_time);
                         break;
                     case R.id.waiting_rfid_dooropen_button:
-                        background = (LinearLayout)findViewById(R.id.waiting_rfid_background);
+
                         view.setBackgroundResource(R.drawable.door_open_off);
-                        background.setBackgroundResource(R.drawable.waiting_rfid_dooropen_back);
-                        isDoorOpened = true;
+                        if (Application_manager.getSoundManager().play(Application_manager.m_language, 3) == 0) {
 
-                        val = 0x01;
-                        communicator.set_tx(11, val);
-                        communicator.send(communicator.get_tx());
+                            background = (LinearLayout) findViewById(R.id.waiting_rfid_background);
+                            background.setBackgroundResource(R.drawable.waiting_rfid_dooropen_back);
+                            isDoorOpened = true;
 
-                        //Application_manager.getSoundManager().play(Application_manager.ID_LANG_SOUND[Application_manager.m_language][3]);
-                        Application_manager.getSoundManager().play_door_open(Application_manager.m_language);
+                            val = 0x01;
+                            communicator.set_tx(11, val);
+                            communicator.send(communicator.get_tx());
+                        }
                         break;
                     case R.id.waiting_rfid_doorclose_button:
-                        background = (LinearLayout)findViewById(R.id.waiting_rfid_background);
+
                         view.setBackgroundResource(R.drawable.door_close_off);
-                        background.setBackgroundResource(R.drawable.waiting_rfid_doorclose_back);
-                        isDoorOpened = false;
+                        if (Application_manager.getSoundManager().play(Application_manager.m_language, 4) == 0) {
+                            background = (LinearLayout) findViewById(R.id.waiting_rfid_background);
+                            background.setBackgroundResource(R.drawable.waiting_rfid_doorclose_back);
+                            isDoorOpened = false;
 
-                        val = 0x02;
-                        communicator.set_tx(11, val);
-                        communicator.send(communicator.get_tx());
-
-                        //Application_manager.getSoundManager().play(Application_manager.ID_LANG_SOUND[Application_manager.m_language][4]);
-                        Application_manager.getSoundManager().play_door_close(Application_manager.m_language);
+                            val = 0x02;
+                            communicator.set_tx(11, val);
+                            communicator.send(communicator.get_tx());
+                        }
                         break;
                     case R.id.waiting_rfid_time_text:
 
