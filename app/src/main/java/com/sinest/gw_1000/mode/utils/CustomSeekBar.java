@@ -115,7 +115,7 @@ public class CustomSeekBar extends RelativeLayout{
                     case MotionEvent.ACTION_MOVE:
                         movedYMin = event.getRawY() - startYMin;
                         startYMin = event.getRawY();
-                        if (v.getHeight() + movedYMin <= initialHeightMin || dTopMin + v.getHeight() + movedYMin >= dTopMax) {
+                        if (v.getHeight() + movedYMin + 12<= initialHeightMin || dTopMin + v.getHeight() + movedYMin >= dTopMax - 60) {
                             currentHeightMin = v.getHeight();
                             getResultMin();
                             break;
@@ -146,7 +146,7 @@ public class CustomSeekBar extends RelativeLayout{
                     case MotionEvent.ACTION_MOVE:
                         movedYMax = event.getRawY() - startYMax;
                         startYMax = event.getRawY();
-                        if (v.getHeight() - movedYMax <= initialHeightMin || v.getY() + movedYMax <= currentHeightMin + dTopMin) {
+                        if (v.getHeight() - movedYMax + 12 <= initialHeightMin || v.getY() + movedYMax <= currentHeightMin + dTopMin + 60) {
                             currentHeightMax = v.getHeight();
                             getResultMax();
                             break;
@@ -239,7 +239,7 @@ public class CustomSeekBar extends RelativeLayout{
                     } else {
                         viewParent.getViewTreeObserver().removeGlobalOnLayoutListener(this);
                     }
-                    currentHeightMin = ((minProgress * (viewParent.getHeight()) / 14)) + 1;
+                    currentHeightMin = ((minProgress * (viewParent.getHeight()) / 14 + initialHeightMin - 10));
                     Log.i("RR", "s_rr_resultMin : " + (int) resultMin);
                     ViewGroup.LayoutParams layoutParams = relFilterMin.getLayoutParams();
                     layoutParams.height = currentHeightMin;
@@ -269,7 +269,7 @@ public class CustomSeekBar extends RelativeLayout{
                     } else {
                         viewParent.getViewTreeObserver().removeGlobalOnLayoutListener(this);
                     }
-                    currentHeightMax = ((Math.abs(maxProgress - 14) * (viewParent.getHeight()) / 14)) + 1;
+                    currentHeightMax = ((Math.abs(maxProgress - 14) * (viewParent.getHeight()) / 14 + initialHeightMin - 10));
                     Log.i("RR", "s_rr_resultMax : " + (int) resultMax);
                     ViewGroup.LayoutParams layoutParams = relFilterMax.getLayoutParams();
                     layoutParams.height = currentHeightMax;
