@@ -80,11 +80,11 @@ public class Activity_water extends Activity {
                     case R.id.water_off:
                         //
                         if (water_flag[1] == true) {
-                            water_off.setBackgroundResource(R.drawable.on);
+                            water_off.setBackgroundResource(R.drawable.on_109);
                             water_flag[1] = false;
                             Application_manager.set_m_water_ff(water_flag[1]);
                         } else {
-                            water_off.setBackgroundResource(R.drawable.off);
+                            water_off.setBackgroundResource(R.drawable.off_109);
                             water_flag[1] = true;
                             Application_manager.set_m_water_ff(water_flag[1]);
                         }
