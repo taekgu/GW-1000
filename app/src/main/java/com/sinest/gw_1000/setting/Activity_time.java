@@ -79,6 +79,7 @@ public class Activity_time extends Activity {
 
         View.OnClickListener listener = new View.OnClickListener() {
             public void onClick(View v) {
+                Application_manager.set_m_start_sleep(0);
                 switch (v.getId()) {
                     case R.id.time1:
                         //

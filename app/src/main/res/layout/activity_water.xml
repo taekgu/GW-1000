@@ -142,8 +142,9 @@
             android:gravity="center">
 
             <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+
                 android:id="@+id/water_save"
                 android:background="@drawable/save_setting_off"/>
 
@@ -161,10 +162,10 @@
             android:gravity="center">
 
             <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
                 android:id="@+id/water_off"
-                android:background="@drawable/off" />
+                android:background="@drawable/off_109" />
 
         </LinearLayout>
 

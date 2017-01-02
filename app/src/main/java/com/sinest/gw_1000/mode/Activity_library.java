@@ -89,6 +89,22 @@ public class Activity_library extends AppCompatActivity{
     }
 
     @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        Application_manager.set_m_start_sleep(0);
+        Log.v("sb1","test");
+        int action = event.getAction();
+        switch(action) {
+            case MotionEvent.ACTION_DOWN :    //화면을 터치했을때
+                break;
+            case MotionEvent.ACTION_UP :    //화면을 터치했다 땠을때
+                break;
+            case MotionEvent.ACTION_MOVE :    //화면을 터치하고 이동할때
+                break;
+        }
+        return super.onTouchEvent(event);
+    }
+
+    @Override
     protected void onResume() {
         super.onResume();
         Application_manager.setFullScreen(this);
@@ -134,6 +150,7 @@ public class Activity_library extends AppCompatActivity{
     private View.OnTouchListener mTouchEvent = new View.OnTouchListener() {
         @Override
         public boolean onTouch(View view, MotionEvent motionEvent) {
+            Application_manager.set_m_start_sleep(0);
             Intent intent;
             int action = motionEvent.getAction();
             int id = view.getId();
@@ -199,6 +216,7 @@ public class Activity_library extends AppCompatActivity{
     };
     public void onClicked(View v)
     {
+        Application_manager.set_m_start_sleep(0);
         ImageView imageView;
         int id = v.getId();
 

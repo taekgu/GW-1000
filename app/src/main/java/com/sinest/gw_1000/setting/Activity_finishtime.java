@@ -74,6 +74,7 @@ public class Activity_finishtime extends Activity {
 
         View.OnClickListener listener = new View.OnClickListener() {
             public void onClick(View v) {
+                Application_manager.set_m_start_sleep(0);
                 switch (v.getId()) {
                     case R.id.finish_time1:
                         //

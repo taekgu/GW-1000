@@ -76,15 +76,16 @@ public class Activity_water extends Activity {
 
         View.OnClickListener listener = new View.OnClickListener() {
             public void onClick(View v) {
+                Application_manager.set_m_start_sleep(0);
                 switch (v.getId()) {
                     case R.id.water_off:
                         //
                         if (water_flag[1] == true) {
-                            water_off.setBackgroundResource(R.drawable.on);
+                            water_off.setBackgroundResource(R.drawable.on_109);
                             water_flag[1] = false;
                             Application_manager.set_m_water_ff(water_flag[1]);
                         } else {
-                            water_off.setBackgroundResource(R.drawable.off);
+                            water_off.setBackgroundResource(R.drawable.off_109);
                             water_flag[1] = true;
                             Application_manager.set_m_water_ff(water_flag[1]);
                         }
@@ -117,6 +118,7 @@ public class Activity_water extends Activity {
     private View.OnTouchListener mTouchEvent = new View.OnTouchListener() {
         @Override
         public boolean onTouch(View view, MotionEvent motionEvent) {
+            Application_manager.set_m_start_sleep(0);
             int action = motionEvent.getAction();
             int id = view.getId();
             if (action == MotionEvent.ACTION_DOWN) {

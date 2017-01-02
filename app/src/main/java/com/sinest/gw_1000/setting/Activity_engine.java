@@ -121,6 +121,7 @@ public class Activity_engine extends AppCompatActivity {
 
         View.OnClickListener listener = new View.OnClickListener() {
             public void onClick(View v) {
+                Application_manager.set_m_start_sleep(0);
                 switch (v.getId()) {
                     case R.id.eng_28h:
                         //
@@ -436,9 +437,26 @@ public class Activity_engine extends AppCompatActivity {
         eng_door_close.setOnTouchListener(mTouchEvent);
     }
 
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        Application_manager.set_m_start_sleep(0);
+        Log.v("sb1","test");
+        int action = event.getAction();
+        switch(action) {
+            case MotionEvent.ACTION_DOWN :    //화면을 터치했을때
+                break;
+            case MotionEvent.ACTION_UP :    //화면을 터치했다 땠을때
+                break;
+            case MotionEvent.ACTION_MOVE :    //화면을 터치하고 이동할때
+                break;
+        }
+        return super.onTouchEvent(event);
+    }
+
     private View.OnTouchListener mTouchEvent = new View.OnTouchListener() {
         @Override
         public boolean onTouch(View view, MotionEvent motionEvent) {
+            Application_manager.set_m_start_sleep(0);
             int action = motionEvent.getAction();
             int id = view.getId();
             if (action == MotionEvent.ACTION_DOWN) {

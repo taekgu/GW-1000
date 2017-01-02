@@ -77,6 +77,7 @@ public class Activity_rfid extends Activity {
 
         View.OnClickListener listener = new View.OnClickListener() {
             public void onClick(View v) {
+                Application_manager.set_m_start_sleep(0);
                 switch (v.getId()) {
                     case R.id.rfid_off:
                         //
@@ -112,6 +113,7 @@ public class Activity_rfid extends Activity {
     private View.OnTouchListener mTouchEvent = new View.OnTouchListener() {
         @Override
         public boolean onTouch(View view, MotionEvent motionEvent) {
+            Application_manager.set_m_start_sleep(0);
             int action = motionEvent.getAction();
             int id = view.getId();
             if (action == MotionEvent.ACTION_DOWN) {

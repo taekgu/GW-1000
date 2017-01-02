@@ -109,6 +109,7 @@ public class Activity_manual_mode_setting extends Activity{
     private View.OnClickListener onClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
+            Application_manager.set_m_start_sleep(0);
 
             int id = view.getId();
             Intent intent;
@@ -128,9 +129,26 @@ public class Activity_manual_mode_setting extends Activity{
         }
     };
 
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        Application_manager.set_m_start_sleep(0);
+        Log.v("sb1","test");
+        int action = event.getAction();
+        switch(action) {
+            case MotionEvent.ACTION_DOWN :    //화면을 터치했을때
+                break;
+            case MotionEvent.ACTION_UP :    //화면을 터치했다 땠을때
+                break;
+            case MotionEvent.ACTION_MOVE :    //화면을 터치하고 이동할때
+                break;
+        }
+        return super.onTouchEvent(event);
+    }
+
     private View.OnTouchListener mTouchEvent = new View.OnTouchListener() {
         @Override
         public boolean onTouch(View view, MotionEvent motionEvent) {
+            Application_manager.set_m_start_sleep(0);
             Button b;
             Intent intent;
             int action = motionEvent.getAction();
@@ -280,6 +298,7 @@ public class Activity_manual_mode_setting extends Activity{
 
     public void onClicked(View v)
     {
+        Application_manager.set_m_start_sleep(0);
         Intent intent;
         int id = v.getId();
         Log.i("test", "onClicked");
