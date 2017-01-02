@@ -246,7 +246,7 @@ public class Application_manager extends Application {
     }
 
     synchronized public static void set_m_start_sleep(int i){
-        sharedPreferences = context.getSharedPreferences(Application_manager.NAME_OF_SHARED_PREF, 0);
+        sharedPreferences = context.getSharedPreferences(Application_manager.DB_NAME, 0);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         start_m = i;
     }
