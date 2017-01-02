@@ -73,6 +73,7 @@ public class Fragment_waiting extends Fragment {
     private View.OnTouchListener mTouchEvent = new View.OnTouchListener() {
         @Override
         public boolean onTouch(View view, MotionEvent motionEvent) {
+            Application_manager.set_m_start_sleep(0);
 
             Activity_waiting activity = (Activity_waiting) getActivity();
             Button button_clicked = (Button) view;

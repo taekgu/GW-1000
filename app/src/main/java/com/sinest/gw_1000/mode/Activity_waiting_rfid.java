@@ -535,6 +535,7 @@ public class Activity_waiting_rfid extends AppCompatActivity {
     private View.OnTouchListener mTouchEvent = new View.OnTouchListener() {
         @Override
         public boolean onTouch(View view, MotionEvent motionEvent) {
+            Application_manager.set_m_start_sleep(0);
             LinearLayout background;
             Intent intent;
             Intent intent_setting;

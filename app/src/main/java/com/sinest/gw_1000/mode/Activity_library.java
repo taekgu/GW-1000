@@ -135,6 +135,7 @@ public class Activity_library extends AppCompatActivity{
     private View.OnTouchListener mTouchEvent = new View.OnTouchListener() {
         @Override
         public boolean onTouch(View view, MotionEvent motionEvent) {
+            Application_manager.set_m_start_sleep(0);
             Intent intent;
             int action = motionEvent.getAction();
             int id = view.getId();
@@ -200,6 +201,7 @@ public class Activity_library extends AppCompatActivity{
     };
     public void onClicked(View v)
     {
+        Application_manager.set_m_start_sleep(0);
         ImageView imageView;
         int id = v.getId();
 

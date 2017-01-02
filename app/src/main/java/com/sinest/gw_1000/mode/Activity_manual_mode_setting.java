@@ -109,6 +109,7 @@ public class Activity_manual_mode_setting extends Activity{
     private View.OnClickListener onClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
+            Application_manager.set_m_start_sleep(0);
 
             int id = view.getId();
             Intent intent;
@@ -131,6 +132,7 @@ public class Activity_manual_mode_setting extends Activity{
     private View.OnTouchListener mTouchEvent = new View.OnTouchListener() {
         @Override
         public boolean onTouch(View view, MotionEvent motionEvent) {
+            Application_manager.set_m_start_sleep(0);
             Button b;
             Intent intent;
             int action = motionEvent.getAction();
@@ -280,6 +282,7 @@ public class Activity_manual_mode_setting extends Activity{
 
     public void onClicked(View v)
     {
+        Application_manager.set_m_start_sleep(0);
         Intent intent;
         int id = v.getId();
         Log.i("test", "onClicked");

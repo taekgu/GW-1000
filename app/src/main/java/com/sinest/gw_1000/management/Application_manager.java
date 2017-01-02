@@ -241,6 +241,12 @@ public class Application_manager extends Application {
         m_sleep_ff = sharedPreferences.getInt(SLEEP_M,3);
     }
 
+    synchronized public static void set_m_start_sleep(int i){
+        sharedPreferences = context.getSharedPreferences(Application_manager.NAME_OF_SHARED_PREF, 0);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        start_m = i;
+    }
+
     synchronized public static void set_m_sleep_m(int i){
         sharedPreferences = context.getSharedPreferences(Application_manager.NAME_OF_SHARED_PREF, 0);
         SharedPreferences.Editor editor = sharedPreferences.edit();

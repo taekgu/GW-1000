@@ -135,6 +135,7 @@ public class Fragment_working extends Fragment {
     View.OnTouchListener mTouchEvent = new View.OnTouchListener() {
         @Override
         public boolean onTouch(View view, MotionEvent motionEvent) {
+            Application_manager.set_m_start_sleep(0);
 
             Button button_clicked = (Button) view;
             int id = button_clicked.getId();

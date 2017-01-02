@@ -76,6 +76,7 @@ public class Activity_waiting_working_time_popup extends Activity {
     private View.OnTouchListener mTouchEvent = new View.OnTouchListener() {
         @Override
         public boolean onTouch(View view, MotionEvent motionEvent) {
+            Application_manager.set_m_start_sleep(0);
             Button b;
             int action = motionEvent.getAction();
             int id = view.getId();
@@ -139,6 +140,7 @@ public class Activity_waiting_working_time_popup extends Activity {
     };
     public void onClicked(View v)
     {
+        Application_manager.set_m_start_sleep(0);
         int id = v.getId();
         int resourceId;
         Intent intent;
