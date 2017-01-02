@@ -112,6 +112,8 @@ public class Activity_emotion extends Activity {
 
     }
 
+
+
     @Override
     public boolean onTouchEvent(MotionEvent event){
         return false;
@@ -250,4 +252,6 @@ public class Activity_emotion extends Activity {
             return true;
         }
     };
+
+
 }
