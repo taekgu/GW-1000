@@ -8,7 +8,6 @@ import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.graphics.drawable.AnimationDrawable;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -17,8 +16,7 @@ import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.TextClock;
+import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -26,7 +24,6 @@ import com.sinest.gw_1000.R;
 import com.sinest.gw_1000.communication.Communicator;
 import com.sinest.gw_1000.management.Application_broadcast;
 import com.sinest.gw_1000.management.Application_manager;
-import com.sinest.gw_1000.mode.utils.CustomTextClock;
 import com.sinest.gw_1000.setting.Activity_setting;
 
 public class Activity_waiting extends AppCompatActivity {
@@ -53,6 +50,9 @@ public class Activity_waiting extends AppCompatActivity {
 
     TextView clock;
 
+    TextView textView_temperature;
+    TextView textView_temperature_bed;
+
     private int mode = 0; // 0: waiting, 1: working
 
     boolean flag = false;
@@ -77,10 +77,10 @@ public class Activity_waiting extends AppCompatActivity {
         clock.setText(Application_manager.doInit_time());
 
         // 산소 농도, 압력, 시간 값 불러오기
-        SharedPreferences sharedPreferences = getSharedPreferences(Application_manager.NAME_OF_SHARED_PREF, 0);
-        val_oxygen = sharedPreferences.getInt(Application_manager.VAL_OXYGEN, 0);
-        val_pressure = sharedPreferences.getInt(Application_manager.VAL_PRESSURE, 0);
-        val_time = sharedPreferences.getInt(Application_manager.VAL_TIME, 10);
+        SharedPreferences sharedPreferences = getSharedPreferences(Application_manager.DB_NAME, 0);
+        val_oxygen = sharedPreferences.getInt(Application_manager.DB_VAL_OXYGEN, 0);
+        val_pressure = sharedPreferences.getInt(Application_manager.DB_VAL_PRESSURE, 0);
+        val_time = sharedPreferences.getInt(Application_manager.DB_VAL_TIME, 10);
 
         time_text = (TextView)findViewById(R.id.waiting_time_text);
         time_text.setTypeface(tf);
@@ -93,11 +93,18 @@ public class Activity_waiting extends AppCompatActivity {
         pressure_text.setText(""+val_pressure);
         time_text.setText(""+val_time);
 
+        Application_manager.SENSOR_TEMP = sharedPreferences.getInt(Application_manager.DB_TEMPERATURE, 0);
+        Application_manager.SENSOR_TEMP_BED = sharedPreferences.getInt(Application_manager.DB_TEMPERATURE_BED, 0);
+        textView_temperature = (TextView) findViewById(R.id.textView_temperature_above);
+        textView_temperature_bed = (TextView) findViewById(R.id.textView_temperature_below);
+        textView_temperature.setOnTouchListener(mTouchEvent);
+        textView_temperature_bed.setOnTouchListener(mTouchEvent);
+
 
         fragment_waiting = new Fragment_waiting();
         for (int i = 0; i< Application_manager.MAX_CHECKED; i++) {
 
-            checked_loc[i] = sharedPreferences.getInt(Application_manager.LIBRARY_LOC_ + i, i);
+            checked_loc[i] = sharedPreferences.getInt(Application_manager.DB_LIBRARY_LOC_ + i, i);
             fragment_waiting.addCheckedIdx(checked_loc[i]);
             Log.i("JW", "Selected library idx : " + checked_loc[i]);
         }
@@ -144,28 +151,25 @@ public class Activity_waiting extends AppCompatActivity {
         Application_manager.setFullScreen(this);
 
         registReceiver();
-        //clock.registReceiver();
         isRun = true;
-        //doInit_time();
 
-        SharedPreferences sharedPreferences = getSharedPreferences(Application_manager.NAME_OF_SHARED_PREF, 0);
+        SharedPreferences sharedPreferences = getSharedPreferences(Application_manager.DB_NAME, 0);
 
         fragment_waiting.reset();
         for (int i = 0; i< Application_manager.MAX_CHECKED; i++) {
 
-            checked_loc[i] = sharedPreferences.getInt(Application_manager.LIBRARY_LOC_ + i, i);
+            checked_loc[i] = sharedPreferences.getInt(Application_manager.DB_LIBRARY_LOC_ + i, i);
             fragment_waiting.addCheckedIdx(checked_loc[i]);
             Log.i("JW", "Selected library idx : " + checked_loc[i]);
         }
         fragment_waiting.refresh();
 
-        val_time = sharedPreferences.getInt(Application_manager.VAL_TIME, 10);
+        val_time = sharedPreferences.getInt(Application_manager.DB_VAL_TIME, 10);
         time_text.setText(Integer.toString(val_time));
-        /*
-        FragmentManager fragmentManager = getFragmentManager();
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.add(R.id.frameLayout_fragment, fragment_waiting);
-        fragmentTransaction.commit();*/
+
+        // 수온 불러오기
+        textView_temperature.setText(""+Application_manager.SENSOR_TEMP);
+        textView_temperature_bed.setText(""+Application_manager.SENSOR_TEMP_BED);
 
         // 화면에 보여질 때 센서값 불러오기
         runOnUiThread(new Runnable() {
@@ -194,11 +198,13 @@ public class Activity_waiting extends AppCompatActivity {
         isRun = false;
         //clock.unregistReceiver();
 
-        SharedPreferences sharedPreferences = getSharedPreferences(Application_manager.NAME_OF_SHARED_PREF, 0);
+        SharedPreferences sharedPreferences = getSharedPreferences(Application_manager.DB_NAME, 0);
         SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putInt(Application_manager.VAL_OXYGEN, val_oxygen);
-        editor.putInt(Application_manager.VAL_PRESSURE, val_pressure);
-        editor.putInt(Application_manager.VAL_TIME, val_time);
+        editor.putInt(Application_manager.DB_VAL_OXYGEN, val_oxygen);
+        editor.putInt(Application_manager.DB_VAL_PRESSURE, val_pressure);
+        editor.putInt(Application_manager.DB_VAL_TIME, val_time);
+        editor.putInt(Application_manager.DB_TEMPERATURE, Application_manager.SENSOR_TEMP);
+        editor.putInt(Application_manager.DB_TEMPERATURE_BED, Application_manager.SENSOR_TEMP_BED);
         editor.commit();
     }
 
@@ -240,15 +246,19 @@ public class Activity_waiting extends AppCompatActivity {
                     handler_update_data.sendEmptyMessage(SET_BUTTON_INVISIBLE);
 
                     // 동작 모드로 바뀌기 이전 산소농도, 수압, 시간 값 저장
-                    SharedPreferences sharedPreferences = getSharedPreferences(Application_manager.NAME_OF_SHARED_PREF, 0);
+                    SharedPreferences sharedPreferences = getSharedPreferences(Application_manager.DB_NAME, 0);
                     SharedPreferences.Editor editor = sharedPreferences.edit();
-                    editor.putInt(Application_manager.VAL_OXYGEN, val_oxygen);
-                    editor.putInt(Application_manager.VAL_PRESSURE, val_pressure);
-                    editor.putInt(Application_manager.VAL_TIME, val_time);
+                    editor.putInt(Application_manager.DB_VAL_OXYGEN, val_oxygen);
+                    editor.putInt(Application_manager.DB_VAL_PRESSURE, val_pressure);
+                    editor.putInt(Application_manager.DB_VAL_TIME, val_time);
                     editor.commit();
 
                     // 애니메이션 시작
                     start_animation();
+
+                    // 동작 구간 표시
+                    SeekBar seekBar = (SeekBar) findViewById(R.id.seekBar2);
+                    seekBar.setVisibility(View.VISIBLE);
                 }
             }
             // 타이머 스레드가 아직 동작중인 경우
@@ -262,6 +272,43 @@ public class Activity_waiting extends AppCompatActivity {
 
             Toast.makeText(this, "동작 시간을 1~90분 사이로 설정해야합니다", Toast.LENGTH_SHORT).show();
         }
+    }
+
+    public void changeFragment_waiting() {
+
+        Log.i("JW", "changeFragment (working -> waiting)");
+        setTimeLeft(val_time);
+        FragmentManager fm = getFragmentManager();
+        FragmentTransaction fragmentTransaction = fm.beginTransaction();
+
+        fragmentTransaction.replace(R.id.frameLayout_fragment, fragment_waiting);
+        fragmentTransaction.commit();
+
+        mode = 0;
+        handler_update_data.sendEmptyMessage(SET_BUTTON_VISIBLE);
+
+        // 동작 시작 전 산소 농도, 압력, 시간 값 불러오기
+        SharedPreferences sharedPreferences = getSharedPreferences(Application_manager.DB_NAME, 0);
+        val_oxygen = sharedPreferences.getInt(Application_manager.DB_VAL_OXYGEN, 0);
+        val_pressure = sharedPreferences.getInt(Application_manager.DB_VAL_PRESSURE, 0);
+        val_time = sharedPreferences.getInt(Application_manager.DB_VAL_TIME, 10);
+
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+
+                oxygen_text.setText(""+val_oxygen);
+                pressure_text.setText(""+val_pressure);
+                time_text.setText(""+val_time);
+            }
+        });
+
+        // 애니메이션 정지
+        stop_animation();
+
+        // 동작 구간 숨김
+        SeekBar seekBar = (SeekBar) findViewById(R.id.seekBar2);
+        seekBar.setVisibility(View.INVISIBLE);
     }
 
     private void start_animation() {
@@ -287,39 +334,6 @@ public class Activity_waiting extends AppCompatActivity {
                 background.setBackgroundResource(R.drawable.waiting_doorclose_backimage);
             }
         }
-    }
-
-    public void changeFragment_waiting() {
-
-        Log.i("JW", "changeFragment (working -> waiting)");
-        setTimeLeft(val_time);
-        FragmentManager fm = getFragmentManager();
-        FragmentTransaction fragmentTransaction = fm.beginTransaction();
-
-        fragmentTransaction.replace(R.id.frameLayout_fragment, fragment_waiting);
-        fragmentTransaction.commit();
-
-        mode = 0;
-        handler_update_data.sendEmptyMessage(SET_BUTTON_VISIBLE);
-
-        // 동작 시작 전 산소 농도, 압력, 시간 값 불러오기
-        SharedPreferences sharedPreferences = getSharedPreferences(Application_manager.NAME_OF_SHARED_PREF, 0);
-        val_oxygen = sharedPreferences.getInt(Application_manager.VAL_OXYGEN, 0);
-        val_pressure = sharedPreferences.getInt(Application_manager.VAL_PRESSURE, 0);
-        val_time = sharedPreferences.getInt(Application_manager.VAL_TIME, 10);
-
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-
-                oxygen_text.setText(""+val_oxygen);
-                pressure_text.setText(""+val_pressure);
-                time_text.setText(""+val_time);
-            }
-        });
-
-        // 애니메이션 정지
-        stop_animation();
     }
 
     public void setTimeLeft(final int min) {
@@ -369,14 +383,14 @@ public class Activity_waiting extends AppCompatActivity {
 
                 if (msg.what == 1) {
 
-                    SharedPreferences sharedPreferences = getSharedPreferences(Application_manager.NAME_OF_SHARED_PREF, 0);
+                    SharedPreferences sharedPreferences = getSharedPreferences(Application_manager.DB_NAME, 0);
 
                     int[] onoff_flag = new int[12];
                     for (int i=1; i<=4; i++) { // 세로
 
                         for (int j = 1; j <= 3; j++) { // 가로
 
-                            onoff_flag[((j-1)*4 + i - 1)] = sharedPreferences.getInt(Application_manager.RFID_ONOFF + i + "" + j, 0);
+                            onoff_flag[((j-1)*4 + i - 1)] = sharedPreferences.getInt(Application_manager.DB_RFID_ONOFF + i + "" + j, 0);
                         }
                     }
 
@@ -415,13 +429,13 @@ public class Activity_waiting extends AppCompatActivity {
                             temp += communicator.get_rx_idx(i-5);
                         }
                     }
-                    TextView textView_temperature = (TextView) findViewById(R.id.textView_temperature_above);
+                    textView_temperature = (TextView) findViewById(R.id.textView_temperature_above);
                     textView_temperature.setText(""+temp);
                     Application_manager.SENSOR_TEMP = temp;
 
                     // 수온
                     temp = communicator.get_rx_idx(2);
-                    TextView textView_temperature_bed = (TextView) findViewById(R.id.textView_temperature_below);
+                    textView_temperature_bed = (TextView) findViewById(R.id.textView_temperature_below);
                     textView_temperature_bed.setText(""+temp);
                     Application_manager.SENSOR_TEMP_BED = temp;
                 }
@@ -642,6 +656,20 @@ public class Activity_waiting extends AppCompatActivity {
                             intent.putExtra("mode", 0);
                             startActivity(intent);
                         }
+                        break;
+                    case R.id.textView_temperature_above:
+
+                        intent = new Intent(getApplicationContext(), Activity_temperature_popup.class);
+                        intent.putExtra("mode", 0);
+                        intent.putExtra("temp", Application_manager.SENSOR_TEMP);
+                        startActivity(intent);
+                        break;
+                    case R.id.textView_temperature_below:
+
+                        intent = new Intent(getApplicationContext(), Activity_temperature_popup.class);
+                        intent.putExtra("mode", 1);
+                        intent.putExtra("temp", Application_manager.SENSOR_TEMP_BED);
+                        startActivity(intent);
                         break;
                 }
             }

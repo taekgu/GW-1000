@@ -6,7 +6,6 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -20,9 +19,6 @@ import com.sinest.gw_1000.management.Application_manager;
 import com.sinest.gw_1000.mode.Activity_waiting;
 import com.sinest.gw_1000.mode.Activity_waiting_rfid;
 import com.sinest.gw_1000.setting.Activity_engine;
-import com.sinest.gw_1000.setting.Activity_rfid;
-
-import static java.lang.reflect.Array.getBoolean;
 
 public class Activity_booting extends AppCompatActivity {
 
@@ -61,10 +57,10 @@ public class Activity_booting extends AppCompatActivity {
                             time = 0;
                             isRun = false;
                             frameAnimation.stop();
-                            SharedPreferences sharedPreferences = getSharedPreferences(Application_manager.NAME_OF_SHARED_PREF, 0);
+                            SharedPreferences sharedPreferences = getSharedPreferences(Application_manager.DB_NAME, 0);
                             Intent intent;
                             // RFID 모드 ON
-                            if (!sharedPreferences.getBoolean(Application_manager.RFID_ONOFF, false)) {
+                            if (!sharedPreferences.getBoolean(Application_manager.DB_RFID_ONOFF, false)) {
 
                                 Application_manager.rfid_pass_f = true;
                                 intent = new Intent(getApplicationContext(), Activity_waiting.class);

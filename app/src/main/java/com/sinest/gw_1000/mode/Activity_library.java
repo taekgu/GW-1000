@@ -16,7 +16,6 @@ import android.widget.Toast;
 
 import com.sinest.gw_1000.R;
 import com.sinest.gw_1000.management.Application_manager;
-import com.sinest.gw_1000.mode.utils.CustomTextClock;
 
 public class Activity_library extends AppCompatActivity{
 
@@ -51,13 +50,13 @@ public class Activity_library extends AppCompatActivity{
             library_map[i] = 0;
         }
 
-        SharedPreferences sharedPreferences = getSharedPreferences(Application_manager.NAME_OF_SHARED_PREF, 0);
+        SharedPreferences sharedPreferences = getSharedPreferences(Application_manager.DB_NAME, 0);
 
         int imageView_id, image_id;
         ImageView imageView;
         for (int i = 0; i< Application_manager.MAX_CHECKED; i++) {
 
-            checked_loc[i] = sharedPreferences.getInt(Application_manager.LIBRARY_LOC_ + i, i);
+            checked_loc[i] = sharedPreferences.getInt(Application_manager.DB_LIBRARY_LOC_ + i, i);
             library_map[checked_loc[i]] = 1;
 
             imageView_id = getResources().getIdentifier("library_mode" + (checked_loc[i]+1), "id", "com.sinest.gw_1000");
@@ -165,11 +164,11 @@ public class Activity_library extends AppCompatActivity{
 
                             if (cnt == 4) {
 
-                                SharedPreferences sharedPreferences = getSharedPreferences(Application_manager.NAME_OF_SHARED_PREF, 0);
+                                SharedPreferences sharedPreferences = getSharedPreferences(Application_manager.DB_NAME, 0);
                                 SharedPreferences.Editor editor = sharedPreferences.edit();
                                 for (int i = 0; i < Application_manager.MAX_CHECKED; i++) {
 
-                                    editor.putInt(Application_manager.LIBRARY_LOC_ + i, checked_loc[i]);
+                                    editor.putInt(Application_manager.DB_LIBRARY_LOC_ + i, checked_loc[i]);
                                     Log.i("JW", "Save checked_loc(0-19)" + i + " set " + checked_loc[i]);
                                 }
                                 editor.commit();

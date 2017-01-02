@@ -87,15 +87,15 @@ public class Activity_manual_mode_pattern_popup extends Activity implements Cust
                 switch (id) {
                     case R.id.manual_popup_save:
                         b = (ImageView) view;
-                        SharedPreferences sharedPreferences = getSharedPreferences(Application_manager.NAME_OF_SHARED_PREF, 0);
+                        SharedPreferences sharedPreferences = getSharedPreferences(Application_manager.DB_NAME, 0);
                         SharedPreferences.Editor editor = sharedPreferences.edit();
 
                         b.setBackgroundResource(R.drawable.save_mode_off);
                         Log.i("modeNum", Integer.toString(intent.getIntExtra("modeNum",0)));
                         Log.i("patternNum", Integer.toString(patternNum));
-                        editor.putInt(Application_manager.MANUAL_MODE_PATTERN_ + intent.getIntExtra("modeNum",0) + "_" + intent.getIntExtra("i",0), patternNum);
-                        editor.putInt(Application_manager.MANUAL_MODE_SECTION_MIN_ + intent.getIntExtra("modeNum",0) + "_" + intent.getIntExtra("i",0), section_min);
-                        editor.putInt(Application_manager.MANUAL_MODE_SECTION_MAX_ + intent.getIntExtra("modeNum",0) + "_" + intent.getIntExtra("i",0), section_max);
+                        editor.putInt(Application_manager.DB_MANUAL_MODE_PATTERN_ + intent.getIntExtra("modeNum",0) + "_" + intent.getIntExtra("i",0), patternNum);
+                        editor.putInt(Application_manager.DB_MANUAL_MODE_SECTION_MIN_ + intent.getIntExtra("modeNum",0) + "_" + intent.getIntExtra("i",0), section_min);
+                        editor.putInt(Application_manager.DB_MANUAL_MODE_SECTION_MAX_ + intent.getIntExtra("modeNum",0) + "_" + intent.getIntExtra("i",0), section_max);
                         editor.commit();
                         finish();
                         break;

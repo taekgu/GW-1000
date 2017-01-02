@@ -337,10 +337,11 @@
                                 android:layout_weight="32">
 
                                 <SeekBar
+                                    android:id="@+id/seekBar2_rfid"
                                     android:layout_width="match_parent"
                                     android:layout_height="match_parent"
-                                    android:id="@+id/seekBar2_rfid"
-                                    android:background="@drawable/alarm_bar_1"/>
+                                    android:background="@drawable/alarm_bar_1"
+                                    android:visibility="invisible"/>
 
                             </LinearLayout>
 

@@ -72,16 +72,16 @@ public class Activity_manual_mode_setting extends Activity{
         }
 
         // 선택한 매뉴얼 모드 정보 로드
-        SharedPreferences sharedPreferences = getSharedPreferences(Application_manager.NAME_OF_SHARED_PREF, 0);
+        SharedPreferences sharedPreferences = getSharedPreferences(Application_manager.DB_NAME, 0);
         int resourceId;
         for (int i=0; i<3; i++) {
 
-            pattern[i] = sharedPreferences.getInt(Application_manager.MANUAL_MODE_PATTERN_ + modeNum + "_" + i, 1);
+            pattern[i] = sharedPreferences.getInt(Application_manager.DB_MANUAL_MODE_PATTERN_ + modeNum + "_" + i, 1);
             pattern_prev[i] = pattern[i];
-            time[i] = sharedPreferences.getInt(Application_manager.MANUAL_MODE_TIME_ + modeNum + "_" + i, 30);
+            time[i] = sharedPreferences.getInt(Application_manager.DB_MANUAL_MODE_TIME_ + modeNum + "_" + i, 30);
             time_prev[i] = time[i];
-            section[i][0] = sharedPreferences.getInt(Application_manager.MANUAL_MODE_SECTION_MIN_ + modeNum + "_" + i, 1);
-            section[i][1] = sharedPreferences.getInt(Application_manager.MANUAL_MODE_SECTION_MAX_ + modeNum + "_" + i, 1);
+            section[i][0] = sharedPreferences.getInt(Application_manager.DB_MANUAL_MODE_SECTION_MIN_ + modeNum + "_" + i, 1);
+            section[i][1] = sharedPreferences.getInt(Application_manager.DB_MANUAL_MODE_SECTION_MAX_ + modeNum + "_" + i, 1);
 
             resourceId = getResources().getIdentifier("manual_mode_progress_bar_" + (i+1), "id", "com.sinest.gw_1000");
             custom_progress_bar[i] = (CustomProgressBar)findViewById(resourceId);
@@ -158,12 +158,12 @@ public class Activity_manual_mode_setting extends Activity{
 
                         if (num_of_enabled_pattern != 0) {
                             // 변경된 값 저장 후 액티비티 종료
-                            sharedPreferences = getSharedPreferences(Application_manager.NAME_OF_SHARED_PREF, 0);
+                            sharedPreferences = getSharedPreferences(Application_manager.DB_NAME, 0);
                             editor = sharedPreferences.edit();
 
                             for (int i = 0; i < 3; i++) {
-                                editor.putInt(Application_manager.MANUAL_MODE_PATTERN_ + modeNum + "_" + i, pattern[i]);
-                                editor.putInt(Application_manager.MANUAL_MODE_TIME_ + modeNum + "_" + i, time[i]);
+                                editor.putInt(Application_manager.DB_MANUAL_MODE_PATTERN_ + modeNum + "_" + i, pattern[i]);
+                                editor.putInt(Application_manager.DB_MANUAL_MODE_TIME_ + modeNum + "_" + i, time[i]);
                             }
                             editor.commit();
                             finish();
@@ -182,12 +182,12 @@ public class Activity_manual_mode_setting extends Activity{
                             pattern[i] = pattern_prev[i];
                         }
                         // 시간 이전 시간값으로 되돌린 후 종료
-                        sharedPreferences = getSharedPreferences(Application_manager.NAME_OF_SHARED_PREF, 0);
+                        sharedPreferences = getSharedPreferences(Application_manager.DB_NAME, 0);
                         editor = sharedPreferences.edit();
 
                         for (int i=0; i<3; i++) {
-                            editor.putInt(Application_manager.MANUAL_MODE_PATTERN_ + modeNum + "_" + i, pattern[i]);
-                            editor.putInt(Application_manager.MANUAL_MODE_TIME_ + modeNum + "_" + i, time[i]);
+                            editor.putInt(Application_manager.DB_MANUAL_MODE_PATTERN_ + modeNum + "_" + i, pattern[i]);
+                            editor.putInt(Application_manager.DB_MANUAL_MODE_TIME_ + modeNum + "_" + i, time[i]);
                         }
                         editor.commit();
                         finish();
@@ -203,16 +203,16 @@ public class Activity_manual_mode_setting extends Activity{
         Application_manager.setFullScreen(this);
         isRun = true;
 
-        SharedPreferences sharedPreferences = getSharedPreferences(Application_manager.NAME_OF_SHARED_PREF, 0);
+        SharedPreferences sharedPreferences = getSharedPreferences(Application_manager.DB_NAME, 0);
         int resourceId;
 
         Log.i("onResume", "onResume");
 
         for (int i=0; i<3; i++) {
-            section[i][0] = sharedPreferences.getInt(Application_manager.MANUAL_MODE_SECTION_MIN_ + modeNum + "_" + i, 1);
-            section[i][1] = sharedPreferences.getInt(Application_manager.MANUAL_MODE_SECTION_MAX_ + modeNum + "_" + i, 1);
-            pattern[i] = sharedPreferences.getInt(Application_manager.MANUAL_MODE_PATTERN_ + modeNum + "_" + i, 1);
-            time[i] = sharedPreferences.getInt(Application_manager.MANUAL_MODE_TIME_ + modeNum + "_" + i, 30);
+            section[i][0] = sharedPreferences.getInt(Application_manager.DB_MANUAL_MODE_SECTION_MIN_ + modeNum + "_" + i, 1);
+            section[i][1] = sharedPreferences.getInt(Application_manager.DB_MANUAL_MODE_SECTION_MAX_ + modeNum + "_" + i, 1);
+            pattern[i] = sharedPreferences.getInt(Application_manager.DB_MANUAL_MODE_PATTERN_ + modeNum + "_" + i, 1);
+            time[i] = sharedPreferences.getInt(Application_manager.DB_MANUAL_MODE_TIME_ + modeNum + "_" + i, 30);
             num_of_enabled_pattern = 0;
             if (time[i] == 0) {
 

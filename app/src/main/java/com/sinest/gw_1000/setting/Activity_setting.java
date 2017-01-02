@@ -8,7 +8,6 @@ import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.os.Handler;
 import android.os.Message;
-import android.os.PowerManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -16,16 +15,13 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.SeekBar;
-import android.widget.TextClock;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.sinest.gw_1000.R;
 import com.sinest.gw_1000.communication.Communicator;
 import com.sinest.gw_1000.management.Application_manager;
 import com.sinest.gw_1000.mode.Activity_waiting;
 import com.sinest.gw_1000.mode.Activity_waiting_rfid;
-import com.sinest.gw_1000.mode.utils.CustomTextClock;
 
 public class Activity_setting extends AppCompatActivity {
     public static final String TAG = "SCREEN";
@@ -156,7 +152,7 @@ public class Activity_setting extends AppCompatActivity {
         sleep_cnt = 0;
         sleep_cnt_end = 1000;
 
-        SharedPreferences sharedPreferences = getSharedPreferences(Application_manager.NAME_OF_SHARED_PREF, 0);
+        SharedPreferences sharedPreferences = getSharedPreferences(Application_manager.DB_NAME, 0);
         int resourceID;
         int rx_idx = -1;
         Log.i("JW", "onCreate");
@@ -168,7 +164,7 @@ public class Activity_setting extends AppCompatActivity {
                 TextView resource = (TextView) findViewById(resourceID);
 
                 // buttonij가 OFF 상태일 때
-                if (sharedPreferences.getInt((Application_manager.SETTING_ONOFF_VAL_ + i + "" + j), 0) == 0) {
+                if (sharedPreferences.getInt((Application_manager.DB_SETTING_ONOFF_VAL_ + i + "" + j), 0) == 0) {
 
                     button_flag[((j-1)*4 + i - 1)] = true;
                     resource.setBackgroundResource(R.drawable.button_off);
@@ -200,7 +196,7 @@ public class Activity_setting extends AppCompatActivity {
         }
 
         b_rf = (Button)findViewById(R.id.b_rf);
-        rfid_state = sharedPreferences.getBoolean(Application_manager.RFID_ONOFF, false);
+        rfid_state = sharedPreferences.getBoolean(Application_manager.DB_RFID_ONOFF, false);
         button2_flag[0] = !rfid_state;
         if (rfid_state) {
 
@@ -745,14 +741,14 @@ public class Activity_setting extends AppCompatActivity {
     @Override
     protected void onStop() {
         super.onStop();
-        SharedPreferences sharedPreferences = getSharedPreferences(Application_manager.NAME_OF_SHARED_PREF, 0);
+        SharedPreferences sharedPreferences = getSharedPreferences(Application_manager.DB_NAME, 0);
         SharedPreferences.Editor editor = sharedPreferences.edit();
 
         isRun = false;
 
         rfid_state = !button2_flag[0];
-        editor.putBoolean(Application_manager.RFID_ONOFF, rfid_state);
-        //editor.putBoolean(Application_manager.RFID_ONOFF, false);
+        editor.putBoolean(Application_manager.DB_RFID_ONOFF, rfid_state);
+        //editor.putBoolean(Application_manager.DB_RFID_ONOFF, false);
         Log.i("JW", "RFID mode = " + rfid_state);
 
         for (int i=1; i<=4; i++) { // 세로
@@ -762,12 +758,12 @@ public class Activity_setting extends AppCompatActivity {
                 // 버튼 플래그가 true(OFF)일 때
                 if (button_flag[((j-1)*4 + i - 1)]) {
 
-                    editor.putInt(Application_manager.SETTING_ONOFF_VAL_ + i + "" + j, 0);
+                    editor.putInt(Application_manager.DB_SETTING_ONOFF_VAL_ + i + "" + j, 0);
                     //    Log.i("JW", "button_flag[" + ((j-1)*4 + i - 1) + "] / button" + i + "" + j + " = OFF");
                 }
                 else {
 
-                    editor.putInt(Application_manager.SETTING_ONOFF_VAL_ + i + "" + j, 1);
+                    editor.putInt(Application_manager.DB_SETTING_ONOFF_VAL_ + i + "" + j, 1);
                     //   Log.i("JW", "button_flag[" + ((j-1)*4 + i - 1) + "] / button" + i + "" + j + " = ON");
                 }
             }

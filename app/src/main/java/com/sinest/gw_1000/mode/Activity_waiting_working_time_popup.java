@@ -13,7 +13,6 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.TextClock;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -41,11 +40,11 @@ public class Activity_waiting_working_time_popup extends Activity {
 
         mContext = this;
         Intent intent = getIntent();
-        SharedPreferences sharedPreferences = getSharedPreferences(Application_manager.NAME_OF_SHARED_PREF, 0);
+        SharedPreferences sharedPreferences = getSharedPreferences(Application_manager.DB_NAME, 0);
         mode = intent.getIntExtra("mode", -1);
         Log.i("mode", Integer.toString(mode));
         if(mode==0){ // Waiting 화면에서 넘어왔을 때
-            workingTime = sharedPreferences.getInt(Application_manager.VAL_TIME, 10);
+            workingTime = sharedPreferences.getInt(Application_manager.DB_VAL_TIME, 10);
             //Log.i("JW", "onCreate / val_time = " + workingTime);
             //workingTime = intent.getIntExtra("time", -1);
         }
@@ -53,11 +52,11 @@ public class Activity_waiting_working_time_popup extends Activity {
         {
             modeNum = intent.getExtras().getInt("modeNum");
             if(mode==1) //manual mode setting에서 첫번째 text
-                workingTime = sharedPreferences.getInt(Application_manager.MANUAL_MODE_TIME_ + modeNum + "_"+"0", 30);
+                workingTime = sharedPreferences.getInt(Application_manager.DB_MANUAL_MODE_TIME_ + modeNum + "_"+"0", 30);
             else if(mode==2) //manual mode setting에서 두번째 text
-                workingTime = sharedPreferences.getInt(Application_manager.MANUAL_MODE_TIME_ + modeNum + "_"+"1", 30);
+                workingTime = sharedPreferences.getInt(Application_manager.DB_MANUAL_MODE_TIME_ + modeNum + "_"+"1", 30);
             else if(mode==3) //manual mode setting에서 세번째 text
-                workingTime = sharedPreferences.getInt(Application_manager.MANUAL_MODE_TIME_ + modeNum + "_"+"2", 30);
+                workingTime = sharedPreferences.getInt(Application_manager.DB_MANUAL_MODE_TIME_ + modeNum + "_"+"2", 30);
         }
 
         // 폰트 설정
@@ -89,13 +88,13 @@ public class Activity_waiting_working_time_popup extends Activity {
             } else if (action == MotionEvent.ACTION_UP) {
                 switch (id) {
                     case R.id.popup_keypad_enter:
-                        SharedPreferences sharedPreferences = getSharedPreferences(Application_manager.NAME_OF_SHARED_PREF, 0);
+                        SharedPreferences sharedPreferences = getSharedPreferences(Application_manager.DB_NAME, 0);
                         SharedPreferences.Editor editor = sharedPreferences.edit();
                         if (mode == 0) { // Waiting 화면에서 넘어왔을 때
 
                             if (workingTime != 0) {
 
-                                editor.putInt(Application_manager.VAL_TIME, workingTime);
+                                editor.putInt(Application_manager.DB_VAL_TIME, workingTime);
                             }
                             else {
 
@@ -105,20 +104,20 @@ public class Activity_waiting_working_time_popup extends Activity {
                         else { // 매뉴얼 모드 세팅에서 넘어왔을 때
 
                             if (mode == 1) //manual mode setting에서 첫번째 text
-                                editor.putInt(Application_manager.MANUAL_MODE_TIME_ + modeNum + "_" + "0", workingTime);
+                                editor.putInt(Application_manager.DB_MANUAL_MODE_TIME_ + modeNum + "_" + "0", workingTime);
                             else if (mode == 2) //manual mode setting에서 두번째 text
-                                editor.putInt(Application_manager.MANUAL_MODE_TIME_ + modeNum + "_" + "1", workingTime);
+                                editor.putInt(Application_manager.DB_MANUAL_MODE_TIME_ + modeNum + "_" + "1", workingTime);
                             else if (mode == 3) //manual mode setting에서 세번째 text
-                                editor.putInt(Application_manager.MANUAL_MODE_TIME_ + modeNum + "_" + "2", workingTime);
+                                editor.putInt(Application_manager.DB_MANUAL_MODE_TIME_ + modeNum + "_" + "2", workingTime);
                             /*
                             if (workingTime >= 0 && workingTime <= 90) { // 0 ~ 90
 
                                 if (mode == 1) //manual mode setting에서 첫번째 text
-                                    editor.putInt(Application_manager.MANUAL_MODE_TIME_ + modeNum + "_" + "0", workingTime);
+                                    editor.putInt(Application_manager.DB_MANUAL_MODE_TIME_ + modeNum + "_" + "0", workingTime);
                                 else if (mode == 2) //manual mode setting에서 두번째 text
-                                    editor.putInt(Application_manager.MANUAL_MODE_TIME_ + modeNum + "_" + "1", workingTime);
+                                    editor.putInt(Application_manager.DB_MANUAL_MODE_TIME_ + modeNum + "_" + "1", workingTime);
                                 else if (mode == 3) //manual mode setting에서 세번째 text
-                                    editor.putInt(Application_manager.MANUAL_MODE_TIME_ + modeNum + "_" + "2", workingTime);
+                                    editor.putInt(Application_manager.DB_MANUAL_MODE_TIME_ + modeNum + "_" + "2", workingTime);
 
                             }
                             else { // 범위 초과

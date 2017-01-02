@@ -3,27 +3,18 @@ package com.sinest.gw_1000.setting;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.graphics.Typeface;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.sinest.gw_1000.R;
 import com.sinest.gw_1000.management.Application_manager;
-
-import static com.sinest.gw_1000.management.Application_manager.NAME_OF_SHARED_PREF;
-import static com.sinest.gw_1000.management.Application_manager.TIME_GAP_F;
-import static com.sinest.gw_1000.management.Application_manager.up;
-
 
 
 public class Activity_rfidcardpassord extends Activity {
