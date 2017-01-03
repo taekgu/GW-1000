@@ -78,7 +78,6 @@ public class Fragment_waiting extends Fragment {
             Activity_waiting activity = (Activity_waiting) getActivity();
             Button button_clicked = (Button) view;
 
-            
             if (motionEvent.getAction() == MotionEvent.ACTION_DOWN) {
 
                 for (int i=0; i<4; i++) {
