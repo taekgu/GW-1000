@@ -185,6 +185,11 @@ public class Application_manager extends Application {
     private static boolean m_sleep_f = false;
     public static int m_sleep_ff = 3;
 
+    //-------------------------------Img ---------------------------------------------------
+
+
+    //-------------------------------Img ---------------------------------------------------
+
     public void onCreate() {
 
         Application_manager.context = getApplicationContext();
@@ -688,5 +693,14 @@ public class Application_manager extends Application {
                         | View.SYSTEM_UI_FLAG_FULLSCREEN
                         | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
         );
+    }
+
+    private void initImg(){
+
+    }
+
+    // 언어 이미지 변경
+    synchronized public static void setLangueage() {
+
     }
 }

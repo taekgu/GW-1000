@@ -311,6 +311,7 @@ public class Activity_setting extends AppCompatActivity {
                     case R.id.button11:
                         //
                         if (button_flag[0] == true) {
+                            //int test = R.drawable.button_off;
                             b_11.setBackgroundResource(R.drawable.button_on);
                             b_11.setText("" + communicator.get_rx_idx(11));
                             b_11.setTypeface(tf);
