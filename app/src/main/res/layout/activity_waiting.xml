@@ -350,12 +350,12 @@
                                 android:layout_height="0dp"
                                 android:layout_weight="32">
 
-                                <SeekBar
-                                    android:id="@+id/seekBar2"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="match_parent"
-                                    android:background="@drawable/alarm_bar_1"
-                                    android:visibility="invisible"/>
+                                <com.sinest.gw_1000.mode.utils.CustomProgressBarHorizontal
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:gravity="center"
+                                    android:id="@+id/custom_progress_bar_horizontal_waiting">
+                                </com.sinest.gw_1000.mode.utils.CustomProgressBarHorizontal>
 
                             </LinearLayout>
 
