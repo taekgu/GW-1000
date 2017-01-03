@@ -312,14 +312,14 @@ public class Activity_setting extends AppCompatActivity {
                         //
                         if (button_flag[0] == true) {
                             //int test = R.drawable.button_off;
-                            b_11.setBackgroundResource(R.drawable.button_on);
+                            b_11.setBackgroundResource(Application_manager.button_on[Application_manager.img_flag]);
                             b_11.setText("" + communicator.get_rx_idx(11));
                             b_11.setTypeface(tf);
                             button_flag[0] = false;
                             Application_manager.wakeLock(getApplicationContext());
 
                         } else {
-                            b_11.setBackgroundResource(R.drawable.button_off);
+                            b_11.setBackgroundResource(Application_manager.button_off[Application_manager.img_flag]);
                             b_11.setText("");
                             button_flag[0] = true;
                             Application_manager.releaseWakeLock();
