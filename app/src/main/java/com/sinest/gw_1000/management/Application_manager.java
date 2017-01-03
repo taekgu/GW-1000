@@ -433,11 +433,13 @@ public class Application_manager extends Application {
         // 시간차 구하기
         Log.v("ss","s_time : "+s_time);
         Log.v("ss","ss_time : "+ss_time);
+        //설정 시간
         String a = s_time.substring(0,2);
         String b = s_time.substring(3,5);
         int a_ = Integer.parseInt(a);
         int b_ = Integer.parseInt(b);
 
+        //현재 시간
         String aa = ss_time.substring(0,2);
         String bb = ss_time.substring(3,5);
         int aa_ = Integer.parseInt(aa);
@@ -446,7 +448,7 @@ public class Application_manager extends Application {
         String gap_buf_t;
         String gap_buf_m;
 
-        if(a_ >= aa_){
+        if(a_ > aa_){
             //설정한 시간이 더 크다
             up = true;
             gap_t = a_-aa_;
@@ -457,8 +459,20 @@ public class Application_manager extends Application {
                 gap_t = gap_t - 1;
                 gap_m = 60 - (bb_-b_);
             }
-        }
-        else{
+        }else if(a_ == aa_){
+            //시간은 같다
+            gap_t = a_-aa_;
+            // 설정 분이 크다
+            if(b_ >= bb_){
+                up = true;
+                gap_m = b_-bb_;
+            }//설정 분이 작다
+            else{
+                up = false;
+                gap_m = (bb_-b_);
+            }
+
+        }else{
             // 설정한 시간이 더 작다
             up = false;
             gap_t = aa_-a_;
