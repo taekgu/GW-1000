@@ -14,17 +14,17 @@ import android.widget.RelativeLayout;
 
 import com.sinest.gw_1000.R;
 
-public class CustomProgressBar extends RelativeLayout {
+public class CustomProgressBarHorizontal extends RelativeLayout {
     private int inactiveColor;
     private int activeColor;
-    private double heightParent;
+    private double widthParent;
     private View viewFilterMain;
     private RelativeLayout relFilterMin, relFilterMax;
     private float startYMin, startYMax;
     private float movedYMin, movedYMax;
-    private int initialHeightMin;
+    private int initialWidthMin;
     private float dTopMin, dTopMax;
-    private int currentHeightMin, currentHeightMax;
+    private int currentWidthMin, currentWidthMax;
     private double resultMin = 0.0;
     private double resultMax = 14.0;
     private View viewParent;
@@ -32,13 +32,13 @@ public class CustomProgressBar extends RelativeLayout {
     private RelativeLayout relativeLayout;
     private View viewInActiveTop, viewInActiveBottom;
 
-    public CustomProgressBar(Context context) {
+    public CustomProgressBarHorizontal(Context context) {
         super(context);
         this.context = context;
         initialize(context);
     }
 
-    public CustomProgressBar(Context context, AttributeSet attrs) {
+    public CustomProgressBarHorizontal(Context context, AttributeSet attrs) {
         super(context, attrs);
         this.context = context;
         TypedArray a = context.obtainStyledAttributes(attrs, com.opalox.rangebarvertical.R.styleable.RangeBarVertical, 0, 0);
@@ -49,7 +49,7 @@ public class CustomProgressBar extends RelativeLayout {
         initialize(context);
     }
 
-    public CustomProgressBar(Context context, AttributeSet attrs, int defStyleAttr) {
+    public CustomProgressBarHorizontal(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         this.context = context;
         initialize(context);
@@ -61,14 +61,14 @@ public class CustomProgressBar extends RelativeLayout {
         return dp * ((float) metrics.densityDpi / DisplayMetrics.DENSITY_DEFAULT);
     }
     private void initialize(Context context) {
-        inflate(context, R.layout.layout_custom_progress_bar_vertical, this);
-        relativeLayout = (RelativeLayout) findViewById(R.id.custom_progress_bar);
-        viewFilterMain = findViewById(R.id.progress_main_view);
-        relFilterMin = (RelativeLayout) findViewById(R.id.rel_progress_min);
-        relFilterMax = (RelativeLayout) findViewById(R.id.rel_progress_max);
-        viewParent = findViewById(R.id.progress_filter_parent);
-        viewInActiveTop = findViewById(R.id.progress_inactive_line_top);
-        viewInActiveBottom = findViewById(R.id.progress_inactive_line_bottom);
+        inflate(context, R.layout.layout_custom_progress_bar_horizontal, this);
+        relativeLayout = (RelativeLayout) findViewById(R.id.custom_progress_bar_horizontal);
+        viewFilterMain = findViewById(R.id.progress_main_view_horizontal);
+        relFilterMin = (RelativeLayout) findViewById(R.id.rel_progress_min_horizontal);
+        relFilterMax = (RelativeLayout) findViewById(R.id.rel_progress_max_horizontal);
+        viewParent = findViewById(R.id.progress_filter_parent_horizontal);
+        viewInActiveTop = findViewById(R.id.progress_inactive_line_top_horizontal);
+        viewInActiveBottom = findViewById(R.id.progress_inactive_line_bottom_horizontal);
 
         init();
     }
@@ -76,7 +76,7 @@ public class CustomProgressBar extends RelativeLayout {
         //ViewCompat.setElevation(tvFilterMin, 14f);
         viewInActiveBottom.setBackgroundColor(inactiveColor);
         viewInActiveTop.setBackgroundColor(inactiveColor);
-        initialHeightMin = (int) convertDpToPixel(30, context); //InitialHeightMin이 뭐지??
+        initialWidthMin = (int) convertDpToPixel(30, context); //InitialHeightMin이 뭐지??
         final ViewTreeObserver viewTreeObserver = relativeLayout.getViewTreeObserver();
         viewTreeObserver.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
             public void onGlobalLayout() {
@@ -85,20 +85,27 @@ public class CustomProgressBar extends RelativeLayout {
                 } else {
                     viewParent.getViewTreeObserver().removeGlobalOnLayoutListener(this);
                 }
-                currentHeightMin = relFilterMin.getHeight();
-                System.out.println("viewParentGetHeight:" + viewParent.getHeight());
-                heightParent = viewParent.getHeight() - 2 * initialHeightMin;
+                currentWidthMin = relFilterMin.getWidth();
+                System.out.println("viewParentGetWidth:" + viewParent.getWidth());
+                widthParent = viewParent.getWidth() - 2 * initialWidthMin;
 
             }
         });
     }
+
+    public void setSectionInit(int min, int max) {
+        resultMin = min;
+        resultMax = max;
+        setMinimumProgress(min);
+        setMaximumProgress(max);
+    }
     public void getResultMin() {
-        //Max
-        resultMin = Math.floor(14 * (Math.abs(currentHeightMin - initialHeightMin)) / heightParent);
+        //Maxr
+        resultMin = Math.floor(14 * (Math.abs(currentWidthMin - initialWidthMin)) / widthParent);
     }
 
     public void getResultMax() {
-        resultMax = Math.floor(14 * (Math.abs(currentHeightMax - initialHeightMin)) / heightParent);
+        resultMax = Math.floor(14 * (Math.abs(currentWidthMax - initialWidthMin)) / widthParent);
         resultMax = Math.abs(resultMax - 14);
     }
     public int getMinimumProgress() {
@@ -116,9 +123,9 @@ public class CustomProgressBar extends RelativeLayout {
                     } else {
                         viewParent.getViewTreeObserver().removeGlobalOnLayoutListener(this);
                     }
-                    currentHeightMin = ((minProgress * (viewParent.getHeight() - 2 * initialHeightMin) / 14));
+                    currentWidthMin = ((minProgress * (viewParent.getWidth() - 2 * initialWidthMin) / 14));
                     ViewGroup.LayoutParams layoutParams = relFilterMin.getLayoutParams();
-                    layoutParams.height = currentHeightMin;
+                    layoutParams.width = currentWidthMin;
                     relFilterMin.setLayoutParams(layoutParams);
                 }
             });
@@ -140,9 +147,9 @@ public class CustomProgressBar extends RelativeLayout {
                     } else {
                         viewParent.getViewTreeObserver().removeGlobalOnLayoutListener(this);
                     }
-                    currentHeightMax = ((Math.abs(maxProgress - 14) * (viewParent.getHeight() - 2 * initialHeightMin) / 14));
+                    currentWidthMax = ((Math.abs(maxProgress - 14) * (viewParent.getWidth() - 2 * initialWidthMin) / 14));
                     ViewGroup.LayoutParams layoutParams = relFilterMax.getLayoutParams();
-                    layoutParams.height = currentHeightMax;
+                    layoutParams.width = currentWidthMax;
                     relFilterMax.setLayoutParams(layoutParams);
                     relFilterMax.bringToFront();
                 }
