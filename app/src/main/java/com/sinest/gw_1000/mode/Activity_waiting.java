@@ -24,6 +24,8 @@ import com.sinest.gw_1000.R;
 import com.sinest.gw_1000.communication.Communicator;
 import com.sinest.gw_1000.management.Application_broadcast;
 import com.sinest.gw_1000.management.Application_manager;
+import com.sinest.gw_1000.mode.utils.CustomProgressBar;
+import com.sinest.gw_1000.mode.utils.CustomProgressBarHorizontal;
 import com.sinest.gw_1000.setting.Activity_setting;
 
 public class Activity_waiting extends AppCompatActivity {
@@ -60,6 +62,8 @@ public class Activity_waiting extends AppCompatActivity {
 
     private ImageView background;
     private AnimationDrawable frameAnimation;
+
+    CustomProgressBarHorizontal seekBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -143,6 +147,8 @@ public class Activity_waiting extends AppCompatActivity {
         time_text.setOnTouchListener(mTouchEvent);
 
         background = (ImageView) findViewById(R.id.activity_waiting_background);
+
+        seekBar = (CustomProgressBarHorizontal) findViewById(R.id.seekBar2);
     }
 
     @Override
@@ -257,7 +263,6 @@ public class Activity_waiting extends AppCompatActivity {
                     start_animation();
 
                     // 동작 구간 표시
-                    SeekBar seekBar = (SeekBar) findViewById(R.id.seekBar2);
                     seekBar.setVisibility(View.VISIBLE);
                 }
             }
@@ -307,7 +312,6 @@ public class Activity_waiting extends AppCompatActivity {
         stop_animation();
 
         // 동작 구간 숨김
-        SeekBar seekBar = (SeekBar) findViewById(R.id.seekBar2);
         seekBar.setVisibility(View.INVISIBLE);
     }
 
@@ -438,6 +442,10 @@ public class Activity_waiting extends AppCompatActivity {
                     textView_temperature_bed = (TextView) findViewById(R.id.textView_temperature_below);
                     textView_temperature_bed.setText(""+temp);
                     Application_manager.SENSOR_TEMP_BED = temp;
+
+                    // 노즐 위치
+                    //seekBar.setMinimumProgress();
+                    //seekBar.setMaximumProgress();
                 }
                 else if (msg.what == SET_BUTTON_INVISIBLE) {
 
