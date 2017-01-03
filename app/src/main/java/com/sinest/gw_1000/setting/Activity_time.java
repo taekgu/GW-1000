@@ -14,6 +14,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.Chronometer;
+import android.widget.Toast;
 
 import com.sinest.gw_1000.R;
 import com.sinest.gw_1000.management.Application_manager;
@@ -123,10 +124,17 @@ public class Activity_time extends Activity {
                         break;
 
                     case R.id.time_enter:
-                        //
-                        //result.putExtra("start",s_buf);
-                        //setResult(RESULT_OK, result);
-                        Application_manager.setTime(s_buf);
+                        check = s_buf.indexOf(":");
+                        buf_l = s_buf.substring(0,check);
+                        buf_r = s_buf.substring(check+1);
+                        int_buf = Integer.parseInt(buf_l)*100 + Integer.parseInt(buf_r);
+                        int_l = int_buf/100;
+                        int_r = int_buf%100;
+                        if(int_l >= 24 || int_r >=60){
+                            Toast.makeText(getApplicationContext(), "Check the time again.", Toast.LENGTH_SHORT).show();
+                        }else{
+                            Application_manager.setTime(s_buf);
+                        }
                         finish();
                         break;
                     case R.id.time_back:

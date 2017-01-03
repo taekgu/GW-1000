@@ -546,7 +546,7 @@ public class Activity_setting extends AppCompatActivity {
                             b_1m.setBackgroundResource(R.drawable.sleepmode_1min);
                             sleep_f = false;
                             sleep_cnt = 0;
-                            sleep_cnt_end = 1000;
+                            sleep_cnt_end = 100000;
                             Application_manager.setSleep(sleep_cnt,sleep_cnt_end,sleep_f);
                             button3_flag[0] = true;
                         }
@@ -570,7 +570,7 @@ public class Activity_setting extends AppCompatActivity {
                             b_3m.setBackgroundResource(R.drawable.sleepmode_3min);
                             sleep_f = false;
                             sleep_cnt = 0;
-                            sleep_cnt_end = 1000;
+                            sleep_cnt_end = 100000;
 
                             Application_manager.setSleep(sleep_cnt,sleep_cnt_end,sleep_f);
                             button3_flag[1] = true;
@@ -593,7 +593,7 @@ public class Activity_setting extends AppCompatActivity {
                             b_5m.setBackgroundResource(R.drawable.sleepmode_5min);
                             sleep_f = false;
                             sleep_cnt = 0;
-                            sleep_cnt_end = 1000;
+                            sleep_cnt_end = 100000;
 
                             Application_manager.setSleep(sleep_cnt,sleep_cnt_end,sleep_f);
                             button3_flag[2] = true;
@@ -606,7 +606,7 @@ public class Activity_setting extends AppCompatActivity {
                             b_coutinue.setBackgroundResource(R.drawable.sleepmode_continue_on);
                             sleep_f = false;
                             sleep_cnt = 0;
-                            sleep_cnt_end = 1000;
+                            sleep_cnt_end = 100000;
 
                             Application_manager.setSleep(sleep_cnt,sleep_cnt_end,sleep_f);
 
@@ -616,7 +616,7 @@ public class Activity_setting extends AppCompatActivity {
                             b_coutinue.setBackgroundResource(R.drawable.sleepmode_continue_off);
                             sleep_f = false;
                             sleep_cnt = 0;
-                            sleep_cnt_end = 1000;
+                            sleep_cnt_end = 100000;
 
                             Application_manager.setSleep(sleep_cnt,sleep_cnt_end,sleep_f);
                             button3_flag[3] = true;
