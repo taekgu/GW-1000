@@ -227,6 +227,7 @@ public class Activity_manual_mode_setting extends Activity{
 
         Log.i("onResume", "onResume");
 
+        num_of_enabled_pattern = 0;
         for (int i=0; i<3; i++) {
             section[i][0] = sharedPreferences.getInt(Application_manager.DB_MANUAL_MODE_SECTION_MIN_ + modeNum + "_" + i, 1);
             section[i][1] = sharedPreferences.getInt(Application_manager.DB_MANUAL_MODE_SECTION_MAX_ + modeNum + "_" + i, 1);

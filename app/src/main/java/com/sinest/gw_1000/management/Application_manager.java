@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 
+import com.sinest.gw_1000.R;
 import com.sinest.gw_1000.communication.Communicator;
 import com.sinest.gw_1000.setting.Activity_setting;
 
@@ -184,6 +185,19 @@ public class Application_manager extends Application {
     private static int end_m = 0;
     private static boolean m_sleep_f = false;
     public static int m_sleep_ff = 3;
+
+    //-------------------------------Img ---------------------------------------------------
+    // 0-> 한국,영어 1-> 중국
+    public static int img_flag = 0;
+    public static int[] button_on = {R.drawable.button_on, };
+    public static int[] button_off = {R.drawable.button_off, };
+    public static int[] on = {R.drawable.on, };
+    public static int[] off = {R.drawable.off, };
+    public static int[] button_play_on = {R.drawable.button_play_on, };
+
+
+
+    //-------------------------------Img ---------------------------------------------------
 
     public void onCreate() {
 
@@ -688,5 +702,14 @@ public class Application_manager extends Application {
                         | View.SYSTEM_UI_FLAG_FULLSCREEN
                         | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
         );
+    }
+
+    private void initImg(){
+
+    }
+
+    // 언어 이미지 변경
+    synchronized public static void setLangueage() {
+
     }
 }
