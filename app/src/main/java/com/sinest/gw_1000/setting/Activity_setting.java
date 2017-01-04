@@ -538,7 +538,7 @@ public class Activity_setting extends AppCompatActivity {
                         //
                         if (button3_flag[0] == true) {
                             setZerosSleep();
-                            b_1m.setBackgroundResource(R.drawable.sleepmode_1min_on);
+                            b_1m.setBackgroundResource(Application_manager.sleepmode_1min_on[Application_manager.img_flag]);
                             button3_flag[0] = false;
 
                             //----screen off----
@@ -551,7 +551,7 @@ public class Activity_setting extends AppCompatActivity {
 
                             Log.v("test", "test");
                         } else {
-                            b_1m.setBackgroundResource(R.drawable.sleepmode_1min);
+                            b_1m.setBackgroundResource(Application_manager.sleepmode_1min[Application_manager.img_flag]);
                             sleep_f = false;
                             sleep_cnt = 0;
                             sleep_cnt_end = 100000;
@@ -563,7 +563,7 @@ public class Activity_setting extends AppCompatActivity {
                         //
                         if (button3_flag[1] == true) {
                             setZerosSleep();
-                            b_3m.setBackgroundResource(R.drawable.sleepmode_3min_on);
+                            b_3m.setBackgroundResource(Application_manager.sleepmode_3min_on[Application_manager.img_flag]);
 
                             sleep_f = true;
                             sleep_cnt = 0;
@@ -575,7 +575,7 @@ public class Activity_setting extends AppCompatActivity {
 
                             button3_flag[1] = false;
                         } else {
-                            b_3m.setBackgroundResource(R.drawable.sleepmode_3min);
+                            b_3m.setBackgroundResource(Application_manager.sleepmode_3min[Application_manager.img_flag]);
                             sleep_f = false;
                             sleep_cnt = 0;
                             sleep_cnt_end = 100000;
@@ -588,7 +588,7 @@ public class Activity_setting extends AppCompatActivity {
                         //
                         if (button3_flag[2] == true) {
                             setZerosSleep();
-                            b_5m.setBackgroundResource(R.drawable.sleepmode_5min_on);
+                            b_5m.setBackgroundResource(Application_manager.sleepmode_5min_on[Application_manager.img_flag]);
                             sleep_f = true;
                             sleep_cnt = 0;
                             sleep_cnt_end = 5*60;
@@ -598,7 +598,7 @@ public class Activity_setting extends AppCompatActivity {
                             Application_manager.set_m_sleep_m(2);
                             button3_flag[2] = false;
                         } else {
-                            b_5m.setBackgroundResource(R.drawable.sleepmode_5min);
+                            b_5m.setBackgroundResource(Application_manager.sleepmode_5min[Application_manager.img_flag]);
                             sleep_f = false;
                             sleep_cnt = 0;
                             sleep_cnt_end = 100000;
@@ -611,7 +611,7 @@ public class Activity_setting extends AppCompatActivity {
                         //
                         if (button3_flag[3] == true) {
                             setZerosSleep();
-                            b_coutinue.setBackgroundResource(R.drawable.sleepmode_continue_on);
+                            b_coutinue.setBackgroundResource(Application_manager.sleepmode_continue_on[Application_manager.img_flag]);
                             sleep_f = false;
                             sleep_cnt = 0;
                             sleep_cnt_end = 100000;
@@ -621,7 +621,7 @@ public class Activity_setting extends AppCompatActivity {
                             Application_manager.set_m_sleep_m(3);
                             button3_flag[3] = false;
                         } else {
-                            b_coutinue.setBackgroundResource(R.drawable.sleepmode_continue_off);
+                            b_coutinue.setBackgroundResource(Application_manager.sleepmode_continue_off[Application_manager.img_flag]);
                             sleep_f = false;
                             sleep_cnt = 0;
                             sleep_cnt_end = 100000;
@@ -637,7 +637,7 @@ public class Activity_setting extends AppCompatActivity {
                             b_language.setBackgroundResource(R.drawable.language_en);
                             b_language_f = 1;
                         } else if (b_language_f == 1) {
-                            b_language.setBackgroundResource(R.drawable.language_ch);
+                            b_language.setBackgroundResource(Application_manager.language_ch[Application_manager.img_flag]);
                             b_language_f = 2;
                         } else if (b_language_f == 2) {
                             b_language.setBackgroundResource(R.drawable.language_ko);
@@ -740,13 +740,13 @@ public class Activity_setting extends AppCompatActivity {
 
     void setZerosSleep()
     {
-        b_1m.setBackgroundResource(R.drawable.sleepmode_1min);
+        b_1m.setBackgroundResource(Application_manager.sleepmode_1min[Application_manager.img_flag]);
         button3_flag[0] = true;
-        b_3m.setBackgroundResource(R.drawable.sleepmode_3min);
+        b_3m.setBackgroundResource(Application_manager.sleepmode_3min[Application_manager.img_flag]);
         button3_flag[1] = true;
-        b_5m.setBackgroundResource(R.drawable.sleepmode_5min);
+        b_5m.setBackgroundResource(Application_manager.sleepmode_5min[Application_manager.img_flag]);
         button3_flag[2] = true;
-        b_coutinue.setBackgroundResource(R.drawable.sleepmode_continue_off);
+        b_coutinue.setBackgroundResource(Application_manager.sleepmode_continue_off[Application_manager.img_flag]);
         button3_flag[3] = true;
 
     }
@@ -811,7 +811,7 @@ public class Activity_setting extends AppCompatActivity {
             if (action == MotionEvent.ACTION_DOWN) {
                 switch (id) {
                     case R.id.b_emotion:
-                        b_emotion.setBackgroundResource(R.drawable.emotion_on);
+                        b_emotion.setBackgroundResource(Application_manager.emotion_on[Application_manager.img_flag]);
 
                         break;
                     case R.id.b_back:
@@ -825,7 +825,7 @@ public class Activity_setting extends AppCompatActivity {
                 byte val = 0x00;
                 switch (id) {
                     case R.id.b_emotion:
-                        b_emotion.setBackgroundResource(R.drawable.emotion_off);
+                        b_emotion.setBackgroundResource(Application_manager.emotion_off[Application_manager.img_flag]);
                         startActivity(intent_emotion);
                         break;
                     case R.id.b_back:
@@ -932,17 +932,17 @@ public class Activity_setting extends AppCompatActivity {
         int sleep_ff = Application_manager.m_sleep_ff;
         if (sleep_ff == 0) {
             setZerosSleep();
-            b_1m.setBackgroundResource(R.drawable.sleepmode_1min_on);
+            b_1m.setBackgroundResource(Application_manager.sleepmode_1min_on[Application_manager.img_flag]);
 
         }else if (sleep_ff == 1) {
             setZerosSleep();
-            b_3m.setBackgroundResource(R.drawable.sleepmode_3min_on);
+            b_3m.setBackgroundResource(Application_manager.sleepmode_3min_on[Application_manager.img_flag]);
         }else if (sleep_ff == 2) {
             setZerosSleep();
-            b_5m.setBackgroundResource(R.drawable.sleepmode_5min_on);
+            b_5m.setBackgroundResource(Application_manager.sleepmode_5min_on[Application_manager.img_flag]);
         }else if (sleep_ff == 3) {
             setZerosSleep();
-            b_coutinue.setBackgroundResource(R.drawable.sleepmode_continue_on);
+            b_coutinue.setBackgroundResource(Application_manager.sleepmode_continue_on[Application_manager.img_flag]);
         }
 
         ex_f = Application_manager.m_external_led;
@@ -979,7 +979,7 @@ public class Activity_setting extends AppCompatActivity {
         } else if (b_language_f == 1) {
             b_language.setBackgroundResource(R.drawable.language_en);
         } else if (b_language_f == 2) {
-            b_language.setBackgroundResource(R.drawable.language_ch);
+            b_language.setBackgroundResource(Application_manager.language_ch[Application_manager.img_flag]);
         }
 
         b_inverter_f = Application_manager.m_inverter;
@@ -992,6 +992,7 @@ public class Activity_setting extends AppCompatActivity {
         }
 
         activity_setting.setBackgroundResource(Application_manager.setting_back_image[Application_manager.img_flag]);
+        b_emotion.setBackgroundResource(Application_manager.emotion_off[Application_manager.img_flag]);
         b_back.setBackgroundResource(Application_manager.button_circle_back_off[Application_manager.img_flag]);
 
     }

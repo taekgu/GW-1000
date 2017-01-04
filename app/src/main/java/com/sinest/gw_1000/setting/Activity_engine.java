@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextClock;
 import android.widget.TextView;
 
@@ -58,6 +59,8 @@ public class Activity_engine extends AppCompatActivity {
 
     private boolean isRun = false;
 
+    LinearLayout activity_engine;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -75,6 +78,8 @@ public class Activity_engine extends AppCompatActivity {
         {
             check_activity = "main";
         }
+
+        activity_engine = (LinearLayout)findViewById(R.id.activity_engine);
 
         eng_28h = (Button)findViewById(R.id.eng_28h);
         eng_36h = (Button)findViewById(R.id.eng_36h);
@@ -213,11 +218,11 @@ public class Activity_engine extends AppCompatActivity {
                         //
                         if (eng_step_flag[0] == true) {
                             setZerosOXY();
-                            eng_1step.setBackgroundResource(R.drawable.oxygen_1step_on);
+                            eng_1step.setBackgroundResource(Application_manager.oxygen_1step_on[Application_manager.img_flag]);
                             eng_step_flag[0] = false;
                             oxy = 1;
                         } else {
-                            eng_1step.setBackgroundResource(R.drawable.oxygen_1step_off);
+                            eng_1step.setBackgroundResource(Application_manager.oxygen_1step_off[Application_manager.img_flag]);
                             eng_step_flag[0] = true;
                             oxy = 0;
                         }
@@ -227,11 +232,11 @@ public class Activity_engine extends AppCompatActivity {
                         //
                         if (eng_step_flag[1] == true) {
                             setZerosOXY();
-                            eng_2step.setBackgroundResource(R.drawable.oxygen_2step_on);
+                            eng_2step.setBackgroundResource(Application_manager.oxygen_2step_on[Application_manager.img_flag]);
                             eng_step_flag[1] = false;
                             oxy = 2;
                         } else {
-                            eng_2step.setBackgroundResource(R.drawable.oxygen_2step_off);
+                            eng_2step.setBackgroundResource(Application_manager.oxygen_2step_off[Application_manager.img_flag]);
                             eng_step_flag[1] = true;
                             oxy = 0;
                         }
@@ -241,11 +246,11 @@ public class Activity_engine extends AppCompatActivity {
                         //
                         if (eng_step_flag[2] == true) {
                             setZerosOXY();
-                            eng_3step.setBackgroundResource(R.drawable.oxygen_3step_on);
+                            eng_3step.setBackgroundResource(Application_manager.oxygen_3step_on[Application_manager.img_flag]);
                             eng_step_flag[2] = false;
                             oxy = 3;
                         } else {
-                            eng_3step.setBackgroundResource(R.drawable.oxygen_3step_off);
+                            eng_3step.setBackgroundResource(Application_manager.oxygen_3step_off[Application_manager.img_flag]);
                             eng_step_flag[2] = true;
                             oxy = 0;
                         }
@@ -255,11 +260,11 @@ public class Activity_engine extends AppCompatActivity {
                         //
                         if (eng_step_flag[3] == true) {
                             setZerosOXY();
-                            eng_4step.setBackgroundResource(R.drawable.oxygen_4step_on);
+                            eng_4step.setBackgroundResource(Application_manager.oxygen_4step_on[Application_manager.img_flag]);
                             eng_step_flag[3] = false;
                             oxy = 4;
                         } else {
-                            eng_4step.setBackgroundResource(R.drawable.oxygen_4step_off);
+                            eng_4step.setBackgroundResource(Application_manager.oxygen_4step_off[Application_manager.img_flag]);
                             eng_step_flag[3] = true;
                             oxy = 0;
                         }
@@ -269,11 +274,11 @@ public class Activity_engine extends AppCompatActivity {
                         //
                         if (eng_step_flag[4] == true) {
                             setZerosOXY();
-                            eng_5step.setBackgroundResource(R.drawable.oxygen_5step_on);
+                            eng_5step.setBackgroundResource(Application_manager.oxygen_5step_on[Application_manager.img_flag]);
                             eng_step_flag[4] = false;
                             oxy = 5;
                         } else {
-                            eng_5step.setBackgroundResource(R.drawable.oxygen_5step_off);
+                            eng_5step.setBackgroundResource(Application_manager.oxygen_5step_off[Application_manager.img_flag]);
                             eng_step_flag[4] = true;
                             oxy = 0;
                         }
@@ -336,21 +341,21 @@ public class Activity_engine extends AppCompatActivity {
                     case R.id.program_m:
                         //
                         if (mode_f == true) {
-                            program_m.setBackgroundResource(R.drawable.program_mode_on);
+                            program_m.setBackgroundResource(Application_manager.program_mode_on[Application_manager.img_flag]);
                             mode_f = false;
                         } else {
-                            program_m.setBackgroundResource(R.drawable.program_mode_off);
+                            program_m.setBackgroundResource(Application_manager.program_mode_off[Application_manager.img_flag]);
                             mode_f = true;
                         }
                         break;
                     case R.id.invert_choice:
                         //
                         if (invert_f == true) {
-                            invert_choice.setBackgroundResource(R.drawable.inverter_ls);
+                            invert_choice.setBackgroundResource(Application_manager.inverter_ls[Application_manager.img_flag]);
                             invert_f = false;
                             inverter = 0x10;
                         } else {
-                            invert_choice.setBackgroundResource(R.drawable.inverter_ys);
+                            invert_choice.setBackgroundResource(Application_manager.inverter_ys[Application_manager.img_flag]);
                             invert_f = true;
                             inverter = 0x00;
                         }
@@ -462,7 +467,7 @@ public class Activity_engine extends AppCompatActivity {
             if (action == MotionEvent.ACTION_DOWN) {
                 switch (id) {
                     case R.id.eng_b_back:
-                        eng_b_back.setBackgroundResource(R.drawable.button_circle_back_on);
+                        eng_b_back.setBackgroundResource(Application_manager.button_circle_back_on[Application_manager.img_flag]);
                         break;
                     case R.id.eng_b_left:
                         eng_b_left.setBackgroundResource(R.drawable.moving_left_on);
@@ -482,11 +487,11 @@ public class Activity_engine extends AppCompatActivity {
                         break;
 
                     case R.id.eng_door_open:
-                        eng_door_open.setBackgroundResource(R.drawable.door_open_on);
+                        eng_door_open.setBackgroundResource(Application_manager.door_open_on[Application_manager.img_flag]);
                         communicator.set_engineer(9,(byte)0x01);
                         break;
                     case R.id.eng_door_close:
-                        eng_door_close.setBackgroundResource(R.drawable.door_close_on);
+                        eng_door_close.setBackgroundResource(Application_manager.door_close_on[Application_manager.img_flag]);
                         communicator.set_engineer(9,(byte)0x02);
                         break;
                 }
@@ -494,7 +499,7 @@ public class Activity_engine extends AppCompatActivity {
                 byte val = 0x00;
                 switch (id) {
                     case R.id.eng_b_back:
-                        eng_b_back.setBackgroundResource(R.drawable.button_circle_back_off);
+                        eng_b_back.setBackgroundResource(Application_manager.button_circle_back_off[Application_manager.img_flag]);
                         Log.v("test","check_activity : " + check_activity);
                         if(check_activity.equals("setting")){
                             onStop();
@@ -524,11 +529,11 @@ public class Activity_engine extends AppCompatActivity {
                         break;
 
                     case R.id.eng_door_open:
-                        eng_door_open.setBackgroundResource(R.drawable.door_open_off);
+                        eng_door_open.setBackgroundResource(Application_manager.door_open_off[Application_manager.img_flag]);
                         communicator.set_engineer(9,(byte)0x00);
                         break;
                     case R.id.eng_door_close:
-                        eng_door_close.setBackgroundResource(R.drawable.door_close_off);
+                        eng_door_close.setBackgroundResource(Application_manager.door_close_off[Application_manager.img_flag]);
                         communicator.set_engineer(9,(byte)0x00);
                         break;
                 }
@@ -578,6 +583,19 @@ public class Activity_engine extends AppCompatActivity {
         super.onResume();
         Application_manager.setFullScreen(this);
         isRun = true;
+
+        activity_engine.setBackgroundResource(Application_manager.engineermode_back_image[Application_manager.img_flag]);
+        eng_door_open.setBackgroundResource(Application_manager.door_open_off[Application_manager.img_flag]);
+        eng_door_close.setBackgroundResource(Application_manager.door_close_off[Application_manager.img_flag]);
+        invert_choice.setBackgroundResource(Application_manager.inverter_ys[Application_manager.img_flag]);
+        program_m.setBackgroundResource(Application_manager.program_mode_off[Application_manager.img_flag]);
+        eng_1step.setBackgroundResource(Application_manager.oxygen_1step_off[Application_manager.img_flag]);
+        eng_2step.setBackgroundResource(Application_manager.oxygen_2step_off[Application_manager.img_flag]);
+        eng_3step.setBackgroundResource(Application_manager.oxygen_3step_off[Application_manager.img_flag]);
+        eng_4step.setBackgroundResource(Application_manager.oxygen_4step_off[Application_manager.img_flag]);
+        eng_5step.setBackgroundResource(Application_manager.oxygen_5step_off[Application_manager.img_flag]);
+        eng_b_back.setBackgroundResource(Application_manager.button_circle_back_off[Application_manager.img_flag]);
+
     }
 
     @Override
@@ -603,15 +621,15 @@ public class Activity_engine extends AppCompatActivity {
     }
 
     void setZerosOXY(){
-        eng_1step.setBackgroundResource(R.drawable.oxygen_1step_off);
+        eng_1step.setBackgroundResource(Application_manager.oxygen_1step_off[Application_manager.img_flag]);
         eng_step_flag[0] = true;
-        eng_2step.setBackgroundResource(R.drawable.oxygen_2step_off);
+        eng_2step.setBackgroundResource(Application_manager.oxygen_2step_off[Application_manager.img_flag]);
         eng_step_flag[1] = true;
-        eng_3step.setBackgroundResource(R.drawable.oxygen_3step_off);
+        eng_3step.setBackgroundResource(Application_manager.oxygen_3step_off[Application_manager.img_flag]);
         eng_step_flag[2] = true;
-        eng_4step.setBackgroundResource(R.drawable.oxygen_4step_off);
+        eng_4step.setBackgroundResource(Application_manager.oxygen_4step_off[Application_manager.img_flag]);
         eng_step_flag[3] = true;
-        eng_5step.setBackgroundResource(R.drawable.oxygen_5step_off);
+        eng_5step.setBackgroundResource(Application_manager.oxygen_5step_off[Application_manager.img_flag]);
         eng_step_flag[4] = true;
     }
 }

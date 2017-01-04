@@ -188,6 +188,7 @@ public class Application_manager extends Application {
 
     //-------------------------------Img ---------------------------------------------------
     // 0-> 한국,영어 1-> 중국
+    //setting
     public static int img_flag = 0;
     public static int[] button_on = {R.drawable.button_on, R.drawable.button_on};//
     public static int[] button_off = {R.drawable.button_off, R.drawable.button_off_ch};
@@ -196,7 +197,6 @@ public class Application_manager extends Application {
     public static int[] button_play_on = {R.drawable.button_play_on, R.drawable.button_play_on};//
     public static int[] button_circle_back_on = {R.drawable.button_circle_back_on, R.drawable.button_circle_back_on_ch};
     public static int[] button_circle_back_off = {R.drawable.button_circle_back_off, R.drawable.button_circle_back_off_ch};
-
     public static int[] sleepmode_1min_on = {R.drawable.sleepmode_1min_on, R.drawable.sleepmode_1min_on_ch};
     public static int[] sleepmode_3min_on = {R.drawable.sleepmode_3min_on, R.drawable.sleepmode_3min_on_ch};
     public static int[] sleepmode_5min_on = {R.drawable.sleepmode_5min_on, R.drawable.sleepmode_5min_on_ch};
@@ -207,9 +207,47 @@ public class Application_manager extends Application {
     public static int[] sleepmode_continue_off = {R.drawable.sleepmode_continue_off, R.drawable.sleepmode_continue_off_ch};
     public static int[] emotion_on = {R.drawable.emotion_on, R.drawable.emotion_on_ch};
     public static int[] emotion_off = {R.drawable.emotion_off, R.drawable.emotion_off_ch};
-
     public static int[] language_ch = {R.drawable.language_ch, R.drawable.language_ch_ch};
     public static int[] setting_back_image = {R.drawable.setting_back_image, R.drawable.setting_back_image_ch};
+
+    //setting pop
+    public static int[] check_on = {R.drawable.check_on, R.drawable.check_on_ch};
+    public static int[] check_off = {R.drawable.check_off, R.drawable.check_off_ch};
+    public static int[] save_setting_on = {R.drawable.save_setting_on, R.drawable.save_setting_on_ch};
+    public static int[] save_setting_off = {R.drawable.save_setting_off, R.drawable.save_setting_off_ch};
+    public static int[] button_elipse_back_on = {R.drawable.button_elipse_back_on, R.drawable.button_elipse_back_on_ch};
+    public static int[] button_elipse_back_off = {R.drawable.button_elipse_back_off, R.drawable.button_elipse_back_off_ch};
+    // 저장버튼 추가 요청및 추가해야함  ,  rfid 쪽 안함 ,  팝업 배경 받고 진행
+
+    //engine
+    public static int[] engineermode_back_image = {R.drawable.engineermode_back_image, R.drawable.engineermode_back_image_ch};
+    public static int[] door_open_on = {R.drawable.door_open_on, R.drawable.door_open_on_ch};
+    public static int[] door_open_off = {R.drawable.door_open_off, R.drawable.door_open_off_ch};
+    public static int[] door_close_on = {R.drawable.door_close_on, R.drawable.door_close_on_ch};
+    public static int[] door_close_off = {R.drawable.door_close_off, R.drawable.door_close_off_ch};
+    public static int[] inverter_ls = {R.drawable.inverter_ls, R.drawable.inverter_ls_ch};
+    public static int[] inverter_ys = {R.drawable.inverter_ys, R.drawable.inverter_ys_ch};
+    public static int[] oxygen_1step_on = {R.drawable.oxygen_1step_on, R.drawable.oxygen_1step_on_ch};
+    public static int[] oxygen_1step_off = {R.drawable.oxygen_1step_off, R.drawable.oxygen_1step_off_ch};
+    public static int[] oxygen_2step_on = {R.drawable.oxygen_2step_on, R.drawable.oxygen_2step_on_ch};
+    public static int[] oxygen_2step_off = {R.drawable.oxygen_2step_off, R.drawable.oxygen_2step_off_ch};
+    public static int[] oxygen_3step_on = {R.drawable.oxygen_3step_on, R.drawable.oxygen_3step_on_ch};
+    public static int[] oxygen_3step_off = {R.drawable.oxygen_3step_off, R.drawable.oxygen_3step_off_ch};
+    public static int[] oxygen_4step_on = {R.drawable.oxygen_4step_on, R.drawable.oxygen_4step_on_ch};
+    public static int[] oxygen_4step_off = {R.drawable.oxygen_4step_off, R.drawable.oxygen_4step_off_ch};
+    public static int[] oxygen_5step_on = {R.drawable.oxygen_5step_on, R.drawable.oxygen_5step_on_ch};
+    public static int[] oxygen_5step_off = {R.drawable.oxygen_5step_off, R.drawable.oxygen_5step_off_ch};
+    public static int[] program_mode_on = {R.drawable.program_mode_on, R.drawable.program_mode_on_ch};
+    public static int[] program_mode_off = {R.drawable.program_mode_off, R.drawable.program_mode_off_ch};
+
+
+    //working
+
+    //waiting
+
+    //library
+
+
 
 
 

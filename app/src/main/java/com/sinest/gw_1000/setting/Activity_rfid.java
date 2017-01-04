@@ -82,10 +82,10 @@ public class Activity_rfid extends Activity {
                     case R.id.rfid_off:
                         //
                         if (rfid_flag[2] == true) {
-                            rfid_off.setBackgroundResource(R.drawable.on);
+                            rfid_off.setBackgroundResource(R.drawable.save_setting_on);
                             rfid_flag[2] = false;
                         } else {
-                            rfid_off.setBackgroundResource(R.drawable.off);
+                            rfid_off.setBackgroundResource(R.drawable.save_setting_off);
                             rfid_flag[2] = true;
                         }
                         break;
@@ -131,7 +131,7 @@ public class Activity_rfid extends Activity {
                         rfid_t_down.setBackgroundResource(R.drawable.button_down_on);
                         break;
                     case R.id.rfid_save:
-                        rfid_save.setBackgroundResource(R.drawable.save_setting_on);
+                        rfid_save.setBackgroundResource(R.drawable.save_on);
                         break;
                     case R.id.rfid_check:
                         rfid_check.setBackgroundResource(R.drawable.check_on);
@@ -185,7 +185,7 @@ public class Activity_rfid extends Activity {
                         }
                         break;
                     case R.id.rfid_save:
-                        rfid_save.setBackgroundResource(R.drawable.save_setting_off);
+                        rfid_save.setBackgroundResource(R.drawable.save_off);
                         //save -> working_mode_num, treatment_num
                         save_f = true;
 

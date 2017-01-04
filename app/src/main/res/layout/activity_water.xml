@@ -146,7 +146,7 @@
                 android:layout_height="match_parent"
 
                 android:id="@+id/water_save"
-                android:background="@drawable/save_setting_off"/>
+                android:background="@drawable/save_off"/>
 
         </LinearLayout>
 
@@ -165,7 +165,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:id="@+id/water_off"
-                android:background="@drawable/off_109" />
+                android:background="@drawable/save_setting_off" />
 
         </LinearLayout>
 

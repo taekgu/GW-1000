@@ -81,11 +81,11 @@ public class Activity_water extends Activity {
                     case R.id.water_off:
                         //
                         if (water_flag[1] == true) {
-                            water_off.setBackgroundResource(R.drawable.on_109);
+                            water_off.setBackgroundResource(Application_manager.save_setting_on[Application_manager.img_flag]);
                             water_flag[1] = false;
                             Application_manager.set_m_water_ff(water_flag[1]);
                         } else {
-                            water_off.setBackgroundResource(R.drawable.off_109);
+                            water_off.setBackgroundResource(Application_manager.save_setting_off[Application_manager.img_flag]);
                             water_flag[1] = true;
                             Application_manager.set_m_water_ff(water_flag[1]);
                         }
@@ -124,22 +124,22 @@ public class Activity_water extends Activity {
             if (action == MotionEvent.ACTION_DOWN) {
                 switch (id) {
                     case R.id.water_save:
-                        water_save.setBackgroundResource(R.drawable.save_setting_on);
+                        water_save.setBackgroundResource(R.drawable.save_on);
                         break;
                     case R.id.water_back:
-                        water_back.setBackgroundResource(R.drawable.button_elipse_back_on);
+                        water_back.setBackgroundResource(Application_manager.button_elipse_back_on[Application_manager.img_flag]);
                         break;
                 }
             } else if (action == MotionEvent.ACTION_UP) {
                 switch (id) {
                     case R.id.water_save:
-                        water_save.setBackgroundResource(R.drawable.save_setting_off);
+                        water_save.setBackgroundResource(R.drawable.save_off);
                         //change
                         Application_manager.set_m_water_f(false);
                         finish();
                         break;
                     case R.id.water_back:
-                        water_back.setBackgroundResource(R.drawable.button_elipse_back_off);
+                        water_back.setBackgroundResource(Application_manager.button_elipse_back_off[Application_manager.img_flag]);
                         Application_manager.set_m_water_f(true);
                         finish();
                         break;
@@ -153,6 +153,10 @@ public class Activity_water extends Activity {
     protected void onResume() {
         super.onResume();
         Application_manager.setFullScreen(this);
+
+        water_off.setBackgroundResource(Application_manager.save_setting_off[Application_manager.img_flag]);
+        water_back.setBackgroundResource(Application_manager.button_elipse_back_off[Application_manager.img_flag]);
+
         //change
         do_init_time();
     }
