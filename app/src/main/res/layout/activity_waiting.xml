@@ -348,7 +348,8 @@
                             <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="0dp"
-                                android:layout_weight="32">
+                                android:layout_weight="32"
+                                android:layout_gravity="center">
 
                                 <com.sinest.gw_1000.mode.utils.CustomProgressBarHorizontal
                                     android:layout_width="wrap_content"

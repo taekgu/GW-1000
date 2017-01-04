@@ -213,7 +213,7 @@ public class CustomSeekBar extends RelativeLayout{
         resultMax = Math.abs(resultMax - 14);
         tvFilterMax.setText(((int) resultMax + ""));
         Log.i("RR", "getResult_currentHeightMax : " + currentHeightMax);
-        Log.i("RR", "rr_resultMax : " + (int) resultMax);
+        Log.i("RR", "getResult_resultMax : " + (int) resultMax);
         onRangeBarChangeListener.onRangeBarChange((int) resultMin, (int) resultMax);
     }
 

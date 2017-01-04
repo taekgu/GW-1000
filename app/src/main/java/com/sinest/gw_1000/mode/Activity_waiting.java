@@ -16,7 +16,6 @@ import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -257,8 +256,8 @@ public class Activity_waiting extends AppCompatActivity {
                     start_animation();
 
                     // 동작 구간 표시
-                    SeekBar seekBar = (SeekBar) findViewById(R.id.seekBar2);
-                    seekBar.setVisibility(View.VISIBLE);
+                    /*CustomProgressBarHorizontal progressBar = (CustomProgressBarHorizontal) findViewById(R.id.custom_progress_bar_horizontal);
+                    seekBar.setVisibility(View.VISIBLE);*/
                 }
             }
             // 타이머 스레드가 아직 동작중인 경우
@@ -307,8 +306,8 @@ public class Activity_waiting extends AppCompatActivity {
         stop_animation();
 
         // 동작 구간 숨김
-        SeekBar seekBar = (SeekBar) findViewById(R.id.seekBar2);
-        seekBar.setVisibility(View.INVISIBLE);
+        /*SeekBar seekBar = (SeekBar) findViewById(R.id.seekBar2);
+        seekBar.setVisibility(View.INVISIBLE);*/
     }
 
     private void start_animation() {

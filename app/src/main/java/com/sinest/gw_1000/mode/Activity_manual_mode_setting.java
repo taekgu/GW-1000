@@ -220,6 +220,7 @@ public class Activity_manual_mode_setting extends Activity{
         super.onResume();
         Application_manager.setFullScreen(this);
         isRun = true;
+        num_of_enabled_pattern = 0;
 
         SharedPreferences sharedPreferences = getSharedPreferences(Application_manager.DB_NAME, 0);
         int resourceId;
@@ -231,7 +232,6 @@ public class Activity_manual_mode_setting extends Activity{
             section[i][1] = sharedPreferences.getInt(Application_manager.DB_MANUAL_MODE_SECTION_MAX_ + modeNum + "_" + i, 1);
             pattern[i] = sharedPreferences.getInt(Application_manager.DB_MANUAL_MODE_PATTERN_ + modeNum + "_" + i, 1);
             time[i] = sharedPreferences.getInt(Application_manager.DB_MANUAL_MODE_TIME_ + modeNum + "_" + i, 30);
-            num_of_enabled_pattern = 0;
             if (time[i] == 0) {
 
                 manual_mode_setting[i].setVisibility(View.INVISIBLE);
