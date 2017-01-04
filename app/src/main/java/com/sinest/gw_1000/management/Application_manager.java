@@ -189,11 +189,28 @@ public class Application_manager extends Application {
     //-------------------------------Img ---------------------------------------------------
     // 0-> 한국,영어 1-> 중국
     public static int img_flag = 0;
-    public static int[] button_on = {R.drawable.button_on, };
-    public static int[] button_off = {R.drawable.button_off, };
-    public static int[] on = {R.drawable.on, };
-    public static int[] off = {R.drawable.off, };
-    public static int[] button_play_on = {R.drawable.button_play_on, };
+    public static int[] button_on = {R.drawable.button_on, R.drawable.button_on};//
+    public static int[] button_off = {R.drawable.button_off, R.drawable.button_off_ch};
+    public static int[] on = {R.drawable.on, R.drawable.on_ch};
+    public static int[] off = {R.drawable.off, R.drawable.off_ch};
+    public static int[] button_play_on = {R.drawable.button_play_on, R.drawable.button_play_on};//
+    public static int[] button_circle_back_on = {R.drawable.button_circle_back_on, R.drawable.button_circle_back_on_ch};
+    public static int[] button_circle_back_off = {R.drawable.button_circle_back_off, R.drawable.button_circle_back_off_ch};
+
+    public static int[] sleepmode_1min_on = {R.drawable.sleepmode_1min_on, R.drawable.sleepmode_1min_on_ch};
+    public static int[] sleepmode_3min_on = {R.drawable.sleepmode_3min_on, R.drawable.sleepmode_3min_on_ch};
+    public static int[] sleepmode_5min_on = {R.drawable.sleepmode_5min_on, R.drawable.sleepmode_5min_on_ch};
+    public static int[] sleepmode_continue_on = {R.drawable.sleepmode_continue_on, R.drawable.sleepmode_continue_on_ch};
+    public static int[] sleepmode_1min = {R.drawable.sleepmode_1min, R.drawable.sleepmode_1min_ch};
+    public static int[] sleepmode_3min = {R.drawable.sleepmode_3min, R.drawable.sleepmode_3min_ch};
+    public static int[] sleepmode_5min = {R.drawable.sleepmode_5min, R.drawable.sleepmode_5min_ch};
+    public static int[] sleepmode_continue_off = {R.drawable.sleepmode_continue_off, R.drawable.sleepmode_continue_off_ch};
+    public static int[] emotion_on = {R.drawable.emotion_on, R.drawable.emotion_on_ch};
+    public static int[] emotion_off = {R.drawable.emotion_off, R.drawable.emotion_off_ch};
+
+    public static int[] language_ch = {R.drawable.language_ch, R.drawable.language_ch_ch};
+    public static int[] setting_back_image = {R.drawable.setting_back_image, R.drawable.setting_back_image_ch};
+
 
 
 
@@ -257,6 +274,12 @@ public class Application_manager extends Application {
 
         //sleep mode flag
         m_sleep_ff = sharedPreferences.getInt(DB_SLEEP_M,3);
+
+        if(m_language == 2){
+            img_flag = 1;
+        }else{
+            img_flag = 0;
+        }
     }
 
     synchronized public static void set_m_start_sleep(int i){
@@ -287,6 +310,11 @@ public class Application_manager extends Application {
         editor.putInt(DB_LANGUEAGE, i);
         editor.commit();
         m_language = i;
+        if(m_language == 2){
+            img_flag = 1;
+        }else{
+            img_flag = 0;
+        }
     }
 
     synchronized public static void set_m_inverter(int i){
