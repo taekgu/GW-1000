@@ -19,23 +19,21 @@ public class SoundManager {
     private final static int MAX_STREAMS = 1; // 동시 재생 가능한 음원 수
 
     private MediaPlayer latest_player;
-//    private MediaPlayer[] mediaPlayer_open;
-//    private MediaPlayer[] mediaPlayer_close;
     private MediaPlayer.OnPreparedListener preparedListener;
     private int prepare_cnt = 0;
     private final static int TOTAL_CNT = Application_manager.NUM_OF_LANG * Application_manager.NUM_OF_SOUND;
 
-    public static MediaPlayer mediaPlayer_therapy;
+
+
+    private MediaPlayer mediaPlayer_therapy;
     private  boolean isPrepared_therapy = false;
 
-    private SoundPool soundPool;
+    //private SoundPool soundPool;
     private Context context;
 
     public SoundManager(Context _context) {
 
-//        mediaPlayer_open = new MediaPlayer[3];
-//        mediaPlayer_close = new MediaPlayer[3] ;
-        soundPool = new SoundPool(MAX_STREAMS, AudioManager.STREAM_MUSIC, 0);
+//        soundPool = new SoundPool(MAX_STREAMS, AudioManager.STREAM_MUSIC, 0);
         context = _context;
 
         loadSounds2();
@@ -45,6 +43,10 @@ public class SoundManager {
 
         try {
 
+            mediaPlayer_therapy = new MediaPlayer();
+            mediaPlayer_therapy.setLooping(true);
+            mediaPlayer_therapy.setAudioStreamType(AudioManager.STREAM_MUSIC);
+
             for (int lang=0; lang<Application_manager.NUM_OF_LANG; lang++) {
 
                 for (int sound=0; sound<Application_manager.NUM_OF_SOUND; sound++) {
@@ -53,8 +55,6 @@ public class SoundManager {
                     Application_manager.mediaPlayer[lang][sound].setAudioStreamType(AudioManager.STREAM_NOTIFICATION);
                 }
             }
-            mediaPlayer_therapy = new MediaPlayer();
-            mediaPlayer_therapy.setAudioStreamType(AudioManager.STREAM_MUSIC);
 
             AssetFileDescriptor afd;
             afd = context.getAssets().openFd("sounds/korean_start.wav");
@@ -252,58 +252,24 @@ public class SoundManager {
         }
     }
 
-    public void play_therapy(int sound, int onoff) {
+    public void play_therapy(int sound, boolean isPlay) {
 
-        if (onoff == 0) {
-
-            mediaPlayer_therapy.stop();
-            isPrepared_therapy = false;
-            try {
-
-                mediaPlayer_therapy.prepare();
-            } catch (IOException e) {
-            }
-        }
-        else if (onoff == 1) {
+        // 재생
+        if (isPlay) {
 
             if (isPrepared_therapy) {
 
+                mediaPlayer_therapy.seekTo(0);
                 mediaPlayer_therapy.start();
-            } else {
-
-                Toast.makeText(context, "잠시 후에 다시 시도해주세요.", Toast.LENGTH_SHORT).show();
             }
         }
-    }
-/*
-    public void play_door_open(int lang) {
-
-        if (prepare_cnt == TOTAL_CNT) {
-
-            if(!mediaPlayer_close[lang].isPlaying()) {
-
-                mediaPlayer_open[lang].start();
-            }
-        }
+        // 중지
         else {
 
-            Log.i("JW", "음원 파일이 아직 준비되지 않았습니다. prepared_cnt = " + prepare_cnt);
-        }
-    }
+            if (mediaPlayer_therapy.isPlaying()) {
 
-    public void play_door_close(int lang) {
-
-        if (prepare_cnt == TOTAL_CNT) {
-
-            if(!mediaPlayer_open[lang].isPlaying()) {
-
-                mediaPlayer_close[lang].start();
+                mediaPlayer_therapy.pause();
             }
         }
-        else {
-
-            Log.i("JW", "음원 파일이 아직 준비되지 않았습니다. prepared_cnt = " + prepare_cnt);
-        }
     }
-    */
 }

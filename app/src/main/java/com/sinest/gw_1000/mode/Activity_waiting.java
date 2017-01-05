@@ -67,6 +67,8 @@ public class Activity_waiting extends AppCompatActivity {
     ImageView waiting_door_open_button;
     ImageView waiting_door_close_button;
 
+    boolean isFirstInit = true;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -167,16 +169,20 @@ public class Activity_waiting extends AppCompatActivity {
 
         SharedPreferences sharedPreferences = getSharedPreferences(Application_manager.DB_NAME, 0);
 
-        if (mode == 0) {
+        if (isFirstInit) {
 
-            fragment_waiting.reset();
-            for (int i = 0; i < Application_manager.MAX_CHECKED; i++) {
+            isFirstInit = false;
+            if (mode == 0) {
 
-                checked_loc[i] = sharedPreferences.getInt(Application_manager.DB_LIBRARY_LOC_ + i, i);
-                fragment_waiting.addCheckedIdx(checked_loc[i]);
-                Log.i("JW", "Selected library idx : " + checked_loc[i]);
+                fragment_waiting.reset();
+                for (int i = 0; i < Application_manager.MAX_CHECKED; i++) {
+
+                    checked_loc[i] = sharedPreferences.getInt(Application_manager.DB_LIBRARY_LOC_ + i, i);
+                    fragment_waiting.addCheckedIdx(checked_loc[i]);
+                    Log.i("JW", "Selected library idx : " + checked_loc[i]);
+                }
+                fragment_waiting.refresh();
             }
-            fragment_waiting.refresh();
         }
 
         val_time = sharedPreferences.getInt(Application_manager.DB_VAL_TIME, 10);
@@ -286,7 +292,7 @@ public class Activity_waiting extends AppCompatActivity {
                     if (Application_manager.sound_mode_num != 0) {
 
                         Log.i("JW", "치료 음악 재생");
-                        Application_manager.getSoundManager().play_therapy(Application_manager.sound_mode_num, 1);
+                        Application_manager.getSoundManager().play_therapy(Application_manager.sound_mode_num, true);
                     }
                 }
             }
@@ -351,7 +357,7 @@ public class Activity_waiting extends AppCompatActivity {
         if (Application_manager.sound_mode_num != 0) {
 
             Log.i("JW", "치료 음악 중지");
-            Application_manager.getSoundManager().play_therapy(Application_manager.sound_mode_num, 0);
+            Application_manager.getSoundManager().play_therapy(Application_manager.sound_mode_num, false);
         }
     }
 

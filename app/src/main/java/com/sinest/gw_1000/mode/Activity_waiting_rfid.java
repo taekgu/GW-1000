@@ -331,7 +331,7 @@ public class Activity_waiting_rfid extends AppCompatActivity {
                     // 치료 음악 재생
                     if (Application_manager.sound_mode_num != 0) {
 
-                        Application_manager.getSoundManager().play_therapy(Application_manager.sound_mode_num, 1);
+                        Application_manager.getSoundManager().play_therapy(Application_manager.sound_mode_num, true);
                     }
                 }
             }
@@ -393,7 +393,7 @@ public class Activity_waiting_rfid extends AppCompatActivity {
         // 치료 음악 재생 종료
         if (Application_manager.sound_mode_num != 0) {
 
-            Application_manager.getSoundManager().play_therapy(Application_manager.sound_mode_num, 0);
+            Application_manager.getSoundManager().play_therapy(Application_manager.sound_mode_num, false);
         }
     }
 
