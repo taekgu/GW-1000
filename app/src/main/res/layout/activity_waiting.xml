@@ -351,13 +351,13 @@
                                 android:layout_weight="32"
                                 android:layout_gravity="center">
 
-                                <com.sinest.gw_1000.mode.utils.CustomProgressBarHorizontal
+                                <com.sinest.gw_1000.mode.utils.CustomProgressBarBlock
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:gravity="center"
                                     android:id="@+id/seekBar2"
                                     android:visibility="invisible">
-                                </com.sinest.gw_1000.mode.utils.CustomProgressBarHorizontal>
+                                </com.sinest.gw_1000.mode.utils.CustomProgressBarBlock>
 
                             </LinearLayout>
 

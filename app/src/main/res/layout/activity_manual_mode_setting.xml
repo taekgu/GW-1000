@@ -110,22 +110,30 @@
             android:layout_height="match_parent"
             android:orientation="vertical"
             android:gravity="center_horizontal"
-            android:layout_weight="15"
+            android:layout_weight="15.3"
             android:weightSum="100">
-
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="20">
+            </LinearLayout>
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_weight="70">
+                android:layout_weight="40">
                 <ImageView
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:background="@drawable/manual_mode_pattern_1"
                     android:layout_centerInParent="true"
                     android:onClick="onClicked"
                     android:id="@+id/manual_mode_setting_1"/>
             </RelativeLayout>
-
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="10">
+            </LinearLayout>
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
@@ -179,12 +187,17 @@
             android:orientation="vertical"
             android:layout_weight="6.5"
             android:weightSum="100">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="20">
+            </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_weight="70"
-                android:gravity="center">
+                android:layout_weight="40"
+                android:gravity="left|center_vertical">
 
                 <com.sinest.gw_1000.mode.utils.CustomProgressBar
                     android:layout_width="20dp"
@@ -204,20 +217,28 @@
             android:gravity="center_horizontal"
             android:layout_weight="15"
             android:weightSum="100">
-
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="20">
+            </LinearLayout>
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_weight="70">
+                android:layout_weight="40">
                 <ImageView
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:background="@drawable/manual_mode_pattern_1"
                     android:layout_centerInParent="true"
                     android:onClick="onClicked"
                     android:id="@+id/manual_mode_setting_2"/>
             </RelativeLayout>
-
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="10">
+            </LinearLayout>
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
@@ -270,12 +291,16 @@
             android:orientation="vertical"
             android:layout_weight="5.5"
             android:weightSum="100">
-
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_weight="70"
-                android:gravity="center">
+                android:layout_weight="20">
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="40"
+                android:gravity="left|center_vertical">
 
                 <com.sinest.gw_1000.mode.utils.CustomProgressBar
                     android:layout_width="20dp"
@@ -295,20 +320,28 @@
             android:gravity="center_horizontal"
             android:layout_weight="15"
             android:weightSum="100">
-
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="20">
+            </LinearLayout>
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_weight="70">
+                android:layout_weight="40">
                 <ImageView
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:background="@drawable/manual_mode_pattern_1"
                     android:layout_centerInParent="true"
                     android:onClick="onClicked"
                     android:id="@+id/manual_mode_setting_3"/>
             </RelativeLayout>
-
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="10">
+            </LinearLayout>
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
@@ -361,12 +394,16 @@
             android:orientation="vertical"
             android:layout_weight="5.5"
             android:weightSum="100">
-
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_weight="70"
-                android:gravity="center">
+                android:layout_weight="20">
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="40"
+                android:gravity="left|center_vertical">
 
                 <com.sinest.gw_1000.mode.utils.CustomProgressBar
                     android:layout_width="20dp"

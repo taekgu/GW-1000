@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="40dp"
-    android:layout_height="300dp"
+    android:layout_height="400dp"
     android:gravity="center"
     android:id="@+id/rel_main"
     android:background="@android:color/transparent">
@@ -19,10 +19,9 @@
         android:id="@+id/rel_filter_min"
         android:layout_width="wrap_content"
         android:layout_height="20dp"
-        android:layout_alignEnd="@+id/progress_main_view"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="29dp"
+        android:layout_marginTop="25dp"
         android:layout_gravity="bottom">
         <TextView
             android:layout_width="20dp"
@@ -34,8 +33,7 @@
             android:id="@+id/view_inactive_line_top"
             android:layout_width="6dp"
             android:layout_height="match_parent"
-            android:layout_marginRight="16.5dp"
-            android:layout_alignParentEnd="true"
+            android:layout_centerHorizontal="true"
             android:background="@color/grey" />
         <View
             android:id="@+id/oval_thumb_min"
@@ -51,8 +49,7 @@
         android:layout_width="wrap_content"
         android:layout_height="20dp"
         android:layout_alignParentBottom="true"
-        android:layout_alignStart="@+id/progress_main_view"
-        android:layout_marginBottom="27dp"
+        android:layout_marginBottom="25dp"
         android:layout_gravity="bottom">
 
         <TextView
@@ -65,29 +62,25 @@
             android:id="@+id/view_inactive_line_bottom"
             android:layout_width="6dp"
             android:layout_height="match_parent"
+            android:layout_centerHorizontal="true"
             android:background="@color/grey"
-            android:layout_marginLeft="17.5dp" />
+            />
         <View
             android:id="@+id/oval_thumb_max"
             android:layout_width="match_parent"
             android:layout_height="20dp"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
             android:background="@drawable/range_bar_thumb"
-
             />
 
     </RelativeLayout>
 
     <View
-        android:layout_marginBottom="27dp"
-        android:layout_marginTop="27dp"
+        android:layout_marginBottom="35dp"
+        android:layout_marginTop="35dp"
         android:id="@+id/view_filter_parent"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@android:color/transparent"
-        android:clickable="false"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentStart="true" />
+        android:clickable="false" />
 </RelativeLayout>

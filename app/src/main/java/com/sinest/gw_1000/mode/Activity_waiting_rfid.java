@@ -17,7 +17,6 @@ import android.util.Log;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.widget.ImageView;
-import android.widget.SeekBar;
 import android.widget.TextView;
 import android.view.View;
 import android.content.Intent;
@@ -27,7 +26,7 @@ import com.sinest.gw_1000.R;
 import com.sinest.gw_1000.communication.Communicator;
 import com.sinest.gw_1000.management.Application_broadcast;
 import com.sinest.gw_1000.management.Application_manager;
-import com.sinest.gw_1000.mode.utils.CustomProgressBarHorizontal;
+import com.sinest.gw_1000.mode.utils.CustomProgressBarBlock;
 import com.sinest.gw_1000.setting.Activity_setting;
 
 public class Activity_waiting_rfid extends AppCompatActivity {
@@ -63,7 +62,7 @@ public class Activity_waiting_rfid extends AppCompatActivity {
     private ImageView background;
     private AnimationDrawable frameAnimation;
 
-    CustomProgressBarHorizontal seekBar;
+    CustomProgressBarBlock seekBar;
 
     ImageView waiting_door_open_button;
     ImageView waiting_door_close_button;
@@ -139,7 +138,7 @@ public class Activity_waiting_rfid extends AppCompatActivity {
 
         background = (ImageView) findViewById(R.id.activity_waiting_rfid_background);
 
-        seekBar = (CustomProgressBarHorizontal) findViewById(R.id.seekBar2_rfid);
+        seekBar = (CustomProgressBarBlock) findViewById(R.id.seekBar2_rfid);
     }
 
     @Override

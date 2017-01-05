@@ -23,8 +23,7 @@ import com.sinest.gw_1000.R;
 import com.sinest.gw_1000.communication.Communicator;
 import com.sinest.gw_1000.management.Application_broadcast;
 import com.sinest.gw_1000.management.Application_manager;
-import com.sinest.gw_1000.mode.utils.CustomProgressBar;
-import com.sinest.gw_1000.mode.utils.CustomProgressBarHorizontal;
+import com.sinest.gw_1000.mode.utils.CustomProgressBarBlock;
 import com.sinest.gw_1000.setting.Activity_setting;
 
 public class Activity_waiting extends AppCompatActivity {
@@ -62,7 +61,7 @@ public class Activity_waiting extends AppCompatActivity {
     private ImageView background;
     private AnimationDrawable frameAnimation;
 
-    CustomProgressBarHorizontal seekBar;
+    CustomProgressBarBlock seekBar;
 
     ImageView waiting_door_open_button;
     ImageView waiting_door_close_button;
@@ -152,7 +151,7 @@ public class Activity_waiting extends AppCompatActivity {
 
         background = (ImageView) findViewById(R.id.activity_waiting_background);
 
-        seekBar = (CustomProgressBarHorizontal) findViewById(R.id.seekBar2);
+        seekBar = (CustomProgressBarBlock) findViewById(R.id.seekBar2);
     }
 
     @Override

@@ -20,8 +20,6 @@ public class CustomProgressBar extends RelativeLayout {
     private double heightParent;
     private View viewFilterMain;
     private RelativeLayout relFilterMin, relFilterMax;
-    private float startYMin, startYMax;
-    private float movedYMin, movedYMax;
     private int initialHeightMin;
     private float dTopMin, dTopMax;
     private int currentHeightMin, currentHeightMax;
