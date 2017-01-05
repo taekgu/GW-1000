@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -33,6 +34,11 @@ public class Activity_library extends AppCompatActivity{
 
     TextView clock;
 
+    LinearLayout ribrary_back_image;
+    ImageView library_back_button;
+    ImageView library_save_button;
+    ImageView library_set_button;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,6 +50,8 @@ public class Activity_library extends AppCompatActivity{
         clock = (TextView) findViewById(R.id.library_clock);
         clock.setTypeface(tf);
         clock.setText(Application_manager.doInit_time());
+
+        ribrary_back_image = (LinearLayout) findViewById(R.id.ribrary_back_image);
 
         for (int i=0; i<20; i++) {
 
@@ -78,9 +86,9 @@ public class Activity_library extends AppCompatActivity{
         }
         Log.i("JW", "library loaded, cnt = " + cnt + ", manual_cnt = " + manual_cnt);
 
-        ImageView library_back_button = (ImageView)findViewById(R.id.library_back_button);
-        ImageView library_save_button = (ImageView)findViewById(R.id.library_save_button);
-        ImageView library_set_button = (ImageView)findViewById(R.id.library_set_button);
+        library_back_button = (ImageView)findViewById(R.id.library_back_button);
+        library_save_button = (ImageView)findViewById(R.id.library_save_button);
+        library_set_button = (ImageView)findViewById(R.id.library_set_button);
 
 
         library_back_button.setOnTouchListener(mTouchEvent);
@@ -108,6 +116,11 @@ public class Activity_library extends AppCompatActivity{
     protected void onResume() {
         super.onResume();
         Application_manager.setFullScreen(this);
+
+        ribrary_back_image.setBackgroundResource(Application_manager.ribrary_back_image[Application_manager.img_flag]);
+        library_back_button.setBackgroundResource(Application_manager.button_circle_back_off[Application_manager.img_flag]);
+        library_save_button.setBackgroundResource(Application_manager.save_mode_off[Application_manager.img_flag]);
+        library_set_button.setBackgroundResource(Application_manager.library_setting_off[Application_manager.img_flag]);
 
         change_mode(mode_setting);
     }
@@ -157,13 +170,13 @@ public class Activity_library extends AppCompatActivity{
             if (action == MotionEvent.ACTION_DOWN) {
                 switch (id) {
                     case R.id.library_back_button:
-                        view.setBackgroundResource(R.drawable.button_circle_back_on);
+                        view.setBackgroundResource(Application_manager.button_circle_back_on[Application_manager.img_flag]);
                         break;
                     case R.id.library_save_button:
-                        view.setBackgroundResource(R.drawable.save_mode_on);
+                        view.setBackgroundResource(Application_manager.save_mode_on[Application_manager.img_flag]);
                         break;
                     case R.id.library_set_button:
-                        view.setBackgroundResource(R.drawable.library_setting_on);
+                        view.setBackgroundResource(Application_manager.library_setting_on[Application_manager.img_flag]);
                         break;
 
                 }
@@ -171,11 +184,11 @@ public class Activity_library extends AppCompatActivity{
             else if (action == MotionEvent.ACTION_UP) {
                 switch (id) {
                     case R.id.library_back_button:
-                        view.setBackgroundResource(R.drawable.button_circle_back_off);
+                        view.setBackgroundResource(Application_manager.button_circle_back_off[Application_manager.img_flag]);
                         finish();
                         break;
                     case R.id.library_save_button:
-                        view.setBackgroundResource(R.drawable.save_mode_off);
+                        view.setBackgroundResource(Application_manager.save_mode_off[Application_manager.img_flag]);
 
                         if (mode_setting == 0) {
 
@@ -194,7 +207,7 @@ public class Activity_library extends AppCompatActivity{
                         }
                         break;
                     case R.id.library_set_button:
-                        view.setBackgroundResource(R.drawable.library_setting_off);
+                        view.setBackgroundResource(Application_manager.library_setting_on[Application_manager.img_flag]);
 
                         if (mode_setting == 0) {
 

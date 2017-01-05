@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:id="@+id/ribrary_back_image"
     android:background="@drawable/ribrary_back_image"
     tools:context="com.sinest.gw_1000.mode.Activity_library"
     android:weightSum="100">
