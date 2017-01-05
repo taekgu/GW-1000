@@ -285,6 +285,7 @@ public class Activity_waiting extends AppCompatActivity {
                     // 치료 음악 재생
                     if (Application_manager.sound_mode_num != 0) {
 
+                        Log.i("JW", "치료 음악 재생");
                         Application_manager.getSoundManager().play_therapy(Application_manager.sound_mode_num, 1);
                     }
                 }
@@ -349,6 +350,7 @@ public class Activity_waiting extends AppCompatActivity {
         // 치료 음악 재생 종료
         if (Application_manager.sound_mode_num != 0) {
 
+            Log.i("JW", "치료 음악 중지");
             Application_manager.getSoundManager().play_therapy(Application_manager.sound_mode_num, 0);
         }
     }
@@ -683,7 +685,7 @@ public class Activity_waiting extends AppCompatActivity {
 
                             val = 0x01;
                             communicator.set_tx(11, val);
-                            communicator.send(communicator.get_tx());
+                            //communicator.send(communicator.get_tx());
                         }
                         break;
                     case R.id.waiting_doorclose_button:
@@ -697,7 +699,7 @@ public class Activity_waiting extends AppCompatActivity {
 
                             val = 0x02;
                             communicator.set_tx(11, val);
-                            communicator.send(communicator.get_tx());
+                            //communicator.send(communicator.get_tx());
                         }
                         break;
                     case R.id.waiting_time_text:

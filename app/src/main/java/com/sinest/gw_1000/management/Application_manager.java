@@ -125,7 +125,6 @@ public class Application_manager extends Application {
     public final static int[] ID_CHI = new int[5];
     public final static int[][] ID_LANG_SOUND = new int[NUM_OF_LANG][NUM_OF_SOUND];
     public final static MediaPlayer[][] mediaPlayer = new MediaPlayer[NUM_OF_LANG][NUM_OF_SOUND];
-    public static MediaPlayer mediaPlayer_therapy;
 
     public static int[] t_flag = {0,0,0,0};
 

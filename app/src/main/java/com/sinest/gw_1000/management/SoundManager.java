@@ -25,6 +25,7 @@ public class SoundManager {
     private int prepare_cnt = 0;
     private final static int TOTAL_CNT = Application_manager.NUM_OF_LANG * Application_manager.NUM_OF_SOUND;
 
+    public static MediaPlayer mediaPlayer_therapy;
     private  boolean isPrepared_therapy = false;
 
     private SoundPool soundPool;
@@ -52,8 +53,8 @@ public class SoundManager {
                     Application_manager.mediaPlayer[lang][sound].setAudioStreamType(AudioManager.STREAM_NOTIFICATION);
                 }
             }
-            Application_manager.mediaPlayer_therapy = new MediaPlayer();
-            Application_manager.mediaPlayer_therapy.setAudioStreamType(AudioManager.STREAM_MUSIC);
+            mediaPlayer_therapy = new MediaPlayer();
+            mediaPlayer_therapy.setAudioStreamType(AudioManager.STREAM_MUSIC);
 
             AssetFileDescriptor afd;
             afd = context.getAssets().openFd("sounds/korean_start.wav");
@@ -105,14 +106,14 @@ public class SoundManager {
             afd.close();
 
             afd = context.getAssets().openFd("sounds/therapy1.mp3");
-            Application_manager.mediaPlayer_therapy.setDataSource(afd.getFileDescriptor(), afd.getStartOffset(), afd.getLength());
+            mediaPlayer_therapy.setDataSource(afd.getFileDescriptor(), afd.getStartOffset(), afd.getLength());
             afd.close();
 
             preparedListener = new MediaPlayer.OnPreparedListener() {
                 @Override
                 public void onPrepared(MediaPlayer mediaPlayer) {
 
-                    if (mediaPlayer == Application_manager.mediaPlayer_therapy) {
+                    if (mediaPlayer == mediaPlayer_therapy) {
 
                         isPrepared_therapy = true;
                     }
@@ -131,8 +132,8 @@ public class SoundManager {
                     Application_manager.mediaPlayer[lang][sound].prepare();
                 }
             }
-            Application_manager.mediaPlayer_therapy.setOnPreparedListener(preparedListener);
-            Application_manager.mediaPlayer_therapy.prepare();
+            mediaPlayer_therapy.setOnPreparedListener(preparedListener);
+            mediaPlayer_therapy.prepare();
 
         } catch (IOException e) {
 
@@ -255,11 +256,11 @@ public class SoundManager {
 
         if (onoff == 0) {
 
-            Application_manager.mediaPlayer_therapy.stop();
+            mediaPlayer_therapy.stop();
             isPrepared_therapy = false;
             try {
 
-                Application_manager.mediaPlayer_therapy.prepare();
+                mediaPlayer_therapy.prepare();
             } catch (IOException e) {
             }
         }
@@ -267,7 +268,7 @@ public class SoundManager {
 
             if (isPrepared_therapy) {
 
-                Application_manager.mediaPlayer_therapy.start();
+                mediaPlayer_therapy.start();
             } else {
 
                 Toast.makeText(context, "잠시 후에 다시 시도해주세요.", Toast.LENGTH_SHORT).show();

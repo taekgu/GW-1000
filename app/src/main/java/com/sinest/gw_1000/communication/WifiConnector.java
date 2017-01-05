@@ -193,7 +193,7 @@ public class WifiConnector {
 
                         } catch (IOException e) {
 
-                            Log.i("JW", "서버에 연결 실패 :" + e.getMessage() + ", " + e.getCause());
+                            //Log.i("JW", "서버에 연결 실패 :" + e.getMessage() + ", " + e.getCause());
                         }
                     }
                 }
