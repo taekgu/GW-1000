@@ -246,6 +246,8 @@ public class Application_manager extends Application {
     //working
 
     //waiting
+    public static int[] waiting_doorclose_backimage = {R.drawable.waiting_doorclose_backimage, R.drawable.waiting_doorclose_backimage_ch};
+    public static int[] waiting_dooropen_backimage = {R.drawable.waiting_dooropen_backimage, R.drawable.waiting_dooropen_backimage_ch};
 
     //library
 

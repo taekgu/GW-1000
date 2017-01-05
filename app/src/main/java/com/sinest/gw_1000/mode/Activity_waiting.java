@@ -64,6 +64,9 @@ public class Activity_waiting extends AppCompatActivity {
 
     CustomProgressBarHorizontal seekBar;
 
+    ImageView waiting_door_open_button;
+    ImageView waiting_door_close_button;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -127,8 +130,8 @@ public class Activity_waiting extends AppCompatActivity {
         ImageView waiting_time_up_button = (ImageView)findViewById(R.id.waiting_time_up_button);
         ImageView waiting_time_down_button = (ImageView)findViewById(R.id.waiting_time_down_button);
 
-        ImageView waiting_door_open_button = (ImageView)findViewById(R.id.waiting_dooropen_button);
-        ImageView waiting_door_close_button = (ImageView)findViewById(R.id.waiting_doorclose_button);
+        waiting_door_open_button = (ImageView)findViewById(R.id.waiting_dooropen_button);
+        waiting_door_close_button = (ImageView)findViewById(R.id.waiting_doorclose_button);
 
         waiting_library_button.setOnTouchListener(mTouchEvent);
         waiting_setting_button.setOnTouchListener(mTouchEvent);
@@ -368,13 +371,12 @@ public class Activity_waiting extends AppCompatActivity {
                     frameAnimation.stop();
                     // 도어 열림
                     if (Application_manager.getCommunicator().get_tx_idx(11) == 0x01) {
-
                         background.setBackgroundResource(Application_manager.waiting_dooropen_backimage[Application_manager.img_flag]);
                     }
                     // 도어 닫힘
                     else {
 
-                        background.setBackgroundResource(R.drawable.waiting_doorclose_backimage);
+                        background.setBackgroundResource(Application_manager.waiting_dooropen_backimage[Application_manager.img_flag]);
                     }
                 }
             });
@@ -568,10 +570,10 @@ public class Activity_waiting extends AppCompatActivity {
                         view.setBackgroundResource(R.drawable.button_down_on);
                         break;
                     case R.id.waiting_dooropen_button:
-                        view.setBackgroundResource(Application_manager.door_open_off[Application_manager.img_flag]);
+                        view.setBackgroundResource(Application_manager.door_open_on[Application_manager.img_flag]);
                         break;
                     case R.id.waiting_doorclose_button:
-                        view.setBackgroundResource(Application_manager.door_close_off[Application_manager.img_flag]);
+                        view.setBackgroundResource(Application_manager.door_close_on[Application_manager.img_flag]);
                         break;
                     case R.id.waiting_time_text:
                         break;

@@ -491,17 +491,13 @@ public class Activity_setting extends AppCompatActivity {
                     case R.id.b_ex:
                         //
                         if (ex_f == 0) {
-                            b_ex.setBackgroundResource(Application_manager.on[Application_manager.img_flag]);
+                            b_ex.setBackgroundResource(R.drawable.button_blue);
                             ex_f = 1;
-                            communicator.set_setting(2, (byte) 0x01);
+                            communicator.set_engineer(6,(byte)0x01);
                         } else if (ex_f == 1) {
-                            b_ex.setBackgroundResource(Application_manager.button_play_on[Application_manager.img_flag]);
-                            ex_f = 2;
-                            communicator.set_setting(2, (byte) 0x02);
-                        } else if (ex_f == 2) {
-                            b_ex.setBackgroundResource(Application_manager.off[Application_manager.img_flag]);
+                            b_ex.setBackgroundResource(R.drawable.button_gry);
                             ex_f = 0;
-                            communicator.set_setting(2, (byte) 0x00);
+                            communicator.set_engineer(6,(byte)0x00);
                         }
                         break;
                     case R.id.b_wa:
@@ -947,14 +943,11 @@ public class Activity_setting extends AppCompatActivity {
 
         ex_f = Application_manager.m_external_led;
         if (ex_f == 0) {
-            b_ex.setBackgroundResource(Application_manager.off[Application_manager.img_flag]);
-            communicator.set_setting(2, (byte) 0x00);
+            b_ex.setBackgroundResource(R.drawable.button_gry);
+            communicator.set_engineer(6,(byte)0x00);
         } else if (ex_f == 1) {
-            b_ex.setBackgroundResource(Application_manager.on[Application_manager.img_flag]);
-            communicator.set_setting(2, (byte) 0x01);
-        } else if (ex_f == 2) {
-            b_ex.setBackgroundResource(Application_manager.button_play_on[Application_manager.img_flag]);
-            communicator.set_setting(2, (byte) 0x02);
+            b_ex.setBackgroundResource(R.drawable.button_blue);
+            communicator.set_engineer(6,(byte)0x01);
         }
 
         button2_flag[2] = Application_manager.m_water_heater_f;
