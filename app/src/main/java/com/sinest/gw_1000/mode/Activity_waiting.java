@@ -64,6 +64,9 @@ public class Activity_waiting extends AppCompatActivity {
 
     CustomProgressBarHorizontal seekBar;
 
+    ImageView waiting_door_open_button;
+    ImageView waiting_door_close_button;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -127,8 +130,8 @@ public class Activity_waiting extends AppCompatActivity {
         ImageView waiting_time_up_button = (ImageView)findViewById(R.id.waiting_time_up_button);
         ImageView waiting_time_down_button = (ImageView)findViewById(R.id.waiting_time_down_button);
 
-        ImageView waiting_door_open_button = (ImageView)findViewById(R.id.waiting_dooropen_button);
-        ImageView waiting_door_close_button = (ImageView)findViewById(R.id.waiting_doorclose_button);
+        waiting_door_open_button = (ImageView)findViewById(R.id.waiting_dooropen_button);
+        waiting_door_close_button = (ImageView)findViewById(R.id.waiting_doorclose_button);
 
         waiting_library_button.setOnTouchListener(mTouchEvent);
         waiting_setting_button.setOnTouchListener(mTouchEvent);
@@ -157,6 +160,11 @@ public class Activity_waiting extends AppCompatActivity {
 
         registReceiver();
         isRun = true;
+
+        background.setBackgroundResource(Application_manager.waiting_dooropen_backimage[Application_manager.img_flag]);
+        waiting_door_open_button.setBackgroundResource(Application_manager.door_open_off[Application_manager.img_flag]);
+        waiting_door_close_button.setBackgroundResource(Application_manager.door_close_off[Application_manager.img_flag]);
+
 
         SharedPreferences sharedPreferences = getSharedPreferences(Application_manager.DB_NAME, 0);
 
@@ -332,7 +340,7 @@ public class Activity_waiting extends AppCompatActivity {
             // 도어 열림
             if (Application_manager.getCommunicator().get_tx_idx(11) == 0x01) {
 
-                background.setBackgroundResource(R.drawable.waiting_dooropen_backimage);
+                background.setBackgroundResource(Application_manager.waiting_dooropen_backimage[Application_manager.img_flag]);
             }
             // 도어 닫힘
             else {
@@ -638,7 +646,7 @@ public class Activity_waiting extends AppCompatActivity {
                         if (Application_manager.getSoundManager().play(Application_manager.m_language, 3) == 0) {
 
                             background = (ImageView) findViewById(R.id.activity_waiting_background);
-                            background.setBackgroundResource(R.drawable.waiting_dooropen_backimage);
+                            background.setBackgroundResource(Application_manager.waiting_dooropen_backimage[Application_manager.img_flag]);
 
                             val = 0x01;
                             communicator.set_tx(11, val);
