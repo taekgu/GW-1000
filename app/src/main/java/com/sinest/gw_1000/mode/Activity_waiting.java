@@ -693,7 +693,7 @@ public class Activity_waiting extends AppCompatActivity {
                         if (Application_manager.getSoundManager().play(Application_manager.m_language, 4) == 0) {
 
                             background = (ImageView) findViewById(R.id.activity_waiting_background);
-                            background.setBackgroundResource(R.drawable.waiting_doorclose_backimage);
+                            background.setBackgroundResource(Application_manager.waiting_doorclose_backimage[Application_manager.img_flag]);
 
                             val = 0x02;
                             communicator.set_tx(11, val);
