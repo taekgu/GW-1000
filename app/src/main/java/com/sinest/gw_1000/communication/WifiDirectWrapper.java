@@ -28,7 +28,7 @@ import java.util.ArrayList;
  */
 
 public class WifiDirectWrapper extends Thread {
-
+/*
     private static String TAG = "WIFI";
     private final static String DEVICE_ADDRESS = "96:76:b7:37:9e:23";
 
@@ -123,19 +123,6 @@ public class WifiDirectWrapper extends Thread {
             }
         });
         thread_connectToServer.start();
-    }
-
-    public int send(byte[] msg) {
-
-        if (socketManager == null) {
-
-            return -1;
-        }
-        if (!isConnected) {
-
-            return -1;
-        }
-        return socketManager.send(msg);
     }
 
     public void run() {
@@ -311,4 +298,5 @@ public class WifiDirectWrapper extends Thread {
             }
         };
     }
+    */
 }

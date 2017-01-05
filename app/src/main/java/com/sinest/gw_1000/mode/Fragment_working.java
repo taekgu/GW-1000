@@ -207,7 +207,6 @@ public class Fragment_working extends Fragment {
                         }
                         break;
                 }
-                communicator.send(communicator.get_tx());
             }
             return true;
         }

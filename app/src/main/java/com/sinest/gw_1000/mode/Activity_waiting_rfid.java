@@ -640,7 +640,6 @@ public class Activity_waiting_rfid extends AppCompatActivity {
 
                             val = (byte) val_oxygen;
                             communicator.set_tx(8, val);
-                            communicator.send(communicator.get_tx());
                         break;
                     case R.id.waiting_rfid_oxygen_down_button:
                         view.setBackgroundResource(R.drawable.button_down);
@@ -651,7 +650,6 @@ public class Activity_waiting_rfid extends AppCompatActivity {
 
                             val = (byte) val_oxygen;
                             communicator.set_tx(8, val);
-                            communicator.send(communicator.get_tx());
                         break;
                     case R.id.waiting_rfid_pressure_up_button:
                         view.setBackgroundResource(R.drawable.button_up);
@@ -661,7 +659,6 @@ public class Activity_waiting_rfid extends AppCompatActivity {
                             pressure_text.setText("" + val_pressure);
 
                             communicator.set_tx(5, (byte) val_pressure);
-                            communicator.send(communicator.get_tx());
                         break;
                     case R.id.waiting_rfid_pressure_down_button:
                         view.setBackgroundResource(R.drawable.button_down);
@@ -671,7 +668,6 @@ public class Activity_waiting_rfid extends AppCompatActivity {
                             pressure_text.setText("" + val_pressure);
 
                             communicator.set_tx(5, (byte) val_pressure);
-                            communicator.send(communicator.get_tx());
                         break;
                     case R.id.waiting_rfid_time_up_button:
                         view.setBackgroundResource(R.drawable.button_up);
@@ -698,7 +694,6 @@ public class Activity_waiting_rfid extends AppCompatActivity {
 
                             val = 0x01;
                             communicator.set_tx(11, val);
-                            communicator.send(communicator.get_tx());
                         }
                         break;
                     case R.id.waiting_rfid_doorclose_button:
@@ -711,7 +706,6 @@ public class Activity_waiting_rfid extends AppCompatActivity {
 
                             val = 0x02;
                             communicator.set_tx(11, val);
-                            communicator.send(communicator.get_tx());
                         }
                         break;
                     case R.id.waiting_rfid_time_text:

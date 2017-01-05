@@ -46,7 +46,7 @@ public class WifiConnector {
     private static final String AP_PSWD     = "1234567890";
     private static final String IP_ADDRESS  = "192.168.0.22";
     private static final int PORT           = 20002;
-    private SocketManager socketManager;
+    private SocketManager socketManager     = null;
     private Handler handler_data;
 
     private Context context;
@@ -68,10 +68,13 @@ public class WifiConnector {
 
     public int permission = 0;
 
-    public WifiConnector(Context _context, Handler _handler_data) {
+    private Communicator communicator;
+
+    public WifiConnector(Context _context, Handler _handler_data, Communicator _communicator) {
 
         context = _context;
         handler_data = _handler_data;
+        communicator = _communicator;
         init();
     }
 
@@ -179,8 +182,12 @@ public class WifiConnector {
                                     isConnected_server = true;
                                     isRun = false;
 
-                                    socketManager = new SocketManager(socket, handler_data);
-                                    socketManager.start_receiver();
+                                    if (socketManager == null) {
+
+                                        socketManager = new SocketManager();
+                                    }
+                                    socketManager.init(socket, handler_data, communicator);
+                                    socketManager.start_thread();
                                     Log.i("JW", "Start socketManager");
                                 } else {
 
@@ -284,7 +291,7 @@ public class WifiConnector {
 
                                 if (socketManager != null) {
 
-                                    socketManager.stop_receiver();
+                                    socketManager.stop_thread();
                                 }
                             }
 
@@ -360,18 +367,5 @@ public class WifiConnector {
 
             wifiManager.enableNetwork(networkId, true);
         }
-    }
-
-    public int send(byte[] msg) {
-
-        if (socketManager == null) {
-
-            return -1;
-        }
-        if (!isConnected) {
-
-            return -1;
-        }
-        return socketManager.send(msg);
     }
 }

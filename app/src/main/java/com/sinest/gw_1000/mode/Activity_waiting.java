@@ -265,6 +265,7 @@ public class Activity_waiting extends AppCompatActivity {
 
                     mode = 1;
                     Application_manager.m_operation_f = true;
+                    communicator.set_tx(1, (byte)0x01);
                     handler_update_data.sendEmptyMessage(SET_BUTTON_INVISIBLE);
 
                     // 동작 모드로 바뀌기 이전 산소농도, 수압, 시간 값 저장
@@ -613,7 +614,6 @@ public class Activity_waiting extends AppCompatActivity {
 
                             val = (byte) val_oxygen;
                             communicator.set_tx(8, val);
-                            communicator.send(communicator.get_tx());
                         //}
                         break;
                     case R.id.waiting_oxygen_down_button:
@@ -627,7 +627,6 @@ public class Activity_waiting extends AppCompatActivity {
 
                             val = (byte) val_oxygen;
                             communicator.set_tx(8, val);
-                            communicator.send(communicator.get_tx());
                         //}
                         break;
                     case R.id.waiting_pressure_up_button:
@@ -640,7 +639,6 @@ public class Activity_waiting extends AppCompatActivity {
                             pressure_text.setText("" + val_pressure);
 
                             communicator.set_tx(5, (byte) val_pressure);
-                            communicator.send(communicator.get_tx());
                         //}
                         break;
                     case R.id.waiting_pressure_down_button:
@@ -653,7 +651,6 @@ public class Activity_waiting extends AppCompatActivity {
                             pressure_text.setText("" + val_pressure);
 
                             communicator.set_tx(5, (byte) val_pressure);
-                            communicator.send(communicator.get_tx());
                         //}
                         break;
                     case R.id.waiting_time_up_button:
