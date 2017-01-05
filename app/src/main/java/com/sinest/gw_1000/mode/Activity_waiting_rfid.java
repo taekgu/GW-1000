@@ -63,6 +63,8 @@ public class Activity_waiting_rfid extends AppCompatActivity {
     private ImageView background;
     private AnimationDrawable frameAnimation;
 
+    CustomProgressBarHorizontal seekBar;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -133,6 +135,8 @@ public class Activity_waiting_rfid extends AppCompatActivity {
                 new Intent(this, getClass()).addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP), 0);
 
         background = (ImageView) findViewById(R.id.activity_waiting_rfid_background);
+
+        seekBar = (CustomProgressBarHorizontal) findViewById(R.id.seekBar2_rfid);
     }
 
     @Override
@@ -301,6 +305,7 @@ public class Activity_waiting_rfid extends AppCompatActivity {
                     fragmentTransaction.commit();
 
                     mode = 1;
+                    Application_manager.m_operation_f = true;
                     handler_update_data.sendEmptyMessage(SET_BUTTON_INVISIBLE);
 
                     // 동작 모드로 바뀌기 이전 산소농도, 수압, 시간 값 저장
@@ -315,8 +320,19 @@ public class Activity_waiting_rfid extends AppCompatActivity {
                     start_animation();
 
                     // 동작 구간 표시
-                    CustomProgressBarHorizontal seekBar = (CustomProgressBarHorizontal) findViewById(R.id.seekBar2_rfid);
-                    seekBar.setVisibility(View.VISIBLE);
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+
+                            seekBar.setVisibility(View.VISIBLE);
+                        }
+                    });
+
+                    // 치료 음악 재생
+                    if (Application_manager.sound_mode_num != 0) {
+
+                        Application_manager.getSoundManager().play_therapy(Application_manager.sound_mode_num, 1);
+                    }
                 }
             }
             // 타이머 스레드가 아직 동작중인 경우
@@ -343,6 +359,7 @@ public class Activity_waiting_rfid extends AppCompatActivity {
         fragmentTransaction.commit();
 
         mode = 0;
+        Application_manager.m_operation_f = false;
         handler_update_data.sendEmptyMessage(SET_BUTTON_VISIBLE);
 
         // 동작 시작 전 산소 농도, 압력, 시간 값 불러오기
@@ -365,8 +382,19 @@ public class Activity_waiting_rfid extends AppCompatActivity {
         stop_animation();
 
         // 동작 구간 숨김
-        CustomProgressBarHorizontal seekBar = (CustomProgressBarHorizontal) findViewById(R.id.seekBar2_rfid);
-        seekBar.setVisibility(View.INVISIBLE);
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+
+                seekBar.setVisibility(View.INVISIBLE);
+            }
+        });
+
+        // 치료 음악 재생 종료
+        if (Application_manager.sound_mode_num != 0) {
+
+            Application_manager.getSoundManager().play_therapy(Application_manager.sound_mode_num, 0);
+        }
     }
 
     private void start_animation() {
@@ -380,17 +408,23 @@ public class Activity_waiting_rfid extends AppCompatActivity {
 
         if (frameAnimation != null) {
 
-            frameAnimation.stop();
-            // 도어 열림
-            if (Application_manager.getCommunicator().get_tx_idx(11) == 0x01) {
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
 
-                background.setBackgroundResource(R.drawable.waiting_rfid_dooropen_back);
-            }
-            // 도어 닫힘
-            else {
+                    frameAnimation.stop();
+                    // 도어 열림
+                    if (Application_manager.getCommunicator().get_tx_idx(11) == 0x01) {
 
-                background.setBackgroundResource(R.drawable.waiting_rfid_doorclose_back);
-            }
+                        background.setBackgroundResource(R.drawable.waiting_rfid_dooropen_back);
+                    }
+                    // 도어 닫힘
+                    else {
+
+                        background.setBackgroundResource(R.drawable.waiting_rfid_doorclose_back);
+                    }
+                }
+            });
         }
     }
 

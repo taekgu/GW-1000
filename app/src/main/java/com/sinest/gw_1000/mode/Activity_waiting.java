@@ -158,16 +158,23 @@ public class Activity_waiting extends AppCompatActivity {
         registReceiver();
         isRun = true;
 
+        background.setBackgroundResource(Application_manager.waiting_dooropen_backimage[Application_manager.img_flag]);
+        waiting_door_open_button.setBackgroundResource(Application_manager.door_open_off[Application_manager.img_flag]);
+        waiting_door_close_button.setBackgroundResource(Application_manager.door_close_off[Application_manager.img_flag]);
+
         SharedPreferences sharedPreferences = getSharedPreferences(Application_manager.DB_NAME, 0);
 
-        fragment_waiting.reset();
-        for (int i = 0; i< Application_manager.MAX_CHECKED; i++) {
+        if (mode == 0) {
 
-            checked_loc[i] = sharedPreferences.getInt(Application_manager.DB_LIBRARY_LOC_ + i, i);
-            fragment_waiting.addCheckedIdx(checked_loc[i]);
-            Log.i("JW", "Selected library idx : " + checked_loc[i]);
+            fragment_waiting.reset();
+            for (int i = 0; i < Application_manager.MAX_CHECKED; i++) {
+
+                checked_loc[i] = sharedPreferences.getInt(Application_manager.DB_LIBRARY_LOC_ + i, i);
+                fragment_waiting.addCheckedIdx(checked_loc[i]);
+                Log.i("JW", "Selected library idx : " + checked_loc[i]);
+            }
+            fragment_waiting.refresh();
         }
-        fragment_waiting.refresh();
 
         val_time = sharedPreferences.getInt(Application_manager.DB_VAL_TIME, 10);
         time_text.setText(Integer.toString(val_time));
@@ -248,6 +255,7 @@ public class Activity_waiting extends AppCompatActivity {
                     fragmentTransaction.commit();
 
                     mode = 1;
+                    Application_manager.m_operation_f = true;
                     handler_update_data.sendEmptyMessage(SET_BUTTON_INVISIBLE);
 
                     // 동작 모드로 바뀌기 이전 산소농도, 수압, 시간 값 저장
@@ -263,7 +271,19 @@ public class Activity_waiting extends AppCompatActivity {
 
                     // 동작 구간 표시
                     //CustomProgressBarHorizontal progressBar = (CustomProgressBarHorizontal) findViewById(R.id.custom_progress_bar_horizontal);
-                    seekBar.setVisibility(View.VISIBLE);
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+
+                            seekBar.setVisibility(View.VISIBLE);
+                        }
+                    });
+
+                    // 치료 음악 재생
+                    if (Application_manager.sound_mode_num != 0) {
+
+                        Application_manager.getSoundManager().play_therapy(Application_manager.sound_mode_num, 1);
+                    }
                 }
             }
             // 타이머 스레드가 아직 동작중인 경우
@@ -290,6 +310,7 @@ public class Activity_waiting extends AppCompatActivity {
         fragmentTransaction.commit();
 
         mode = 0;
+        Application_manager.m_operation_f = false;
         handler_update_data.sendEmptyMessage(SET_BUTTON_VISIBLE);
 
         // 동작 시작 전 산소 농도, 압력, 시간 값 불러오기
@@ -314,7 +335,19 @@ public class Activity_waiting extends AppCompatActivity {
         // 동작 구간 숨김
         /*SeekBar seekBar = (SeekBar) findViewById(R.id.seekBar2);
         seekBar.setVisibility(View.INVISIBLE);*/
-        seekBar.setVisibility(View.INVISIBLE);
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+
+                seekBar.setVisibility(View.INVISIBLE);
+            }
+        });
+
+        // 치료 음악 재생 종료
+        if (Application_manager.sound_mode_num != 0) {
+
+            Application_manager.getSoundManager().play_therapy(Application_manager.sound_mode_num, 0);
+        }
     }
 
     private void start_animation() {
@@ -328,17 +361,23 @@ public class Activity_waiting extends AppCompatActivity {
 
         if (frameAnimation != null) {
 
-            frameAnimation.stop();
-            // 도어 열림
-            if (Application_manager.getCommunicator().get_tx_idx(11) == 0x01) {
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
 
-                background.setBackgroundResource(R.drawable.waiting_dooropen_backimage);
-            }
-            // 도어 닫힘
-            else {
+                    frameAnimation.stop();
+                    // 도어 열림
+                    if (Application_manager.getCommunicator().get_tx_idx(11) == 0x01) {
 
-                background.setBackgroundResource(R.drawable.waiting_doorclose_backimage);
-            }
+                        background.setBackgroundResource(Application_manager.waiting_dooropen_backimage[Application_manager.img_flag]);
+                    }
+                    // 도어 닫힘
+                    else {
+
+                        background.setBackgroundResource(R.drawable.waiting_doorclose_backimage);
+                    }
+                }
+            });
         }
     }
 
@@ -529,10 +568,10 @@ public class Activity_waiting extends AppCompatActivity {
                         view.setBackgroundResource(R.drawable.button_down_on);
                         break;
                     case R.id.waiting_dooropen_button:
-                        view.setBackgroundResource(R.drawable.door_open_on);
+                        view.setBackgroundResource(Application_manager.door_open_off[Application_manager.img_flag]);
                         break;
                     case R.id.waiting_doorclose_button:
-                        view.setBackgroundResource(R.drawable.door_close_on);
+                        view.setBackgroundResource(Application_manager.door_close_off[Application_manager.img_flag]);
                         break;
                     case R.id.waiting_time_text:
                         break;
@@ -633,12 +672,12 @@ public class Activity_waiting extends AppCompatActivity {
                         break;
                     case R.id.waiting_dooropen_button:
 
-                        view.setBackgroundResource(R.drawable.door_open_off);
+                        view.setBackgroundResource(Application_manager.door_open_off[Application_manager.img_flag]);
 
                         if (Application_manager.getSoundManager().play(Application_manager.m_language, 3) == 0) {
 
                             background = (ImageView) findViewById(R.id.activity_waiting_background);
-                            background.setBackgroundResource(R.drawable.waiting_dooropen_backimage);
+                            background.setBackgroundResource(Application_manager.waiting_dooropen_backimage[Application_manager.img_flag]);
 
                             val = 0x01;
                             communicator.set_tx(11, val);
@@ -647,7 +686,7 @@ public class Activity_waiting extends AppCompatActivity {
                         break;
                     case R.id.waiting_doorclose_button:
 
-                        view.setBackgroundResource(R.drawable.door_close_off);
+                        view.setBackgroundResource(Application_manager.door_close_off[Application_manager.img_flag]);
 
                         if (Application_manager.getSoundManager().play(Application_manager.m_language, 4) == 0) {
 

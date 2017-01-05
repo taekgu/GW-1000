@@ -88,7 +88,7 @@ public class Communicator {
                     set_rx(i, b);
                     temp[i] = b;
                 }
-                send(temp);
+                //send(temp);
                 if (!checkCheckSum(msg_rx)) {
 
                     Log.i("JW", "Rx data is wrong (checkSum error)");
@@ -128,6 +128,7 @@ public class Communicator {
     synchronized private Boolean checkCheckSum(byte[] msg) {
 
         int len = msg.length;
+        
         if (msg[len-2] == calcCheckSum(msg)) {
 
             return true;
@@ -138,9 +139,9 @@ public class Communicator {
     synchronized private byte calcCheckSum(byte[] msg) {
 
         int len = msg.length;
-        byte res = 0x00;
+        byte res = msg[1];
 
-        for (int i=1; i<len-2; i++) {
+        for (int i=2; i<len-2; i++) {
 
             res = (byte)(res ^ msg[i]);
         }
