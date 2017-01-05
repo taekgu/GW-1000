@@ -12,6 +12,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -45,6 +46,10 @@ public class Activity_manual_mode_setting extends Activity{
     boolean isRun;
     TextView clock;
 
+    LinearLayout activity_manual_mode_setting;
+    Button manual_mode_setting_save;
+    Button manual_mode_setting_back;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,8 +59,8 @@ public class Activity_manual_mode_setting extends Activity{
         ImageView manual_setting_selected_mode = (ImageView) findViewById(R.id.manual_setting_selected_mode);
         Intent intent = getIntent();
 
-        Button manual_mode_setting_save = (Button)findViewById(R.id.manual_mode_setting_save);
-        Button manual_mode_setting_back = (Button)findViewById(R.id.manual_mode_setting_back);
+        manual_mode_setting_save = (Button)findViewById(R.id.manual_mode_setting_save);
+        manual_mode_setting_back = (Button)findViewById(R.id.manual_mode_setting_back);
 
 
         manual_mode_total = (TextView)findViewById(R.id.manual_mode_total);
@@ -63,6 +68,8 @@ public class Activity_manual_mode_setting extends Activity{
 
         clock = (TextView) findViewById(R.id.manual_mode_setting_clock);
         clock.setTypeface(tf);
+
+        activity_manual_mode_setting = (LinearLayout) findViewById(R.id.activity_manual_mode_setting);
 
         modeNum = intent.getExtras().getInt("modeNum");
         if (modeNum != -1) {
@@ -157,11 +164,11 @@ public class Activity_manual_mode_setting extends Activity{
                 switch (id) {
                     case R.id.manual_mode_setting_save:
                         b = (Button) view;
-                        b.setBackgroundResource(R.drawable.save_mode_on);
+                        b.setBackgroundResource(Application_manager.save_mode_on[Application_manager.img_flag]);
                         break;
                     case R.id.manual_mode_setting_back:
                         b = (Button) view;
-                        b.setBackgroundResource(R.drawable.button_circle_back_on);
+                        b.setBackgroundResource(Application_manager.button_circle_back_on[Application_manager.img_flag]);
                         break;
 
                 }
@@ -169,7 +176,7 @@ public class Activity_manual_mode_setting extends Activity{
                 switch (id) {
                     case R.id.manual_mode_setting_save:
                         b = (Button) view;
-                        b.setBackgroundResource(R.drawable.save_mode_off);
+                        b.setBackgroundResource(Application_manager.save_mode_off[Application_manager.img_flag]);
 
                         SharedPreferences sharedPreferences;
                         SharedPreferences.Editor editor;
@@ -193,7 +200,7 @@ public class Activity_manual_mode_setting extends Activity{
                         break;
                     case R.id.manual_mode_setting_back:
                         b = (Button) view;
-                        b.setBackgroundResource(R.drawable.button_circle_back_off);
+                        b.setBackgroundResource(Application_manager.button_circle_back_off[Application_manager.img_flag]);
                         for (int i=0; i<3; i++) {
 
                             time[i] = time_prev[i];
@@ -226,6 +233,10 @@ public class Activity_manual_mode_setting extends Activity{
         int resourceId;
 
         Log.i("onResume", "onResume");
+
+        activity_manual_mode_setting.setBackgroundResource(Application_manager.manual_mode_setting_backimage[Application_manager.img_flag]);
+        manual_mode_setting_save.setBackgroundResource(Application_manager.save_mode_off[Application_manager.img_flag]);
+        manual_mode_setting_back.setBackgroundResource(Application_manager.button_circle_back_off[Application_manager.img_flag]);
 
         num_of_enabled_pattern = 0;
         for (int i=0; i<3; i++) {

@@ -189,7 +189,7 @@ public class Application_manager extends Application {
 
     //-------------------------------Img ---------------------------------------------------
     // 0-> 한국,영어 1-> 중국
-    //setting
+    //setting - o
     public static int img_flag = 0;
     public static int[] button_on = {R.drawable.button_on, R.drawable.button_on};//
     public static int[] button_off = {R.drawable.button_off, R.drawable.button_off_ch};
@@ -220,7 +220,7 @@ public class Application_manager extends Application {
     public static int[] button_elipse_back_off = {R.drawable.button_elipse_back_off, R.drawable.button_elipse_back_off_ch};
     // 저장버튼 추가 요청및 추가해야함  ,  rfid 쪽 안함 ,  팝업 배경 받고 진행
 
-    //engine
+    //engine - o
     public static int[] engineermode_back_image = {R.drawable.engineermode_back_image, R.drawable.engineermode_back_image_ch};
     public static int[] door_open_on = {R.drawable.door_open_on, R.drawable.door_open_on_ch};
     public static int[] door_open_off = {R.drawable.door_open_off, R.drawable.door_open_off_ch};
@@ -241,7 +241,7 @@ public class Application_manager extends Application {
     public static int[] program_mode_on = {R.drawable.program_mode_on, R.drawable.program_mode_on_ch};
     public static int[] program_mode_off = {R.drawable.program_mode_off, R.drawable.program_mode_off_ch};
 
-    //waiting
+    //waiting - o
     public static int[] waiting_doorclose_backimage = {R.drawable.waiting_doorclose_backimage, R.drawable.waiting_doorclose_backimage_ch};
     public static int[] waiting_dooropen_backimage = {R.drawable.waiting_dooropen_backimage, R.drawable.waiting_dooropen_backimage_ch};
 
@@ -249,12 +249,14 @@ public class Application_manager extends Application {
     public static int[] waiting_rfid_doorclose_back = {R.drawable.waiting_rfid_doorclose_back, R.drawable.waiting_rfid_doorclose_back_ch};
     public static int[] waiting_rfid_dooropen_back = {R.drawable.waiting_rfid_dooropen_back, R.drawable.waiting_rfid_dooropen_back_ch};
 
-    //library
+    //library - o
     public static int[] ribrary_back_image = {R.drawable.ribrary_back_image, R.drawable.ribrary_back_image_ch};
     public static int[] library_setting_off = {R.drawable.library_setting_off, R.drawable.library_setting_off_ch};
     public static int[] library_setting_on = {R.drawable.library_setting_on, R.drawable.library_setting_on_ch};
     public static int[] save_mode_off = {R.drawable.save_mode_off, R.drawable.save_mode_off_ch};
     public static int[] save_mode_on = {R.drawable.save_mode_on, R.drawable.save_mode_on_ch};
+
+    public static int[] manual_mode_setting_backimage = {R.drawable.manual_mode_setting_backimage, R.drawable.manual_mode_setting_backimage_ch};
 
 
     //-------------------------------Img ---------------------------------------------------
