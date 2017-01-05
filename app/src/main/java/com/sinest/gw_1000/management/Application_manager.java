@@ -241,9 +241,6 @@ public class Application_manager extends Application {
     public static int[] program_mode_on = {R.drawable.program_mode_on, R.drawable.program_mode_on_ch};
     public static int[] program_mode_off = {R.drawable.program_mode_off, R.drawable.program_mode_off_ch};
 
-
-    //working
-
     //waiting
     public static int[] waiting_doorclose_backimage = {R.drawable.waiting_doorclose_backimage, R.drawable.waiting_doorclose_backimage_ch};
     public static int[] waiting_dooropen_backimage = {R.drawable.waiting_dooropen_backimage, R.drawable.waiting_dooropen_backimage_ch};
