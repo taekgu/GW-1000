@@ -65,6 +65,9 @@ public class Activity_waiting_rfid extends AppCompatActivity {
 
     CustomProgressBarHorizontal seekBar;
 
+    ImageView waiting_door_open_button;
+    ImageView waiting_door_close_button;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -112,8 +115,8 @@ public class Activity_waiting_rfid extends AppCompatActivity {
         ImageView waiting_time_up_button = (ImageView)findViewById(R.id.waiting_rfid_time_up_button);
         ImageView waiting_time_down_button = (ImageView)findViewById(R.id.waiting_rfid_time_down_button);
 
-        ImageView waiting_door_open_button = (ImageView)findViewById(R.id.waiting_rfid_dooropen_button);
-        ImageView waiting_door_close_button = (ImageView)findViewById(R.id.waiting_rfid_doorclose_button);
+        waiting_door_open_button = (ImageView)findViewById(R.id.waiting_rfid_dooropen_button);
+        waiting_door_close_button = (ImageView)findViewById(R.id.waiting_rfid_doorclose_button);
 
 
         waiting_oxygen_up_button.setOnTouchListener(mTouchEvent);
@@ -149,6 +152,10 @@ public class Activity_waiting_rfid extends AppCompatActivity {
         isRun = true;
 
         SharedPreferences sharedPreferences = getSharedPreferences(Application_manager.DB_NAME, 0);
+
+        background.setBackgroundResource(Application_manager.waiting_rfid_doorclose_back[Application_manager.img_flag]);
+        waiting_door_open_button.setBackgroundResource(Application_manager.door_open_off[Application_manager.img_flag]);
+        waiting_door_close_button.setBackgroundResource(Application_manager.door_close_off[Application_manager.img_flag]);
 
         val_time = sharedPreferences.getInt(Application_manager.DB_VAL_TIME, 10);
         time_text.setText(Integer.toString(val_time));
@@ -605,10 +612,10 @@ public class Activity_waiting_rfid extends AppCompatActivity {
                         view.setBackgroundResource(R.drawable.button_down_on);
                         break;
                     case R.id.waiting_rfid_dooropen_button:
-                        view.setBackgroundResource(R.drawable.door_open_on);
+                        view.setBackgroundResource(Application_manager.door_open_on[Application_manager.img_flag]);
                         break;
                     case R.id.waiting_rfid_doorclose_button:
-                        view.setBackgroundResource(R.drawable.door_close_on);
+                        view.setBackgroundResource(Application_manager.door_close_on[Application_manager.img_flag]);
                         break;
                     case R.id.waiting_rfid_time_text:
                         break;
@@ -682,11 +689,11 @@ public class Activity_waiting_rfid extends AppCompatActivity {
                         break;
                     case R.id.waiting_rfid_dooropen_button:
 
-                        view.setBackgroundResource(R.drawable.door_open_off);
+                        view.setBackgroundResource(Application_manager.door_open_off[Application_manager.img_flag]);
                         if (Application_manager.getSoundManager().play(Application_manager.m_language, 3) == 0) {
 
                             background = (ImageView) findViewById(R.id.activity_waiting_rfid_background);
-                            background.setBackgroundResource(R.drawable.waiting_rfid_dooropen_back);
+                            background.setBackgroundResource(Application_manager.waiting_rfid_dooropen_back[Application_manager.img_flag]);
                             isDoorOpened = true;
 
                             val = 0x01;
@@ -696,10 +703,10 @@ public class Activity_waiting_rfid extends AppCompatActivity {
                         break;
                     case R.id.waiting_rfid_doorclose_button:
 
-                        view.setBackgroundResource(R.drawable.door_close_off);
+                        view.setBackgroundResource(Application_manager.door_close_off[Application_manager.img_flag]);
                         if (Application_manager.getSoundManager().play(Application_manager.m_language, 4) == 0) {
                             background = (ImageView) findViewById(R.id.activity_waiting_rfid_background);
-                            background.setBackgroundResource(R.drawable.waiting_rfid_doorclose_back);
+                            background.setBackgroundResource(Application_manager.waiting_rfid_doorclose_back[Application_manager.img_flag]);
                             isDoorOpened = false;
 
                             val = 0x02;
