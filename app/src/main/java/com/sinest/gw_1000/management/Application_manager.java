@@ -252,12 +252,12 @@ public class Application_manager extends Application {
     public static int[] waiting_rfid_doorclose_back = {R.drawable.waiting_rfid_doorclose_back, R.drawable.waiting_rfid_doorclose_back_ch};
     public static int[] waiting_rfid_dooropen_back = {R.drawable.waiting_rfid_dooropen_back, R.drawable.waiting_rfid_dooropen_back_ch};
 
-
     //library
     public static int[] ribrary_back_image = {R.drawable.ribrary_back_image, R.drawable.ribrary_back_image_ch};
-
-
-
+    public static int[] library_setting_off = {R.drawable.library_setting_off, R.drawable.library_setting_off_ch};
+    public static int[] library_setting_on = {R.drawable.library_setting_on, R.drawable.library_setting_on_ch};
+    public static int[] save_mode_off = {R.drawable.save_mode_off, R.drawable.save_mode_off_ch};
+    public static int[] save_mode_on = {R.drawable.save_mode_on, R.drawable.save_mode_on_ch};
 
 
     //-------------------------------Img ---------------------------------------------------
