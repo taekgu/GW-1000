@@ -249,8 +249,13 @@ public class Application_manager extends Application {
     public static int[] waiting_doorclose_backimage = {R.drawable.waiting_doorclose_backimage, R.drawable.waiting_doorclose_backimage_ch};
     public static int[] waiting_dooropen_backimage = {R.drawable.waiting_dooropen_backimage, R.drawable.waiting_dooropen_backimage_ch};
 
-    //library
+    //waiting rfid
+    public static int[] waiting_rfid_doorclose_back = {R.drawable.waiting_rfid_doorclose_back, R.drawable.waiting_rfid_doorclose_back_ch};
+    public static int[] waiting_rfid_dooropen_back = {R.drawable.waiting_rfid_dooropen_back, R.drawable.waiting_rfid_dooropen_back_ch};
 
+
+    //library
+    public static int[] ribrary_back_image = {R.drawable.ribrary_back_image, R.drawable.ribrary_back_image_ch};
 
 
 
