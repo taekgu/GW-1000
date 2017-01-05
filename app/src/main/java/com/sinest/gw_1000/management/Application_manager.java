@@ -185,6 +185,7 @@ public class Application_manager extends Application {
     private static int end_m = 0;
     private static boolean m_sleep_f = false;
     public static int m_sleep_ff = 3;
+    public static boolean m_operation_f = false;
 
     //-------------------------------Img ---------------------------------------------------
     // 0-> 한국,영어 1-> 중국
@@ -721,17 +722,20 @@ public class Application_manager extends Application {
                 while (isRun) {
 
                     try {
-
                         Thread.sleep(1000);
-                        runningTime++;
-                        save_Running_time();
-                        Log.v("sss","STOP : "+runningTime);
+
+                        if(m_operation_f == true){
+                            runningTime++;
+                            save_Running_time();
+                            Log.v("sss","STOP : "+runningTime);
+                        }
 
                         if(m_sleep_f == true){
                             start_m++;
                             if(start_m == end_m){
                                 Activity_setting.devicePolicyManager.lockNow();
                             }
+                            Log.v("sb_test","start_m : "+start_m+"  end_m : "+end_m);
                         }
                     }
                     catch (Exception e) {
