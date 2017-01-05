@@ -529,10 +529,10 @@ public class Activity_waiting extends AppCompatActivity {
                         view.setBackgroundResource(R.drawable.button_down_on);
                         break;
                     case R.id.waiting_dooropen_button:
-                        view.setBackgroundResource(R.drawable.door_open_on);
+                        view.setBackgroundResource(Application_manager.door_open_on[Application_manager.img_flag]);
                         break;
                     case R.id.waiting_doorclose_button:
-                        view.setBackgroundResource(R.drawable.door_close_on);
+                        view.setBackgroundResource(Application_manager.door_close_on[Application_manager.img_flag]);
                         break;
                     case R.id.waiting_time_text:
                         break;
@@ -633,7 +633,7 @@ public class Activity_waiting extends AppCompatActivity {
                         break;
                     case R.id.waiting_dooropen_button:
 
-                        view.setBackgroundResource(R.drawable.door_open_off);
+                        view.setBackgroundResource(Application_manager.door_open_off[Application_manager.img_flag]);
 
                         if (Application_manager.getSoundManager().play(Application_manager.m_language, 3) == 0) {
 
@@ -647,7 +647,7 @@ public class Activity_waiting extends AppCompatActivity {
                         break;
                     case R.id.waiting_doorclose_button:
 
-                        view.setBackgroundResource(R.drawable.door_close_off);
+                        view.setBackgroundResource(Application_manager.door_close_off[Application_manager.img_flag]);
 
                         if (Application_manager.getSoundManager().play(Application_manager.m_language, 4) == 0) {
 

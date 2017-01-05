@@ -355,19 +355,31 @@
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:visibility="invisible"
-                        android:layout_weight="3" />
+                        android:layout_weight="4" />
 
                     <LinearLayout
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
-                        android:layout_weight="24"
+                        android:layout_weight="22"
+                        android:orientation="vertical"
                         android:gravity="center">
 
                         <Button
                             android:layout_width="match_parent"
-                            android:layout_height="match_parent"
+                            android:layout_height="0dp"
+                            android:visibility="invisible"
+                            android:layout_weight="4" />
+                        <Button
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
                             android:id="@+id/b_ex"
-                            android:background="@drawable/off"/>
+                            android:layout_weight="92"
+                            android:background="@drawable/button_gry"/>
+                        <Button
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:visibility="invisible"
+                            android:layout_weight="4" />
 
                     </LinearLayout>
 
@@ -376,7 +388,7 @@
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:visibility="invisible"
-                        android:layout_weight="3" />
+                        android:layout_weight="4" />
 
                     <LinearLayout
                         android:layout_width="0dp"
