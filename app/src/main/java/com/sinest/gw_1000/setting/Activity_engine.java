@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextClock;
@@ -66,6 +67,7 @@ public class Activity_engine extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_engine);
         Application_manager.setFullScreen(this);
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 
         // 폰트 설정
         Typeface tf = Typeface.createFromAsset(getAssets(), "fonts/digital.ttf");
@@ -582,6 +584,7 @@ public class Activity_engine extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         Application_manager.setFullScreen(this);
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         isRun = true;
 
         activity_engine.setBackgroundResource(Application_manager.engineermode_back_image[Application_manager.img_flag]);

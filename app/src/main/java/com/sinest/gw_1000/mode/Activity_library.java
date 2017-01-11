@@ -10,6 +10,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -44,6 +45,7 @@ public class Activity_library extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_library);
         Application_manager.setFullScreen(this);
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 
         // 폰트 설정
         Typeface tf = Typeface.createFromAsset(getAssets(), "fonts/digital.ttf");
@@ -116,6 +118,7 @@ public class Activity_library extends AppCompatActivity{
     protected void onResume() {
         super.onResume();
         Application_manager.setFullScreen(this);
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 
         ribrary_back_image.setBackgroundResource(Application_manager.ribrary_back_image[Application_manager.img_flag]);
         library_back_button.setBackgroundResource(Application_manager.button_circle_back_off[Application_manager.img_flag]);

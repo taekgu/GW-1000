@@ -50,6 +50,7 @@ public class Activity_finishtime extends Activity {
         setContentView(R.layout.activity_finish_time);
 
         Application_manager.setFullScreen(this);
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 
         finish_time1 = (Button) findViewById(R.id.finish_time1);
         finish_time2 = (Button) findViewById(R.id.finish_time2);

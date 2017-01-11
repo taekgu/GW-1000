@@ -51,6 +51,7 @@ public class Activity_rfid extends Activity {
         setContentView(R.layout.activity_rfid);
 
         Application_manager.setFullScreen(this);
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 
         rfid_w_up = (Button) findViewById(R.id.rfid_w_up);
         rfid_w_down = (Button) findViewById(R.id.rfid_w_down);

@@ -10,6 +10,7 @@ import android.os.Message;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -55,6 +56,7 @@ public class Activity_manual_mode_setting extends Activity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_manual_mode_setting);
         Application_manager.setFullScreen(this);
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         // 선택한 매뉴얼 모드 이미지 넣기
         ImageView manual_setting_selected_mode = (ImageView) findViewById(R.id.manual_setting_selected_mode);
         Intent intent = getIntent();
@@ -226,6 +228,7 @@ public class Activity_manual_mode_setting extends Activity{
     protected void onResume() {
         super.onResume();
         Application_manager.setFullScreen(this);
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         isRun = true;
         num_of_enabled_pattern = 0;
 

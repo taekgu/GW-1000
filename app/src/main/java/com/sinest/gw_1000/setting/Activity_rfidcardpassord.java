@@ -55,6 +55,7 @@ public class Activity_rfidcardpassord extends Activity {
         setContentView(R.layout.activity_rfid_card_passord);
 
         Application_manager.setFullScreen(this);
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 
         password = Application_manager.get_m_password();
 

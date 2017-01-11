@@ -53,6 +53,7 @@ public class Activity_time extends Activity {
         setContentView(R.layout.activity_time);
 
         Application_manager.setFullScreen(this);
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 
         time1 = (Button) findViewById(R.id.time1);
         time2 = (Button) findViewById(R.id.time2);

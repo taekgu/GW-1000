@@ -60,6 +60,7 @@ public class Activity_emotion extends Activity {
         setContentView(R.layout.activity_emotion);
 
         Application_manager.setFullScreen(this);
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 
         emotion_ledm_up = (ImageView)findViewById(R.id.emotion_ledm_up);
         emotion_ledm_down = (ImageView)findViewById(R.id.emotion_ledm_down);

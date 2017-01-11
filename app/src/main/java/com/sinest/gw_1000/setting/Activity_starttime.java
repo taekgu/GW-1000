@@ -50,6 +50,7 @@ public class Activity_starttime extends Activity {
         setContentView(R.layout.activity_start_time);
 
         Application_manager.setFullScreen(this);
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 
         start_time1 = (Button) findViewById(R.id.start_time1);
         start_time2 = (Button) findViewById(R.id.start_time2);

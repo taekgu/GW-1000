@@ -51,6 +51,7 @@ public class Activity_water extends Activity {
         setContentView(R.layout.activity_water);
 
         Application_manager.setFullScreen(this);
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 
         water_save = (Button) findViewById(R.id.water_save);
         water_off = (Button) findViewById(R.id.water_off);

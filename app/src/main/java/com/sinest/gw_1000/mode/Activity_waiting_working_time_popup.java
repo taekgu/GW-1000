@@ -37,6 +37,7 @@ public class Activity_waiting_working_time_popup extends Activity {
         getWindow().setAttributes(layoutParams);
         setContentView(R.layout.activity_waiting_time_popup);
         Application_manager.setFullScreen(this);
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 
         mContext = this;
         Intent intent = getIntent();

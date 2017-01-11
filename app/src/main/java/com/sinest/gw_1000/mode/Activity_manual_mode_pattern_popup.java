@@ -31,6 +31,7 @@ public class Activity_manual_mode_pattern_popup extends Activity implements Cust
         getWindow().setAttributes(layoutParams);
         setContentView(R.layout.activity_manual_mode_pattern_popup);
         Application_manager.setFullScreen(this);
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 
         ImageView manual_popup_save = (ImageView) findViewById(R.id.manual_popup_save);
         ImageView manual_popup_back = (ImageView) findViewById(R.id.manual_popup_back);
