@@ -31,7 +31,7 @@
             android:id="@+id/tv_filter_min" />
         <View
             android:id="@+id/view_inactive_line_top"
-            android:layout_width="6dp"
+            android:layout_width="7dp"
             android:layout_height="match_parent"
             android:layout_centerHorizontal="true"
             android:background="@color/grey" />
@@ -60,7 +60,7 @@
             android:id="@+id/tv_filter_max" />
         <View
             android:id="@+id/view_inactive_line_bottom"
-            android:layout_width="6dp"
+            android:layout_width="7dp"
             android:layout_height="match_parent"
             android:layout_centerHorizontal="true"
             android:background="@color/grey"

@@ -243,8 +243,8 @@ public class Activity_manual_mode_setting extends Activity{
 
         num_of_enabled_pattern = 0;
         for (int i=0; i<3; i++) {
-            section[i][0] = sharedPreferences.getInt(Application_manager.DB_MANUAL_MODE_SECTION_MIN_ + modeNum + "_" + i, 1);
-            section[i][1] = sharedPreferences.getInt(Application_manager.DB_MANUAL_MODE_SECTION_MAX_ + modeNum + "_" + i, 1);
+            section[i][0] = sharedPreferences.getInt(Application_manager.DB_MANUAL_MODE_SECTION_MIN_ + modeNum + "_" + i, 0);
+            section[i][1] = sharedPreferences.getInt(Application_manager.DB_MANUAL_MODE_SECTION_MAX_ + modeNum + "_" + i, 14);
             pattern[i] = sharedPreferences.getInt(Application_manager.DB_MANUAL_MODE_PATTERN_ + modeNum + "_" + i, 1);
             time[i] = sharedPreferences.getInt(Application_manager.DB_MANUAL_MODE_TIME_ + modeNum + "_" + i, 30);
             if (time[i] == 0) {
@@ -257,10 +257,10 @@ public class Activity_manual_mode_setting extends Activity{
                 manual_mode_setting[i].setVisibility(View.VISIBLE);
             }
 
-            Log.i("pattern[i]", Integer.toString(pattern[i]));
-            Log.i("modeNum", Integer.toString(modeNum));
-            Log.i("section_min", Integer.toString(section[i][0]));
-            Log.i("section_max", Integer.toString(section[i][1]));
+            Log.i("m_setting_pattern[i]", Integer.toString(pattern[i]));
+            Log.i("m_setting_modeNum", Integer.toString(modeNum));
+            Log.i("m_setting_section_min", Integer.toString(section[i][0]));
+            Log.i("m_setting_section_max", Integer.toString(section[i][1]));
 
             resourceId = getResources().getIdentifier("manual_mode_pattern_" + pattern[i], "drawable", "com.sinest.gw_1000");
             manual_mode_setting[i].setBackgroundResource(resourceId);

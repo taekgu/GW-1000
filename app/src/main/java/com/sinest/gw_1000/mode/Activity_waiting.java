@@ -498,8 +498,7 @@ public class Activity_waiting extends AppCompatActivity {
                     Application_manager.SENSOR_TEMP_BED = temp;
 
                     // 노즐 위치
-                    //seekBar.setMinimumProgress();
-                    //seekBar.setMaximumProgress();
+                    seekBar.setProgress(Application_manager.getCommunicator().get_tx_idx(15));
                 }
                 else if (msg.what == SET_BUTTON_INVISIBLE) {
 
