@@ -89,12 +89,12 @@ public class Activity_temperature_popup extends Activity {
 
                             if (mode == TEMPERATURE_ABOVE) {
 
-                                editor.putInt(Application_manager.DB_TEMPERATURE, temperature);
-                                Application_manager.SENSOR_TEMP = temperature;
+                                editor.putInt(Application_manager.DB_TEMPERATURE_USER, temperature);
+                                Application_manager.SENSOR_TEMP_USER = temperature;
                             } else {
 
-                                editor.putInt(Application_manager.DB_TEMPERATURE_BED, temperature);
-                                Application_manager.SENSOR_TEMP_BED = temperature;
+                                editor.putInt(Application_manager.DB_TEMPERATURE_BED_USER, temperature);
+                                Application_manager.SENSOR_TEMP_BED_USER = temperature;
                             }
                             editor.commit();
                             finish();

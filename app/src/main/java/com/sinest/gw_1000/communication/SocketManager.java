@@ -78,7 +78,7 @@ public class SocketManager extends Thread {
                 // TX 보내기
                 msg_out = communicator.get_tx();
                 outputStream.write(msg_out, 0, msg_out.length);
-                Log.i("JW", "Transferred");
+                Log.i("JW", "Transferred: " + msg_out.length + "byte");
 
                 // RX 초기화
                 Arrays.fill(msg_in, (byte) 0x00);
@@ -88,7 +88,7 @@ public class SocketManager extends Thread {
 
                 if (LENGTH_RX == read_len) {
 
-                    Log.i("JW", "Received");
+                    Log.i("JW", "Received: " + read_len + "byte");
 
                     // Communicator 에서 처리
                     Bundle data = new Bundle();

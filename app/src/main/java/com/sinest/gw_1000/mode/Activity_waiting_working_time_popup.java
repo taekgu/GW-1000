@@ -30,6 +30,7 @@ public class Activity_waiting_working_time_popup extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        // 화면 설정
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         WindowManager.LayoutParams  layoutParams = new WindowManager.LayoutParams();
         layoutParams.flags= WindowManager.LayoutParams.FLAG_DIM_BEHIND;

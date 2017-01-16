@@ -81,14 +81,11 @@ public class Communicator {
 
                 Bundle data = msg.getData();
 
-                byte[] temp = new byte[data.size()];
                 for (int i=0; i<data.size(); i++) {
 
                     byte b = data.getByte(""+i);
                     set_rx(i, b);
-                    temp[i] = b;
                 }
-                //send(temp);
                 if (!checkCheckSum(msg_rx)) {
 
                     Log.i("JW", "Rx data is wrong (checkSum error)");
@@ -128,7 +125,9 @@ public class Communicator {
     synchronized private Boolean checkCheckSum(byte[] msg) {
 
         int len = msg.length;
-        
+
+        //Log.i("JW", "받아온 checkSum: " + String.format("%02x", msg[len-2] & 0xff));
+        //Log.i("JW", "계산한 checkSum: " + String.format("%02x", calcCheckSum(msg) & 0xff));
         if (msg[len-2] == calcCheckSum(msg)) {
 
             return true;
@@ -144,6 +143,7 @@ public class Communicator {
         for (int i=2; i<len-2; i++) {
 
             res = (byte)(res ^ msg[i]);
+        //    Log.i("JW", String.format("%02x", res & 0xff));
         }
 
         return res;

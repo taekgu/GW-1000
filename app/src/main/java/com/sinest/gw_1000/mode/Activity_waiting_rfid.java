@@ -99,8 +99,6 @@ public class Activity_waiting_rfid extends AppCompatActivity {
         pressure_text.setText(""+val_pressure);
         time_text.setText(""+val_time);
 
-        Application_manager.SENSOR_TEMP = sharedPreferences.getInt(Application_manager.DB_TEMPERATURE, 0);
-        Application_manager.SENSOR_TEMP_BED = sharedPreferences.getInt(Application_manager.DB_TEMPERATURE_BED, 0);
         textView_temperature = (TextView) findViewById(R.id.textView_rfid_temperature_above);
         textView_temperature_bed = (TextView) findViewById(R.id.textView_rfid_temperature_below);
         textView_temperature.setOnTouchListener(mTouchEvent);
@@ -164,9 +162,6 @@ public class Activity_waiting_rfid extends AppCompatActivity {
         time_text.setText(Integer.toString(val_time));
         Log.i("JW", "onResume time = " + val_time);
 
-        // 수온 불러오기
-        textView_temperature.setText(""+Application_manager.SENSOR_TEMP);
-        textView_temperature_bed.setText(""+Application_manager.SENSOR_TEMP_BED);
 
         // 앱이 실행될때 NFC 어댑터를 활성화 한다
         if (mAdapter != null) {
@@ -185,10 +180,8 @@ public class Activity_waiting_rfid extends AppCompatActivity {
                 TextView textView_humidity = (TextView) findViewById(R.id.textView_rfid_humidity);
                 textView_humidity.setText(""+Application_manager.SENSOR_HUMIDITY);
 
-                TextView textView_temperature = (TextView) findViewById(R.id.textView_rfid_temperature_above);
+                // 수온 불러오기
                 textView_temperature.setText(""+Application_manager.SENSOR_TEMP);
-
-                TextView textView_temperature_bed = (TextView) findViewById(R.id.textView_rfid_temperature_below);
                 textView_temperature_bed.setText(""+Application_manager.SENSOR_TEMP_BED);
             }
         });
@@ -210,8 +203,6 @@ public class Activity_waiting_rfid extends AppCompatActivity {
         editor.putInt(Application_manager.DB_VAL_OXYGEN, val_oxygen);
         editor.putInt(Application_manager.DB_VAL_PRESSURE, val_pressure);
         editor.putInt(Application_manager.DB_VAL_TIME, val_time);
-        editor.putInt(Application_manager.DB_TEMPERATURE, Application_manager.SENSOR_TEMP);
-        editor.putInt(Application_manager.DB_TEMPERATURE_BED, Application_manager.SENSOR_TEMP_BED);
         editor.commit();
     }
 
@@ -517,45 +508,57 @@ public class Activity_waiting_rfid extends AppCompatActivity {
 
                         for (int j = 1; j <= 3; j++) { // 가로
 
-                            onoff_flag[((j-1)*4 + i - 1)] = sharedPreferences.getInt(Application_manager.DB_RFID_ONOFF + i + "" + j, 0);
+                            onoff_flag[((j-1)*4 + i - 1)] = sharedPreferences.getInt(Application_manager.DB_SETTING_ONOFF_VAL_ + i + "" + j, 0);
                         }
                     }
 
                     // 산소농도 평균
                     int temp = 0;
+                    int cnt = 0;
                     for (int i=0; i<4; i++) {
 
-                        if (onoff_flag[i] == 1) {
+                        if (onoff_flag[i+8] == 1) {
 
                             temp += communicator.get_rx_idx(i+7);
+                            cnt++;
                         }
                     }
+                    if (cnt != 0)
+                        temp /= cnt;
                     TextView textView_oxygen = (TextView) findViewById(R.id.textView_rfid_oxygen);
                     textView_oxygen.setText(""+temp);
                     Application_manager.SENSOR_OXYGEN = temp;
 
                     // 습도 평균
                     temp = 0;
+                    cnt = 0;
                     for (int i=4; i<8; i++) {
 
-                        if (onoff_flag[i] == 1) {
+                        if (onoff_flag[i-4] == 1) {
 
                             temp += communicator.get_rx_idx(i+7);
+                            cnt++;
                         }
                     }
+                    if (cnt != 0)
+                        temp /= cnt;
                     TextView textView_humidity = (TextView) findViewById(R.id.textView_rfid_humidity);
                     textView_humidity.setText(""+temp);
                     Application_manager.SENSOR_HUMIDITY = temp;
 
                     // 내부온도 평균
                     temp = 0;
+                    cnt = 0;
                     for (int i=8; i<12; i++) {
 
-                        if (onoff_flag[i] == 1) {
+                        if (onoff_flag[i-4] == 1) {
 
                             temp += communicator.get_rx_idx(i-5);
+                            cnt++;
                         }
                     }
+                    if (cnt != 0)
+                        temp /= cnt;
                     textView_temperature = (TextView) findViewById(R.id.textView_rfid_temperature_above);
                     textView_temperature.setText(""+temp);
                     Application_manager.SENSOR_TEMP = temp;
@@ -567,8 +570,7 @@ public class Activity_waiting_rfid extends AppCompatActivity {
                     Application_manager.SENSOR_TEMP_BED = temp;
 
                     // 노즐 위치
-                    //seekBar.setMinimumProgress();
-                    //seekBar.setMaximumProgress();
+                    seekBar.setProgress(Application_manager.getCommunicator().get_rx_idx(15));
                 }
                 else if (msg.what == SET_BUTTON_INVISIBLE) {
 
@@ -724,14 +726,14 @@ public class Activity_waiting_rfid extends AppCompatActivity {
 
                         intent = new Intent(getApplicationContext(), Activity_temperature_popup.class);
                         intent.putExtra("mode", 0);
-                        intent.putExtra("temp", Application_manager.SENSOR_TEMP);
+                        intent.putExtra("temp", Application_manager.SENSOR_TEMP_USER);
                         startActivity(intent);
                         break;
                     case R.id.textView_rfid_temperature_below:
 
                         intent = new Intent(getApplicationContext(), Activity_temperature_popup.class);
                         intent.putExtra("mode", 1);
-                        intent.putExtra("temp", Application_manager.SENSOR_TEMP_BED);
+                        intent.putExtra("temp", Application_manager.SENSOR_TEMP_BED_USER);
                         startActivity(intent);
                         break;
                 }

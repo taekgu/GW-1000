@@ -20,15 +20,14 @@ public class SoundManager {
 
     private MediaPlayer latest_player;
     private MediaPlayer.OnPreparedListener preparedListener;
+    private MediaPlayer.OnPreparedListener preparedListener_for_therapy;
     private int prepare_cnt = 0;
     private final static int TOTAL_CNT = Application_manager.NUM_OF_LANG * Application_manager.NUM_OF_SOUND;
 
+    private final static int NUM_OF_THERAPY = 5;
+    private MediaPlayer[] mediaPlayer_therapy = new MediaPlayer[NUM_OF_THERAPY];
+    private int prepare_cnt_therapy = 0;
 
-
-    private MediaPlayer mediaPlayer_therapy;
-    private  boolean isPrepared_therapy = false;
-
-    //private SoundPool soundPool;
     private Context context;
 
     public SoundManager(Context _context) {
@@ -43,9 +42,28 @@ public class SoundManager {
 
         try {
 
-            mediaPlayer_therapy = new MediaPlayer();
-            mediaPlayer_therapy.setLooping(true);
-            mediaPlayer_therapy.setAudioStreamType(AudioManager.STREAM_MUSIC);
+            preparedListener = new MediaPlayer.OnPreparedListener() {
+                @Override
+                public void onPrepared(MediaPlayer mediaPlayer) {
+
+                    prepare_cnt++;
+                }
+            };
+
+            preparedListener_for_therapy = new MediaPlayer.OnPreparedListener() {
+                @Override
+                public void onPrepared(MediaPlayer mediaPlayer) {
+
+                    prepare_cnt_therapy++;
+                }
+            };
+
+            for (int i=0; i<NUM_OF_THERAPY; i++) {
+
+                mediaPlayer_therapy[i] = new MediaPlayer();
+                mediaPlayer_therapy[i].setLooping(true);
+                mediaPlayer_therapy[i].setAudioStreamType(AudioManager.STREAM_MUSIC);
+            }
 
             for (int lang=0; lang<Application_manager.NUM_OF_LANG; lang++) {
 
@@ -105,24 +123,16 @@ public class SoundManager {
             Application_manager.mediaPlayer[2][4].setDataSource(afd.getFileDescriptor(), afd.getStartOffset(), afd.getLength());
             afd.close();
 
-            afd = context.getAssets().openFd("sounds/therapy1.mp3");
-            mediaPlayer_therapy.setDataSource(afd.getFileDescriptor(), afd.getStartOffset(), afd.getLength());
-            afd.close();
+            for (int i=0; i<NUM_OF_THERAPY; i++) {
 
-            preparedListener = new MediaPlayer.OnPreparedListener() {
-                @Override
-                public void onPrepared(MediaPlayer mediaPlayer) {
+                String fileName = "sounds/therapy" + (i+1) + ".mp3";
+                afd = context.getAssets().openFd(fileName);
+                mediaPlayer_therapy[i].setDataSource(afd.getFileDescriptor(), afd.getStartOffset(), afd.getLength());
+                afd.close();
 
-                    if (mediaPlayer == mediaPlayer_therapy) {
-
-                        isPrepared_therapy = true;
-                    }
-                    else {
-
-                        prepare_cnt++;
-                    }
-                }
-            };
+                mediaPlayer_therapy[i].setOnPreparedListener(preparedListener_for_therapy);
+                mediaPlayer_therapy[i].prepare();
+            }
 
             for (int lang=0; lang<Application_manager.NUM_OF_LANG; lang++) {
 
@@ -132,8 +142,6 @@ public class SoundManager {
                     Application_manager.mediaPlayer[lang][sound].prepare();
                 }
             }
-            mediaPlayer_therapy.setOnPreparedListener(preparedListener);
-            mediaPlayer_therapy.prepare();
 
         } catch (IOException e) {
 
@@ -254,21 +262,22 @@ public class SoundManager {
 
     public void play_therapy(int sound, boolean isPlay) {
 
+        int idx = sound - 1;
         // 재생
         if (isPlay) {
 
-            if (isPrepared_therapy) {
+            if (prepare_cnt_therapy == NUM_OF_THERAPY) {
 
-                mediaPlayer_therapy.seekTo(0);
-                mediaPlayer_therapy.start();
+                mediaPlayer_therapy[idx].seekTo(0);
+                mediaPlayer_therapy[idx].start();
             }
         }
         // 중지
         else {
 
-            if (mediaPlayer_therapy.isPlaying()) {
+            if (mediaPlayer_therapy[idx].isPlaying()) {
 
-                mediaPlayer_therapy.pause();
+                mediaPlayer_therapy[idx].pause();
             }
         }
     }

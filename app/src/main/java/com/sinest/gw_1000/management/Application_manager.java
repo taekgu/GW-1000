@@ -27,6 +27,10 @@ public class Application_manager extends Application {
     public static int SENSOR_TEMP       = 0;
     public static int SENSOR_TEMP_BED   = 0;
 
+    // 사용자 설정 온도 값
+    public static int SENSOR_TEMP_USER      = 0;
+    public static int SENSOR_TEMP_BED_USER  = 0;
+
     // time
     public static String s_time = "00:00";
     public static String s_time_gap_t = "00:00";
@@ -114,8 +118,8 @@ public class Application_manager extends Application {
     public final static String DB_SLEEP_M = "sleep_m";
 
     // 내부 온도 및 수온
-    public final static String DB_TEMPERATURE = "temp_above";
-    public final static String DB_TEMPERATURE_BED = "temp_below";
+    public final static String DB_TEMPERATURE_USER = "temp_above_user";
+    public final static String DB_TEMPERATURE_BED_USER = "temp_below_user";
 
     // 사운드 id
     public final static int NUM_OF_LANG = 3;
@@ -325,6 +329,12 @@ public class Application_manager extends Application {
         }else{
             img_flag = 0;
         }
+
+        // DB에서 필요 정보 불러와서 변수에 저장
+        SENSOR_TEMP = 0;
+        SENSOR_TEMP_BED = 0;
+        SENSOR_TEMP_USER = sharedPreferences.getInt(DB_TEMPERATURE_USER, 0);
+        SENSOR_TEMP_BED_USER = sharedPreferences.getInt(DB_TEMPERATURE_BED_USER, 0);
     }
 
     synchronized public static void set_m_start_sleep(int i){
