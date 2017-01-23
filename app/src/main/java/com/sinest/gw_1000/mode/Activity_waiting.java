@@ -163,6 +163,7 @@ public class Activity_waiting extends AppCompatActivity {
         registReceiver();
         isRun = true;
 
+
         background.setBackgroundResource(Application_manager.waiting_dooropen_backimage[Application_manager.img_flag]);
         waiting_door_open_button.setBackgroundResource(Application_manager.door_open_off[Application_manager.img_flag]);
         waiting_door_close_button.setBackgroundResource(Application_manager.door_close_off[Application_manager.img_flag]);
