@@ -994,10 +994,15 @@ public class Activity_setting extends AppCompatActivity {
 
         if(Application_manager.gw_1000 == false)
         {
-            b_11.setVisibility(View.GONE);b_12.setVisibility(View.GONE);b_13.setVisibility(View.GONE);
-            b_21.setVisibility(View.GONE);b_22.setVisibility(View.GONE);b_23.setVisibility(View.GONE);
-            b_31.setVisibility(View.GONE);b_32.setVisibility(View.GONE);b_33.setVisibility(View.GONE);
-            b_41.setVisibility(View.GONE);b_42.setVisibility(View.GONE);b_43.setVisibility(View.GONE);
+            b_11.setVisibility(View.INVISIBLE);b_12.setVisibility(View.INVISIBLE);b_13.setVisibility(View.INVISIBLE);
+            b_21.setVisibility(View.INVISIBLE);b_22.setVisibility(View.INVISIBLE);b_23.setVisibility(View.INVISIBLE);
+            b_31.setVisibility(View.INVISIBLE);b_32.setVisibility(View.INVISIBLE);b_33.setVisibility(View.INVISIBLE);
+            b_41.setVisibility(View.INVISIBLE);b_42.setVisibility(View.INVISIBLE);b_43.setVisibility(View.INVISIBLE);
+        }else{
+            b_11.setVisibility(View.VISIBLE);b_12.setVisibility(View.VISIBLE);b_13.setVisibility(View.VISIBLE);
+            b_21.setVisibility(View.VISIBLE);b_22.setVisibility(View.VISIBLE);b_23.setVisibility(View.VISIBLE);
+            b_31.setVisibility(View.VISIBLE);b_32.setVisibility(View.VISIBLE);b_33.setVisibility(View.VISIBLE);
+            b_41.setVisibility(View.VISIBLE);b_42.setVisibility(View.VISIBLE);b_43.setVisibility(View.VISIBLE);
         }
 
     }

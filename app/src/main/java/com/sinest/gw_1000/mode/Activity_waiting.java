@@ -17,6 +17,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -69,6 +70,8 @@ public class Activity_waiting extends AppCompatActivity {
 
     boolean isFirstInit = true;
 
+    LinearLayout waiting_id;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -77,6 +80,8 @@ public class Activity_waiting extends AppCompatActivity {
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 
         communicator = Application_manager.getCommunicator();
+
+        waiting_id = (LinearLayout)findViewById(R.id.waiting_id);
 
         // 폰트 설정
         Typeface tf = Typeface.createFromAsset(getAssets(), "fonts/digital.ttf");
@@ -168,6 +173,12 @@ public class Activity_waiting extends AppCompatActivity {
         background.setBackgroundResource(Application_manager.waiting_dooropen_backimage[Application_manager.img_flag]);
         waiting_door_open_button.setBackgroundResource(Application_manager.door_open_off[Application_manager.img_flag]);
         waiting_door_close_button.setBackgroundResource(Application_manager.door_close_off[Application_manager.img_flag]);
+
+        if(Application_manager.gw_1000 == true){
+            waiting_id.setVisibility(View.VISIBLE);
+        }else if(Application_manager.gw_1000 == false){
+            waiting_id.setVisibility(View.INVISIBLE);
+        }
 
         SharedPreferences sharedPreferences = getSharedPreferences(Application_manager.DB_NAME, 0);
 
@@ -361,15 +372,21 @@ public class Activity_waiting extends AppCompatActivity {
     }
 
     private void start_animation() {
-
-        background.setBackgroundResource(R.drawable.animation_working);
+        if(Application_manager.gw_1000 == true){
+            background.setBackgroundResource(R.drawable.animation_working);
+        }else if(Application_manager.gw_1000 == false){
+            background.setBackgroundResource(R.drawable.animation_working_l);
+        }
         frameAnimation = (AnimationDrawable) background.getBackground();
         frameAnimation.start();
     }
 
     private void start_animation_ch() {
-
-        background.setBackgroundResource(R.drawable.animation_working_ch);
+        if(Application_manager.gw_1000 == true){
+            background.setBackgroundResource(R.drawable.animation_working_ch);
+        }else if(Application_manager.gw_1000 == false){
+            background.setBackgroundResource(R.drawable.animation_working_l_ch);
+        }
         frameAnimation = (AnimationDrawable) background.getBackground();
         frameAnimation.start();
     }

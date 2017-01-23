@@ -333,6 +333,28 @@ public class Application_manager extends Application {
         //GW_1000
         gw_1000 = sharedPreferences.getBoolean(GW_1000,true);
 
+        if (gw_1000 == false) {
+            // GW-1000L 버전 설정
+            setting_back_image[0] = R.drawable.setting_back_image_l;
+            setting_back_image[1] = R.drawable.setting_back_image_l_ch;
+
+            waiting_dooropen_backimage[0] = R.drawable.waiting_backimage_l;
+            waiting_dooropen_backimage[1] = R.drawable.waiting_backimage_l_ch;
+            waiting_doorclose_backimage[0] = R.drawable.waiting_backimage_l;
+            waiting_doorclose_backimage[1] = R.drawable.waiting_backimage_l_ch;
+
+        } else {
+            // GW-1000H 버전 설정
+            setting_back_image[0] = R.drawable.setting_back_image;
+            setting_back_image[1] = R.drawable.setting_back_image_ch;
+
+            waiting_dooropen_backimage[0] = R.drawable.waiting_dooropen_backimage;
+            waiting_dooropen_backimage[1] = R.drawable.waiting_dooropen_backimage_ch;
+            waiting_doorclose_backimage[0] = R.drawable.waiting_doorclose_backimage;
+            waiting_doorclose_backimage[1] = R.drawable.waiting_doorclose_backimage_ch;
+
+        }
+
         //DB_LANGUEAGE
         m_language = sharedPreferences.getInt(DB_LANGUEAGE,0);
 

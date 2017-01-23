@@ -350,6 +350,11 @@ public class Activity_engine extends AppCompatActivity {
                             Application_manager.setting_back_image[0] = R.drawable.setting_back_image_l;
                             Application_manager.setting_back_image[1] = R.drawable.setting_back_image_l_ch;
 
+                            Application_manager.waiting_dooropen_backimage[0] = R.drawable.waiting_backimage_l;
+                            Application_manager.waiting_dooropen_backimage[1] = R.drawable.waiting_backimage_l_ch;
+                            Application_manager.waiting_doorclose_backimage[0] = R.drawable.waiting_backimage_l;
+                            Application_manager.waiting_doorclose_backimage[1] = R.drawable.waiting_backimage_l_ch;
+
 
                             mode_f = false;
                         } else {
@@ -358,6 +363,11 @@ public class Activity_engine extends AppCompatActivity {
                             // GW-1000H 버전 설정
                             Application_manager.setting_back_image[0] = R.drawable.setting_back_image;
                             Application_manager.setting_back_image[1] = R.drawable.setting_back_image_ch;
+
+                            Application_manager.waiting_dooropen_backimage[0] = R.drawable.waiting_dooropen_backimage;
+                            Application_manager.waiting_dooropen_backimage[1] = R.drawable.waiting_dooropen_backimage_ch;
+                            Application_manager.waiting_doorclose_backimage[0] = R.drawable.waiting_doorclose_backimage;
+                            Application_manager.waiting_doorclose_backimage[1] = R.drawable.waiting_doorclose_backimage_ch;
 
 
                             mode_f = true;
@@ -604,7 +614,12 @@ public class Activity_engine extends AppCompatActivity {
         eng_door_open.setBackgroundResource(Application_manager.door_open_off[Application_manager.img_flag]);
         eng_door_close.setBackgroundResource(Application_manager.door_close_off[Application_manager.img_flag]);
         invert_choice.setBackgroundResource(Application_manager.inverter_ys[Application_manager.img_flag]);
-        program_m.setBackgroundResource(Application_manager.program_mode_off[Application_manager.img_flag]);
+
+        if(Application_manager.gw_1000 == true){
+            program_m.setBackgroundResource(Application_manager.program_mode_off[Application_manager.img_flag]);
+        }else if(Application_manager.gw_1000 == false){
+            program_m.setBackgroundResource(Application_manager.program_mode_on[Application_manager.img_flag]);
+        }
         eng_1step.setBackgroundResource(Application_manager.oxygen_1step_off[Application_manager.img_flag]);
         eng_2step.setBackgroundResource(Application_manager.oxygen_2step_off[Application_manager.img_flag]);
         eng_3step.setBackgroundResource(Application_manager.oxygen_3step_off[Application_manager.img_flag]);
