@@ -121,6 +121,9 @@ public class Application_manager extends Application {
     public final static String DB_TEMPERATURE_USER = "temp_above_user";
     public final static String DB_TEMPERATURE_BED_USER = "temp_below_user";
 
+    //GW-1000
+    public final static String GW_1000 = "GW_1000";
+
     // 사운드 id
     public final static int NUM_OF_LANG = 3;
     public final static int NUM_OF_SOUND = 5;
@@ -190,6 +193,9 @@ public class Application_manager extends Application {
     private static boolean m_sleep_f = false;
     public static int m_sleep_ff = 3;
     public static boolean m_operation_f = false;
+
+    //GW-1000H / GW-1000L    true -> H    false -> L
+    public static boolean gw_1000 = true;
 
     //-------------------------------Img ---------------------------------------------------
     // 0-> 한국,영어 1-> 중국
@@ -324,6 +330,9 @@ public class Application_manager extends Application {
         //Rause Rotation
         m_pause_rotation = sharedPreferences.getBoolean(DB_PAUSE,false);
 
+        //GW_1000
+        gw_1000 = sharedPreferences.getBoolean(GW_1000,true);
+
         //DB_LANGUEAGE
         m_language = sharedPreferences.getInt(DB_LANGUEAGE,0);
 
@@ -349,6 +358,14 @@ public class Application_manager extends Application {
         SENSOR_TEMP_BED = 0;
         SENSOR_TEMP_USER = sharedPreferences.getInt(DB_TEMPERATURE_USER, 0);
         SENSOR_TEMP_BED_USER = sharedPreferences.getInt(DB_TEMPERATURE_BED_USER, 0);
+    }
+
+    synchronized public static void set_m_gw_1000(boolean i){
+        sharedPreferences = context.getSharedPreferences(Application_manager.DB_NAME, 0);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putBoolean(GW_1000, i);
+        editor.commit();
+        gw_1000 = i;
     }
 
     synchronized public static void set_m_start_sleep(int i){

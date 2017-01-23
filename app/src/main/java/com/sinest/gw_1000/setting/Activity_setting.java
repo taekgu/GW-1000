@@ -992,6 +992,14 @@ public class Activity_setting extends AppCompatActivity {
         b_emotion.setBackgroundResource(Application_manager.emotion_off[Application_manager.img_flag]);
         b_back.setBackgroundResource(Application_manager.button_circle_back_off[Application_manager.img_flag]);
 
+        if(Application_manager.gw_1000 == false)
+        {
+            b_11.setVisibility(View.GONE);b_12.setVisibility(View.GONE);b_13.setVisibility(View.GONE);
+            b_21.setVisibility(View.GONE);b_22.setVisibility(View.GONE);b_23.setVisibility(View.GONE);
+            b_31.setVisibility(View.GONE);b_32.setVisibility(View.GONE);b_33.setVisibility(View.GONE);
+            b_41.setVisibility(View.GONE);b_42.setVisibility(View.GONE);b_43.setVisibility(View.GONE);
+        }
+
     }
 
     @Override

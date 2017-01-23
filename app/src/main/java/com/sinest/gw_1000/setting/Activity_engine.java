@@ -344,9 +344,22 @@ public class Activity_engine extends AppCompatActivity {
                         //
                         if (mode_f == true) {
                             program_m.setBackgroundResource(Application_manager.program_mode_on[Application_manager.img_flag]);
+                            Application_manager.set_m_gw_1000(false);
+
+                            // GW-1000L 버전 설정
+                            Application_manager.setting_back_image[0] = R.drawable.setting_back_image_l;
+                            Application_manager.setting_back_image[1] = R.drawable.setting_back_image_l_ch;
+
+
                             mode_f = false;
                         } else {
                             program_m.setBackgroundResource(Application_manager.program_mode_off[Application_manager.img_flag]);
+                            Application_manager.set_m_gw_1000(true);
+                            // GW-1000H 버전 설정
+                            Application_manager.setting_back_image[0] = R.drawable.setting_back_image;
+                            Application_manager.setting_back_image[1] = R.drawable.setting_back_image_ch;
+
+
                             mode_f = true;
                         }
                         break;
