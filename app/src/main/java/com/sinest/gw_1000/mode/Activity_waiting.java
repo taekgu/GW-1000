@@ -107,7 +107,8 @@ public class Activity_waiting extends AppCompatActivity {
         textView_temperature.setOnTouchListener(mTouchEvent);
         textView_temperature_bed.setOnTouchListener(mTouchEvent);
 
-
+        fragment_waiting = new Fragment_waiting();
+/*
         fragment_waiting = new Fragment_waiting();
         for (int i = 0; i< Application_manager.MAX_CHECKED; i++) {
 
@@ -115,7 +116,7 @@ public class Activity_waiting extends AppCompatActivity {
             fragment_waiting.addCheckedIdx(checked_loc[i]);
             Log.i("JW", "Selected library idx : " + checked_loc[i]);
         }
-
+*/
         FragmentManager fragmentManager = getFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.add(R.id.frameLayout_fragment, fragment_waiting);
@@ -163,15 +164,16 @@ public class Activity_waiting extends AppCompatActivity {
         registReceiver();
         isRun = true;
 
+        // ???
         background.setBackgroundResource(Application_manager.waiting_dooropen_backimage[Application_manager.img_flag]);
         waiting_door_open_button.setBackgroundResource(Application_manager.door_open_off[Application_manager.img_flag]);
         waiting_door_close_button.setBackgroundResource(Application_manager.door_close_off[Application_manager.img_flag]);
 
         SharedPreferences sharedPreferences = getSharedPreferences(Application_manager.DB_NAME, 0);
 
-        if (isFirstInit) {
+       // if (isFirstInit) {
 
-            isFirstInit = false;
+       //     isFirstInit = false;
             if (mode == 0) {
 
                 fragment_waiting.reset();
@@ -183,7 +185,7 @@ public class Activity_waiting extends AppCompatActivity {
                 }
                 fragment_waiting.refresh();
             }
-        }
+      //  }
 
         val_time = sharedPreferences.getInt(Application_manager.DB_VAL_TIME, 10);
         time_text.setText(Integer.toString(val_time));

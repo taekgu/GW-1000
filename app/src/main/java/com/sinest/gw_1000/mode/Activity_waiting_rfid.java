@@ -117,7 +117,6 @@ public class Activity_waiting_rfid extends AppCompatActivity {
         waiting_door_open_button = (ImageView)findViewById(R.id.waiting_rfid_dooropen_button);
         waiting_door_close_button = (ImageView)findViewById(R.id.waiting_rfid_doorclose_button);
 
-
         waiting_oxygen_up_button.setOnTouchListener(mTouchEvent);
         waiting_oxygen_down_button.setOnTouchListener(mTouchEvent);
         waiting_pressure_up_button.setOnTouchListener(mTouchEvent);
@@ -146,7 +145,6 @@ public class Activity_waiting_rfid extends AppCompatActivity {
         super.onResume();
         Application_manager.setFullScreen(this);
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
-
 
         registReceiver();
 

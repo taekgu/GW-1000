@@ -356,8 +356,8 @@ public class Application_manager extends Application {
         // DB에서 필요 정보 불러와서 변수에 저장
         SENSOR_TEMP = 0;
         SENSOR_TEMP_BED = 0;
-        SENSOR_TEMP_USER = sharedPreferences.getInt(DB_TEMPERATURE_USER, 0);
-        SENSOR_TEMP_BED_USER = sharedPreferences.getInt(DB_TEMPERATURE_BED_USER, 0);
+        SENSOR_TEMP_USER = sharedPreferences.getInt(DB_TEMPERATURE_USER, 25);
+        SENSOR_TEMP_BED_USER = sharedPreferences.getInt(DB_TEMPERATURE_BED_USER, 25);
     }
 
     synchronized public static void set_m_gw_1000(boolean i){
