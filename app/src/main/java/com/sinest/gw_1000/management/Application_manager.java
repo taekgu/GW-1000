@@ -253,6 +253,14 @@ public class Application_manager extends Application {
     public static int[] waiting_rfid_doorclose_back = {R.drawable.waiting_rfid_doorclose_back, R.drawable.waiting_rfid_doorclose_back_ch};
     public static int[] waiting_rfid_dooropen_back = {R.drawable.waiting_rfid_dooropen_back, R.drawable.waiting_rfid_dooropen_back_ch};
 
+    //working
+    public static int[] workingmotion0 = {R.drawable.workingmotion0, R.drawable.workingmotion0_ch};
+    public static int[] workingmotion1 = {R.drawable.workingmotion1, R.drawable.workingmotion1_ch};
+    public static int[] workingmotion2 = {R.drawable.workingmotion2, R.drawable.workingmotion2_ch};
+    public static int[] workingmotion3 = {R.drawable.workingmotion3, R.drawable.workingmotion3_ch};
+    public static int[] workingmotion4 = {R.drawable.workingmotion4, R.drawable.workingmotion4_ch};
+    public static int[] workingmotion5 = {R.drawable.workingmotion5, R.drawable.workingmotion5_ch};
+
     //library - o  popup 해야됨
     public static int[] ribrary_back_image = {R.drawable.ribrary_back_image, R.drawable.ribrary_back_image_ch};
     public static int[] library_setting_off = {R.drawable.library_setting_off, R.drawable.library_setting_off_ch};

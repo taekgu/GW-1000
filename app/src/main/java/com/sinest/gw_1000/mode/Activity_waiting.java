@@ -163,7 +163,6 @@ public class Activity_waiting extends AppCompatActivity {
         registReceiver();
         isRun = true;
 
-
         background.setBackgroundResource(Application_manager.waiting_dooropen_backimage[Application_manager.img_flag]);
         waiting_door_open_button.setBackgroundResource(Application_manager.door_open_off[Application_manager.img_flag]);
         waiting_door_close_button.setBackgroundResource(Application_manager.door_close_off[Application_manager.img_flag]);
@@ -270,7 +269,11 @@ public class Activity_waiting extends AppCompatActivity {
                     editor.commit();
 
                     // 애니메이션 시작
-                    start_animation();
+                    if(Application_manager.img_flag == 0){
+                        start_animation();
+                    }else if(Application_manager.img_flag == 1){
+                        start_animation_ch();
+                    }
 
                     // 동작 구간 표시
                     //CustomProgressBarHorizontal progressBar = (CustomProgressBarHorizontal) findViewById(R.id.custom_progress_bar_horizontal);
@@ -358,6 +361,13 @@ public class Activity_waiting extends AppCompatActivity {
     private void start_animation() {
 
         background.setBackgroundResource(R.drawable.animation_working);
+        frameAnimation = (AnimationDrawable) background.getBackground();
+        frameAnimation.start();
+    }
+
+    private void start_animation_ch() {
+
+        background.setBackgroundResource(R.drawable.animation_working_ch);
         frameAnimation = (AnimationDrawable) background.getBackground();
         frameAnimation.start();
     }
