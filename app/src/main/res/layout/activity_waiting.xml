@@ -2,7 +2,6 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/waiting_background"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.sinest.gw_1000.mode.Activity_waiting">
@@ -11,7 +10,7 @@
         android:id="@+id/activity_waiting_background"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/waiting_doorclose_backimage"/>
+        android:background="@drawable/workingmotion0"/>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -114,296 +113,334 @@
                     android:orientation="horizontal"
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
-                    android:layout_weight="45">
+                    android:layout_weight="6.5">
                 </LinearLayout>
 
-                <LinearLayout
-                    android:orientation="vertical"
-                    android:id="@+id/waiting_id"
+                <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
-                    android:layout_weight="55"
-                    android:weightSum="100">
+                    android:layout_weight="93.5">
 
                     <LinearLayout
-                        android:orientation="horizontal"
+                        android:orientation="vertical"
                         android:layout_width="match_parent"
-                        android:layout_height="0dp"
-                        android:layout_weight="27.5"
+                        android:layout_height="match_parent"
                         android:weightSum="100">
 
                         <LinearLayout
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:layout_weight="28">
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:layout_weight="13">
-
-                            <RelativeLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:gravity="center">
-
-                                <ImageView
-                                    android:id="@+id/waiting_humidity"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="match_parent"
-                                    app:srcCompat="@drawable/humidity"/>
-
-                                <TextView
-                                    android:id="@+id/textView_humidity"
-                                    android:layout_width="0dp"
-                                    android:layout_height="0dp"
-                                    android:alpha="100"
-                                    android:text="0"
-                                    android:textColor="#000000"
-                                    android:textSize="15dp"
-                                    android:gravity="center"
-                                    android:layout_alignStart="@+id/waiting_humidity"
-                                    android:layout_alignEnd="@+id/waiting_humidity"
-                                    android:layout_alignTop="@+id/waiting_humidity"
-                                    android:layout_alignBottom="@+id/waiting_humidity"
-                                    android:layout_marginRight="15dp"/>
-
-                            </RelativeLayout>
-
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:layout_weight="3">
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:orientation="vertical"
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:layout_weight="12"
+                            android:orientation="horizontal"
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_weight="72"
                             android:weightSum="100">
 
                             <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="0dp"
-                                android:layout_weight="25">
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="11">
                             </LinearLayout>
 
-                            <RelativeLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="0dp"
-                                android:gravity="center"
-                                android:layout_weight="39">
-
-                                <ImageView
-                                    android:id="@+id/waiting_temperature_above"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="match_parent"
-                                    app:srcCompat="@drawable/temperature"/>
-
-                                <TextView
-                                    android:id="@+id/textView_temperature_above"
-                                    android:layout_width="0dp"
-                                    android:layout_height="0dp"
-                                    android:layout_alignStart="@+id/waiting_temperature_above"
-                                    android:layout_alignEnd="@+id/waiting_temperature_above"
-                                    android:layout_alignTop="@+id/waiting_temperature_above"
-                                    android:layout_alignBottom="@+id/waiting_temperature_above"
-                                    android:alpha="100"
-                                    android:text="0"
-                                    android:textColor="#ffffff"
-                                    android:gravity="center"/>
-
-                            </RelativeLayout>
-
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:layout_weight="5">
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:layout_weight="13">
-
-                            <RelativeLayout
-                                android:layout_width="match_parent"
+                            <ImageView
+                                android:id="@+id/imageView_device"
+                                android:layout_width="0dp"
                                 android:layout_height="match_parent"
-                                android:gravity="center">
+                                android:layout_weight="78"
+                                android:background="@drawable/open"
+                                android:scaleType="fitXY"/>
 
-                                <ImageView
-                                    android:id="@+id/waiting_oxygen"
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:orientation="vertical"
+                        android:id="@+id/waiting_id"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:weightSum="100">
+
+                        <LinearLayout
+                            android:orientation="horizontal"
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_weight="33">
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:orientation="horizontal"
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_weight="27.5"
+                            android:weightSum="100">
+
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="28">
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="13">
+
+                                <RelativeLayout
                                     android:layout_width="match_parent"
                                     android:layout_height="match_parent"
-                                    app:srcCompat="@drawable/oxygen"/>
+                                    android:gravity="center">
 
-                                <TextView
-                                    android:id="@+id/textView_oxygen"
-                                    android:layout_width="0dp"
+                                    <ImageView
+                                        android:id="@+id/waiting_humidity"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
+                                        app:srcCompat="@drawable/humidity"/>
+
+                                    <TextView
+                                        android:id="@+id/textView_humidity"
+                                        android:layout_width="0dp"
+                                        android:layout_height="0dp"
+                                        android:alpha="100"
+                                        android:text="0"
+                                        android:textColor="#000000"
+                                        android:textSize="15dp"
+                                        android:gravity="center"
+                                        android:layout_alignStart="@+id/waiting_humidity"
+                                        android:layout_alignEnd="@+id/waiting_humidity"
+                                        android:layout_alignTop="@+id/waiting_humidity"
+                                        android:layout_alignBottom="@+id/waiting_humidity"
+                                        android:layout_marginRight="15dp"/>
+
+                                </RelativeLayout>
+
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="3">
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:orientation="vertical"
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="12"
+                                android:weightSum="100">
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
                                     android:layout_height="0dp"
-                                    android:alpha="100"
-                                    android:text="0"
-                                    android:textColor="#000000"
-                                    android:textSize="15dp"
+                                    android:layout_weight="25">
+                                </LinearLayout>
+
+                                <RelativeLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="0dp"
                                     android:gravity="center"
-                                    android:layout_alignStart="@+id/waiting_oxygen"
-                                    android:layout_alignEnd="@+id/waiting_oxygen"
-                                    android:layout_alignTop="@+id/waiting_oxygen"
-                                    android:layout_alignBottom="@+id/waiting_oxygen"
-                                    android:layout_marginRight="15dp"/>
+                                    android:layout_weight="39">
 
-                            </RelativeLayout>
+                                    <ImageView
+                                        android:id="@+id/waiting_temperature_above"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
+                                        app:srcCompat="@drawable/temperature"/>
 
-                        </LinearLayout>
+                                    <TextView
+                                        android:id="@+id/textView_temperature_above"
+                                        android:layout_width="0dp"
+                                        android:layout_height="0dp"
+                                        android:layout_alignStart="@+id/waiting_temperature_above"
+                                        android:layout_alignEnd="@+id/waiting_temperature_above"
+                                        android:layout_alignTop="@+id/waiting_temperature_above"
+                                        android:layout_alignBottom="@+id/waiting_temperature_above"
+                                        android:alpha="100"
+                                        android:text="0"
+                                        android:textColor="#ffffff"
+                                        android:gravity="center"/>
 
-                    </LinearLayout>
+                                </RelativeLayout>
 
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="0dp"
-                        android:layout_weight="9">
+                            </LinearLayout>
 
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:orientation="horizontal"
-                        android:layout_width="match_parent"
-                        android:layout_height="0dp"
-                        android:layout_weight="10"
-                        android:weightSum="100">
-
-                        <LinearLayout
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:layout_weight="44">
-
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:layout_weight="12">
-
-                            <RelativeLayout
-                                android:layout_width="match_parent"
+                            <LinearLayout
+                                android:layout_width="0dp"
                                 android:layout_height="match_parent"
-                                android:gravity="center">
+                                android:layout_weight="5">
+                            </LinearLayout>
 
-                                <ImageView
-                                    android:id="@+id/waiting_temperature_below"
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="13">
+
+                                <RelativeLayout
                                     android:layout_width="match_parent"
                                     android:layout_height="match_parent"
-                                    app:srcCompat="@drawable/temperature"/>
+                                    android:gravity="center">
 
-                                <TextView
-                                    android:id="@+id/textView_temperature_below"
-                                    android:layout_width="0dp"
-                                    android:layout_height="0dp"
-                                    android:layout_alignStart="@+id/waiting_temperature_below"
-                                    android:layout_alignEnd="@+id/waiting_temperature_below"
-                                    android:layout_alignTop="@+id/waiting_temperature_below"
-                                    android:layout_alignBottom="@+id/waiting_temperature_below"
-                                    android:alpha="100"
-                                    android:text="0"
-                                    android:textColor="#ffffff"
-                                    android:gravity="center"/>
+                                    <ImageView
+                                        android:id="@+id/waiting_oxygen"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
+                                        app:srcCompat="@drawable/oxygen"/>
 
-                            </RelativeLayout>
+                                    <TextView
+                                        android:id="@+id/textView_oxygen"
+                                        android:layout_width="0dp"
+                                        android:layout_height="0dp"
+                                        android:alpha="100"
+                                        android:text="0"
+                                        android:textColor="#000000"
+                                        android:textSize="15dp"
+                                        android:gravity="center"
+                                        android:layout_alignStart="@+id/waiting_oxygen"
+                                        android:layout_alignEnd="@+id/waiting_oxygen"
+                                        android:layout_alignTop="@+id/waiting_oxygen"
+                                        android:layout_alignBottom="@+id/waiting_oxygen"
+                                        android:layout_marginRight="15dp"/>
+
+                                </RelativeLayout>
+
+                            </LinearLayout>
 
                         </LinearLayout>
 
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:orientation="horizontal"
-                        android:layout_width="match_parent"
-                        android:layout_height="0dp"
-                        android:layout_weight="21"
-                        android:weightSum="100">
-
-                        <ImageView
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:background="@null"
-                            android:layout_weight="25"/>
 
                         <LinearLayout
-                            android:orientation="vertical"
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:layout_weight="50"
+                            android:orientation="horizontal"
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_weight="10"
+                            android:weightSum="100">
+
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="44">
+
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="12">
+
+                                <RelativeLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:gravity="center">
+
+                                    <ImageView
+                                        android:id="@+id/waiting_temperature_below"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
+                                        app:srcCompat="@drawable/temperature"/>
+
+                                    <TextView
+                                        android:id="@+id/textView_temperature_below"
+                                        android:layout_width="0dp"
+                                        android:layout_height="0dp"
+                                        android:layout_alignStart="@+id/waiting_temperature_below"
+                                        android:layout_alignEnd="@+id/waiting_temperature_below"
+                                        android:layout_alignTop="@+id/waiting_temperature_below"
+                                        android:layout_alignBottom="@+id/waiting_temperature_below"
+                                        android:alpha="100"
+                                        android:text="0"
+                                        android:textColor="#ffffff"
+                                        android:gravity="center"/>
+
+                                </RelativeLayout>
+
+                            </LinearLayout>
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:orientation="horizontal"
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_weight="11"
                             android:weightSum="100">
 
                             <ImageView
-                                android:layout_width="match_parent"
-                                android:layout_height="0dp"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
                                 android:background="@null"
-                                android:layout_weight="50"/>
+                                android:layout_weight="25"/>
 
                             <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="0dp"
-                                android:layout_weight="32"
-                                android:layout_gravity="center">
+                                android:orientation="vertical"
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="50"
+                                android:weightSum="100">
 
-                                <com.sinest.gw_1000.mode.utils.CustomProgressBarBlock
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:gravity="center"
-                                    android:id="@+id/seekBar2"
-                                    android:visibility="invisible">
-                                </com.sinest.gw_1000.mode.utils.CustomProgressBarBlock>
+                                <ImageView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="0dp"
+                                    android:background="@null"
+                                    android:layout_weight="50"/>
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="0dp"
+                                    android:layout_weight="32"
+                                    android:layout_gravity="center">
+
+                                    <com.sinest.gw_1000.mode.utils.CustomProgressBarBlock
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:gravity="center"
+                                        android:id="@+id/seekBar2"
+                                        android:visibility="invisible">
+                                    </com.sinest.gw_1000.mode.utils.CustomProgressBarBlock>
+
+                                </LinearLayout>
 
                             </LinearLayout>
 
                         </LinearLayout>
 
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="0dp"
-                        android:layout_weight="23"
-                        android:weightSum="100">
-
                         <LinearLayout
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:layout_weight="27.5">
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_weight="14"
+                            android:weightSum="100">
+
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="27.5">
+                            </LinearLayout>
+
+                            <ImageView
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="20.5"
+                                android:id="@+id/waiting_dooropen_button"
+                                android:background="@drawable/door_open_off"
+                                android:scaleType="fitXY"/>
+
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="4">
+
+                            </LinearLayout>
+
+                            <ImageView
+                                android:id="@+id/waiting_doorclose_button"
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="20.5"
+                                android:scaleType="fitXY"
+                                android:background="@drawable/door_close_off"/>
+
                         </LinearLayout>
 
-                        <ImageView
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:layout_weight="20.5"
-                            android:id="@+id/waiting_dooropen_button"
-                            android:background="@drawable/door_open_off"
-                            android:scaleType="fitXY"/>
-
-                        <LinearLayout
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:layout_weight="4">
-
-                        </LinearLayout>
-
-                        <ImageView
-                            android:id="@+id/waiting_doorclose_button"
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:layout_weight="20.5"
-                            android:scaleType="fitXY"
-                            android:background="@drawable/door_close_off"/>
-
                     </LinearLayout>
 
-                </LinearLayout>
+                </RelativeLayout>
 
             </LinearLayout>
 

@@ -350,11 +350,6 @@ public class Activity_engine extends AppCompatActivity {
                             Application_manager.setting_back_image[0] = R.drawable.setting_back_image_l;
                             Application_manager.setting_back_image[1] = R.drawable.setting_back_image_l_ch;
 
-                            Application_manager.waiting_dooropen_backimage[0] = R.drawable.waiting_backimage_l;
-                            Application_manager.waiting_dooropen_backimage[1] = R.drawable.waiting_backimage_l_ch;
-                            Application_manager.waiting_doorclose_backimage[0] = R.drawable.waiting_backimage_l;
-                            Application_manager.waiting_doorclose_backimage[1] = R.drawable.waiting_backimage_l_ch;
-
 
                             mode_f = false;
                         } else {
@@ -363,11 +358,6 @@ public class Activity_engine extends AppCompatActivity {
                             // GW-1000H 버전 설정
                             Application_manager.setting_back_image[0] = R.drawable.setting_back_image;
                             Application_manager.setting_back_image[1] = R.drawable.setting_back_image_ch;
-
-                            Application_manager.waiting_dooropen_backimage[0] = R.drawable.waiting_dooropen_backimage;
-                            Application_manager.waiting_dooropen_backimage[1] = R.drawable.waiting_dooropen_backimage_ch;
-                            Application_manager.waiting_doorclose_backimage[0] = R.drawable.waiting_doorclose_backimage;
-                            Application_manager.waiting_doorclose_backimage[1] = R.drawable.waiting_doorclose_backimage_ch;
 
 
                             mode_f = true;

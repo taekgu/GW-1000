@@ -61,6 +61,7 @@ public class Activity_waiting extends AppCompatActivity {
     boolean isRun;
 
     private ImageView background;
+    private ImageView background_device;
     private AnimationDrawable frameAnimation;
 
     CustomProgressBarBlock seekBar;
@@ -156,6 +157,7 @@ public class Activity_waiting extends AppCompatActivity {
         time_text.setOnTouchListener(mTouchEvent);
 
         background = (ImageView) findViewById(R.id.activity_waiting_background);
+        background_device = (ImageView) findViewById(R.id.imageView_device);
 
         seekBar = (CustomProgressBarBlock) findViewById(R.id.seekBar2);
     }
@@ -169,8 +171,11 @@ public class Activity_waiting extends AppCompatActivity {
         registReceiver();
         isRun = true;
 
-        // ???
-        background.setBackgroundResource(Application_manager.waiting_dooropen_backimage[Application_manager.img_flag]);
+        // 언어에 따라 배경
+        if (mode == 0) {
+
+            background.setBackgroundResource(Application_manager.waiting_backimage[Application_manager.img_flag]);
+        }
         waiting_door_open_button.setBackgroundResource(Application_manager.door_open_off[Application_manager.img_flag]);
         waiting_door_close_button.setBackgroundResource(Application_manager.door_close_off[Application_manager.img_flag]);
 
@@ -400,15 +405,7 @@ public class Activity_waiting extends AppCompatActivity {
                 public void run() {
 
                     frameAnimation.stop();
-                    // 도어 열림
-                    if (Application_manager.getCommunicator().get_tx_idx(11) == 0x01) {
-                        background.setBackgroundResource(Application_manager.waiting_dooropen_backimage[Application_manager.img_flag]);
-                    }
-                    // 도어 닫힘
-                    else {
-
-                        background.setBackgroundResource(Application_manager.waiting_dooropen_backimage[Application_manager.img_flag]);
-                    }
+                    background.setBackgroundResource(Application_manager.waiting_backimage[Application_manager.img_flag]);
                 }
             });
         }
@@ -529,7 +526,7 @@ public class Activity_waiting extends AppCompatActivity {
                     textView_temperature_bed.setText(""+temp);
                     Application_manager.SENSOR_TEMP_BED = temp;
 
-                    // 노즐 위치
+                    // 노즐 위치 0~14
                     seekBar.setProgress(Application_manager.getCommunicator().get_rx_idx(15));
                 }
                 else if (msg.what == SET_BUTTON_INVISIBLE) {
@@ -541,6 +538,41 @@ public class Activity_waiting extends AppCompatActivity {
 
                     waiting_library_button.setVisibility(View.VISIBLE);
                     waiting_setting_button.setVisibility(View.VISIBLE);
+                }
+
+                // 내부온도, 수온 설정 값과 디바이스 실제 값을 비교하여 물히터와 히터 작동 여부 판별
+                // 물히터
+                // 온도 높을 때 - 끄기
+                if (Application_manager.SENSOR_TEMP_BED_USER + 1 < Application_manager.SENSOR_TEMP_BED) {
+
+                    Application_manager.getCommunicator().set_tx(6, (byte) 0x00);
+                }
+                // 온도 낮을 때 - 켜기
+                else if (Application_manager.SENSOR_TEMP_BED_USER - 1 > Application_manager.SENSOR_TEMP_BED) {
+
+                    Application_manager.getCommunicator().set_tx(6, (byte) 0x01);
+                }
+                // 설정 범위 +-1 이내일 때 - 끄기
+                else {
+
+                    Application_manager.getCommunicator().set_tx(6, (byte) 0x00);
+                }
+
+                // 히터
+                // 온도 높을 때 - 끄기
+                if (Application_manager.SENSOR_TEMP_USER + 1 < Application_manager.SENSOR_TEMP) {
+
+                    Application_manager.getCommunicator().set_tx(7, (byte) 0x00);
+                }
+                // 온도 낮을 때 - 켜기
+                else if (Application_manager.SENSOR_TEMP_USER - 1 > Application_manager.SENSOR_TEMP) {
+
+                    Application_manager.getCommunicator().set_tx(7, (byte) 0x01);
+                }
+                // 설정 범위 +-1 이내일 때 - 끄기
+                else {
+
+                    Application_manager.getCommunicator().set_tx(7, (byte) 0x00);
                 }
             }
         };
@@ -716,8 +748,7 @@ public class Activity_waiting extends AppCompatActivity {
 
                         if (Application_manager.getSoundManager().play(Application_manager.m_language, 3) == 0) {
 
-                            background = (ImageView) findViewById(R.id.activity_waiting_background);
-                            background.setBackgroundResource(Application_manager.waiting_dooropen_backimage[Application_manager.img_flag]);
+                            background_device.setBackgroundResource(R.drawable.open);
 
                             val = 0x01;
                             communicator.set_tx(11, val);
@@ -730,8 +761,7 @@ public class Activity_waiting extends AppCompatActivity {
 
                         if (Application_manager.getSoundManager().play(Application_manager.m_language, 4) == 0) {
 
-                            background = (ImageView) findViewById(R.id.activity_waiting_background);
-                            background.setBackgroundResource(Application_manager.waiting_doorclose_backimage[Application_manager.img_flag]);
+                            background_device.setBackgroundResource(R.drawable.close);
 
                             val = 0x02;
                             communicator.set_tx(11, val);

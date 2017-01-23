@@ -6,6 +6,8 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.provider.ContactsContract;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
@@ -26,10 +28,15 @@ public class Activity_temperature_popup extends Activity {
     private final static int TEMPERATURE_ABOVE = 0;
     private final static int TEMPERATURE_BELOW = 1;
 
+    private final static int TEMP_MAX = 40;
+    private final static int TEMP_MIN = 25;
+
     TextView textView_time;
     private int temperature;
     private int mode; // 위 온도 0, 아래 온도 1
     private Context mContext;
+
+    private ImageView background;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,12 +44,12 @@ public class Activity_temperature_popup extends Activity {
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 
         mContext = this;
-        setScreen();
-
 
         Intent intent = getIntent();
         mode = intent.getIntExtra("mode", -1);
         temperature = intent.getIntExtra("temp", 0);
+
+        setScreen();
 
         // 폰트 설정
         Typeface tf = Typeface.createFromAsset(getAssets(), "fonts/digital.ttf");
@@ -66,6 +73,37 @@ public class Activity_temperature_popup extends Activity {
         getWindow().setAttributes(layoutParams);
         setContentView(R.layout.activity_waiting_time_popup);
         Application_manager.setFullScreen(this);
+
+        // 배경 설정
+        background = (ImageView) findViewById(R.id.working_time_standard);
+        // 언어 중국어일 때
+        if (Application_manager.img_flag == 1) {
+
+            // 내부온도 창일 경우
+            if (mode == TEMPERATURE_ABOVE) {
+
+                background.setBackgroundResource(R.drawable.keypad_internal_temp_cn);
+            }
+            // 수온 창일 경우
+            else if (mode == TEMPERATURE_BELOW) {
+
+                background.setBackgroundResource(R.drawable.keypad_water_temp_cn);
+            }
+        }
+        // 나머지 언어일 때
+        else {
+
+            // 내부온도 창일 경우
+            if (mode == TEMPERATURE_ABOVE) {
+
+                background.setBackgroundResource(R.drawable.keypad_internal_temp_en);
+            }
+            // 수온 창일 경우
+            else if (mode == TEMPERATURE_BELOW) {
+
+                background.setBackgroundResource(R.drawable.keypad_water_temp_en);
+            }
+        }
     }
 
     private View.OnTouchListener mTouchEvent = new View.OnTouchListener() {
@@ -82,7 +120,7 @@ public class Activity_temperature_popup extends Activity {
 
                     case R.id.popup_keypad_enter:
 
-                        if (temperature >= 1 && temperature <= 100) {
+                        if (temperature >= TEMP_MIN && temperature <= TEMP_MAX) {
 
                             SharedPreferences sharedPreferences = getSharedPreferences(Application_manager.DB_NAME, 0);
                             SharedPreferences.Editor editor = sharedPreferences.edit();
@@ -101,7 +139,7 @@ public class Activity_temperature_popup extends Activity {
                         }
                         else {
 
-                            Toast.makeText(mContext, "1~100 사이의 값을 입력해주세요", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(mContext, "25~40 사이의 값을 입력해주세요", Toast.LENGTH_SHORT).show();
                         }
                         break;
                     case R.id.popup_keypad_back:
@@ -129,13 +167,10 @@ public class Activity_temperature_popup extends Activity {
                 txt = (TextView)findViewById(R.id.working_time_popup_text);
                 t = (String)txt.getText();
                 temp = Integer.parseInt(t);
-                if(temp==0)
-                    temp = i;
-                else
-                    temp = temp*10 + i;
 
-                if(temp<1 || temp>100)
-                    temp = 0;
+                temp = (temp * 10) + i;
+                temp = (temp % 100);
+
                 temperature = temp;
                 txt.setText(Integer.toString(temp));
                 break;

@@ -265,8 +265,7 @@ public class Application_manager extends Application {
     public static int[] program_mode_off = {R.drawable.program_mode_off, R.drawable.program_mode_off_ch};
 
     //waiting - o
-    public static int[] waiting_doorclose_backimage = {R.drawable.waiting_doorclose_backimage, R.drawable.waiting_doorclose_backimage_ch};
-    public static int[] waiting_dooropen_backimage = {R.drawable.waiting_dooropen_backimage, R.drawable.waiting_dooropen_backimage_ch};
+    public static int[] waiting_backimage = {R.drawable.workingmotion0, R.drawable.workingmotion0_ch};
 
     //waiting rfid
     public static int[] waiting_rfid_doorclose_back = {R.drawable.waiting_rfid_doorclose_back, R.drawable.waiting_rfid_doorclose_back_ch};
@@ -338,20 +337,16 @@ public class Application_manager extends Application {
             setting_back_image[0] = R.drawable.setting_back_image_l;
             setting_back_image[1] = R.drawable.setting_back_image_l_ch;
 
-            waiting_dooropen_backimage[0] = R.drawable.waiting_backimage_l;
-            waiting_dooropen_backimage[1] = R.drawable.waiting_backimage_l_ch;
-            waiting_doorclose_backimage[0] = R.drawable.waiting_backimage_l;
-            waiting_doorclose_backimage[1] = R.drawable.waiting_backimage_l_ch;
+            waiting_backimage[0] = R.drawable.waiting_backimage_l;
+            waiting_backimage[1] = R.drawable.waiting_backimage_l_ch;
 
         } else {
             // GW-1000H 버전 설정
             setting_back_image[0] = R.drawable.setting_back_image;
             setting_back_image[1] = R.drawable.setting_back_image_ch;
 
-            waiting_dooropen_backimage[0] = R.drawable.waiting_dooropen_backimage;
-            waiting_dooropen_backimage[1] = R.drawable.waiting_dooropen_backimage_ch;
-            waiting_doorclose_backimage[0] = R.drawable.waiting_doorclose_backimage;
-            waiting_doorclose_backimage[1] = R.drawable.waiting_doorclose_backimage_ch;
+            waiting_backimage[0] = R.drawable.workingmotion0;
+            waiting_backimage[1] = R.drawable.workingmotion0_ch;
 
         }
 
