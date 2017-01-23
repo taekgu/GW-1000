@@ -14,6 +14,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.Chronometer;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.sinest.gw_1000.R;
@@ -40,6 +41,8 @@ public class Activity_time extends Activity {
     int int_r;
     int check;
 
+    ImageView time_keypad_id;
+
     //Intent result;
 
     @Override
@@ -54,6 +57,8 @@ public class Activity_time extends Activity {
 
         Application_manager.setFullScreen(this);
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+
+        time_keypad_id = (ImageView) findViewById(R.id.time_keypad_id);
 
         time1 = (Button) findViewById(R.id.time1);
         time2 = (Button) findViewById(R.id.time2);
@@ -163,6 +168,14 @@ public class Activity_time extends Activity {
     @Override
     public boolean onTouchEvent(MotionEvent event){
         return false;
+    }
+
+    protected void onResume() {
+        super.onResume();
+
+        time_keypad_id.setBackgroundResource(Application_manager.time_keypad[Application_manager.img_flag]);
+        time_enter.setBackgroundResource(Application_manager.keypad_enter[Application_manager.img_flag]);
+        time_back.setBackgroundResource(Application_manager.keypad_back[Application_manager.img_flag]);
     }
 
     void time_sum(int k)

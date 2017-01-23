@@ -12,6 +12,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.Chronometer;
+import android.widget.LinearLayout;
 
 import com.google.android.gms.appindexing.Action;
 import com.google.android.gms.appindexing.AppIndex;
@@ -40,6 +41,8 @@ public class Activity_water extends Activity {
 
     private GoogleApiClient client;
 
+    LinearLayout activity_water;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,6 +55,8 @@ public class Activity_water extends Activity {
 
         Application_manager.setFullScreen(this);
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+
+        activity_water = (LinearLayout) findViewById(R.id.activity_water);
 
         water_save = (Button) findViewById(R.id.water_save);
         water_off = (Button) findViewById(R.id.water_off);

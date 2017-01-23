@@ -222,7 +222,20 @@ public class Application_manager extends Application {
     public static int[] save_setting_off = {R.drawable.save_setting_off, R.drawable.save_setting_off_ch};
     public static int[] button_elipse_back_on = {R.drawable.button_elipse_back_on, R.drawable.button_elipse_back_on_ch};
     public static int[] button_elipse_back_off = {R.drawable.button_elipse_back_off, R.drawable.button_elipse_back_off_ch};
+
     // 저장버튼 추가 요청및 추가해야함  ,  rfid 쪽 안함 ,  팝업 배경 받고 진행
+    public static int[] rfid_password_popup = {R.drawable.rfid_password_popup, R.drawable.rfid_password_popup_ch};
+
+    public static int[] keypad_enter = {R.drawable.keypad_enter, R.drawable.keypad_enter_ch};
+    public static int[] keypad_back = {R.drawable.keypad_back, R.drawable.keypad_back_ch};
+    public static int[] keypad_change = {R.drawable.keypad_change, R.drawable.keypad_change_ch};
+    public static int[] keypad_delete = {R.drawable.keypad_delete, R.drawable.keypad_delete_ch};
+
+    public static int[] time_keypad = {R.drawable.time_keypad, R.drawable.time_keypad_ch};
+
+    public static int[] water_heater_finishtimer_keyped = {R.drawable.water_heater_finishtimer_keyped, R.drawable.water_heater_finishtimer_keyped_ch};
+    public static int[] water_heater_start_timer_keyped = {R.drawable.water_heater_start_timer_keyped, R.drawable.water_heater_start_timer_keyped_ch};
+
 
     //engine - o
     public static int[] engineermode_back_image = {R.drawable.engineermode_back_image, R.drawable.engineermode_back_image_ch};
@@ -253,13 +266,6 @@ public class Application_manager extends Application {
     public static int[] waiting_rfid_doorclose_back = {R.drawable.waiting_rfid_doorclose_back, R.drawable.waiting_rfid_doorclose_back_ch};
     public static int[] waiting_rfid_dooropen_back = {R.drawable.waiting_rfid_dooropen_back, R.drawable.waiting_rfid_dooropen_back_ch};
 
-    //working
-    public static int[] workingmotion0 = {R.drawable.workingmotion0, R.drawable.workingmotion0_ch};
-    public static int[] workingmotion1 = {R.drawable.workingmotion1, R.drawable.workingmotion1_ch};
-    public static int[] workingmotion2 = {R.drawable.workingmotion2, R.drawable.workingmotion2_ch};
-    public static int[] workingmotion3 = {R.drawable.workingmotion3, R.drawable.workingmotion3_ch};
-    public static int[] workingmotion4 = {R.drawable.workingmotion4, R.drawable.workingmotion4_ch};
-    public static int[] workingmotion5 = {R.drawable.workingmotion5, R.drawable.workingmotion5_ch};
 
     //library - o  popup 해야됨
     public static int[] ribrary_back_image = {R.drawable.ribrary_back_image, R.drawable.ribrary_back_image_ch};

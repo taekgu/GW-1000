@@ -7,16 +7,16 @@
     android:gravity="center">
 
     <ImageView
-        android:id="@+id/a"
+        android:id="@+id/rfid_password_id"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@drawable/rfid_password_popup"/>
 
     <LinearLayout
-        android:layout_alignStart="@+id/a"
-        android:layout_alignEnd="@+id/a"
-        android:layout_alignTop="@+id/a"
-        android:layout_alignBottom="@+id/a"
+        android:layout_alignStart="@+id/rfid_password_id"
+        android:layout_alignEnd="@+id/rfid_password_id"
+        android:layout_alignTop="@+id/rfid_password_id"
+        android:layout_alignBottom="@+id/rfid_password_id"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"

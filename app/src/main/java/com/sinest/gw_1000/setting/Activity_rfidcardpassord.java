@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.sinest.gw_1000.R;
@@ -44,6 +45,8 @@ public class Activity_rfidcardpassord extends Activity {
 
     private static Context context;
 
+    ImageView rfid_password_id;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -58,6 +61,8 @@ public class Activity_rfidcardpassord extends Activity {
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 
         password = Application_manager.get_m_password();
+
+        rfid_password_id = (ImageView) findViewById(R.id.rfid_password_id);
 
         rfid_password_1 = (ImageView) findViewById(R.id.rfid_password_1);
         rfid_password_2 = (ImageView) findViewById(R.id.rfid_password_2);
@@ -233,6 +238,16 @@ public class Activity_rfidcardpassord extends Activity {
         rfid_password_e.setOnClickListener(listener);
         rfid_password_b.setOnClickListener(listener);
 
+    }
+
+    protected void onResume() {
+        super.onResume();
+
+        rfid_password_id.setBackgroundResource(Application_manager.rfid_password_popup[Application_manager.img_flag]);
+        rfid_password_d.setBackgroundResource(Application_manager.keypad_delete[Application_manager.img_flag]);
+        rfid_password_c.setBackgroundResource(Application_manager.keypad_change[Application_manager.img_flag]);
+        rfid_password_e.setBackgroundResource(Application_manager.keypad_enter[Application_manager.img_flag]);
+        rfid_password_b.setBackgroundResource(Application_manager.keypad_back[Application_manager.img_flag]);
     }
 
     @Override

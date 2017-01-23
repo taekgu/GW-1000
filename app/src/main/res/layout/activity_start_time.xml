@@ -7,16 +7,16 @@
     android:gravity="center">
 
     <ImageView
-        android:id="@+id/c"
+        android:id="@+id/start_time_id"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@drawable/water_heater_start_timer_keyped"/>
 
     <LinearLayout
-        android:layout_alignStart="@+id/c"
-        android:layout_alignEnd="@+id/c"
-        android:layout_alignTop="@+id/c"
-        android:layout_alignBottom="@+id/c"
+        android:layout_alignStart="@+id/start_time_id"
+        android:layout_alignEnd="@+id/start_time_id"
+        android:layout_alignTop="@+id/start_time_id"
+        android:layout_alignBottom="@+id/start_time_id"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"

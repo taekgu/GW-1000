@@ -12,6 +12,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.Chronometer;
+import android.widget.ImageView;
 
 import com.sinest.gw_1000.R;
 import com.sinest.gw_1000.management.Application_manager;
@@ -39,6 +40,8 @@ public class Activity_starttime extends Activity {
 
     Intent start_result;
 
+    ImageView start_time_id;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,6 +54,8 @@ public class Activity_starttime extends Activity {
 
         Application_manager.setFullScreen(this);
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+
+        start_time_id = (ImageView) findViewById(R.id.start_time_id);
 
         start_time1 = (Button) findViewById(R.id.start_time1);
         start_time2 = (Button) findViewById(R.id.start_time2);
@@ -150,6 +155,14 @@ public class Activity_starttime extends Activity {
     @Override
     public boolean onTouchEvent(MotionEvent event){
         return false;
+    }
+
+    protected void onResume() {
+        super.onResume();
+
+        start_time_id.setBackgroundResource(Application_manager.water_heater_start_timer_keyped[Application_manager.img_flag]);
+        start_time_enter.setBackgroundResource(Application_manager.keypad_enter[Application_manager.img_flag]);
+        start_time_back.setBackgroundResource(Application_manager.keypad_back[Application_manager.img_flag]);
     }
 
     void time_sum(int k)
