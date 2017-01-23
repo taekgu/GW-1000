@@ -229,7 +229,7 @@ public class Application_manager extends Application {
     public static int[] button_elipse_back_on = {R.drawable.button_elipse_back_on, R.drawable.button_elipse_back_on_ch};
     public static int[] button_elipse_back_off = {R.drawable.button_elipse_back_off, R.drawable.button_elipse_back_off_ch};
 
-    // 저장버튼 추가 요청및 추가해야함  ,  rfid 쪽 안함 ,  팝업 배경 받고 진행
+    // 저장버튼 추가 요청및 추가해야함  ,  팝업 배경 받고 진행
     public static int[] rfid_password_popup = {R.drawable.rfid_password_popup, R.drawable.rfid_password_popup_ch};
 
     public static int[] keypad_enter = {R.drawable.keypad_enter, R.drawable.keypad_enter_ch};
