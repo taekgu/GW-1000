@@ -3,6 +3,7 @@
     android:layout_width="40dp"
     android:layout_height="400dp"
     android:gravity="center"
+    android:layout_gravity="center"
     android:id="@+id/rel_main"
     android:background="@android:color/transparent">
 

@@ -74,7 +74,7 @@ public class CustomProgressBar extends RelativeLayout {
         //ViewCompat.setElevation(tvFilterMin, 14f);
         viewInActiveBottom.setBackgroundColor(inactiveColor);
         viewInActiveTop.setBackgroundColor(inactiveColor);
-        initialHeightMin = (int) convertDpToPixel(30, context); //InitialHeightMin이 뭐지??
+        initialHeightMin = (int) convertDpToPixel(35, context);
         final ViewTreeObserver viewTreeObserver = relativeLayout.getViewTreeObserver();
         viewTreeObserver.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
             public void onGlobalLayout() {
