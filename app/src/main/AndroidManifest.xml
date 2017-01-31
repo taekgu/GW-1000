@@ -23,6 +23,8 @@
     <uses-feature android:name="android.hardware.nfc" android:required="true" />
 
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
+
 
     <application
         android:name=".management.Application_manager"
@@ -125,6 +127,18 @@
             <intent-filter>
                 <action android:name="android.app.action.DEVICE_ADMIN_ENABLED" />
             </intent-filter>
+        </receiver>
+
+        <receiver
+            android:name=".management.StartReceiver"
+            android:enabled="true"
+            android:exported="false"
+            android:label="STARTReceiver">
+
+            <intent-filter >
+                <action android:name="android.intent.action.BOOT_COMPLETED"/>
+            </intent-filter>
+
         </receiver>
         <!--
  ATTENTION: This was auto-generated to add Google Play services to your project for

@@ -4,6 +4,8 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 
+import com.sinest.gw_1000.splash.Activity_booting;
+
 /**
  * Created by taekg on 2017-01-31.
  */
@@ -25,7 +27,7 @@ public class StartReceiver extends BroadcastReceiver {
         if( action.equals("android.intent.action.BOOT_COMPLETED") ){
 
             //맞다면...MainActivity 실행을 위한 Intent 생성..
-            Intent i= new Intent(context, Application_manager.class);
+            Intent i= new Intent(context, Activity_booting.class);
             //위에 만들어진 Intent에 의해 실행되는 Activity는
             //액티비티 스택에서 새로운 Task로 Activity를 실행하도록 하라는 설정.
             i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
