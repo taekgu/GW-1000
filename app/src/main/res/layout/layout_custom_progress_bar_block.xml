@@ -35,8 +35,8 @@
         android:id="@+id/progress_filter_parent_block"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="40dp"
-        android:layout_marginRight="40dp"
+        android:layout_marginLeft="35dp"
+        android:layout_marginRight="35dp"
         android:background="@android:color/transparent"
         android:clickable="false" />
 </RelativeLayout>
