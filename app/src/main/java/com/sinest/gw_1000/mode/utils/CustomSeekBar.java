@@ -105,14 +105,6 @@ public class CustomSeekBar extends RelativeLayout{
                         startYMin = event.getRawY();
                         // startClickTime = Calendar.getInstance().getTimeInMillis();
                         break;
-                    case MotionEvent.ACTION_UP: {
-//                        long clickDuration = Calendar.getInstance().getTimeInMillis() - startClickTime;
-//                        if (clickDuration < MAX_CLICK_DURATION) {
-//                            //Click event triggered
-//
-//                        }
-                        break;
-                    }
 
                     case MotionEvent.ACTION_MOVE:
                         movedYMin = event.getRawY() - startYMin;
@@ -129,6 +121,12 @@ public class CustomSeekBar extends RelativeLayout{
                         dTopMin = relFilterMin.getY();
                         currentHeightMin = relFilterMin.getHeight();
                         getResultMin();
+                        break;
+                    case MotionEvent.ACTION_UP:
+                        ViewGroup.LayoutParams _layoutParams = relFilterMin.getLayoutParams();
+                        _layoutParams.height = (int)(resultMin * (heightParent/14) + initialHeightMin);
+                        Log.i("BE", "min height : "+_layoutParams.height + ", resultMin : " + resultMin);
+                        relFilterMin.setLayoutParams(_layoutParams);
                         break;
                     default:
                         return false;
@@ -161,6 +159,12 @@ public class CustomSeekBar extends RelativeLayout{
                         dTopMax = relFilterMax.getY();
                         currentHeightMax = relFilterMax.getHeight();
                         getResultMax();
+                        break;
+                    case MotionEvent.ACTION_UP:
+                        ViewGroup.LayoutParams _layoutParams = relFilterMax.getLayoutParams();
+                        _layoutParams.height = (int)((14-resultMax) * (heightParent/14) + initialHeightMin) ;
+                        Log.i("BE", "max height : "+_layoutParams.height + ", resultMax : " + resultMax);
+                        relFilterMax.setLayoutParams(_layoutParams);
                         break;
                     default:
                         return false;
@@ -203,8 +207,6 @@ public class CustomSeekBar extends RelativeLayout{
         //Max
         resultMin = Math.floor(14 * (Math.abs(currentHeightMin)-initialHeightMin) / heightParent);
         tvFilterMin.setText((int) resultMin + "");
-        Log.i("RR", "getResult_currentHeightMin : " + currentHeightMin);
-        Log.i("RR", "getResult_resultMin : " + (int) resultMin);
         onRangeBarChangeListener.onRangeBarChange((int) resultMin, (int) resultMax);
 
     }
