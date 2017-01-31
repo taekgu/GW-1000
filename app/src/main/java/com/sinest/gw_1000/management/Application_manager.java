@@ -55,6 +55,7 @@ public class Application_manager extends Application {
 
     // 대기모드 산소농도 / 수압세기 / 사용시간 값
     public final static String DB_VAL_OXYGEN = "val_oxygen";
+    public final static String DB_VAL_OXYGEN_SPRAY = "val_oxygen_spray";
     public final static String DB_VAL_PRESSURE = "val_pressure";
     public final static String DB_VAL_TIME = "val_time";
 
@@ -266,6 +267,7 @@ public class Application_manager extends Application {
 
     //waiting - o
     public static int[] waiting_backimage = {R.drawable.workingmotion0, R.drawable.workingmotion0_ch};
+    public static int[] waiting_backimage_l = {R.drawable.workingmotion0_l, R.drawable.workingmotion0_l_ch};
 
     //waiting rfid
     public static int[] waiting_rfid_doorclose_back = {R.drawable.waiting_rfid_doorclose_back, R.drawable.waiting_rfid_doorclose_back_ch};

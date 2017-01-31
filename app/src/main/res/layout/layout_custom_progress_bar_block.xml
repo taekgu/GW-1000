@@ -17,13 +17,14 @@
 
     <RelativeLayout
         android:id="@+id/rel_progress_block"
-        android:layout_width="wrap_content"
+        android:layout_width="18dp"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_centerVertical="true"
         android:layout_marginLeft="35dp"
         android:layout_gravity="right">
         <ImageView
+            android:layout_alignParentEnd="true"
             android:layout_width="18dp"
             android:layout_height="wrap_content"
             android:id="@+id/progress_block"

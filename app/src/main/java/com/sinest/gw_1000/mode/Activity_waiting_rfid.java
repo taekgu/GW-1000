@@ -41,7 +41,8 @@ public class Activity_waiting_rfid extends AppCompatActivity {
 
     private int val_oxygen = 0;
     private int val_pressure = 0;
-    private int val_time = 0;
+    private int val_time = 0;// 동작 전 설정 시간
+    private int val_time_work = 0; // 동작 시간
 
     TextView time_text, oxygen_text, pressure_text;
     ImageView waiting_setting_button;
@@ -330,7 +331,22 @@ public class Activity_waiting_rfid extends AppCompatActivity {
                     // 치료 음악 재생
                     if (Application_manager.sound_mode_num != 0) {
 
-                        Application_manager.getSoundManager().play_therapy(Application_manager.sound_mode_num, true);
+                        Thread thread = new Thread(new Runnable() {
+                            @Override
+                            public void run() {
+
+                                while (true) {
+
+                                    if (!Application_manager.getSoundManager().getIsPlaying()) {
+
+                                        Log.i("JW", "치료 음악 재생");
+                                        Application_manager.getSoundManager().play_therapy(Application_manager.sound_mode_num, true);
+                                        break;
+                                    }
+                                }
+                            }
+                        });
+                        thread.start();
                     }
                 }
             }
@@ -434,6 +450,7 @@ public class Activity_waiting_rfid extends AppCompatActivity {
             public void run() {
 
                 time_text.setText("" + min);
+                val_time_work = min;
             }
         });
     }
@@ -675,16 +692,38 @@ public class Activity_waiting_rfid extends AppCompatActivity {
                     case R.id.waiting_rfid_time_up_button:
                         view.setBackgroundResource(R.drawable.button_up);
 
+                        if (mode == 0) { // 대기 모드일 때
+
                             val_time += 1;
                             if (val_time > 90) val_time = 90;
                             time_text.setText("" + val_time);
+                        }
+                        else if (mode == 1) { // 동작 모드일 때
+
+                            val_time_work += 1;
+                            if (val_time_work > 90) val_time_work = 90;
+                            time_text.setText("" + val_time_work);
+
+                            fragment_working.setTime_m_left(val_time_work);
+                        }
                         break;
                     case R.id.waiting_rfid_time_down_button:
                         view.setBackgroundResource(R.drawable.button_down);
 
+                        if (mode == 0) { // 대기 모드일 때
+
                             val_time -= 1;
                             if (val_time < 1) val_time = 1;
                             time_text.setText("" + val_time);
+                        }
+                        else if (mode == 1) { // 동작 모드일 때
+
+                            val_time_work -= 1;
+                            if (val_time_work < 1) val_time_work = 1;
+                            time_text.setText("" + val_time_work);
+
+                            fragment_working.setTime_m_left(val_time_work);
+                        }
                         break;
                     case R.id.waiting_rfid_dooropen_button:
 

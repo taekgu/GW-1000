@@ -19,6 +19,9 @@ public class SoundManager {
     private final static int MAX_STREAMS = 1; // 동시 재생 가능한 음원 수
 
     private MediaPlayer latest_player;
+    public boolean isPlaying = false;
+    private boolean isRun = false;
+    private Thread thread_isPlaying;
     private MediaPlayer.OnPreparedListener preparedListener;
     private MediaPlayer.OnPreparedListener preparedListener_for_therapy;
     private int prepare_cnt = 0;
@@ -35,7 +38,33 @@ public class SoundManager {
 //        soundPool = new SoundPool(MAX_STREAMS, AudioManager.STREAM_MUSIC, 0);
         context = _context;
 
+        thread_isPlaying = new Thread(new Runnable() {
+            @Override
+            public void run() {
+
+                while (isRun) {
+
+                    if (latest_player != null) {
+
+                        setIsPlaying(latest_player.isPlaying());
+                    }
+                }
+            }
+        });
+        isRun = true;
+        thread_isPlaying.start();
+
         loadSounds2();
+    }
+
+    synchronized private void setIsPlaying(boolean val) {
+
+        isPlaying = val;
+    }
+
+    synchronized public boolean getIsPlaying() {
+
+        return isPlaying;
     }
 
     private void loadSounds2() {

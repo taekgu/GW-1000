@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.res.Resources;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
@@ -40,10 +41,14 @@ public class CustomProgressBarBlock extends RelativeLayout {
         currentWidth = relFilter.getWidth();
     }
     public void setProgress(final int loc) {
+
         currentWidth = ((loc * (viewParent.getWidth()) / 14));
         ViewGroup.LayoutParams layoutParams = relFilter.getLayoutParams();
         layoutParams.width = currentWidth;
         relFilter.setLayoutParams(layoutParams);
+
+        //Log.i("TEST", "loc: " + loc);
+        //Log.i("TEST", "currentWidth: " + currentWidth);
     }
 }
 

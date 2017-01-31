@@ -39,8 +39,10 @@ public class Activity_waiting extends AppCompatActivity {
     BroadcastReceiver broadcastReceiver;
 
     private int val_oxygen = 0;
+    private int val_oxygen_spray = 0;
     private int val_pressure = 0;
-    private int val_time = 0;
+    private int val_time = 0; // 동작 전 설정 시간
+    private int val_time_work = 0; // 동작 시간
 
     TextView time_text, oxygen_text, pressure_text;
     int[] checked_loc = new int[Application_manager.MAX_CHECKED];
@@ -94,6 +96,7 @@ public class Activity_waiting extends AppCompatActivity {
         // 산소 농도, 압력, 시간 값 불러오기
         SharedPreferences sharedPreferences = getSharedPreferences(Application_manager.DB_NAME, 0);
         val_oxygen = sharedPreferences.getInt(Application_manager.DB_VAL_OXYGEN, 0);
+        val_oxygen_spray = sharedPreferences.getInt(Application_manager.DB_VAL_OXYGEN_SPRAY, 0);
         val_pressure = sharedPreferences.getInt(Application_manager.DB_VAL_PRESSURE, 0);
         val_time = sharedPreferences.getInt(Application_manager.DB_VAL_TIME, 10);
 
@@ -104,7 +107,12 @@ public class Activity_waiting extends AppCompatActivity {
         pressure_text = (TextView)findViewById(R.id.waiting_pressure_text);
         pressure_text.setTypeface(tf);
 
-        oxygen_text.setText(""+val_oxygen);
+        if (Application_manager.gw_1000) {
+            oxygen_text.setText("" + val_oxygen);
+        }
+        else if (!Application_manager.gw_1000) {
+            setOxygenSpray(val_oxygen_spray);
+        }
         pressure_text.setText(""+val_pressure);
         time_text.setText(""+val_time);
 
@@ -174,15 +182,34 @@ public class Activity_waiting extends AppCompatActivity {
         // 언어에 따라 배경
         if (mode == 0) {
 
-            background.setBackgroundResource(Application_manager.waiting_backimage[Application_manager.img_flag]);
+            if(Application_manager.gw_1000 == true) {
+
+                if (Application_manager.img_flag == 1) { // 중국어
+                    background.setBackgroundResource(R.drawable.workingmotion0_ch);
+                } else {
+                    background.setBackgroundResource(R.drawable.workingmotion0);
+                }
+            }
+            else if(Application_manager.gw_1000 == false) {
+
+                if (Application_manager.img_flag == 1) { // 중국어
+                    background.setBackgroundResource(R.drawable.workingmotion0_l_ch);
+                } else {
+                    background.setBackgroundResource(R.drawable.workingmotion0_l);
+                }
+            }
         }
         waiting_door_open_button.setBackgroundResource(Application_manager.door_open_off[Application_manager.img_flag]);
         waiting_door_close_button.setBackgroundResource(Application_manager.door_close_off[Application_manager.img_flag]);
 
         if(Application_manager.gw_1000 == true){
             waiting_id.setVisibility(View.VISIBLE);
+            ImageView imageView_device = (ImageView) findViewById(R.id.imageView_device);
+            imageView_device.setVisibility(View.VISIBLE);
         }else if(Application_manager.gw_1000 == false){
             waiting_id.setVisibility(View.INVISIBLE);
+            ImageView imageView_device = (ImageView) findViewById(R.id.imageView_device);
+            imageView_device.setVisibility(View.INVISIBLE);
         }
 
         SharedPreferences sharedPreferences = getSharedPreferences(Application_manager.DB_NAME, 0);
@@ -234,6 +261,7 @@ public class Activity_waiting extends AppCompatActivity {
         SharedPreferences sharedPreferences = getSharedPreferences(Application_manager.DB_NAME, 0);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putInt(Application_manager.DB_VAL_OXYGEN, val_oxygen);
+        editor.putInt(Application_manager.DB_VAL_OXYGEN_SPRAY, val_oxygen_spray);
         editor.putInt(Application_manager.DB_VAL_PRESSURE, val_pressure);
         editor.putInt(Application_manager.DB_VAL_TIME, val_time);
         editor.commit();
@@ -265,10 +293,12 @@ public class Activity_waiting extends AppCompatActivity {
 
                     Log.i("JW", "changeFragment (waiting -> working)");
 
+                    val_time_work = val_time;
+
                     FragmentManager fm = getFragmentManager();
                     FragmentTransaction fragmentTransaction = fm.beginTransaction();
 
-                    fragment_working.init(modeNum, val_time, 0);
+                    fragment_working.init(modeNum, val_time_work, 0);
 
                     fragmentTransaction.replace(R.id.frameLayout_fragment, fragment_working);
                     fragmentTransaction.commit();
@@ -282,6 +312,7 @@ public class Activity_waiting extends AppCompatActivity {
                     SharedPreferences sharedPreferences = getSharedPreferences(Application_manager.DB_NAME, 0);
                     SharedPreferences.Editor editor = sharedPreferences.edit();
                     editor.putInt(Application_manager.DB_VAL_OXYGEN, val_oxygen);
+                    editor.putInt(Application_manager.DB_VAL_OXYGEN_SPRAY, val_oxygen_spray);
                     editor.putInt(Application_manager.DB_VAL_PRESSURE, val_pressure);
                     editor.putInt(Application_manager.DB_VAL_TIME, val_time);
                     editor.commit();
@@ -306,8 +337,22 @@ public class Activity_waiting extends AppCompatActivity {
                     // 치료 음악 재생
                     if (Application_manager.sound_mode_num != 0) {
 
-                        Log.i("JW", "치료 음악 재생");
-                        Application_manager.getSoundManager().play_therapy(Application_manager.sound_mode_num, true);
+                        Thread thread = new Thread(new Runnable() {
+                            @Override
+                            public void run() {
+
+                                while (true) {
+
+                                    if (!Application_manager.getSoundManager().getIsPlaying()) {
+
+                                        Log.i("JW", "치료 음악 재생");
+                                        Application_manager.getSoundManager().play_therapy(Application_manager.sound_mode_num, true);
+                                        break;
+                                    }
+                                }
+                            }
+                        });
+                        thread.start();
                     }
                 }
             }
@@ -341,6 +386,7 @@ public class Activity_waiting extends AppCompatActivity {
         // 동작 시작 전 산소 농도, 압력, 시간 값 불러오기
         SharedPreferences sharedPreferences = getSharedPreferences(Application_manager.DB_NAME, 0);
         val_oxygen = sharedPreferences.getInt(Application_manager.DB_VAL_OXYGEN, 0);
+        val_oxygen_spray = sharedPreferences.getInt(Application_manager.DB_VAL_OXYGEN_SPRAY, 0);
         val_pressure = sharedPreferences.getInt(Application_manager.DB_VAL_PRESSURE, 0);
         val_time = sharedPreferences.getInt(Application_manager.DB_VAL_TIME, 10);
 
@@ -348,7 +394,12 @@ public class Activity_waiting extends AppCompatActivity {
             @Override
             public void run() {
 
-                oxygen_text.setText(""+val_oxygen);
+                if (Application_manager.gw_1000) {
+                    oxygen_text.setText("" + val_oxygen);
+                }
+                else {
+                    setOxygenSpray(val_oxygen_spray);
+                }
                 pressure_text.setText(""+val_pressure);
                 time_text.setText(""+val_time);
             }
@@ -405,7 +456,22 @@ public class Activity_waiting extends AppCompatActivity {
                 public void run() {
 
                     frameAnimation.stop();
-                    background.setBackgroundResource(Application_manager.waiting_backimage[Application_manager.img_flag]);
+                    if(Application_manager.gw_1000 == true) {
+
+                        if (Application_manager.img_flag == 1) { // 중국어
+                            background.setBackgroundResource(R.drawable.workingmotion0_ch);
+                        } else {
+                            background.setBackgroundResource(R.drawable.workingmotion0);
+                        }
+                    }
+                    else if(Application_manager.gw_1000 == false) {
+
+                        if (Application_manager.img_flag == 1) { // 중국어
+                            background.setBackgroundResource(R.drawable.workingmotion0_l_ch);
+                        } else {
+                            background.setBackgroundResource(R.drawable.workingmotion0_l);
+                        }
+                    }
                 }
             });
         }
@@ -418,6 +484,7 @@ public class Activity_waiting extends AppCompatActivity {
             public void run() {
 
                 time_text.setText("" + min);
+                val_time_work = min;
             }
         });
     }
@@ -527,6 +594,7 @@ public class Activity_waiting extends AppCompatActivity {
                     Application_manager.SENSOR_TEMP_BED = temp;
 
                     // 노즐 위치 0~14
+                    //Log.i("JW", "노즐 위치: "+Application_manager.getCommunicator().get_rx_idx(15));
                     seekBar.setProgress(Application_manager.getCommunicator().get_rx_idx(15));
                 }
                 else if (msg.what == SET_BUTTON_INVISIBLE) {
@@ -671,39 +739,53 @@ public class Activity_waiting extends AppCompatActivity {
                     case R.id.waiting_oxygen_up_button:
                         view.setBackgroundResource(R.drawable.button_up);
 
-                        //if (mode == 0) {
+                        if (Application_manager.gw_1000 == true) { // GW-1000H
 
                             val_oxygen++;
                             if (val_oxygen > 5) val_oxygen = 5;
                             oxygen_text.setText("" + val_oxygen);
-
                             val = (byte) val_oxygen;
-                            communicator.set_tx(8, val);
-                        //}
+                        }
+                        else { // GW-1000L
+
+                            val_oxygen_spray++;
+                            if (val_oxygen_spray > 3) val_oxygen_spray = 3;
+                            setOxygenSpray(val_oxygen_spray);
+                            val = (byte) val_oxygen_spray;
+                        }
+
+                        communicator.set_tx(8, val);
                         break;
                     case R.id.waiting_oxygen_down_button:
                         view.setBackgroundResource(R.drawable.button_down);
 
-                        //if (mode == 0) {
+                        if (Application_manager.gw_1000 == true) { // GW-1000H
 
                             val_oxygen--;
                             if (val_oxygen < 0) val_oxygen = 0;
                             oxygen_text.setText("" + val_oxygen);
-
                             val = (byte) val_oxygen;
-                            communicator.set_tx(8, val);
-                        //}
+                        }
+                        else { // GW-1000L
+
+                            val_oxygen_spray--;
+                            if (val_oxygen_spray < 0) val_oxygen_spray = 0;
+                            setOxygenSpray(val_oxygen_spray);
+                            val = (byte) val_oxygen_spray;
+                        }
+
+                        communicator.set_tx(8, val);
                         break;
                     case R.id.waiting_pressure_up_button:
                         view.setBackgroundResource(R.drawable.button_up);
 
                         //if (mode == 0) {
 
-                            val_pressure += 1;
-                            if (val_pressure > 6) val_pressure = 6;
-                            pressure_text.setText("" + val_pressure);
+                        val_pressure += 1;
+                        if (val_pressure > 6) val_pressure = 6;
+                        pressure_text.setText("" + val_pressure);
 
-                            communicator.set_tx(5, (byte) val_pressure);
+                        communicator.set_tx(5, (byte) val_pressure);
                         //}
                         break;
                     case R.id.waiting_pressure_down_button:
@@ -711,35 +793,45 @@ public class Activity_waiting extends AppCompatActivity {
 
                         //if (mode == 0) {
 
-                            val_pressure -= 1;
-                            if (val_pressure < 0) val_pressure = 0;
-                            pressure_text.setText("" + val_pressure);
+                        val_pressure -= 1;
+                        if (val_pressure < 0) val_pressure = 0;
+                        pressure_text.setText("" + val_pressure);
 
-                            communicator.set_tx(5, (byte) val_pressure);
+                        communicator.set_tx(5, (byte) val_pressure);
                         //}
                         break;
                     case R.id.waiting_time_up_button:
                         view.setBackgroundResource(R.drawable.button_up);
 
-                        val_time += 1;
-                        if (val_time > 90) val_time = 90;
-                        time_text.setText("" + val_time);
+                        if (mode == 0) { // 대기 모드일 때
 
-                        if (mode == 1) {
+                            val_time += 1;
+                            if (val_time > 90) val_time = 90;
+                            time_text.setText("" + val_time);
+                        } else if (mode == 1) { // 동작 모드일 때
 
-                            fragment_working.setTime_m_left(val_time);
+                            val_time_work += 1;
+                            if (val_time_work > 90) val_time_work = 90;
+                            time_text.setText("" + val_time_work);
+
+                            fragment_working.setTime_m_left(val_time_work);
                         }
                         break;
                     case R.id.waiting_time_down_button:
                         view.setBackgroundResource(R.drawable.button_down);
 
-                        val_time -= 1;
-                        if (val_time < 1) val_time = 1;
-                        time_text.setText("" + val_time);
+                        if (mode == 0) { // 대기 모드일 때
 
-                        if (mode == 1) {
+                            val_time -= 1;
+                            if (val_time < 1) val_time = 1;
+                            time_text.setText("" + val_time);
+                        } else if (mode == 1) { // 동작 모드일 때
 
-                            fragment_working.setTime_m_left(val_time);
+                            val_time_work -= 1;
+                            if (val_time_work < 1) val_time_work = 1;
+                            time_text.setText("" + val_time_work);
+
+                            fragment_working.setTime_m_left(val_time_work);
                         }
                         break;
                     case R.id.waiting_dooropen_button:
@@ -796,6 +888,24 @@ public class Activity_waiting extends AppCompatActivity {
             return true;
         }
     };
+
+    private void setOxygenSpray(int val) {
+
+        switch (val) {
+            case 0:
+                oxygen_text.setText("0");
+                break;
+            case 1:
+                oxygen_text.setText("약");
+                break;
+            case 2:
+                oxygen_text.setText("중");
+                break;
+            case 3:
+                oxygen_text.setText("강");
+                break;
+        }
+    }
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {

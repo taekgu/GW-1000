@@ -37,34 +37,13 @@ public class Activity_temperature_popup extends Activity {
     private Context mContext;
 
     private ImageView background;
+    private ImageView popup_keypad_enter;
+    private ImageView popup_keypad_back;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
-
-        mContext = this;
-
-        Intent intent = getIntent();
-        mode = intent.getIntExtra("mode", -1);
-        temperature = intent.getIntExtra("temp", 0);
-
-        setScreen();
-
-        // 폰트 설정
-        Typeface tf = Typeface.createFromAsset(getAssets(), "fonts/digital.ttf");
-        textView_time = (TextView) findViewById(R.id.working_time_popup_text);
-        textView_time.setText(""+temperature);
-        textView_time.setTypeface(tf);
-
-        ImageView popup_keypad_enter = (ImageView)findViewById(R.id.popup_keypad_enter);
-        ImageView popup_keypad_back = (ImageView)findViewById(R.id.popup_keypad_back);
-
-        popup_keypad_enter.setOnTouchListener(mTouchEvent);
-        popup_keypad_back.setOnTouchListener(mTouchEvent);
-    }
-
-    private void setScreen() {
 
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         WindowManager.LayoutParams layoutParams = new WindowManager.LayoutParams();
@@ -73,6 +52,29 @@ public class Activity_temperature_popup extends Activity {
         getWindow().setAttributes(layoutParams);
         setContentView(R.layout.activity_waiting_time_popup);
         Application_manager.setFullScreen(this);
+
+        mContext = this;
+
+        Intent intent = getIntent();
+        mode = intent.getIntExtra("mode", -1);
+        temperature = intent.getIntExtra("temp", 0);
+
+        popup_keypad_enter = (ImageView)findViewById(R.id.popup_keypad_enter);
+        popup_keypad_back = (ImageView)findViewById(R.id.popup_keypad_back);
+
+        popup_keypad_enter.setOnTouchListener(mTouchEvent);
+        popup_keypad_back.setOnTouchListener(mTouchEvent);
+
+        setScreen();
+
+        // 폰트 설정
+        Typeface tf = Typeface.createFromAsset(getAssets(), "fonts/digital.ttf");
+        textView_time = (TextView) findViewById(R.id.working_time_popup_text);
+        textView_time.setText(""+temperature);
+        textView_time.setTypeface(tf);
+    }
+
+    private void setScreen() {
 
         // 배경 설정
         background = (ImageView) findViewById(R.id.working_time_standard);
@@ -89,6 +91,10 @@ public class Activity_temperature_popup extends Activity {
 
                 background.setBackgroundResource(R.drawable.keypad_water_temp_cn);
             }
+
+            // 엔터, 백 버튼 배경
+            popup_keypad_enter.setBackgroundResource(R.drawable.keypad_enter_ch);
+            popup_keypad_back.setBackgroundResource(R.drawable.keypad_back_ch);
         }
         // 나머지 언어일 때
         else {
@@ -103,6 +109,10 @@ public class Activity_temperature_popup extends Activity {
 
                 background.setBackgroundResource(R.drawable.keypad_water_temp_en);
             }
+
+            // 엔터, 백 버튼 배경
+            popup_keypad_enter.setBackgroundResource(R.drawable.keypad_enter);
+            popup_keypad_back.setBackgroundResource(R.drawable.keypad_back);
         }
     }
 
