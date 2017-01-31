@@ -494,11 +494,11 @@ public class Activity_setting extends AppCompatActivity {
                     case R.id.b_ex:
                         //
                         if (ex_f == 0) {
-                            b_ex.setBackgroundResource(R.drawable.button_blue);
+                            b_ex.setBackgroundResource(Application_manager.on[Application_manager.img_flag]);
                             ex_f = 1;
                             communicator.set_engineer(6,(byte)0x01);
                         } else if (ex_f == 1) {
-                            b_ex.setBackgroundResource(R.drawable.button_gry);
+                            b_ex.setBackgroundResource(Application_manager.off[Application_manager.img_flag]);
                             ex_f = 0;
                             communicator.set_engineer(6,(byte)0x00);
                         }
@@ -947,10 +947,10 @@ public class Activity_setting extends AppCompatActivity {
 
         ex_f = Application_manager.m_external_led;
         if (ex_f == 0) {
-            b_ex.setBackgroundResource(R.drawable.button_gry);
+            b_ex.setBackgroundResource(Application_manager.off[Application_manager.img_flag]);
             communicator.set_engineer(6,(byte)0x00);
         } else if (ex_f == 1) {
-            b_ex.setBackgroundResource(R.drawable.button_blue);
+            b_ex.setBackgroundResource(Application_manager.on[Application_manager.img_flag]);
             communicator.set_engineer(6,(byte)0x01);
         }
 
