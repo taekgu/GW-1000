@@ -39,11 +39,11 @@ public class WifiConnector {
 
     //private static final String AP_KEYWORD  = "MALAB";
     //private static final String AP_PSWD     = "malab123";
-    private static final String IP_ADDRESS  = "192.168.0.22";
+    //private static final String IP_ADDRESS  = "192.168.0.22";
 
     private static final String AP_KEYWORD  = "GW1000";
     private static final String AP_PSWD     = "1234567890";
-    //private static final String IP_ADDRESS  = "192.168.0.1";
+    private static final String IP_ADDRESS  = "192.168.0.1";
     private static final int PORT           = 20002;
     private SocketManager socketManager     = null;
     private Handler handler_data;
@@ -59,8 +59,6 @@ public class WifiConnector {
     private IntentFilter intentFilter;
     private String ssid = null;
     private String bssid = null;
-    private boolean isConnected = false;
-    private boolean isConnected_server = false;
     private WifiConfiguration wfc;
 
     private Thread thread;
@@ -69,20 +67,20 @@ public class WifiConnector {
     public int permission = 0;
 
     private Communicator communicator;
+    private WifiConnector wifiConnector;
 
     public WifiConnector(Context _context, Handler _handler_data, Communicator _communicator) {
 
         context = _context;
         handler_data = _handler_data;
         communicator = _communicator;
+        wifiConnector = this;
         init();
     }
 
     private void init() {
 
         setHandler_for_toast();
-
-        Log.i("JW", "WifiConnector - init()");
 
         wifiManager = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);
 
@@ -95,26 +93,15 @@ public class WifiConnector {
                 Log.i("JW", "와이파이 ENABLING 아님");
 
                 // 와이파이 on
-                Log.i("JW", "와이파이 활성화");
                 wifiManager.setWifiEnabled(true);
+                Log.i("JW", "와이파이 활성화");
             }
         }
         else {
 
             // 와이파이 연결되어있으면 바로 서버에 연결
             ConnectivityManager connectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
-            isConnected = connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI).isConnected();
-
-            if (isConnected) {
-
-                if (!isConnected_server && isSet) {
-
-                    setThread();
-                    isRun = true;
-                    thread.start();
-                    isSet = false;
-                }
-            }
+            Application_manager.setIsConnected_wifi(connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI).isConnected());
         }
 
         // 스캔 시작
@@ -157,7 +144,7 @@ public class WifiConnector {
             }
         };
     }
-
+/*
     private void setThread() {
 
         if (runnable == null) {
@@ -182,13 +169,11 @@ public class WifiConnector {
                                         handler_for_toast.sendEmptyMessage(SERVER_CONNECTED);
 
                                         isConnected_server = true;
-                                        isRun = false;
+                                        //isRun = false;
 
-                                        if (socketManager == null) {
-
-                                            socketManager = new SocketManager();
-                                        }
-                                        socketManager.init(socket, handler_data, communicator);
+                                        socketManager = null;
+                                        socketManager = new SocketManager();
+                                        socketManager.init(socket, handler_data, communicator, wifiConnector);
                                         socketManager.start_thread();
                                         Log.i("JW", "Start socketManager");
                                     } else {
@@ -214,7 +199,7 @@ public class WifiConnector {
 
         thread = new Thread(runnable);
     }
-
+*/
     public void registReceiver() {
 
         if (broadcastReceiver == null) {
@@ -245,7 +230,7 @@ public class WifiConnector {
 
                             if (permission == 1) {
 
-                                if (!isConnected) {
+                                if (!Application_manager.getIsConnected_wifi()) {
 
                                     List<ScanResult> scanResults = wifiManager.getScanResults();
                                     Log.i("JW", "와이파이 목록 스캔");
@@ -271,35 +256,18 @@ public class WifiConnector {
                         case ConnectivityManager.CONNECTIVITY_ACTION:
 
                             ConnectivityManager connectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
-                            isConnected = connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI).isConnected();
+                            Application_manager.setIsConnected_wifi(connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI).isConnected());
 
                             // 와이파이 연결 되면 서버 소켓에 연결 시도
-                            if (isConnected) {
+                            if (Application_manager.getIsConnected_wifi()) {
 
                                 handler_for_toast.sendEmptyMessage(WIFI_CONNECTED);
-
-                                if (!isConnected_server && isSet) {
-
-                                    setThread();
-                                    isRun = true;
-                                    thread.start();
-                                    isSet = false;
-                                }
                             }
                             // 와이파이 연결 끊어지면 서버 소켓 플래그 비활성화
                             else {
 
                                 handler_for_toast.sendEmptyMessage(WIFI_DISCONNECTED);
-
-                                isConnected_server = false;
-                                isRun = false;
-
-                                if (socketManager != null) {
-
-                                    socketManager.stop_thread();
-                                }
                             }
-
                             break;
                     }
                 }

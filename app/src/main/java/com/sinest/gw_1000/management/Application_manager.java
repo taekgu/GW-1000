@@ -21,6 +21,17 @@ import com.sinest.gw_1000.setting.Activity_setting;
 
 public class Application_manager extends Application {
 
+    // WIFI 연결 유/무
+    private static boolean isConnected_wifi = false;
+    synchronized public static boolean getIsConnected_wifi() {
+
+        return isConnected_wifi;
+    }
+    synchronized public static void setIsConnected_wifi(boolean val) {
+
+        isConnected_wifi = val;
+    }
+
     // RFID - 일반 대기 모드 전환시 센서값 저장
     public static int SENSOR_HUMIDITY   = 0;
     public static int SENSOR_OXYGEN     = 0;

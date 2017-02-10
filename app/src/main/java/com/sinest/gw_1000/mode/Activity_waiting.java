@@ -101,6 +101,15 @@ public class Activity_waiting extends AppCompatActivity {
         val_pressure = sharedPreferences.getInt(Application_manager.DB_VAL_PRESSURE, 0);
         val_time = sharedPreferences.getInt(Application_manager.DB_VAL_TIME, 10);
 
+        // tx 메시지의 DATA4, 7에 수압, 산소투입량 입력
+        Application_manager.getCommunicator().set_tx(5, (byte) val_pressure);
+        if (Application_manager.gw_1000) {
+            Application_manager.getCommunicator().set_tx(8, (byte) val_oxygen);
+        }
+        else if (!Application_manager.gw_1000) {
+            Application_manager.getCommunicator().set_tx(8, (byte) val_oxygen_spray);
+        }
+
         time_text = (TextView)findViewById(R.id.waiting_time_text);
         time_text.setTypeface(tf);
         oxygen_text = (TextView)findViewById(R.id.waiting_oxygen_text);
@@ -304,6 +313,8 @@ public class Activity_waiting extends AppCompatActivity {
                     FragmentTransaction fragmentTransaction = fm.beginTransaction();
 
                     fragment_working.init(modeNum, val_time_work, 0);
+                    // tx 메시지의 DATA1에 패턴 입력
+                    Application_manager.getCommunicator().set_tx(2, (byte) modeNum);
 
                     fragmentTransaction.replace(R.id.frameLayout_fragment, fragment_working);
                     fragmentTransaction.commit();

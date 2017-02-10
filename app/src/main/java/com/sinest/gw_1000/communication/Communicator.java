@@ -45,6 +45,7 @@ public class Communicator {
     private Context mContext;
 //    private WifiDirectWrapper mWidiWrapper;
     private WifiConnector wifiConnector;
+    private SocketManager socketManager;
 
     // Socket
 
@@ -69,6 +70,8 @@ public class Communicator {
         //mWidiWrapper.start();
         wifiConnector = new WifiConnector(mContext, handler_data, this);
         wifiConnector.registReceiver();
+
+        socketManager = new SocketManager(handler_data, this);
     }
 
     private void setHandler() {
