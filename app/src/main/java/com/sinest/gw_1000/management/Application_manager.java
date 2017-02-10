@@ -283,6 +283,9 @@ public class Application_manager extends Application {
 
     public static int[] manual_mode_setting_backimage = {R.drawable.manual_mode_setting_backimage, R.drawable.manual_mode_setting_backimage_ch};
 
+    public static String s_time_buf = "00:00";
+    public static String f_time_buf = "00:00";
+    public static int time_buf_f = 1;
 
     //-------------------------------Img ---------------------------------------------------
 

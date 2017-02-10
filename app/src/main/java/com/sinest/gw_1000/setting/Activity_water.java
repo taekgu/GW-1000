@@ -2,6 +2,7 @@ package com.sinest.gw_1000.setting;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Bundle;
@@ -75,7 +76,7 @@ public class Activity_water extends Activity {
         //intent_finish.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_SINGLE_TOP);
 
         //change
-        do_init_time();
+        //do_init_time();
         //water_s_c.setText(start_time);
         //water_f_c.setText(finish_time);
 
@@ -89,11 +90,11 @@ public class Activity_water extends Activity {
                         if (water_flag[1] == true) {
                             water_off.setBackgroundResource(Application_manager.save_setting_on[Application_manager.img_flag]);
                             water_flag[1] = false;
-                            Application_manager.set_m_water_ff(water_flag[1]);
+                            //Application_manager.set_m_water_ff(water_flag[1]);
                         } else {
                             water_off.setBackgroundResource(Application_manager.save_setting_off[Application_manager.img_flag]);
                             water_flag[1] = true;
-                            Application_manager.set_m_water_ff(water_flag[1]);
+                            //Application_manager.set_m_water_ff(water_flag[1]);
                         }
                         break;
                     case R.id.water_s_c:
@@ -141,7 +142,10 @@ public class Activity_water extends Activity {
                     case R.id.water_save:
                         water_save.setBackgroundResource(R.drawable.save_off);
                         //change
+                        Application_manager.set_m_water_stime((String)water_s_c.getText());
+                        Application_manager.set_m_water_ftime((String)water_f_c.getText());
                         Application_manager.set_m_water_f(false);
+                        Application_manager.set_m_water_ff(water_flag[1]);
                         finish();
                         break;
                     case R.id.water_back:
@@ -168,11 +172,24 @@ public class Activity_water extends Activity {
     }
 
     private void do_init_time(){
-        start_time = Application_manager.m_water_heater_time_stime;
-        water_s_c.setText(start_time);
-        finish_time = Application_manager.m_water_heater_time_ftime;
-        water_f_c.setText(finish_time);
-
+        Log.v("sb11","" +Application_manager.time_buf_f);
+        if(Application_manager.time_buf_f == 1){
+            start_time = Application_manager.m_water_heater_time_stime;
+            water_s_c.setText(start_time);
+            finish_time = Application_manager.m_water_heater_time_ftime;
+            water_f_c.setText(finish_time);
+        }else if(Application_manager.time_buf_f == 0){
+            water_s_c.setText(Application_manager.s_time_buf);
+            water_f_c.setText(Application_manager.f_time_buf);
+        }
         water_flag[1] = Application_manager.m_water_heater_f;
+        Application_manager.time_buf_f = 0;
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        Application_manager.time_buf_f = 1;
+        Log.v("sb11","" +Application_manager.time_buf_f);
     }
 }

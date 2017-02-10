@@ -157,7 +157,7 @@ public class Activity_rfid extends Activity {
                         rfid_w_down.setBackgroundResource(R.drawable.button_down_off);
                         if(w_mode_idx == 0)
                         {
-                            w_mode_idx = 0;
+                            w_mode_idx = 20;
                         }else{
                             w_mode_idx--;
                         }
