@@ -167,6 +167,7 @@
                         </LinearLayout>
 
                         <LinearLayout
+                            android:id="@+id/layout_switch_visible1"
                             android:orientation="horizontal"
                             android:layout_width="match_parent"
                             android:layout_height="0dp"
@@ -305,7 +306,6 @@
 
                         </LinearLayout>
 
-
                         <LinearLayout
                             android:orientation="horizontal"
                             android:layout_width="match_parent"
@@ -375,11 +375,42 @@
                                 android:layout_weight="50"
                                 android:weightSum="100">
 
-                                <ImageView
+                                <LinearLayout
                                     android:layout_width="match_parent"
                                     android:layout_height="0dp"
-                                    android:background="@null"
-                                    android:layout_weight="50"/>
+                                    android:layout_weight="18">
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="0dp"
+                                    android:layout_weight="32"
+                                    android:weightSum="100"
+                                    android:orientation="horizontal">
+
+                                    <LinearLayout
+                                        android:layout_width="0dp"
+                                        android:layout_height="match_parent"
+                                        android:layout_weight="35">
+                                    </LinearLayout>
+
+                                    <LinearLayout
+                                        android:layout_width="0dp"
+                                        android:layout_height="match_parent"
+                                        android:layout_weight="6"
+                                        android:weightSum="100"
+                                        android:gravity="center|bottom">
+
+                                        <ImageView
+                                            android:id="@+id/water"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="match_parent"
+                                            android:background="@drawable/water"
+                                            android:visibility="invisible"/>
+
+                                    </LinearLayout>
+
+                                </LinearLayout>
 
                                 <LinearLayout
                                     android:layout_width="match_parent"
@@ -402,6 +433,7 @@
                         </LinearLayout>
 
                         <LinearLayout
+                            android:id="@+id/layout_switch_visible3"
                             android:layout_width="match_parent"
                             android:layout_height="0dp"
                             android:layout_weight="14"

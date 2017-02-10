@@ -197,7 +197,7 @@ public class Activity_manual_mode_setting extends Activity{
                         }
                         else {
 
-                            Toast.makeText(getApplicationContext(), "하나 이상의 패턴을 사용해야합니다.", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getApplicationContext(), "하나 이상의 패턴을 사용해야합니다", Toast.LENGTH_SHORT).show();
                         }
                         break;
                     case R.id.manual_mode_setting_back:

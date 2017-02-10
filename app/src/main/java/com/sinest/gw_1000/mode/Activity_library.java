@@ -30,7 +30,7 @@ public class Activity_library extends AppCompatActivity{
     int[] checked_loc = new int[Application_manager.MAX_CHECKED];
     int[] library_map = new int[20];
 
-    int mode_setting = 0;
+    int mode_setting = 0; // 0: 일반 모드 / 1: 매뉴얼 모드 세팅 모드
     boolean isRun;
 
     TextView clock;
@@ -206,6 +206,10 @@ public class Activity_library extends AppCompatActivity{
                                 }
                                 editor.commit();
                                 finish();
+                            }
+                            else {
+
+                                Toast.makeText(getApplicationContext(), "4개의 모드를 선택하세요", Toast.LENGTH_SHORT).show();
                             }
                         }
                         break;

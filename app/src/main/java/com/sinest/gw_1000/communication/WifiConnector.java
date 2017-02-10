@@ -64,6 +64,7 @@ public class WifiConnector {
     private WifiConfiguration wfc;
 
     private Thread thread;
+    private Runnable runnable;
 
     public int permission = 0;
 
@@ -159,54 +160,59 @@ public class WifiConnector {
 
     private void setThread() {
 
-        thread = new Thread(new Runnable() {
+        if (runnable == null) {
 
-            @Override
-            public void run() {
+            runnable = new Runnable() {
 
-                Log.i("JW", "서버소켓 연결 스레드 시작");
-                while (isRun) {
+                @Override
+                public void run() {
 
-                    if (!isConnected_server) {
+                    Log.i("JW", "서버소켓 연결 스레드 시작");
+                    while (isRun) {
 
-                        try {
+                        if (!isConnected_server) {
 
-                            Socket socket = new Socket(IP_ADDRESS, PORT);
-                            if (socket != null) {
+                            try {
 
-                                if (socket.isConnected()) {
+                                Socket socket = new Socket(IP_ADDRESS, PORT);
+                                if (socket != null) {
 
-                                    handler_for_toast.sendEmptyMessage(SERVER_CONNECTED);
+                                    if (socket.isConnected()) {
 
-                                    isConnected_server = true;
-                                    isRun = false;
+                                        handler_for_toast.sendEmptyMessage(SERVER_CONNECTED);
 
-                                    if (socketManager == null) {
+                                        isConnected_server = true;
+                                        isRun = false;
 
-                                        socketManager = new SocketManager();
+                                        if (socketManager == null) {
+
+                                            socketManager = new SocketManager();
+                                        }
+                                        socketManager.init(socket, handler_data, communicator);
+                                        socketManager.start_thread();
+                                        Log.i("JW", "Start socketManager");
+                                    } else {
+
+                                        Log.i("JW", "Socket is not connected");
                                     }
-                                    socketManager.init(socket, handler_data, communicator);
-                                    socketManager.start_thread();
-                                    Log.i("JW", "Start socketManager");
                                 } else {
 
-                                    Log.i("JW", "Socket is not connected");
+                                    Log.i("JW", "socket is null");
                                 }
-                            } else {
 
-                                Log.i("JW", "socket is null");
+                            } catch (IOException e) {
+
+                                //Log.i("JW", "서버에 연결 실패 :" + e.getMessage() + ", " + e.getCause());
                             }
-
-                        } catch (IOException e) {
-
-                            //Log.i("JW", "서버에 연결 실패 :" + e.getMessage() + ", " + e.getCause());
                         }
                     }
+                    isSet = true;
+                    Log.i("JW", "서버소켓 연결 스레드 종료");
                 }
-                isSet = true;
-                Log.i("JW", "서버소켓 연결 스레드 종료");
-            }
-        });
+            };
+        }
+
+        thread = new Thread(runnable);
     }
 
     public void registReceiver() {
@@ -315,6 +321,7 @@ public class WifiConnector {
         }
     }
 
+    // 정의된 SSID/PW로 와이파이 연결 시도
     private void tryToConnect() {
 
         Log.i("JW", "와이파이 연결 시도");

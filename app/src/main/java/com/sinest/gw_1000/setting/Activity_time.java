@@ -137,7 +137,7 @@ public class Activity_time extends Activity {
                         int_l = int_buf/100;
                         int_r = int_buf%100;
                         if(int_l >= 24 || int_r >=60){
-                            Toast.makeText(getApplicationContext(), "Check the time again.", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getApplicationContext(), "Check the time again", Toast.LENGTH_SHORT).show();
                         }else{
                             Application_manager.setTime(s_buf);
                         }

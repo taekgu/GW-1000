@@ -54,12 +54,15 @@ public class Activity_waiting extends AppCompatActivity {
 
     TextView clock;
 
+    // 내부 온도 및 수온
     TextView textView_temperature;
     TextView textView_temperature_bed;
 
+    // GW-1000H / L 버전에 따라 visible/invisible 되는 레이아웃들
+    LinearLayout layout_switchable1, layout_switchable2;
+
     private int mode = 0; // 0: waiting, 1: working
 
-    boolean flag = false;
     boolean isRun;
 
     private ImageView background;
@@ -67,13 +70,10 @@ public class Activity_waiting extends AppCompatActivity {
     private AnimationDrawable frameAnimation;
 
     CustomProgressBarBlock seekBar;
+    ImageView seekBar_water;
 
     ImageView waiting_door_open_button;
     ImageView waiting_door_close_button;
-
-    boolean isFirstInit = true;
-
-    LinearLayout waiting_id;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -84,7 +84,8 @@ public class Activity_waiting extends AppCompatActivity {
 
         communicator = Application_manager.getCommunicator();
 
-        waiting_id = (LinearLayout)findViewById(R.id.waiting_id);
+        layout_switchable1 = (LinearLayout) findViewById(R.id.layout_switch_visible1);
+        layout_switchable2 = (LinearLayout) findViewById(R.id.layout_switch_visible3);
 
         // 폰트 설정
         Typeface tf = Typeface.createFromAsset(getAssets(), "fonts/digital.ttf");
@@ -111,7 +112,7 @@ public class Activity_waiting extends AppCompatActivity {
             oxygen_text.setText("" + val_oxygen);
         }
         else if (!Application_manager.gw_1000) {
-            setOxygenSpray(val_oxygen_spray);
+            oxygen_text.setText("" + val_oxygen_spray);
         }
         pressure_text.setText(""+val_pressure);
         time_text.setText(""+val_time);
@@ -168,6 +169,7 @@ public class Activity_waiting extends AppCompatActivity {
         background_device = (ImageView) findViewById(R.id.imageView_device);
 
         seekBar = (CustomProgressBarBlock) findViewById(R.id.seekBar2);
+        seekBar_water = (ImageView) findViewById(R.id.water);
     }
 
     @Override
@@ -203,35 +205,38 @@ public class Activity_waiting extends AppCompatActivity {
         waiting_door_close_button.setBackgroundResource(Application_manager.door_close_off[Application_manager.img_flag]);
 
         if(Application_manager.gw_1000 == true){
-            waiting_id.setVisibility(View.VISIBLE);
+
+            layout_switchable1.setVisibility(View.VISIBLE);
+            layout_switchable2.setVisibility(View.VISIBLE);
             ImageView imageView_device = (ImageView) findViewById(R.id.imageView_device);
             imageView_device.setVisibility(View.VISIBLE);
-        }else if(Application_manager.gw_1000 == false){
-            waiting_id.setVisibility(View.INVISIBLE);
+        }
+        else if(Application_manager.gw_1000 == false){
+
+            layout_switchable1.setVisibility(View.INVISIBLE);
+            layout_switchable2.setVisibility(View.INVISIBLE);
             ImageView imageView_device = (ImageView) findViewById(R.id.imageView_device);
             imageView_device.setVisibility(View.INVISIBLE);
         }
 
         SharedPreferences sharedPreferences = getSharedPreferences(Application_manager.DB_NAME, 0);
 
-       // if (isFirstInit) {
+        if (mode == 0) {
 
-       //     isFirstInit = false;
-            if (mode == 0) {
+            // 선택된 모드 갱신
+            fragment_waiting.reset();
+            for (int i = 0; i < Application_manager.MAX_CHECKED; i++) {
 
-                fragment_waiting.reset();
-                for (int i = 0; i < Application_manager.MAX_CHECKED; i++) {
-
-                    checked_loc[i] = sharedPreferences.getInt(Application_manager.DB_LIBRARY_LOC_ + i, i);
-                    fragment_waiting.addCheckedIdx(checked_loc[i]);
-                    Log.i("JW", "Selected library idx : " + checked_loc[i]);
-                }
-                fragment_waiting.refresh();
+                checked_loc[i] = sharedPreferences.getInt(Application_manager.DB_LIBRARY_LOC_ + i, i);
+                fragment_waiting.addCheckedIdx(checked_loc[i]);
+                Log.i("JW", "Selected library idx : " + checked_loc[i]);
             }
-      //  }
+            fragment_waiting.refresh();
 
-        val_time = sharedPreferences.getInt(Application_manager.DB_VAL_TIME, 10);
-        time_text.setText(Integer.toString(val_time));
+            // 동작 시간 갱신 (시간 설정 팝업 -> 웨이팅 복귀 시)
+            val_time = sharedPreferences.getInt(Application_manager.DB_VAL_TIME, 10);
+            time_text.setText(Integer.toString(val_time));
+        }
 
         // 화면에 보여질 때 센서값 불러오기
         runOnUiThread(new Runnable() {
@@ -331,6 +336,7 @@ public class Activity_waiting extends AppCompatActivity {
                         public void run() {
 
                             seekBar.setVisibility(View.VISIBLE);
+                            seekBar_water.setVisibility(View.VISIBLE);
                         }
                     });
 
@@ -398,7 +404,7 @@ public class Activity_waiting extends AppCompatActivity {
                     oxygen_text.setText("" + val_oxygen);
                 }
                 else {
-                    setOxygenSpray(val_oxygen_spray);
+                    oxygen_text.setText("" + val_oxygen_spray);
                 }
                 pressure_text.setText(""+val_pressure);
                 time_text.setText(""+val_time);
@@ -409,13 +415,12 @@ public class Activity_waiting extends AppCompatActivity {
         stop_animation();
 
         // 동작 구간 숨김
-        /*SeekBar seekBar = (SeekBar) findViewById(R.id.seekBar2);
-        seekBar.setVisibility(View.INVISIBLE);*/
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
 
                 seekBar.setVisibility(View.INVISIBLE);
+                seekBar_water.setVisibility(View.INVISIBLE);
             }
         });
 
@@ -750,7 +755,7 @@ public class Activity_waiting extends AppCompatActivity {
 
                             val_oxygen_spray++;
                             if (val_oxygen_spray > 3) val_oxygen_spray = 3;
-                            setOxygenSpray(val_oxygen_spray);
+                            oxygen_text.setText("" + val_oxygen_spray);
                             val = (byte) val_oxygen_spray;
                         }
 
@@ -770,7 +775,7 @@ public class Activity_waiting extends AppCompatActivity {
 
                             val_oxygen_spray--;
                             if (val_oxygen_spray < 0) val_oxygen_spray = 0;
-                            setOxygenSpray(val_oxygen_spray);
+                            oxygen_text.setText("" + val_oxygen_spray);
                             val = (byte) val_oxygen_spray;
                         }
 
@@ -888,24 +893,6 @@ public class Activity_waiting extends AppCompatActivity {
             return true;
         }
     };
-
-    private void setOxygenSpray(int val) {
-
-        switch (val) {
-            case 0:
-                oxygen_text.setText("0");
-                break;
-            case 1:
-                oxygen_text.setText("약");
-                break;
-            case 2:
-                oxygen_text.setText("중");
-                break;
-            case 3:
-                oxygen_text.setText("강");
-                break;
-        }
-    }
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
