@@ -131,7 +131,7 @@ public class Activity_water extends Activity {
             if (action == MotionEvent.ACTION_DOWN) {
                 switch (id) {
                     case R.id.water_save:
-                        water_save.setBackgroundResource(R.drawable.save_on);
+                        water_save.setBackgroundResource(Application_manager.save_on[Application_manager.img_flag]);
                         break;
                     case R.id.water_back:
                         water_back.setBackgroundResource(Application_manager.button_elipse_back_on[Application_manager.img_flag]);
@@ -140,7 +140,7 @@ public class Activity_water extends Activity {
             } else if (action == MotionEvent.ACTION_UP) {
                 switch (id) {
                     case R.id.water_save:
-                        water_save.setBackgroundResource(R.drawable.save_off);
+                        water_save.setBackgroundResource(Application_manager.save_off[Application_manager.img_flag]);
                         //change
                         Application_manager.set_m_water_stime((String)water_s_c.getText());
                         Application_manager.set_m_water_ftime((String)water_f_c.getText());
@@ -166,6 +166,7 @@ public class Activity_water extends Activity {
 
         water_off.setBackgroundResource(Application_manager.save_setting_off[Application_manager.img_flag]);
         water_back.setBackgroundResource(Application_manager.button_elipse_back_off[Application_manager.img_flag]);
+        water_save.setBackgroundResource(Application_manager.save_off[Application_manager.img_flag]);
 
         //change
         do_init_time();

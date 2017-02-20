@@ -225,16 +225,6 @@ public class Activity_setting extends AppCompatActivity {
         b_5m = (Button)findViewById(R.id.b_5m);
         b_coutinue = (Button)findViewById(R.id.b_coutinue);
 
-        b_back = (Button)findViewById(R.id.b_back);
-        b_emotion = (Button)findViewById(R.id.b_emotion);
-        b_language = (Button)findViewById(R.id.b_language);
-        b_inverter = (Button)findViewById(R.id.b_inverter);
-
-        hidden_s_1 = (Button)findViewById(R.id.hidden_s_1);
-        hidden_s_2 = (Button)findViewById(R.id.hidden_s_2);
-        hidden_s_3 = (Button)findViewById(R.id.hidden_s_3);
-        hidden_s_4 = (Button)findViewById(R.id.hidden_s_4);
-
         seekbar = (SeekBar)findViewById(R.id.seekBar);
 
         b_11 = (TextView) findViewById(R.id.button11);
@@ -649,13 +639,13 @@ public class Activity_setting extends AppCompatActivity {
                     case R.id.b_inverter:
                         //
                         if (b_inverter_f == 0) {
-                            b_inverter.setBackgroundResource(R.drawable.inverter_50);
+                            b_inverter.setBackgroundResource(Application_manager.inverter_50[Application_manager.img_flag]);
                             b_inverter_f = 1;
                         } else if (b_inverter_f == 1) {
-                            b_inverter.setBackgroundResource(R.drawable.inverter_100);
+                            b_inverter.setBackgroundResource(Application_manager.inverter_100[Application_manager.img_flag]);
                             b_inverter_f = 2;
                         } else if (b_inverter_f == 2) {
-                            b_inverter.setBackgroundResource(R.drawable.inverter_0);
+                            b_inverter.setBackgroundResource(Application_manager.inverter_0[Application_manager.img_flag]);
                             b_inverter_f = 0;
                         }
                         break;
@@ -981,11 +971,11 @@ public class Activity_setting extends AppCompatActivity {
 
         b_inverter_f = Application_manager.m_inverter;
         if (b_inverter_f == 0) {
-            b_inverter.setBackgroundResource(R.drawable.inverter_0);
+            b_inverter.setBackgroundResource(Application_manager.inverter_0[Application_manager.img_flag]);
         } else if (b_inverter_f == 1) {
-            b_inverter.setBackgroundResource(R.drawable.inverter_50);
+            b_inverter.setBackgroundResource(Application_manager.inverter_50[Application_manager.img_flag]);
         } else if (b_inverter_f == 2) {
-            b_inverter.setBackgroundResource(R.drawable.inverter_100);
+            b_inverter.setBackgroundResource(Application_manager.inverter_100[Application_manager.img_flag]);
         }
 
         activity_setting.setBackgroundResource(Application_manager.setting_back_image[Application_manager.img_flag]);
