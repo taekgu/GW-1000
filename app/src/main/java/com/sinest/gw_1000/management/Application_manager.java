@@ -232,7 +232,7 @@ public class Application_manager extends Application {
     public static int[] emotion_off = {R.drawable.emotion_off, R.drawable.emotion_off_ch};
     public static int[] language_ch = {R.drawable.language_ch, R.drawable.language_ch_ch};
     public static int[] setting_back_image = {R.drawable.setting_back_image, R.drawable.setting_back_image_ch};
-    public static int[] inverter_0 = {R.drawable.inverter_0, R.drawable.inverter_0};
+    public static int[] inverter_0 = {R.drawable.inverter_0, R.drawable.inverter_0_ch};
     public static int[] inverter_50 = {R.drawable.inverter_50, R.drawable.inverter_50_ch};
     public static int[] inverter_100 = {R.drawable.inverter_100, R.drawable.inverter_100_ch};
 
