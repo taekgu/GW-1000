@@ -74,6 +74,14 @@ public class Activity_temperature_popup extends Activity {
         textView_time.setTypeface(tf);
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        // 슬립 모드 동작 재시작
+        Application_manager.setSleep_f(0,true);
+    }
+
     private void setScreen() {
 
         // 배경 설정
@@ -149,7 +157,8 @@ public class Activity_temperature_popup extends Activity {
                         }
                         else {
 
-                            Toast.makeText(mContext, "25~40 사이의 값을 입력해주세요", Toast.LENGTH_SHORT).show();
+                            Application_manager.getToastManager().popToast(3);
+                            //Toast.makeText(mContext, "25~40 사이의 값을 입력해주세요", Toast.LENGTH_SHORT).show();
                         }
                         break;
                     case R.id.popup_keypad_back:

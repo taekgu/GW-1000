@@ -197,7 +197,8 @@ public class Activity_manual_mode_setting extends Activity{
                         }
                         else {
 
-                            Toast.makeText(getApplicationContext(), "하나 이상의 패턴을 사용해야합니다", Toast.LENGTH_SHORT).show();
+                            Application_manager.getToastManager().popToast(2);
+                            //Toast.makeText(getApplicationContext(), "하나 이상의 패턴을 사용해야합니다", Toast.LENGTH_SHORT).show();
                         }
                         break;
                     case R.id.manual_mode_setting_back:
@@ -274,6 +275,9 @@ public class Activity_manual_mode_setting extends Activity{
             manual_mode_time[i].setText(""+time[i]);
         }
         manual_mode_total.setText(""+(time[0] + time[1] + time[2]));
+
+        // 슬립 모드 동작 재시작
+        Application_manager.setSleep_f(0,true);
     }
 
     @Override

@@ -93,8 +93,16 @@ public class Fragment_working extends Fragment {
 
                     Log.i("JW", "치료 종료");
                     Application_manager.getSoundManager().play(Application_manager.m_language, 2);
-                    Activity_waiting activity_waiting = (Activity_waiting) getActivity();
-                    activity_waiting.changeFragment_waiting();
+                    if (parent == 0) {
+
+                        Activity_waiting activity_waiting = (Activity_waiting) getActivity();
+                        activity_waiting.changeFragment_waiting();
+                    }
+                    else {
+
+                        Activity_waiting_rfid activity_waiting_rfid = (Activity_waiting_rfid) getActivity();
+                        activity_waiting_rfid.changeFragment_waiting();
+                    }
                 }
                 isAlive = false;
             }

@@ -164,6 +164,9 @@ public class Activity_starttime extends Activity {
         start_time_id.setBackgroundResource(Application_manager.water_heater_start_timer_keyped[Application_manager.img_flag]);
         start_time_enter.setBackgroundResource(Application_manager.keypad_enter[Application_manager.img_flag]);
         start_time_back.setBackgroundResource(Application_manager.keypad_back[Application_manager.img_flag]);
+
+        // 슬립 모드 동작 재시작
+        Application_manager.setSleep_f(0,true);
     }
 
     void time_sum(int k)

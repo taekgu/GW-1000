@@ -543,7 +543,7 @@ public class Activity_setting extends AppCompatActivity {
                             b_1m.setBackgroundResource(Application_manager.sleepmode_1min[Application_manager.img_flag]);
                             sleep_f = false;
                             sleep_cnt = 0;
-                            sleep_cnt_end = 100000;
+                            sleep_cnt_end = 0;
                             Application_manager.setSleep(sleep_cnt,sleep_cnt_end,sleep_f);
                             button3_flag[0] = true;
                         }
@@ -567,7 +567,7 @@ public class Activity_setting extends AppCompatActivity {
                             b_3m.setBackgroundResource(Application_manager.sleepmode_3min[Application_manager.img_flag]);
                             sleep_f = false;
                             sleep_cnt = 0;
-                            sleep_cnt_end = 100000;
+                            sleep_cnt_end = 0;
 
                             Application_manager.setSleep(sleep_cnt,sleep_cnt_end,sleep_f);
                             button3_flag[1] = true;
@@ -590,7 +590,7 @@ public class Activity_setting extends AppCompatActivity {
                             b_5m.setBackgroundResource(Application_manager.sleepmode_5min[Application_manager.img_flag]);
                             sleep_f = false;
                             sleep_cnt = 0;
-                            sleep_cnt_end = 100000;
+                            sleep_cnt_end = 0;
 
                             Application_manager.setSleep(sleep_cnt,sleep_cnt_end,sleep_f);
                             button3_flag[2] = true;
@@ -603,7 +603,7 @@ public class Activity_setting extends AppCompatActivity {
                             b_coutinue.setBackgroundResource(Application_manager.sleepmode_continue_on[Application_manager.img_flag]);
                             sleep_f = false;
                             sleep_cnt = 0;
-                            sleep_cnt_end = 100000;
+                            sleep_cnt_end = 0;
 
                             Application_manager.setSleep(sleep_cnt,sleep_cnt_end,sleep_f);
 
@@ -613,7 +613,7 @@ public class Activity_setting extends AppCompatActivity {
                             b_coutinue.setBackgroundResource(Application_manager.sleepmode_continue_off[Application_manager.img_flag]);
                             sleep_f = false;
                             sleep_cnt = 0;
-                            sleep_cnt_end = 100000;
+                            sleep_cnt_end = 0;
 
                             Application_manager.setSleep(sleep_cnt,sleep_cnt_end,sleep_f);
                             button3_flag[3] = true;
@@ -864,6 +864,9 @@ public class Activity_setting extends AppCompatActivity {
                 startActivity(intent_rfid2);
             }
         }
+
+        // 슬립 모드 동작 재시작
+        Application_manager.setSleep_f(0,true);
     }
 
     @Override

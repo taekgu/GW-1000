@@ -617,6 +617,8 @@ public class Activity_engine extends AppCompatActivity {
         eng_5step.setBackgroundResource(Application_manager.oxygen_5step_off[Application_manager.img_flag]);
         eng_b_back.setBackgroundResource(Application_manager.button_circle_back_off[Application_manager.img_flag]);
 
+        // 슬립 모드 동작 재시작
+        Application_manager.setSleep_f(0,true);
     }
 
     @Override

@@ -223,5 +223,8 @@ public class Activity_rfid extends Activity {
         rfid_save.setBackgroundResource(Application_manager.save_off[Application_manager.img_flag]);
         rfid_check.setBackgroundResource(Application_manager.check_off[Application_manager.img_flag]);
         rfid_off.setBackgroundResource(Application_manager.save_setting_off[Application_manager.img_flag]);
+
+        // 슬립 모드 동작 재시작
+        Application_manager.setSleep_f(0,true);
     }
 }

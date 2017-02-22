@@ -126,6 +126,9 @@ public class Activity_library extends AppCompatActivity{
         library_set_button.setBackgroundResource(Application_manager.library_setting_off[Application_manager.img_flag]);
 
         change_mode(mode_setting);
+
+        // 슬립 모드 동작 재시작
+        Application_manager.setSleep_f(0,true);
     }
 
     @Override
@@ -209,7 +212,8 @@ public class Activity_library extends AppCompatActivity{
                             }
                             else {
 
-                                Toast.makeText(getApplicationContext(), "4개의 모드를 선택하세요", Toast.LENGTH_SHORT).show();
+                                Application_manager.getToastManager().popToast(0);
+                                //Toast.makeText(getApplicationContext(), "4개의 모드를 선택하세요", Toast.LENGTH_SHORT).show();
                             }
                         }
                         break;
@@ -300,7 +304,8 @@ public class Activity_library extends AppCompatActivity{
                         // 라이브러리 4개 이상 선택 시
                         else {
 
-                            Toast.makeText(this, "4개 초과 선택할 수 없습니다", Toast.LENGTH_SHORT).show();
+                            Application_manager.getToastManager().popToast(1);
+                            //Toast.makeText(this, "4개 초과 선택할 수 없습니다", Toast.LENGTH_SHORT).show();
                         }
                     }
                 }

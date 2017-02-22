@@ -170,6 +170,9 @@ public class Activity_water extends Activity {
 
         //change
         do_init_time();
+
+        // 슬립 모드 동작 재시작
+        Application_manager.setSleep_f(0,true);
     }
 
     private void do_init_time(){

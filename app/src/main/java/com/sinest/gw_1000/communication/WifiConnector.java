@@ -121,7 +121,8 @@ public class WifiConnector {
                     case SERVER_CONNECTED:
 
                         Log.i("JW", "Socket is connected");
-                        Toast.makeText(context, "서버 연결 완료", Toast.LENGTH_SHORT).show();
+                        Application_manager.getToastManager().popToast(8);
+                        //Toast.makeText(context, "서버 연결 완료", Toast.LENGTH_SHORT).show();
                         break;
                     case SERVER_DISCONNECTED:
 
@@ -133,12 +134,14 @@ public class WifiConnector {
                             ssid = wifiManager.getConnectionInfo().getSSID();
                         }
                         Log.i("JW", "WIFI 연결 완료");
-                        Toast.makeText(context, "WIFI 연결 완료: " + ssid, Toast.LENGTH_SHORT).show();
+                        Application_manager.getToastManager().popToast(9);
+                        //Toast.makeText(context, "WIFI 연결 완료: " + ssid, Toast.LENGTH_SHORT).show();
                         break;
                     case WIFI_DISCONNECTED:
 
                         Log.i("JW", "WIFI 연결 해제");
-                        Toast.makeText(context, "WIFI 연결 해제", Toast.LENGTH_SHORT).show();
+                        Application_manager.getToastManager().popToast(10);
+                        //Toast.makeText(context, "WIFI 연결 해제", Toast.LENGTH_SHORT).show();
                         break;
                 }
             }

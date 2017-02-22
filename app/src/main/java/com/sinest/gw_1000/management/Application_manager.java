@@ -10,6 +10,7 @@ import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.Toast;
 
 import com.sinest.gw_1000.R;
 import com.sinest.gw_1000.communication.Communicator;
@@ -149,12 +150,17 @@ public class Application_manager extends Application {
 
     // App context
     private static Context context;
+    public static Context getContext() { return context; }
 
     // Communicator
     private static Communicator communicator;
 
     // SoundManager
     private static SoundManager soundManager;
+
+    // ToastManager
+    private static ToastManager toastManager;
+    public static ToastManager getToastManager() { return toastManager; }
 
     // 앱 동작 시간
     private boolean isRun = false;
@@ -200,11 +206,13 @@ public class Application_manager extends Application {
     public static boolean rfid_pass_f = true;
     public static boolean rfid_pass_f2 = false;
 
+    // sleep 모드
     private static int start_m = 0;
     private static int end_m = 0;
     private static boolean m_sleep_f = false;
     public static int m_sleep_ff = 3;
     public static boolean m_operation_f = false;
+    public final static String DB_SLEEP_MIN = "db_sleep_min";
 
     //GW-1000H / GW-1000L    true -> H    false -> L
     public static boolean gw_1000 = true;
@@ -310,6 +318,7 @@ public class Application_manager extends Application {
         Application_manager.context = getApplicationContext();
         Application_manager.communicator = new Communicator(context);
         Application_manager.soundManager = new SoundManager(context);
+        Application_manager.toastManager = new ToastManager();
 
         // 기기 DPI 출력
         DisplayMetrics metrics = new DisplayMetrics();
@@ -384,6 +393,15 @@ public class Application_manager extends Application {
 
         //sleep mode flag
         m_sleep_ff = sharedPreferences.getInt(DB_SLEEP_M,3);
+        if(m_sleep_ff == 0){
+            end_m = 60;
+        }else if(m_sleep_ff == 1) {
+            end_m = 180;
+        }else if(m_sleep_ff == 2) {
+            end_m = 300;
+        }else if(m_sleep_ff == 3) {
+            end_m = 0;
+        }
 
         if(m_language == 2){
             img_flag = 1;
@@ -835,6 +853,11 @@ public class Application_manager extends Application {
         m_sleep_f = f;
         start_m = start;
         end_m = end;
+    }
+
+    synchronized public static void setSleep_f(int start, boolean f) {
+        m_sleep_f = f;
+        start_m = start;
     }
 
     public static Communicator getCommunicator() {

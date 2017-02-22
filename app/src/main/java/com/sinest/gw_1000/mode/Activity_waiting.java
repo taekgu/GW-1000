@@ -13,6 +13,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
@@ -30,7 +31,6 @@ import com.sinest.gw_1000.setting.Activity_setting;
 
 public class Activity_waiting extends AppCompatActivity {
 
-    public static final int REQUEST_CODE_WORKINGTIME_POPUP  = 1001;
     private final static int SET_BUTTON_INVISIBLE           = 1002;
     private final static int SET_BUTTON_VISIBLE             = 1003;
 
@@ -45,7 +45,8 @@ public class Activity_waiting extends AppCompatActivity {
     private int val_time_work = 0; // 동작 시간
 
     TextView time_text, oxygen_text, pressure_text;
-    int[] checked_loc = new int[Application_manager.MAX_CHECKED];
+    int[] checked_loc = new int[Application_manager.MAX_CHECKED]; // 선택된 라이브러리 4개 메뉴
+
     Fragment_waiting fragment_waiting;
     Fragment_working fragment_working;
 
@@ -70,7 +71,7 @@ public class Activity_waiting extends AppCompatActivity {
     private AnimationDrawable frameAnimation;
 
     CustomProgressBarBlock seekBar;
-    ImageView seekBar_water;
+    //ImageView seekBar_water;
 
     ImageView waiting_door_open_button;
     ImageView waiting_door_close_button;
@@ -178,7 +179,7 @@ public class Activity_waiting extends AppCompatActivity {
         background_device = (ImageView) findViewById(R.id.imageView_device);
 
         seekBar = (CustomProgressBarBlock) findViewById(R.id.seekBar2);
-        seekBar_water = (ImageView) findViewById(R.id.water);
+        //seekBar_water = (ImageView) findViewById(R.id.water);
     }
 
     @Override
@@ -263,6 +264,9 @@ public class Activity_waiting extends AppCompatActivity {
                 textView_temperature_bed.setText(""+Application_manager.SENSOR_TEMP_BED);
             }
         });
+
+        // 슬립 모드 동작 재시작
+        Application_manager.setSleep_f(0,true);
     }
 
     @Override
@@ -282,13 +286,21 @@ public class Activity_waiting extends AppCompatActivity {
     }
 
     @Override
-    protected void onStop() {
-        super.onStop();
-    }
-
-    @Override
-    protected void onDestroy(){
-        super.onDestroy();
+    protected void onStart() {
+        super.onStart();
+        isRun = true;
+        Thread myThread = new Thread(new Runnable() {
+            public void run() {
+                while (true) {
+                    try {
+                        handler.sendMessage(handler.obtainMessage());
+                        Thread.sleep(1000);
+                    } catch (Throwable t) {
+                    }
+                }
+            }
+        });
+        myThread.start();
     }
 
     public void changeFragment_working(int modeNum) {
@@ -341,13 +353,12 @@ public class Activity_waiting extends AppCompatActivity {
                     }
 
                     // 동작 구간 표시
-                    //CustomProgressBarHorizontal progressBar = (CustomProgressBarHorizontal) findViewById(R.id.custom_progress_bar_horizontal);
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
 
                             seekBar.setVisibility(View.VISIBLE);
-                            seekBar_water.setVisibility(View.VISIBLE);
+                            //seekBar_water.setVisibility(View.VISIBLE);
                         }
                     });
 
@@ -371,18 +382,23 @@ public class Activity_waiting extends AppCompatActivity {
                         });
                         thread.start();
                     }
+
+                    // 슬립 모드 중지
+                    Application_manager.setSleep_f(0, false);
                 }
             }
             // 타이머 스레드가 아직 동작중인 경우
             else {
 
                 Log.i("JW", "changeFragment (waiting -> working) is failed");
-                Toast.makeText(this, "잠시 후 다시 시도해주세요", Toast.LENGTH_SHORT).show();
+                Application_manager.getToastManager().popToast(4);
+                //Toast.makeText(this, "잠시 후 다시 시도해주세요", Toast.LENGTH_SHORT).show();
             }
         }
         else {
 
-            Toast.makeText(this, "동작 시간을 1~90분 사이로 설정해야합니다", Toast.LENGTH_SHORT).show();
+            Application_manager.getToastManager().popToast(5);
+            //Toast.makeText(this, "동작 시간을 1~90분 사이로 설정해야합니다", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -431,7 +447,7 @@ public class Activity_waiting extends AppCompatActivity {
             public void run() {
 
                 seekBar.setVisibility(View.INVISIBLE);
-                seekBar_water.setVisibility(View.INVISIBLE);
+                //seekBar_water.setVisibility(View.INVISIBLE);
             }
         });
 
@@ -441,6 +457,9 @@ public class Activity_waiting extends AppCompatActivity {
             Log.i("JW", "치료 음악 중지");
             Application_manager.getSoundManager().play_therapy(Application_manager.sound_mode_num, false);
         }
+
+        // 슬립 모드 재시작
+        Application_manager.setSleep_f(0, true);
     }
 
     private void start_animation() {
@@ -662,24 +681,6 @@ public class Activity_waiting extends AppCompatActivity {
         };
     }
 
-    @Override
-    protected void onStart() {
-        super.onStart();
-        isRun = true;
-        Thread myThread = new Thread(new Runnable() {
-            public void run() {
-                while (true) {
-                    try {
-                        handler.sendMessage(handler.obtainMessage());
-                        Thread.sleep(1000);
-                    } catch (Throwable t) {
-                    }
-                }
-            }
-        });
-        myThread.start();
-    }
-
     Handler handler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
@@ -694,8 +695,8 @@ public class Activity_waiting extends AppCompatActivity {
     private View.OnTouchListener mTouchEvent = new View.OnTouchListener() {
         @Override
         public boolean onTouch(View view, MotionEvent motionEvent) {
-            Application_manager.set_m_start_sleep(0);
             ImageView background;
+            Application_manager.set_m_start_sleep(0);
             Intent intent;
             Intent intent_setting;
             int action = motionEvent.getAction();
@@ -706,7 +707,6 @@ public class Activity_waiting extends AppCompatActivity {
                         view.setBackgroundResource(R.drawable.library_on);
                         break;
                     case R.id.waiting_setting_button:
-                        //iv  = (ImageView) view;
                         view.setBackgroundResource(R.drawable.setting_on);
                         break;
                     case R.id.waiting_oxygen_up_button:
@@ -860,7 +860,6 @@ public class Activity_waiting extends AppCompatActivity {
 
                             val = 0x01;
                             communicator.set_tx(11, val);
-                            //communicator.send(communicator.get_tx());
                         }
                         break;
                     case R.id.waiting_doorclose_button:
@@ -873,7 +872,6 @@ public class Activity_waiting extends AppCompatActivity {
 
                             val = 0x02;
                             communicator.set_tx(11, val);
-                            //communicator.send(communicator.get_tx());
                         }
                         break;
                     case R.id.waiting_time_text:
@@ -904,6 +902,16 @@ public class Activity_waiting extends AppCompatActivity {
             return true;
         }
     };
+
+    // back키 작동 중지
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event){
+        switch(keyCode){
+            case KeyEvent.KEYCODE_BACK:
+                return false;
+        }
+        return super.onKeyDown(keyCode, event);
+    }
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {

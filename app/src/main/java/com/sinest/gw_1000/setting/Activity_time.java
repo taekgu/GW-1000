@@ -137,7 +137,8 @@ public class Activity_time extends Activity {
                         int_l = int_buf/100;
                         int_r = int_buf%100;
                         if(int_l >= 24 || int_r >=60){
-                            Toast.makeText(getApplicationContext(), "Check the time again", Toast.LENGTH_SHORT).show();
+                            Application_manager.getToastManager().popToast(11);
+                            //Toast.makeText(getApplicationContext(), "Check the time again", Toast.LENGTH_SHORT).show();
                         }else{
                             Application_manager.setTime(s_buf);
                         }
@@ -176,6 +177,9 @@ public class Activity_time extends Activity {
         time_keypad_id.setBackgroundResource(Application_manager.time_keypad[Application_manager.img_flag]);
         time_enter.setBackgroundResource(Application_manager.keypad_enter[Application_manager.img_flag]);
         time_back.setBackgroundResource(Application_manager.keypad_back[Application_manager.img_flag]);
+
+        // 슬립 모드 동작 재시작
+        Application_manager.setSleep_f(0,true);
     }
 
     void time_sum(int k)

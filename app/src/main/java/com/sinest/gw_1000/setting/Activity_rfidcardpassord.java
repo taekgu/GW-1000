@@ -248,6 +248,9 @@ public class Activity_rfidcardpassord extends Activity {
         rfid_password_c.setBackgroundResource(Application_manager.keypad_change[Application_manager.img_flag]);
         rfid_password_e.setBackgroundResource(Application_manager.keypad_enter[Application_manager.img_flag]);
         rfid_password_b.setBackgroundResource(Application_manager.keypad_back[Application_manager.img_flag]);
+
+        // 슬립 모드 동작 재시작
+        Application_manager.setSleep_f(0,true);
     }
 
     @Override

@@ -113,7 +113,13 @@ public class Activity_emotion extends Activity {
 
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
 
+        // 슬립 모드 동작 재시작
+        Application_manager.setSleep_f(0,true);
+    }
 
     @Override
     public boolean onTouchEvent(MotionEvent event){

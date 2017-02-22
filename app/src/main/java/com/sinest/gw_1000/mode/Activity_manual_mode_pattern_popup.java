@@ -64,8 +64,16 @@ public class Activity_manual_mode_pattern_popup extends Activity implements Cust
         manual_popup_save.setOnTouchListener(mTouchEvent);
         manual_popup_back.setOnTouchListener(mTouchEvent);
 
-
     }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        // 슬립 모드 동작 재시작
+        Application_manager.setSleep_f(0,true);
+    }
+
     private View.OnTouchListener mTouchEvent = new View.OnTouchListener() {
         @Override
         public boolean onTouch(View view, MotionEvent motionEvent) {

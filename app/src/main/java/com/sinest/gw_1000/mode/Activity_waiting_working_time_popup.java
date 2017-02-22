@@ -80,6 +80,14 @@ public class Activity_waiting_working_time_popup extends Activity {
         textView_workingTime.setTypeface(tf);
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        // 슬립 모드 동작 재시작
+        Application_manager.setSleep_f(0,true);
+    }
+
     private void setScreen() {
 
         // 배경 설정
@@ -135,7 +143,8 @@ public class Activity_waiting_working_time_popup extends Activity {
                             }
                             else {
 
-                                Toast.makeText(mContext, "1~90 사이의 값을 입력해주세요", Toast.LENGTH_SHORT).show();
+                                Application_manager.getToastManager().popToast(6);
+                                //Toast.makeText(mContext, "1~90 사이의 값을 입력해주세요", Toast.LENGTH_SHORT).show();
                             }
                         }
                         else { // 매뉴얼 모드 세팅에서 넘어왔을 때
@@ -154,7 +163,8 @@ public class Activity_waiting_working_time_popup extends Activity {
                             }
                             else { // 범위 초과
 
-                                Toast.makeText(mContext, "0~90 사이의 값을 입력해주세요", Toast.LENGTH_SHORT).show();
+                                Application_manager.getToastManager().popToast(7);
+                                //Toast.makeText(mContext, "0~90 사이의 값을 입력해주세요", Toast.LENGTH_SHORT).show();
                             }
                         }
                         break;
