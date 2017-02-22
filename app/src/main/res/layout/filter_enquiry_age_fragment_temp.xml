@@ -22,7 +22,7 @@
         android:layout_height="20dp"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="25dp"
+        android:layout_marginTop="15dp"
         android:layout_gravity="bottom">
         <TextView
             android:layout_width="20dp"
@@ -34,6 +34,7 @@
             android:id="@+id/view_inactive_line_top"
             android:layout_width="7dp"
             android:layout_height="match_parent"
+            android:layout_marginTop="20dp"
             android:layout_centerHorizontal="true"
             android:background="@color/grey" />
         <View
@@ -50,7 +51,7 @@
         android:layout_width="wrap_content"
         android:layout_height="20dp"
         android:layout_alignParentBottom="true"
-        android:layout_marginBottom="25dp"
+        android:layout_marginBottom="15dp"
         android:layout_gravity="bottom">
 
         <TextView
@@ -63,6 +64,7 @@
             android:id="@+id/view_inactive_line_bottom"
             android:layout_width="7dp"
             android:layout_height="match_parent"
+            android:layout_marginBottom="20dp"
             android:layout_centerHorizontal="true"
             android:background="@color/grey"
             />
