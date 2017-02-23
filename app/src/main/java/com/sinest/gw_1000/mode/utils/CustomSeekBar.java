@@ -109,7 +109,7 @@ public class CustomSeekBar extends RelativeLayout{
                     case MotionEvent.ACTION_MOVE:
                         movedYMin = event.getRawY() - startYMin;
                         startYMin = event.getRawY();
-                        if (relFilterMin.getHeight() + movedYMin <= initialHeightMin || dTopMin + relFilterMin.getHeight()+ movedYMin >= dTopMax - (heightParent/14*2)) {
+                        if (relFilterMin.getHeight() + movedYMin <= initialHeightMin || dTopMin + relFilterMin.getHeight()+ movedYMin >= dTopMax - (heightParent/14*2)+10) {
                             Log.i("debug", "dTopMax : "+dTopMax);
                             currentHeightMin = relFilterMin.getHeight();
                             getResultMin();
@@ -148,7 +148,7 @@ public class CustomSeekBar extends RelativeLayout{
                         movedYMax = event.getRawY() - startYMax;
                         startYMax = event.getRawY();
 
-                        if (relFilterMax.getHeight() - movedYMax <= initialHeightMin || relFilterMax.getY() + movedYMax <= currentHeightMin + dTopMin + (heightParent/14*2)) {
+                        if (relFilterMax.getHeight() - movedYMax <= initialHeightMin || relFilterMax.getY() + movedYMax <= currentHeightMin + dTopMin + (heightParent/14*2)-10) {
                             currentHeightMax = relFilterMax.getHeight();
                             getResultMax();
                             break;
