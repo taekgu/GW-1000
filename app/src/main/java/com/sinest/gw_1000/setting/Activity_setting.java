@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Typeface;
+import android.media.AudioManager;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
@@ -273,8 +274,13 @@ public class Activity_setting extends AppCompatActivity {
             public void onStopTrackingTouch(SeekBar seekBar) {
                 // 메소드 이름대로 사용자가 SeekBar를 손에서 땠을때 실행됩니다
                 // TODO Auto-generated method stub
-                Log.v("test2", "v : " + volume);
+
+                volume = ((volume + 5) / 10) * 10;
+                seekBar.setProgress(volume);
+
+                Log.v("test2", "v : " + (volume));
                 Application_manager.set_m_volume(volume);
+                Application_manager.getSoundManager().setVolume_alarm(volume);
             }
 
             @Override
@@ -282,6 +288,7 @@ public class Activity_setting extends AppCompatActivity {
                 // 메소드 이름대로 사용자가 SeekBar를 움직일때 실행됩니다
                 // 주로 사용되는 메소드 입니다
                 // TODO Auto-generated method stub
+
                 volume = progress;
             }
         });

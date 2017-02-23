@@ -266,6 +266,16 @@ public class Activity_waiting extends AppCompatActivity {
 
         // 슬립 모드 동작 재시작
         Application_manager.setSleep_f(0,true);
+
+        // 도어 상태
+        if (Application_manager.isDoorOpened) {
+
+            background_device.setBackgroundResource(R.drawable.open);
+        }
+        else {
+
+            background_device.setBackgroundResource(R.drawable.close);
+        }
     }
 
     @Override
@@ -869,6 +879,7 @@ public class Activity_waiting extends AppCompatActivity {
                         if (Application_manager.getSoundManager().play(Application_manager.m_language, 3) == 0) {
 
                             background_device.setBackgroundResource(R.drawable.open);
+                            Application_manager.set_door_state(true);
 
                             val = 0x01;
                             communicator.set_tx(11, val);
@@ -881,6 +892,7 @@ public class Activity_waiting extends AppCompatActivity {
                         if (Application_manager.getSoundManager().play(Application_manager.m_language, 4) == 0) {
 
                             background_device.setBackgroundResource(R.drawable.close);
+                            Application_manager.set_door_state(false);
 
                             val = 0x02;
                             communicator.set_tx(11, val);

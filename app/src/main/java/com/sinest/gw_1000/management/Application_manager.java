@@ -21,6 +21,10 @@ import com.sinest.gw_1000.setting.Activity_setting;
 
 public class Application_manager extends Application {
 
+    // 문 열림 닫힘
+    public static boolean isDoorOpened = false;
+    public static final String DB_DOOR_STATE = "door_state";
+
     // 인버터 타입 false: 야스카와 / true: LS
     public static boolean inverterType = false;
     public static byte inverterVal = 0x00;
@@ -383,9 +387,12 @@ public class Application_manager extends Application {
         // 감성 LED 모드 및 밝기 불러오기
         led_mode_num = sharedPreferences.getInt(DB_EMOTION1,0);
         led_bright_num = sharedPreferences.getInt(DB_EMOTION2,1);
+        getCommunicator().set_setting(3, (byte)(led_mode_num*16 | led_bright_num));
+
+        // 감성 음원 모드 및 음량 불러오기
         sound_mode_num = sharedPreferences.getInt(DB_EMOTION3,0);
         sound_volume_num = sharedPreferences.getInt(DB_EMOTION4,1);
-        getCommunicator().set_setting(3, (byte)(led_mode_num*16 | led_bright_num));
+        soundManager.setVolume_therapy(sound_volume_num);
 
         // 인버터 타입 불러오기
         inverterType = sharedPreferences.getBoolean(DB_INVERT_TYPE, false);
@@ -421,6 +428,7 @@ public class Application_manager extends Application {
 
         //DB_VOLUME
         m_volume = sharedPreferences.getInt(DB_VOLUME,0);
+        soundManager.setVolume_alarm(m_volume);
 
         // 어플 시작 시 이전 time gap 가져와서 변수에 넣기
 
@@ -447,6 +455,9 @@ public class Application_manager extends Application {
         SENSOR_TEMP_BED = 0;
         SENSOR_TEMP_USER = sharedPreferences.getInt(DB_TEMPERATURE_USER, 25);
         SENSOR_TEMP_BED_USER = sharedPreferences.getInt(DB_TEMPERATURE_BED_USER, 25);
+
+        // 도어 상태
+        isDoorOpened = sharedPreferences.getBoolean(DB_DOOR_STATE, false);
     }
 
     public static void set_inverter(boolean _inverterType) {
@@ -461,6 +472,15 @@ public class Application_manager extends Application {
             communicator.set_engineer(2, (byte)0x00);
             inverterVal = 0x00;
         }
+    }
+
+    public static void set_door_state(boolean i) {
+
+        SharedPreferences sharedPreferences = context.getSharedPreferences(Application_manager.DB_NAME, 0);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putBoolean(DB_DOOR_STATE, i);
+        editor.commit();
+        isDoorOpened = i;
     }
 
     synchronized public static void set_m_gw_1000(boolean i){
@@ -574,6 +594,7 @@ public class Application_manager extends Application {
         led_bright_num = e2;
         sound_mode_num = e3;
         sound_volume_num = e4;
+        soundManager.setVolume_therapy(e4);
     }
 
     synchronized public static String get_m_password(){
