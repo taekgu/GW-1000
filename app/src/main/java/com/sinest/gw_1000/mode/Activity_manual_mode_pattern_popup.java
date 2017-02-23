@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 
 import com.sinest.gw_1000.R;
 import com.sinest.gw_1000.management.Application_manager;
@@ -21,6 +22,9 @@ public class Activity_manual_mode_pattern_popup extends Activity implements Cust
     Intent intent;
     ImageView img;
     CustomSeekBar customSeekBar;
+
+    ImageView popup_keypad_save, popup_keypad_back;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,6 +41,8 @@ public class Activity_manual_mode_pattern_popup extends Activity implements Cust
         ImageView manual_popup_back = (ImageView) findViewById(R.id.manual_popup_back);
         customSeekBar = (CustomSeekBar) findViewById(R.id.custom_seek_bar);
 
+        setScreen();
+
         intent = getIntent();
         section_min = intent.getIntExtra("seekbar_min", 0);
         section_max = intent.getIntExtra("seekbar_max", 14);
@@ -45,8 +51,6 @@ public class Activity_manual_mode_pattern_popup extends Activity implements Cust
         Log.i("RR", "rr_section_max : " + section_max);
 
         customSeekBar.setSectionInit(section_min, section_max);
-
-
 
         int resourceId;
         img = (ImageView)findViewById(R.id.manual_popup_imageview);
@@ -64,6 +68,27 @@ public class Activity_manual_mode_pattern_popup extends Activity implements Cust
         manual_popup_save.setOnTouchListener(mTouchEvent);
         manual_popup_back.setOnTouchListener(mTouchEvent);
 
+    }
+
+    private void setScreen() {
+
+        popup_keypad_save = (ImageView) findViewById(R.id.manual_popup_save);
+        popup_keypad_back = (ImageView) findViewById(R.id.manual_popup_back);
+
+        // 언어 중국어일 때
+        if (Application_manager.img_flag == 1) {
+
+            // 엔터, 백 버튼 배경
+            popup_keypad_save.setBackgroundResource(R.drawable.save_mode_off_ch);
+            popup_keypad_back.setBackgroundResource(R.drawable.button_circle_back_off_ch);
+        }
+        // 나머지 언어일 때
+        else {
+
+            // 엔터, 백 버튼 배경
+            popup_keypad_save.setBackgroundResource(R.drawable.save_mode_off);
+            popup_keypad_back.setBackgroundResource(R.drawable.button_circle_back_off);
+        }
     }
 
     @Override
