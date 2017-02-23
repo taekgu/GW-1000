@@ -174,8 +174,9 @@ public class Activity_emotion extends Activity {
                             //s_buf = Integer.toString(int_buf);
                             up = (byte)led_bright_num;
                             led_bright.setText(String.valueOf(led_bright_num));
-                            communicator.set_setting(4,(byte)((byte)up|(byte)down));
+                            communicator.set_setting(3,(byte)((byte)up|(byte)down));
                         }
+                        communicator.getSocketManager().send_setting();
                         break;
                     case R.id.emotion_ledm_down:
                         emotion_ledm_down.setBackgroundResource(R.drawable.button_down_off);
@@ -187,8 +188,9 @@ public class Activity_emotion extends Activity {
                             //s_buf = Integer.toString(int_buf);
                             up = (byte)led_bright_num;
                             led_bright.setText(String.valueOf(led_bright_num));
-                            communicator.set_setting(4,(byte)((byte)up|(byte)down));
+                            communicator.set_setting(3,(byte)((byte)up|(byte)down));
                         }
+                        communicator.getSocketManager().send_setting();
                         break;
                     case R.id.emotion_led_up:
                         emotion_led_up.setBackgroundResource(R.drawable.button_up_off);
@@ -198,10 +200,11 @@ public class Activity_emotion extends Activity {
                         {
                             led_mode_num++;
                             //s_buf = Integer.toString(int_buf);
-                            down = (byte)led_mode_num;
+                            down = (byte)(led_mode_num * 16);
                             led_mode.setText(String.valueOf(led_mode_num));
-                            communicator.set_setting(4,(byte)((byte)up|(byte)down));
+                            communicator.set_setting(3,(byte)((byte)up|(byte)down));
                         }
+                        communicator.getSocketManager().send_setting();
                         break;
                     case R.id.emotion_led_down:
                         emotion_led_down.setBackgroundResource(R.drawable.button_down_off);
@@ -211,10 +214,11 @@ public class Activity_emotion extends Activity {
                         {
                             led_mode_num--;
                             //s_buf = Integer.toString(int_buf);
-                            down = (byte)led_mode_num;
+                            down = (byte)(led_mode_num * 16);
                             led_mode.setText(String.valueOf(led_mode_num));
-                            communicator.set_setting(4,(byte)((byte)up|(byte)down));
+                            communicator.set_setting(3,(byte)((byte)up|(byte)down));
                         }
+                        communicator.getSocketManager().send_setting();
                         break;
                     case R.id.emotion_soundm_up:
                         emotion_soundm_up.setBackgroundResource(R.drawable.button_up_off);

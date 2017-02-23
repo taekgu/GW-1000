@@ -6,6 +6,8 @@ import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
 
+import com.sinest.gw_1000.management.Application_manager;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -113,8 +115,17 @@ public class SocketManager {
 
                             Thread.sleep(500);
 
-                            // TX 보내기
-                            msg_out = communicator.get_tx();
+                            // TX / Engineer 보내기
+                            if (Application_manager.getIsEngineerMode()) {
+
+                                msg_out = communicator.get_engineer();
+                                Log.i("JW_COM", "엔지니어링");
+                            }
+                            else {
+
+                                msg_out = communicator.get_tx();
+                                Log.i("JW_COM", "동작명령");
+                            }
                             outputStream.write(msg_out, 0, msg_out.length);
                             Log.i("JW", "Transferred: " + msg_out.length + "byte");
 
@@ -198,5 +209,117 @@ public class SocketManager {
 
 
         init();
+    }
+
+    public void send_setting() {
+
+        if (isConnected) {
+
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+
+                    byte[] msg_in = new byte[LENGTH_RX];
+                    byte[] msg_out;
+                    int read_len;
+
+                    try {
+
+                        // setting 보내기
+                        msg_out = communicator.get_setting();
+                        outputStream.write(msg_out, 0, msg_out.length);
+                        Log.i("JW", "Transferred: " + msg_out.length + "byte");
+                        Log.i("JW_COM", "설정명령");
+
+                        // RX 초기화
+                        Arrays.fill(msg_in, (byte) 0x00);
+
+                        // RX 받기, timeout = 500ms
+                        read_len = inputStream.read(msg_in);
+
+                        if (LENGTH_RX == read_len) {
+
+                            Log.i("JW", "Received: " + read_len + "byte");
+
+                            // Communicator 에서 처리
+                            Bundle data = new Bundle();
+                            for (int i = 0; i < read_len; i++) {
+
+                                data.putByte("" + i, msg_in[i]);
+                                //Log.i("WIFI", "Received : " + String.format("%02x", msg_in[i] & 0xff));
+                            }
+                            Message msg = new Message();
+                            msg.setData(data);
+                            mHandler.sendMessage(msg);
+                        }
+                    } catch (SocketTimeoutException e) {
+
+                        send_setting();
+                        Log.i("JW", "Socket timeout exception: " + e.getMessage());
+                    } catch (IOException e) {
+
+                        send_setting();
+                        Log.i("JW", "IO stream exception: " + e.getMessage());
+                    }
+                    Log.i("JW", "setting msg 전송 완료");
+                }
+            }).start();
+        }
+    }
+
+    public void send_rfid() {
+
+        if (isConnected) {
+
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+
+                    byte[] msg_in = new byte[LENGTH_RX];
+                    byte[] msg_out;
+                    int read_len;
+
+                    try {
+
+                        // rfid 보내기
+                        msg_out = communicator.get_rfid();
+                        outputStream.write(msg_out, 0, msg_out.length);
+                        Log.i("JW", "Transferred: " + msg_out.length + "byte");
+                        Log.i("JW_COM", "RFID 명령");
+
+                        // RX 초기화
+                        Arrays.fill(msg_in, (byte) 0x00);
+
+                        // RX 받기, timeout = 500ms
+                        read_len = inputStream.read(msg_in);
+
+                        if (LENGTH_RX == read_len) {
+
+                            Log.i("JW", "Received: " + read_len + "byte");
+
+                            // Communicator 에서 처리
+                            Bundle data = new Bundle();
+                            for (int i = 0; i < read_len; i++) {
+
+                                data.putByte("" + i, msg_in[i]);
+                                //Log.i("WIFI", "Received : " + String.format("%02x", msg_in[i] & 0xff));
+                            }
+                            Message msg = new Message();
+                            msg.setData(data);
+                            mHandler.sendMessage(msg);
+                        }
+                    } catch (SocketTimeoutException e) {
+
+                        send_rfid();
+                        Log.i("JW", "Socket timeout exception: " + e.getMessage());
+                    } catch (IOException e) {
+
+                        send_rfid();
+                        Log.i("JW", "IO stream exception: " + e.getMessage());
+                    }
+                    Log.i("JW", "rfid msg 전송 완료");
+                }
+            }).start();
+        }
     }
 }

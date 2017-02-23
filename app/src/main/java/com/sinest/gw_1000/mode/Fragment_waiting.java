@@ -20,7 +20,7 @@ public class Fragment_waiting extends Fragment {
 
     Button[] mode = new Button[4];
     int idx = 0;
-    int[] checked_idx = new int[4];
+    int[] checked_idx = new int[4]; // 선택된 패턴 인덱스 ex) {12, 3, 1, 9}
 
     private View view;
 
@@ -99,7 +99,8 @@ public class Fragment_waiting extends Fragment {
                         int resourceId = -1;
                         resourceId = getResources().getIdentifier("mode" + (checked_idx[i]+1), "drawable", "com.sinest.gw_1000");
                         mode[i].setBackgroundResource(resourceId);
-                        activity.changeFragment_working(i+1);
+                        // i+1 번째 모드
+                        activity.changeFragment_working(checked_idx[i]+1);
                     }
                 }
             }

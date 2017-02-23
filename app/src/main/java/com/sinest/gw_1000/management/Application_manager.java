@@ -10,7 +10,6 @@ import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
-import android.widget.Toast;
 
 import com.sinest.gw_1000.R;
 import com.sinest.gw_1000.communication.Communicator;
@@ -21,6 +20,22 @@ import com.sinest.gw_1000.setting.Activity_setting;
  */
 
 public class Application_manager extends Application {
+
+    // 인버터 타입 false: 야스카와 / true: LS
+    public static boolean inverterType = false;
+    public static byte inverterVal = 0x00;
+    public static final String DB_INVERT_TYPE = "invert_type";
+
+    // 엔지니어 모드인지
+    private static boolean isEngineerMode = false;
+    synchronized public static boolean getIsEngineerMode() {
+
+        return isEngineerMode;
+    }
+    synchronized public static void setIsEngineerMode(boolean val) {
+
+        isEngineerMode = val;
+    }
 
     // WIFI 연결 유/무
     private static boolean isConnected_wifi = false;
@@ -340,27 +355,7 @@ public class Application_manager extends Application {
         isRun = true;
         thread_runningTime.start();
 
-
-        //emotion 저장
-        led_mode_num = sharedPreferences.getInt(DB_EMOTION1,0);
-        led_bright_num = sharedPreferences.getInt(DB_EMOTION2,1);
-        sound_mode_num = sharedPreferences.getInt(DB_EMOTION3,0);
-        sound_volume_num = sharedPreferences.getInt(DB_EMOTION4,1);
-
-        //water_heater_time_save
-        m_water_heater_time_save = sharedPreferences.getBoolean(DB_WATER_F,false);
-        m_water_heater_f = sharedPreferences.getBoolean(DB_WATER_FF,false);
-        m_water_heater_time_stime = sharedPreferences.getString(DB_WATER_ST,"00:00");
-        m_water_heater_time_ftime = sharedPreferences.getString(DB_WATER_FT,"00:00");
-
-        //External_led
-        m_external_led = sharedPreferences.getInt(DB_EXTERN_LED,0);
-
-        //Rause Rotation
-        m_pause_rotation = sharedPreferences.getBoolean(DB_PAUSE,false);
-
-        //GW_1000
-        gw_1000 = sharedPreferences.getBoolean(GW_1000,true);
+        load_data();
 
         if (gw_1000 == false) {
             // GW-1000L 버전 설정
@@ -379,6 +374,44 @@ public class Application_manager extends Application {
             waiting_backimage[1] = R.drawable.workingmotion0_ch;
 
         }
+    }
+
+    private void load_data(){
+
+        SharedPreferences sharedPreferences = context.getSharedPreferences(Application_manager.DB_NAME, 0);
+
+        // 감성 LED 모드 및 밝기 불러오기
+        led_mode_num = sharedPreferences.getInt(DB_EMOTION1,0);
+        led_bright_num = sharedPreferences.getInt(DB_EMOTION2,1);
+        sound_mode_num = sharedPreferences.getInt(DB_EMOTION3,0);
+        sound_volume_num = sharedPreferences.getInt(DB_EMOTION4,1);
+        getCommunicator().set_setting(3, (byte)(led_mode_num*16 | led_bright_num));
+
+        // 인버터 타입 불러오기
+        inverterType = sharedPreferences.getBoolean(DB_INVERT_TYPE, false);
+        set_inverter(inverterType);
+
+        //water_heater_time_save
+        m_water_heater_time_save = sharedPreferences.getBoolean(DB_WATER_F,false);
+        m_water_heater_f = sharedPreferences.getBoolean(DB_WATER_FF,false);
+        m_water_heater_time_stime = sharedPreferences.getString(DB_WATER_ST,"00:00");
+        m_water_heater_time_ftime = sharedPreferences.getString(DB_WATER_FT,"00:00");
+
+        //External_led
+        m_external_led = sharedPreferences.getInt(DB_EXTERN_LED,0);
+        getCommunicator().set_setting(2, (byte)m_external_led);
+
+        //Rause Rotation
+        m_pause_rotation = sharedPreferences.getBoolean(DB_PAUSE,false);
+        if (m_pause_rotation) {
+            getCommunicator().set_setting(4, (byte)0x01);
+        }
+        else {
+            getCommunicator().set_setting(4, (byte)0x00);
+        }
+
+        //GW_1000
+        gw_1000 = sharedPreferences.getBoolean(GW_1000,true);
 
         //DB_LANGUEAGE
         m_language = sharedPreferences.getInt(DB_LANGUEAGE,0);
@@ -414,6 +447,20 @@ public class Application_manager extends Application {
         SENSOR_TEMP_BED = 0;
         SENSOR_TEMP_USER = sharedPreferences.getInt(DB_TEMPERATURE_USER, 25);
         SENSOR_TEMP_BED_USER = sharedPreferences.getInt(DB_TEMPERATURE_BED_USER, 25);
+    }
+
+    public static void set_inverter(boolean _inverterType) {
+
+        // LS
+        if (_inverterType) {
+            communicator.set_engineer(2, (byte)0x10);
+            inverterVal = 0x10;
+        }
+        // 야스카와
+        else {
+            communicator.set_engineer(2, (byte)0x00);
+            inverterVal = 0x00;
+        }
     }
 
     synchronized public static void set_m_gw_1000(boolean i){

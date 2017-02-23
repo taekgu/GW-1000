@@ -7,6 +7,8 @@ import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
 
+import java.net.Socket;
+
 /**
  * Created by Jinwook on 2016-11-15.
  */
@@ -59,6 +61,11 @@ public class Communicator {
         return wifiConnector;
     }
 
+    public SocketManager getSocketManager() {
+
+        return socketManager;
+    }
+
     public void init(Context context) {
 
         this.mContext = context;
@@ -94,6 +101,43 @@ public class Communicator {
                     Log.i("JW", "Rx data is wrong (checkSum error)");
                     calcCheckSum(msg_rx);
                 }
+
+                switch (get_rx_idx(1)) {
+
+                    case 0x10:
+
+                        Log.i("JW_COM", "정지 ACK");
+                        break;
+                    case 0x11:
+
+                        Log.i("JW_COM", "동작 ACK");
+                        break;
+                    case 0x12:
+
+                        Log.i("JW_COM", "일시정지 ACK");
+                        break;
+                    case 0x1A:
+
+                        Log.i("JW_COM", "설정 ACK");
+                        break;
+                    case 0x1B:
+
+                        Log.i("JW_COM", "RFID 읽기 ACK");
+                        break;
+                    case 0x1C:
+
+                        Log.i("JW_COM", "RFID 쓰기 ACK");
+                        break;
+                    case 0x1D:
+
+                        Log.i("JW_COM", "엔지니어모드 ACK");
+                        break;
+                    case 0x20:
+
+                        Log.i("JW_COM", "Warm-up");
+                        break;
+                }
+
                 Intent intent = new Intent("update.data");
                 mContext.sendBroadcast(intent);
                 Log.i("jW", "sendBroadcast");

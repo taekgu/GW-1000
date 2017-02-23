@@ -486,12 +486,15 @@ public class Activity_setting extends AppCompatActivity {
                         if (ex_f == 0) {
                             b_ex.setBackgroundResource(Application_manager.on[Application_manager.img_flag]);
                             ex_f = 1;
-                            communicator.set_engineer(6,(byte)0x01);
+                            //communicator.set_engineer(6,(byte)0x01);
+                            communicator.set_setting(2, (byte) 0x01);
                         } else if (ex_f == 1) {
                             b_ex.setBackgroundResource(Application_manager.off[Application_manager.img_flag]);
                             ex_f = 0;
-                            communicator.set_engineer(6,(byte)0x00);
+                            //communicator.set_engineer(6,(byte)0x00);
+                            communicator.set_setting(2, (byte) 0x00);
                         }
+                        communicator.getSocketManager().send_setting();
                         break;
                     case R.id.b_wa:
                         //
@@ -520,6 +523,7 @@ public class Activity_setting extends AppCompatActivity {
                             button2_flag[3] = true;
                             communicator.set_setting(4, (byte) 0x00);
                         }
+                        communicator.getSocketManager().send_setting();
                         break;
 
                     //----------------------------------------------------------------------------------------
@@ -941,10 +945,10 @@ public class Activity_setting extends AppCompatActivity {
         ex_f = Application_manager.m_external_led;
         if (ex_f == 0) {
             b_ex.setBackgroundResource(Application_manager.off[Application_manager.img_flag]);
-            communicator.set_engineer(6,(byte)0x00);
+            //communicator.set_engineer(6,(byte)0x00);
         } else if (ex_f == 1) {
             b_ex.setBackgroundResource(Application_manager.on[Application_manager.img_flag]);
-            communicator.set_engineer(6,(byte)0x01);
+            //communicator.set_engineer(6,(byte)0x01);
         }
 
         button2_flag[2] = Application_manager.m_water_heater_f;

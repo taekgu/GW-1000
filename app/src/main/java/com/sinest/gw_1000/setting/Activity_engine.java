@@ -1,6 +1,7 @@
 package com.sinest.gw_1000.setting;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.os.Handler;
 import android.os.Message;
@@ -12,14 +13,12 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.LinearLayout;
-import android.widget.TextClock;
 import android.widget.TextView;
 
 import com.sinest.gw_1000.R;
 import com.sinest.gw_1000.communication.Communicator;
 import com.sinest.gw_1000.management.Application_manager;
 import com.sinest.gw_1000.mode.Activity_waiting;
-import com.sinest.gw_1000.mode.utils.CustomTextClock;
 
 public class Activity_engine extends AppCompatActivity {
 
@@ -364,16 +363,25 @@ public class Activity_engine extends AppCompatActivity {
                         }
                         break;
                     case R.id.invert_choice:
-                        //
+                        // LS (0x10)
                         if (invert_f == true) {
                             invert_choice.setBackgroundResource(Application_manager.inverter_ls[Application_manager.img_flag]);
                             invert_f = false;
                             inverter = 0x10;
-                        } else {
+                        }
+                        // 야스카와 (0x00)
+                        else {
                             invert_choice.setBackgroundResource(Application_manager.inverter_ys[Application_manager.img_flag]);
                             invert_f = true;
                             inverter = 0x00;
                         }
+                        SharedPreferences sharedPreferences = getSharedPreferences(Application_manager.DB_NAME, 0);
+                        SharedPreferences.Editor editor = sharedPreferences.edit();
+                        editor.putBoolean(Application_manager.DB_INVERT_TYPE, !invert_f);
+                        editor.commit();
+
+                        Application_manager.inverterType = !invert_f;
+                        Application_manager.set_inverter(Application_manager.inverterType);
                         communicator.set_engineer(2,(byte)((byte)inverter|(byte)w_press));
                         break;
 
@@ -619,12 +627,37 @@ public class Activity_engine extends AppCompatActivity {
 
         // 슬립 모드 동작 재시작
         Application_manager.setSleep_f(0,true);
+
+        // 엔지니어모드 시작 플래그
+        Application_manager.setIsEngineerMode(true);
+
+        // 인버터 타입 불러오기
+        // LS (0x10)
+        if (Application_manager.inverterType) {
+            invert_choice.setBackgroundResource(Application_manager.inverter_ls[Application_manager.img_flag]);
+            invert_f = false;
+            inverter = 0x10;
+        }
+        // 야스카와 (0x00)
+        else {
+            invert_choice.setBackgroundResource(Application_manager.inverter_ys[Application_manager.img_flag]);
+            invert_f = true;
+            inverter = 0x00;
+        }
     }
 
     @Override
     protected void onPause() {
         super.onPause();
         isRun = false;
+
+        // 엔지니어모드 중지 플래그
+        Application_manager.setIsEngineerMode(false);
+
+        int val_pressure = 0;
+        SharedPreferences sharedPreferences = getSharedPreferences(Application_manager.DB_NAME, 0);
+        sharedPreferences.getInt(Application_manager.DB_VAL_PRESSURE, val_pressure);
+        communicator.set_tx(5, (byte)(Application_manager.inverterVal | (byte)val_pressure));
     }
 
     void setZerosWaterPressure()

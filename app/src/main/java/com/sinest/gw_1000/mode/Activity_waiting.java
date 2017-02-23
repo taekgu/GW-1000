@@ -20,7 +20,6 @@ import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.sinest.gw_1000.R;
 import com.sinest.gw_1000.communication.Communicator;
@@ -103,12 +102,12 @@ public class Activity_waiting extends AppCompatActivity {
         val_time = sharedPreferences.getInt(Application_manager.DB_VAL_TIME, 10);
 
         // tx 메시지의 DATA4, 7에 수압, 산소투입량 입력
-        Application_manager.getCommunicator().set_tx(5, (byte) val_pressure);
+        communicator.set_tx(5, (byte)(Application_manager.inverterVal | (byte)val_pressure));
         if (Application_manager.gw_1000) {
-            Application_manager.getCommunicator().set_tx(8, (byte) val_oxygen);
+            communicator.set_tx(8, (byte) val_oxygen);
         }
         else if (!Application_manager.gw_1000) {
-            Application_manager.getCommunicator().set_tx(8, (byte) val_oxygen_spray);
+            communicator.set_tx(8, (byte) val_oxygen_spray);
         }
 
         time_text = (TextView)findViewById(R.id.waiting_time_text);
@@ -303,7 +302,7 @@ public class Activity_waiting extends AppCompatActivity {
         myThread.start();
     }
 
-    public void changeFragment_working(int modeNum) {
+    public void changeFragment_working(int patternNum) {
 
         if (val_time > 0) {
 
@@ -324,9 +323,9 @@ public class Activity_waiting extends AppCompatActivity {
                     FragmentManager fm = getFragmentManager();
                     FragmentTransaction fragmentTransaction = fm.beginTransaction();
 
-                    fragment_working.init(modeNum, val_time_work, 0);
+                    fragment_working.init(patternNum, val_time_work, 0);
                     // tx 메시지의 DATA1에 패턴 입력
-                    Application_manager.getCommunicator().set_tx(2, (byte) modeNum);
+                    communicator.set_tx(2, (byte) patternNum);
 
                     fragmentTransaction.replace(R.id.frameLayout_fragment, fragment_working);
                     fragmentTransaction.commit();
@@ -422,6 +421,19 @@ public class Activity_waiting extends AppCompatActivity {
         val_oxygen_spray = sharedPreferences.getInt(Application_manager.DB_VAL_OXYGEN_SPRAY, 0);
         val_pressure = sharedPreferences.getInt(Application_manager.DB_VAL_PRESSURE, 0);
         val_time = sharedPreferences.getInt(Application_manager.DB_VAL_TIME, 10);
+
+        // 동작 시작 전 값으로 tx 값 복원
+        byte val;
+        if (Application_manager.gw_1000 == true) { // GW-1000H
+
+            val = (byte) val_oxygen;
+        }
+        else { // GW-1000L
+
+            val = (byte) val_oxygen_spray;
+        }
+        communicator.set_tx(8, val);
+        communicator.set_tx(5, (byte)(Application_manager.inverterVal | (byte)val_pressure));
 
         runOnUiThread(new Runnable() {
             @Override
@@ -630,7 +642,7 @@ public class Activity_waiting extends AppCompatActivity {
 
                     // 노즐 위치 0~14
                     //Log.i("JW", "노즐 위치: "+Application_manager.getCommunicator().get_rx_idx(15));
-                    seekBar.setProgress(Application_manager.getCommunicator().get_rx_idx(15));
+                    seekBar.setProgress(communicator.get_rx_idx(15));
                 }
                 else if (msg.what == SET_BUTTON_INVISIBLE) {
 
@@ -648,34 +660,34 @@ public class Activity_waiting extends AppCompatActivity {
                 // 온도 높을 때 - 끄기
                 if (Application_manager.SENSOR_TEMP_BED_USER + 1 < Application_manager.SENSOR_TEMP_BED) {
 
-                    Application_manager.getCommunicator().set_tx(6, (byte) 0x00);
+                    communicator.set_tx(6, (byte) 0x00);
                 }
                 // 온도 낮을 때 - 켜기
                 else if (Application_manager.SENSOR_TEMP_BED_USER - 1 > Application_manager.SENSOR_TEMP_BED) {
 
-                    Application_manager.getCommunicator().set_tx(6, (byte) 0x01);
+                    communicator.set_tx(6, (byte) 0x01);
                 }
                 // 설정 범위 +-1 이내일 때 - 끄기
                 else {
 
-                    Application_manager.getCommunicator().set_tx(6, (byte) 0x00);
+                    communicator.set_tx(6, (byte) 0x00);
                 }
 
                 // 히터
                 // 온도 높을 때 - 끄기
                 if (Application_manager.SENSOR_TEMP_USER + 1 < Application_manager.SENSOR_TEMP) {
 
-                    Application_manager.getCommunicator().set_tx(7, (byte) 0x00);
+                    communicator.set_tx(7, (byte) 0x00);
                 }
                 // 온도 낮을 때 - 켜기
                 else if (Application_manager.SENSOR_TEMP_USER - 1 > Application_manager.SENSOR_TEMP) {
 
-                    Application_manager.getCommunicator().set_tx(7, (byte) 0x01);
+                    communicator.set_tx(7, (byte) 0x01);
                 }
                 // 설정 범위 +-1 이내일 때 - 끄기
                 else {
 
-                    Application_manager.getCommunicator().set_tx(7, (byte) 0x00);
+                    communicator.set_tx(7, (byte) 0x00);
                 }
             }
         };
@@ -801,7 +813,7 @@ public class Activity_waiting extends AppCompatActivity {
                         if (val_pressure > 6) val_pressure = 6;
                         pressure_text.setText("" + val_pressure);
 
-                        communicator.set_tx(5, (byte) val_pressure);
+                        communicator.set_tx(5, (byte)(Application_manager.inverterVal | (byte)val_pressure));
                         //}
                         break;
                     case R.id.waiting_pressure_down_button:
@@ -813,7 +825,7 @@ public class Activity_waiting extends AppCompatActivity {
                         if (val_pressure < 0) val_pressure = 0;
                         pressure_text.setText("" + val_pressure);
 
-                        communicator.set_tx(5, (byte) val_pressure);
+                        communicator.set_tx(5, (byte)(Application_manager.inverterVal | (byte)val_pressure));
                         //}
                         break;
                     case R.id.waiting_time_up_button:
