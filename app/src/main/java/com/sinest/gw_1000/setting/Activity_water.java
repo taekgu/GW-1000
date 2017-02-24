@@ -146,6 +146,7 @@ public class Activity_water extends Activity {
                         Application_manager.set_m_water_ftime((String)water_f_c.getText());
                         Application_manager.set_m_water_f(false);
                         Application_manager.set_m_water_ff(water_flag[1]);
+                        Application_manager.time_buf_f = 1;
                         finish();
                         break;
                     case R.id.water_back:
