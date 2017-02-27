@@ -15,7 +15,6 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.sinest.gw_1000.R;
 import com.sinest.gw_1000.management.Application_manager;
@@ -94,8 +93,7 @@ public class Activity_manual_mode_setting extends Activity{
 
             resourceId = getResources().getIdentifier("manual_mode_progress_bar_" + (i+1), "id", "com.sinest.gw_1000");
             custom_progress_bar[i] = (CustomProgressBar)findViewById(resourceId);
-            custom_progress_bar[i].setMinimumProgress(section[i][0]);
-            custom_progress_bar[i].setMaximumProgress(section[i][1]);
+            custom_progress_bar[i].setProgress(section[i][0], section[i][1]);
 
             resourceId = getResources().getIdentifier("manual_mode_setting_" + (i+1), "id", "com.sinest.gw_1000");
             manual_mode_setting[i] = (ImageView)findViewById(resourceId);
@@ -269,8 +267,7 @@ public class Activity_manual_mode_setting extends Activity{
             resourceId = getResources().getIdentifier("manual_mode_progress_bar_" + (i+1), "id", "com.sinest.gw_1000");
             custom_progress_bar[i] = (CustomProgressBar)findViewById(resourceId);
 
-            custom_progress_bar[i].setMinimumProgress(section[i][0]);
-            custom_progress_bar[i].setMaximumProgress(section[i][1]);
+            custom_progress_bar[i].setProgress(section[i][0], section[i][1]);
 
             manual_mode_time[i].setText(""+time[i]);
         }
