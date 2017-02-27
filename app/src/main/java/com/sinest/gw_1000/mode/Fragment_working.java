@@ -219,4 +219,13 @@ public class Fragment_working extends Fragment {
             return true;
         }
     };
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        // 슬립 모드 동작 재시작
+        Application_manager.setSleep_f(0, false);
+    }
+
 }

@@ -152,6 +152,8 @@ public class Activity_water extends Activity {
                     case R.id.water_back:
                         water_back.setBackgroundResource(Application_manager.button_elipse_back_off[Application_manager.img_flag]);
                         Application_manager.set_m_water_f(true);
+                        Application_manager.s_time_buf = Application_manager.m_water_heater_time_stime;
+                        Application_manager.f_time_buf = Application_manager.m_water_heater_time_ftime;
                         finish();
                         break;
                 }
@@ -188,6 +190,7 @@ public class Activity_water extends Activity {
             water_s_c.setText(Application_manager.s_time_buf);
             water_f_c.setText(Application_manager.f_time_buf);
         }
+        Log.v("sb_test","s_time_buf : "+Application_manager.s_time_buf+"  f_time_buf : "+Application_manager.f_time_buf+"  time_buf_f:"+Application_manager.time_buf_f);
         water_flag[1] = Application_manager.m_water_heater_f;
         Application_manager.time_buf_f = 0;
     }

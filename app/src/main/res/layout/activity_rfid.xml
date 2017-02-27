@@ -73,7 +73,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:visibility="invisible"
-                android:layout_weight="20" />
+                android:layout_weight="21" />
 
             <TextView
                 android:layout_width="match_parent"
@@ -89,7 +89,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:visibility="invisible"
-                android:layout_weight="33"/>
+                android:layout_weight="32"/>
 
         </LinearLayout>
 
@@ -168,7 +168,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:visibility="invisible"
-                android:layout_weight="20" />
+                android:layout_weight="21" />
 
             <TextView
                 android:layout_width="match_parent"
@@ -184,7 +184,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:visibility="invisible"
-                android:layout_weight="33"/>
+                android:layout_weight="32"/>
 
         </LinearLayout>
 
