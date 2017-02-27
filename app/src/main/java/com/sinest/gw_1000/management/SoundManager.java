@@ -76,10 +76,10 @@ public class SoundManager {
         volume /= 10;
         final AudioManager audioManager = (AudioManager) context.getSystemService(AUDIO_SERVICE);
 
-        int max = audioManager.getStreamMaxVolume(AudioManager.STREAM_NOTIFICATION);
+        int max = audioManager.getStreamMaxVolume(AudioManager.STREAM_RING);
         double level = (double)max / 10;
 
-        audioManager.setStreamVolume(AudioManager.STREAM_NOTIFICATION, (int)(level * volume), 0);
+        audioManager.setStreamVolume(AudioManager.STREAM_RING, (int)(level * volume), 0);
 
         Log.i("JW_VOL", "max = " + max + " / level = " + level + " / volume = " + volume);
     }
@@ -126,7 +126,7 @@ public class SoundManager {
                 for (int sound=0; sound<Application_manager.NUM_OF_SOUND; sound++) {
 
                     Application_manager.mediaPlayer[lang][sound] = new MediaPlayer();
-                    Application_manager.mediaPlayer[lang][sound].setAudioStreamType(AudioManager.STREAM_NOTIFICATION);
+                    Application_manager.mediaPlayer[lang][sound].setAudioStreamType(AudioManager.STREAM_RING);
                 }
             }
 

@@ -494,6 +494,9 @@ public class Activity_waiting extends AppCompatActivity {
 
         // 슬립 모드 재시작
         Application_manager.setSleep_f(0, true);
+
+        // tx 메시지의 DATA1에 패턴 초기화
+        communicator.set_tx(2, (byte) 0x00);
     }
 
     private void start_animation() {

@@ -101,6 +101,10 @@ public class Activity_emotion extends Activity {
         sound_mode_num = Application_manager.sound_mode_num;
         sound_volume_num = Application_manager.sound_volume_num;
 
+        // 프로토콜 계산 위한 값 입력
+        up = (byte)led_bright_num;
+        down = (byte)(led_mode_num * 16);
+
         Typeface tf = Typeface.createFromAsset(getAssets(), "fonts/digital.ttf");
 
         led_mode .setText(Integer.toString(led_mode_num));
@@ -112,9 +116,6 @@ public class Activity_emotion extends Activity {
         sound_mode.setTypeface(tf);
         led_bright.setTypeface(tf);
         sound_volume.setTypeface(tf);
-
-        up = 0x00;
-        down = 0x00;
 
     }
 

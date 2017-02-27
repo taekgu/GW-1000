@@ -25,7 +25,7 @@ public class SocketManager {
     private final static int LENGTH_TX = 14;
     private final static int LENGTH_RX = 25;
 
-    private static final String IP_ADDRESS  = "192.168.0.1";
+    private static final String IP_ADDRESS  = "192.168.219.135";
     private static final int PORT           = 20002;
 
     private Socket mSocket;
