@@ -3,9 +3,7 @@ package com.sinest.gw_1000.mode.utils;
 import android.content.Context;
 import android.content.res.Resources;
 import android.content.res.TypedArray;
-import android.graphics.Color;
 import android.os.Build;
-import android.support.v4.view.ViewCompat;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
 import android.util.Log;
@@ -13,8 +11,8 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
-import android.widget.TextView;
 
 import com.sinest.gw_1000.R;
 
@@ -27,8 +25,6 @@ public class CustomSeekBar extends RelativeLayout{
     private static final int TOTAL_DIVISION_COUNT = 100;
     //    private static final int MAX_CLICK_DURATION = 200;
     public CustomSeekBar.OnRangeBarChangeListener onRangeBarChangeListener;
-    private int inactiveColor;
-    private int activeColor;
     private double heightParent;
     private View viewFilterMain, viewThumbMin, viewThumbMax;
     private RelativeLayout relFilterMin, relFilterMax;
@@ -40,7 +36,6 @@ public class CustomSeekBar extends RelativeLayout{
     private double resultMin = 0.0;
     private double resultMax = 14.0;
     private View viewParent;
-    private TextView tvFilterMin, tvFilterMax;
     private Context context;
     private long startClickTime;
     private RelativeLayout relativeLayout;
@@ -58,8 +53,6 @@ public class CustomSeekBar extends RelativeLayout{
         this.context = context;
         TypedArray a = context.obtainStyledAttributes(attrs, com.opalox.rangebarvertical.R.styleable.RangeBarVertical, 0, 0);
         System.out.println(a.getIndexCount());
-        activeColor = a.getColor(com.opalox.rangebarvertical.R.styleable.RangeBarVertical_activeColor, Color.parseColor("#00FFFF"));
-        inactiveColor = a.getColor(com.opalox.rangebarvertical.R.styleable.RangeBarVertical_inactiveColor, Color.parseColor("#808080"));
         a.recycle();
         initialize(context);
     }
@@ -82,20 +75,14 @@ public class CustomSeekBar extends RelativeLayout{
         onRangeBarChangeListener = (CustomSeekBar.OnRangeBarChangeListener) context;
         onRangeBarChangeListener.onRangeBarChange((int) resultMin, (int) resultMax);
         relativeLayout = (RelativeLayout) findViewById(R.id.rel_main);
-        tvFilterMin = (TextView) findViewById(R.id.tv_filter_min);
-        tvFilterMax = (TextView) findViewById(R.id.tv_filter_max);
         relFilterMin = (RelativeLayout) findViewById(R.id.rel_filter_min);
         relFilterMax = (RelativeLayout) findViewById(R.id.rel_filter_max);
         viewThumbMax = findViewById(R.id.oval_thumb_max);
         viewThumbMin = findViewById(R.id.oval_thumb_min);
         viewFilterMain = findViewById(R.id.filter_main_view);
         viewParent = findViewById(R.id.view_filter_parent);
-        viewInActiveTop = findViewById(R.id.view_inactive_line_top);
-        viewInActiveBottom = findViewById(R.id.view_inactive_line_bottom);
-
 
         init();
-
         viewThumbMin.setOnTouchListener(new View.OnTouchListener() {
             public boolean onTouch(View v, MotionEvent event) {
                 dTopMin = relFilterMin.getY();
@@ -121,6 +108,7 @@ public class CustomSeekBar extends RelativeLayout{
                         dTopMin = relFilterMin.getY();
                         currentHeightMin = relFilterMin.getHeight();
                         getResultMin();
+                        setProgress((int)resultMin, (int)resultMax);
                         break;
                     case MotionEvent.ACTION_UP:
                         ViewGroup.LayoutParams _layoutParams = relFilterMin.getLayoutParams();
@@ -158,6 +146,7 @@ public class CustomSeekBar extends RelativeLayout{
                         relFilterMax.setLayoutParams(layoutParams);
                         dTopMax = relFilterMax.getY();
                         currentHeightMax = relFilterMax.getHeight();
+                        setProgress((int)resultMin, (int)resultMax);
                         getResultMax();
                         break;
                     case MotionEvent.ACTION_UP:
@@ -177,9 +166,6 @@ public class CustomSeekBar extends RelativeLayout{
     }
 
     private void init() {
-        ViewCompat.setElevation(tvFilterMin, 14f);
-        viewInActiveBottom.setBackgroundColor(inactiveColor);
-        viewInActiveTop.setBackgroundColor(inactiveColor);
         initialHeightMin = (int) convertDpToPixel(20, context);
         final ViewTreeObserver viewTreeObserver = relativeLayout.getViewTreeObserver();
         //  if (viewTreeObserver.isAlive())
@@ -193,20 +179,15 @@ public class CustomSeekBar extends RelativeLayout{
                 dTopMin = relFilterMin.getY();
                 dTopMax = relFilterMax.getY();
                 currentHeightMin = relFilterMin.getHeight();
-                System.out.println("viewParentGetHeight_rr:" + viewParent.getHeight());
-                System.out.println("initialHeightMin_rr:" + initialHeightMin);
                 heightParent = viewParent.getHeight();
 
             }
         });
-
-
     }
 
     public void getResultMin() {
         //Max
         resultMin = Math.floor(14 * (Math.abs(currentHeightMin)-initialHeightMin) / heightParent);
-        tvFilterMin.setText((int) resultMin + "");
         onRangeBarChangeListener.onRangeBarChange((int) resultMin, (int) resultMax);
 
     }
@@ -214,17 +195,27 @@ public class CustomSeekBar extends RelativeLayout{
     public void getResultMax() {
         resultMax = Math.floor(14 * (Math.abs(currentHeightMax)-initialHeightMin) / heightParent);
         resultMax = Math.abs(resultMax - 14);
-        tvFilterMax.setText(((int) resultMax + ""));
         onRangeBarChangeListener.onRangeBarChange((int) resultMin, (int) resultMax);
     }
     public void setSectionInit(int min, int max) {
         resultMin = min;
         resultMax = max;
+        setProgress(min, max);
         setMinimumProgress(min);
         setMaximumProgress(max);
     }
-    public int getMinimumProgress() {
-        return (int) resultMin;
+    public void setProgress(int minProgress, int maxProgress)
+    {
+        int i, resourceId;
+        ImageView b;
+        for(i=1; i<=14; i++) {
+            resourceId = getResources().getIdentifier("seek_block_" + i, "id", "com.sinest.gw_1000");
+            b = (ImageView)findViewById(resourceId);
+            if(i>minProgress && i<=maxProgress)
+                b.setVisibility(VISIBLE);
+            else
+                b.setVisibility(INVISIBLE);
+        }
     }
     public void setMinimumProgress(final int minProgress) {
         if (minProgress >= 0 && minProgress <= resultMax) {
@@ -243,13 +234,8 @@ public class CustomSeekBar extends RelativeLayout{
                     relFilterMin.setLayoutParams(layoutParams);
                 }
             });
-            tvFilterMin.setText((int) resultMin + "");
             onRangeBarChangeListener.onRangeBarChange((int) resultMin, (int) resultMax);
         }
-    }
-
-    public int getMaximumProgress() {
-        return (int) resultMax;
     }
 
     public void setMaximumProgress(final int maxProgress) {
@@ -269,8 +255,6 @@ public class CustomSeekBar extends RelativeLayout{
                     relFilterMax.setLayoutParams(layoutParams);
                 }
             });
-            tvFilterMax.setText((int) resultMax + "");
-
             onRangeBarChangeListener.onRangeBarChange((int) resultMin, (int) resultMax);
         }
     }

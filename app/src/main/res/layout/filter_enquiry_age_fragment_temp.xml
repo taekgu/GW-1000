@@ -14,8 +14,183 @@
         android:layout_centerInParent="true"
         android:layout_marginBottom="20dp"
         android:layout_marginTop="20dp"
-        android:background="@drawable/progress_bar_full" />
-
+        android:background="@drawable/bar_base_vertical" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:weightSum="14"
+        android:layout_marginBottom="35dp"
+        android:layout_marginTop="35dp"
+        android:orientation="vertical">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1">
+            <ImageView
+                android:layout_width="6dp"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="1dp"
+                android:background="@drawable/touch_bar_on"
+                android:layout_centerInParent="true"
+                android:id="@+id/seek_block_1"/>
+        </RelativeLayout>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1">
+            <ImageView
+                android:layout_width="6dp"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="1dp"
+                android:background="@drawable/touch_bar_on"
+                android:layout_centerInParent="true"
+                android:id="@+id/seek_block_2"/>
+        </RelativeLayout>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1">
+            <ImageView
+                android:layout_width="6dp"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="1dp"
+                android:background="@drawable/touch_bar_on"
+                android:layout_centerInParent="true"
+                android:id="@+id/seek_block_3"/>
+        </RelativeLayout>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1">
+            <ImageView
+                android:layout_width="6dp"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="1dp"
+                android:background="@drawable/touch_bar_on"
+                android:layout_centerInParent="true"
+                android:id="@+id/seek_block_4"/>
+        </RelativeLayout>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1">
+            <ImageView
+                android:layout_width="6dp"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="1dp"
+                android:background="@drawable/touch_bar_on"
+                android:layout_centerInParent="true"
+                android:id="@+id/seek_block_5"/>
+        </RelativeLayout>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1">
+            <ImageView
+                android:layout_width="6dp"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="1dp"
+                android:background="@drawable/touch_bar_on"
+                android:layout_centerInParent="true"
+                android:id="@+id/seek_block_6"/>
+        </RelativeLayout>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1">
+            <ImageView
+                android:layout_width="6dp"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="1dp"
+                android:background="@drawable/touch_bar_on"
+                android:layout_centerInParent="true"
+                android:id="@+id/seek_block_7"/>
+        </RelativeLayout>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1">
+            <ImageView
+                android:layout_width="6dp"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="1dp"
+                android:background="@drawable/touch_bar_on"
+                android:layout_centerInParent="true"
+                android:id="@+id/seek_block_8"/>
+        </RelativeLayout>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1">
+            <ImageView
+                android:layout_width="6dp"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="1dp"
+                android:background="@drawable/touch_bar_on"
+                android:layout_centerInParent="true"
+                android:id="@+id/seek_block_9"/>
+        </RelativeLayout>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1">
+            <ImageView
+                android:layout_width="6dp"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="1dp"
+                android:background="@drawable/touch_bar_on"
+                android:layout_centerInParent="true"
+                android:id="@+id/seek_block_10"/>
+        </RelativeLayout>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1">
+            <ImageView
+                android:layout_width="6dp"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="1dp"
+                android:background="@drawable/touch_bar_on"
+                android:layout_centerInParent="true"
+                android:id="@+id/seek_block_11"/>
+        </RelativeLayout>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1">
+            <ImageView
+                android:layout_width="6dp"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="1dp"
+                android:background="@drawable/touch_bar_on"
+                android:layout_centerInParent="true"
+                android:id="@+id/seek_block_12"/>
+        </RelativeLayout>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1">
+            <ImageView
+                android:layout_width="6dp"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="1dp"
+                android:background="@drawable/touch_bar_on"
+                android:layout_centerInParent="true"
+                android:id="@+id/seek_block_13"/>
+        </RelativeLayout>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1">
+            <ImageView
+                android:layout_width="6dp"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="1dp"
+                android:background="@drawable/touch_bar_on"
+                android:layout_centerInParent="true"
+                android:id="@+id/seek_block_14"/>
+        </RelativeLayout>
+    </LinearLayout>
     <RelativeLayout
         android:id="@+id/rel_filter_min"
         android:layout_width="wrap_content"
@@ -24,19 +199,6 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="15dp"
         android:layout_gravity="bottom">
-        <TextView
-            android:layout_width="20dp"
-            android:layout_height="10dp"
-            android:text="00"
-            android:visibility="invisible"
-            android:id="@+id/tv_filter_min" />
-        <View
-            android:id="@+id/view_inactive_line_top"
-            android:layout_width="7dp"
-            android:layout_height="match_parent"
-            android:layout_marginTop="20dp"
-            android:layout_centerHorizontal="true"
-            android:background="@color/grey" />
         <View
             android:id="@+id/oval_thumb_min"
             android:layout_width="match_parent"
@@ -53,21 +215,6 @@
         android:layout_alignParentBottom="true"
         android:layout_marginBottom="15dp"
         android:layout_gravity="bottom">
-
-        <TextView
-            android:layout_width="20dp"
-            android:layout_height="10dp"
-            android:text="100"
-            android:visibility="invisible"
-            android:id="@+id/tv_filter_max" />
-        <View
-            android:id="@+id/view_inactive_line_bottom"
-            android:layout_width="7dp"
-            android:layout_height="match_parent"
-            android:layout_marginBottom="20dp"
-            android:layout_centerHorizontal="true"
-            android:background="@color/grey"
-            />
         <View
             android:id="@+id/oval_thumb_max"
             android:layout_width="match_parent"
