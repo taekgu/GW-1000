@@ -264,8 +264,11 @@ public class Activity_waiting extends AppCompatActivity {
             }
         });
 
-        // 슬립 모드 동작 재시작
-        Application_manager.setSleep_f(0,true);
+        // 동작중이 아닐 경우에만 슬립 모드 동작 재시작
+        if (mode == 0) {
+
+            Application_manager.setSleep_f(0,true);
+        }
 
         // 도어 상태
         if (Application_manager.isDoorOpened) {
@@ -342,7 +345,11 @@ public class Activity_waiting extends AppCompatActivity {
 
                     mode = 1;
                     Application_manager.m_operation_f = true;
+
+                    // 시작 명령
                     communicator.set_tx(1, (byte)0x01);
+
+                    // 동작 시 라이브러리, 설정 버튼 안보이게
                     handler_update_data.sendEmptyMessage(SET_BUTTON_INVISIBLE);
 
                     // 동작 모드로 바뀌기 이전 산소농도, 수압, 시간 값 저장
@@ -423,6 +430,11 @@ public class Activity_waiting extends AppCompatActivity {
 
         mode = 0;
         Application_manager.m_operation_f = false;
+
+        // 중지 명령
+        communicator.set_tx(1, (byte)0x00);
+
+        // 동작 중지 시 라이브러리, 설정 버튼 보이게
         handler_update_data.sendEmptyMessage(SET_BUTTON_VISIBLE);
 
         // 동작 시작 전 산소 농도, 압력, 시간 값 불러오기

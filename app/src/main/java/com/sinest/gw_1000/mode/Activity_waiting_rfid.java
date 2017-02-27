@@ -251,8 +251,11 @@ public class Activity_waiting_rfid extends AppCompatActivity {
             }
         });
 
-        // 슬립 모드 동작 재시작
-        Application_manager.setSleep_f(0,true);
+        // 동작중이 아닐 경우에만 슬립 모드 동작 재시작
+        if (mode == 0) {
+
+            Application_manager.setSleep_f(0,true);
+        }
 
         // 도어 상태
         if (Application_manager.isDoorOpened) {
