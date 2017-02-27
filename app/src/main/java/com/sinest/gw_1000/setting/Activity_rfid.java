@@ -25,6 +25,8 @@ public class Activity_rfid extends Activity {
     Button rfid_save; Button rfid_check; Button rfid_off;
     Button rfid_back;
 
+    LinearLayout activity_rfid;
+
     boolean[] rfid_flag = {true,true,true};
 
     TextView rfid_t_c; TextView rfid_w_c;
@@ -52,6 +54,8 @@ public class Activity_rfid extends Activity {
 
         Application_manager.setFullScreen(this);
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+
+        activity_rfid = (LinearLayout) findViewById(R.id.activity_rfid);
 
         rfid_w_up = (Button) findViewById(R.id.rfid_w_up);
         rfid_w_down = (Button) findViewById(R.id.rfid_w_down);
@@ -223,6 +227,8 @@ public class Activity_rfid extends Activity {
         rfid_save.setBackgroundResource(Application_manager.save_off[Application_manager.img_flag]);
         rfid_check.setBackgroundResource(Application_manager.check_off[Application_manager.img_flag]);
         rfid_off.setBackgroundResource(Application_manager.save_setting_off[Application_manager.img_flag]);
+
+        activity_rfid.setBackgroundResource(Application_manager.rfid_working_popup[Application_manager.img_flag]);
 
         // 슬립 모드 동작 재시작
         Application_manager.setSleep_f(0,true);

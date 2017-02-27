@@ -272,6 +272,9 @@ public class Application_manager extends Application {
     public static int[] save_setting_off = {R.drawable.save_setting_off, R.drawable.save_setting_off_ch};
     public static int[] button_elipse_back_on = {R.drawable.button_elipse_back_on, R.drawable.button_elipse_back_on_ch};
     public static int[] button_elipse_back_off = {R.drawable.button_elipse_back_off, R.drawable.button_elipse_back_off_ch};
+    public static int[] emotionpopup = {R.drawable.emotionpopup, R.drawable.emotionpopup_ch};
+    public static int[] rfid_working_popup = {R.drawable.rfid_working_popup, R.drawable.rfid_working_popup_ch};
+    public static int[] water_heater_timer_popup = {R.drawable.water_heater_timer_popup, R.drawable.water_heater_timer_popup_ch};
 
     // 저장버튼 추가 요청및 추가해야함  ,  팝업 배경 받고 진행
     public static int[] rfid_password_popup = {R.drawable.rfid_password_popup, R.drawable.rfid_password_popup_ch};
@@ -282,7 +285,6 @@ public class Application_manager extends Application {
     public static int[] keypad_delete = {R.drawable.keypad_delete, R.drawable.keypad_delete_ch};
 
     public static int[] time_keypad = {R.drawable.time_keypad, R.drawable.time_keypad_ch};
-
     public static int[] water_heater_finishtimer_keyped = {R.drawable.water_heater_finishtimer_keyped, R.drawable.water_heater_finishtimer_keyped_ch};
     public static int[] water_heater_start_timer_keyped = {R.drawable.water_heater_start_timer_keyped, R.drawable.water_heater_start_timer_keyped_ch};
 

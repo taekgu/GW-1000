@@ -11,6 +11,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.sinest.gw_1000.R;
@@ -20,6 +21,8 @@ import com.sinest.gw_1000.management.Application_manager;
 public class Activity_emotion extends Activity {
 
     Communicator communicator;
+
+    LinearLayout emotion_popup;
 
     ImageView emotion_ledm_up; ImageView emotion_ledm_down;
     ImageView emotion_led_up; ImageView emotion_led_down;
@@ -61,6 +64,8 @@ public class Activity_emotion extends Activity {
 
         Application_manager.setFullScreen(this);
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+
+        emotion_popup = (LinearLayout)findViewById(R.id.emotion_popup);
 
         emotion_ledm_up = (ImageView)findViewById(R.id.emotion_ledm_up);
         emotion_ledm_down = (ImageView)findViewById(R.id.emotion_ledm_down);
@@ -116,6 +121,8 @@ public class Activity_emotion extends Activity {
     @Override
     protected void onResume() {
         super.onResume();
+
+        emotion_popup.setBackgroundResource(Application_manager.emotionpopup[Application_manager.img_flag]);
 
         // 슬립 모드 동작 재시작
         Application_manager.setSleep_f(0,true);

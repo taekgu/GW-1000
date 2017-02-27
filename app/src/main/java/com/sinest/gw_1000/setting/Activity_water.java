@@ -168,6 +168,7 @@ public class Activity_water extends Activity {
         water_off.setBackgroundResource(Application_manager.save_setting_off[Application_manager.img_flag]);
         water_back.setBackgroundResource(Application_manager.button_elipse_back_off[Application_manager.img_flag]);
         water_save.setBackgroundResource(Application_manager.save_off[Application_manager.img_flag]);
+        activity_water.setBackgroundResource(Application_manager.water_heater_timer_popup[Application_manager.img_flag]);
 
         //change
         do_init_time();
