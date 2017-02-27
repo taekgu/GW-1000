@@ -115,6 +115,7 @@ public class CustomSeekBar extends RelativeLayout{
                         _layoutParams.height = (int)(resultMin * (heightParent/14) + initialHeightMin);
                         Log.i("BE", "min height : "+_layoutParams.height + ", resultMin : " + resultMin);
                         relFilterMin.setLayoutParams(_layoutParams);
+                        setProgress((int)resultMin, (int)resultMax);
                         break;
                     default:
                         return false;
@@ -154,6 +155,7 @@ public class CustomSeekBar extends RelativeLayout{
                         _layoutParams.height = (int)((14-resultMax) * (heightParent/14) + initialHeightMin) ;
                         Log.i("BE", "max height : "+_layoutParams.height + ", resultMax : " + resultMax);
                         relFilterMax.setLayoutParams(_layoutParams);
+                        setProgress((int)resultMin, (int)resultMax);
                         break;
                     default:
                         return false;
