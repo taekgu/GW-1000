@@ -28,7 +28,7 @@ public class Activity_starttime extends Activity {
 
     Chronometer start_time;
 
-    String s_buf;
+    String s_buf = Application_manager.m_water_heater_time_stime;
     int int_buf;
     int int_c = 0;
 
@@ -164,6 +164,8 @@ public class Activity_starttime extends Activity {
         start_time_id.setBackgroundResource(Application_manager.water_heater_start_timer_keyped[Application_manager.img_flag]);
         start_time_enter.setBackgroundResource(Application_manager.keypad_enter[Application_manager.img_flag]);
         start_time_back.setBackgroundResource(Application_manager.keypad_back[Application_manager.img_flag]);
+
+        start_time.setText(Application_manager.m_water_heater_time_stime);
 
         // 슬립 모드 동작 재시작
         Application_manager.setSleep_f(0,true);

@@ -28,7 +28,7 @@ public class Activity_finishtime extends Activity {
 
     Chronometer finish_time;
 
-    String s_buf;
+    String s_buf = Application_manager.m_water_heater_time_ftime;
     int int_buf;
     int int_c = 0;
 
@@ -128,9 +128,6 @@ public class Activity_finishtime extends Activity {
                         //
                         //change
                         Application_manager.f_time_buf = s_buf;
-                        //Application_manager.set_m_water_ftime(s_buf);
-                        //finish_result.putExtra("finish",s_buf);
-                        //setResult(RESULT_OK, finish_result);
                         finish();
 
                         break;
@@ -167,6 +164,8 @@ public class Activity_finishtime extends Activity {
         finish_time_id.setBackgroundResource(Application_manager.water_heater_finishtimer_keyped[Application_manager.img_flag]);
         finish_time_enter.setBackgroundResource(Application_manager.keypad_enter[Application_manager.img_flag]);
         finish_time_back.setBackgroundResource(Application_manager.keypad_back[Application_manager.img_flag]);
+
+        finish_time.setText(Application_manager.m_water_heater_time_ftime);
 
         // 슬립 모드 동작 재시작
         Application_manager.setSleep_f(0,true);
