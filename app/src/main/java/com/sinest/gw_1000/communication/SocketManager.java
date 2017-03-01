@@ -25,7 +25,8 @@ public class SocketManager {
     private final static int LENGTH_TX = 14;
     private final static int LENGTH_RX = 25;
 
-    private static final String IP_ADDRESS  = "192.168.219.135";
+    //private static final String IP_ADDRESS  = "192.168.219.135";
+    private static final String IP_ADDRESS  = "192.168.0.1";
     private static final int PORT           = 20002;
 
     private Socket mSocket;
@@ -126,6 +127,7 @@ public class SocketManager {
                                 msg_out = communicator.get_tx();
                                 Log.i("JW_COM", "동작명령");
                             }
+                            msg_out[msg_out.length - 2] = communicator.calcCheckSum(msg_out);
                             outputStream.write(msg_out, 0, msg_out.length);
                             Log.i("JW", "Transferred: " + msg_out.length + "byte");
 
@@ -227,6 +229,8 @@ public class SocketManager {
 
                         // setting 보내기
                         msg_out = communicator.get_setting();
+                        msg_out[msg_out.length - 2] = communicator.calcCheckSum(msg_out);
+
                         outputStream.write(msg_out, 0, msg_out.length);
                         Log.i("JW", "Transferred: " + msg_out.length + "byte");
                         Log.i("JW_COM", "설정명령");
@@ -283,6 +287,8 @@ public class SocketManager {
 
                         // rfid 보내기
                         msg_out = communicator.get_rfid();
+                        msg_out[msg_out.length - 2] = communicator.calcCheckSum(msg_out);
+
                         outputStream.write(msg_out, 0, msg_out.length);
                         Log.i("JW", "Transferred: " + msg_out.length + "byte");
                         Log.i("JW_COM", "RFID 명령");

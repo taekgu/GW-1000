@@ -24,6 +24,7 @@ public class Activity_waiting_working_time_popup extends Activity {
     TextView textView_workingTime;
     int mode, modeNum; //mode : 어느 액티비티에서 불러왔는지, modeNum 어떤 매뉴얼 모드인지
     int workingTime;
+    int total, limit;
     Context mContext;
 
     private ImageView background;
@@ -71,6 +72,11 @@ public class Activity_waiting_working_time_popup extends Activity {
                 workingTime = sharedPreferences.getInt(Application_manager.DB_MANUAL_MODE_TIME_ + modeNum + "_"+"1", 30);
             else if(mode==3) //manual mode setting에서 세번째 text
                 workingTime = sharedPreferences.getInt(Application_manager.DB_MANUAL_MODE_TIME_ + modeNum + "_"+"2", 30);
+
+            // 3개 모드 총합 시간
+            total = intent.getExtras().getInt("total");
+            // 최대 설정 가능 시간
+            limit = 90 - total + workingTime;
         }
 
         // 폰트 설정
@@ -149,7 +155,7 @@ public class Activity_waiting_working_time_popup extends Activity {
                         }
                         else { // 매뉴얼 모드 세팅에서 넘어왔을 때
 
-                            if (workingTime >= 0 && workingTime <= 90) { // 0 ~ 90
+                            if (workingTime >= 0 && workingTime <= limit) { // 0 ~ 90
 
                                 if (mode == 1) //manual mode setting에서 첫번째 text
                                     editor.putInt(Application_manager.DB_MANUAL_MODE_TIME_ + modeNum + "_" + "0", workingTime);
@@ -163,7 +169,8 @@ public class Activity_waiting_working_time_popup extends Activity {
                             }
                             else { // 범위 초과
 
-                                Application_manager.getToastManager().popToast(7);
+                                //Application_manager.getToastManager().popToast(7);
+                                Application_manager.getToastManager().popToast_time_range(0, limit);
                                 //Toast.makeText(mContext, "0~90 사이의 값을 입력해주세요", Toast.LENGTH_SHORT).show();
                             }
                         }

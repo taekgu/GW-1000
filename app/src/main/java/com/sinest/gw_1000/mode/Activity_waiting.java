@@ -947,6 +947,7 @@ public class Activity_waiting extends AppCompatActivity {
     public boolean onKeyDown(int keyCode, KeyEvent event){
         switch(keyCode){
             case KeyEvent.KEYCODE_BACK:
+
                 return false;
         }
         return super.onKeyDown(keyCode, event);

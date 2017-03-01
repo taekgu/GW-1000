@@ -1,8 +1,11 @@
 package com.sinest.gw_1000.management;
 
 import android.app.Activity;
+import android.app.AlarmManager;
 import android.app.Application;
+import android.app.PendingIntent;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.media.MediaPlayer;
 import android.os.PowerManager;
@@ -14,6 +17,9 @@ import android.view.WindowManager;
 import com.sinest.gw_1000.R;
 import com.sinest.gw_1000.communication.Communicator;
 import com.sinest.gw_1000.setting.Activity_setting;
+import com.sinest.gw_1000.splash.Activity_booting;
+
+import java.lang.Thread.UncaughtExceptionHandler;
 
 /**
  * Created by Jinwook on 2016-11-20.
@@ -334,7 +340,33 @@ public class Application_manager extends Application {
 
     //-------------------------------Img ---------------------------------------------------
 
+    private UncaughtExceptionHandler mUncaughtExceptionHandler;
+
     public void onCreate() {
+
+        mUncaughtExceptionHandler = Thread.getDefaultUncaughtExceptionHandler();
+
+        Thread.setDefaultUncaughtExceptionHandler(new UncaughtExceptionHandler() {
+            @Override
+            public void uncaughtException(Thread thread, Throwable throwable) {
+
+                Log.i("JW", "예외 발생. 어플리케이션 재시작");
+
+                //예외상황이 발행 되는 경우 작업
+                Intent intent = new Intent(getApplicationContext(), Activity_booting.class);
+                PendingIntent i = PendingIntent.getActivity(getApplicationContext(), 0, intent, 0);
+
+                AlarmManager am = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+                am.set(AlarmManager.RTC, System.currentTimeMillis() + 5000, i);
+
+                //System.exit(2)
+                android.os.Process.killProcess(android.os.Process.myPid());
+
+                //예외처리를 하지 않고 DefaultUncaughtException으로 넘긴다.
+                //mUncaughtExceptionHandler.uncaughtException(thread, throwable);
+            }
+        });
+
 
         Application_manager.context = getApplicationContext();
         Application_manager.communicator = new Communicator(context);

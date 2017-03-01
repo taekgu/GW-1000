@@ -59,4 +59,23 @@ public class ToastManager {
 
         Toast.makeText(Application_manager.getContext(), toastMsgs[Application_manager.m_language][msg_num], Toast.LENGTH_SHORT).show();
     }
+
+    public static void popToast_time_range(int min, int max) {
+
+        String msg = "";
+        if (Application_manager.m_language == 0) {
+
+            msg = "" + min + "~" + max + " 사이의 값을 입력해주세요";
+        }
+        else if (Application_manager.m_language == 1) {
+
+            msg = "Please enter a value between " + min + " and " + max;
+        }
+        else if (Application_manager.m_language == 2) {
+
+            msg = "请输入" + min + "~" + max + "之间的数字";
+        }
+
+        Toast.makeText(Application_manager.getContext(), msg, Toast.LENGTH_SHORT).show();
+    }
 }

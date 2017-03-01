@@ -192,7 +192,10 @@ public class Activity_rfid extends Activity {
                     case R.id.rfid_save:
                         rfid_save.setBackgroundResource(Application_manager.save_off[Application_manager.img_flag]);
                         //save -> working_mode_num, treatment_num
-                        save_f = true;
+                        if (rfid_flag[2] == false) {
+
+                            save_f = true;
+                        }
 
                         break;
                     case R.id.rfid_check:

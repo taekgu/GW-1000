@@ -182,7 +182,7 @@ public class Communicator {
         return false;
     }
 
-    synchronized private byte calcCheckSum(byte[] msg) {
+    synchronized public byte calcCheckSum(byte[] msg) {
 
         int len = msg.length;
         byte res = msg[1];
@@ -190,7 +190,10 @@ public class Communicator {
         for (int i=2; i<len-2; i++) {
 
             res = (byte)(res ^ msg[i]);
-        //    Log.i("JW", String.format("%02x", res & 0xff));
+            Log.i("JW_CHECKSUM", String.format("%02x", res));
+            res = (byte) (res & 0xff);
+            Log.i("JW_CHECKSUM", String.format("%02x", res));
+            Log.i("JW_CHECKSUM", "---");
         }
 
         return res;

@@ -526,12 +526,12 @@ public class Activity_engine extends AppCompatActivity {
                         Log.v("test","check_activity : " + check_activity);
                         if(check_activity.equals("setting")){
                             onStop();
-                            finish();
                         }
                         else{
                             onStop();
                             startActivity(main_intent);
                         }
+                        finish();
 
                         break;
                     case R.id.eng_b_left:
@@ -593,6 +593,7 @@ public class Activity_engine extends AppCompatActivity {
     private void updateThread() {
         clock.setText(Application_manager.doInit_time());
         operation_t.setText(""+ Application_manager.getRunningTime()/60);
+        Log.i("JW_RT", ""+Application_manager.getRunningTime());
     }
 
     @Override

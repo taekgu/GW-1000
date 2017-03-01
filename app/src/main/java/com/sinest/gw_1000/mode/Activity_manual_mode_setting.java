@@ -131,7 +131,8 @@ public class Activity_manual_mode_setting extends Activity{
                     intent.putExtra("mode", 2);
                 else
                     intent.putExtra("mode", 3);
-                startActivity(intent);;
+                intent.putExtra("total", (time[0] + time[1] + time[2]));
+                startActivity(intent);
             }
         }
     };
