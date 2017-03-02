@@ -124,7 +124,10 @@ public class Fragment_working extends Fragment {
         stop.setOnTouchListener(mTouchEvent);
 
         isRun = true;
-        thread_timer.start();
+        if (thread_timer != null) {
+
+            thread_timer.start();
+        }
 
         return view;
     }

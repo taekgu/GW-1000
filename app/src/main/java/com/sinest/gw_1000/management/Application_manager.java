@@ -342,6 +342,10 @@ public class Application_manager extends Application {
 
     public static int rfid_on_f = 0;
 
+    // 비정상 종료 플래그
+    private static boolean isTerminated_by_uncaughtException = false;
+    public final static String DB_IS_TERMINATED = "is_terminated";
+
     //-------------------------------Img ---------------------------------------------------
 
     private UncaughtExceptionHandler mUncaughtExceptionHandler;
@@ -355,8 +359,17 @@ public class Application_manager extends Application {
             public void uncaughtException(Thread thread, Throwable throwable) {
 
                 Log.i("JW", "예외 발생. 어플리케이션 재시작");
+                Log.i("JW", throwable.getMessage());
+                Log.i("JW", throwable.getCause().getMessage());
 
                 //예외상황이 발행 되는 경우 작업
+
+                isTerminated_by_uncaughtException = true;
+                SharedPreferences sharedPreferences = getSharedPreferences(DB_NAME, 0);
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                editor.putBoolean(DB_IS_TERMINATED, isTerminated_by_uncaughtException);
+                editor.commit();
+
                 Intent intent = new Intent(getApplicationContext(), Activity_booting.class);
                 PendingIntent i = PendingIntent.getActivity(getApplicationContext(), 0, intent, 0);
 
@@ -370,7 +383,6 @@ public class Application_manager extends Application {
                 //mUncaughtExceptionHandler.uncaughtException(thread, throwable);
             }
         });
-
 
         Application_manager.context = getApplicationContext();
         Application_manager.communicator = new Communicator(context);
@@ -424,6 +436,19 @@ public class Application_manager extends Application {
     private void load_data(){
 
         SharedPreferences sharedPreferences = context.getSharedPreferences(Application_manager.DB_NAME, 0);
+
+        // 비정상 종료인지 확인
+        isTerminated_by_uncaughtException = sharedPreferences.getBoolean(DB_IS_TERMINATED, false);
+        if (isTerminated_by_uncaughtException) {
+
+            // 중지 명령 -> 모터 원점 복귀
+            communicator.set_tx(1, (byte)0x00);
+
+            isTerminated_by_uncaughtException = false;
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+            editor.putBoolean(DB_IS_TERMINATED, isTerminated_by_uncaughtException);
+            editor.commit();
+        }
 
         // 감성 LED 모드 및 밝기 불러오기
         led_mode_num = sharedPreferences.getInt(DB_EMOTION1,0);

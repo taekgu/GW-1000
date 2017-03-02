@@ -420,6 +420,7 @@ public class Activity_waiting extends AppCompatActivity {
 
     public void changeFragment_waiting() {
 
+
         Log.i("JW", "changeFragment (working -> waiting)");
         setTimeLeft(val_time);
         FragmentManager fm = getFragmentManager();
@@ -432,7 +433,7 @@ public class Activity_waiting extends AppCompatActivity {
         Application_manager.m_operation_f = false;
 
         // 중지 명령
-        communicator.set_tx(1, (byte)0x00);
+        communicator.set_tx(1, (byte) 0x00);
 
         // 동작 중지 시 라이브러리, 설정 버튼 보이게
         handler_update_data.sendEmptyMessage(SET_BUTTON_VISIBLE);
@@ -449,13 +450,12 @@ public class Activity_waiting extends AppCompatActivity {
         if (Application_manager.gw_1000 == true) { // GW-1000H
 
             val = (byte) val_oxygen;
-        }
-        else { // GW-1000L
+        } else { // GW-1000L
 
             val = (byte) val_oxygen_spray;
         }
         communicator.set_tx(8, val);
-        communicator.set_tx(5, (byte)(Application_manager.inverterVal | (byte)val_pressure));
+        communicator.set_tx(5, (byte) (Application_manager.inverterVal | (byte) val_pressure));
 
         runOnUiThread(new Runnable() {
             @Override
@@ -463,12 +463,11 @@ public class Activity_waiting extends AppCompatActivity {
 
                 if (Application_manager.gw_1000) {
                     oxygen_text.setText("" + val_oxygen);
-                }
-                else {
+                } else {
                     oxygen_text.setText("" + val_oxygen_spray);
                 }
-                pressure_text.setText(""+val_pressure);
-                time_text.setText(""+val_time);
+                pressure_text.setText("" + val_pressure);
+                time_text.setText("" + val_time);
             }
         });
 

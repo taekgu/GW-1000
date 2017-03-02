@@ -601,6 +601,9 @@ public class Activity_engine extends AppCompatActivity {
     protected void onStop() {
         super.onStop();
         isRun = false;
+
+        // 중지 명령 -> 모터 원점 복귀
+        communicator.set_tx(1, (byte)0x00);
     }
 
     @Override
