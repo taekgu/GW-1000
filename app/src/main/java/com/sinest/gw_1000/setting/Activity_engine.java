@@ -396,6 +396,7 @@ public class Activity_engine extends AppCompatActivity {
                             //operating time re-set
                             operation_t.setText("0");
                             Application_manager.setRunningTime(0);
+                            Application_manager.save_Running_time();
                         }else
                         {
                             hidden[0] = true;

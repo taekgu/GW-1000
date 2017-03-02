@@ -64,6 +64,7 @@ public class Application_manager extends Application {
     public static int SENSOR_TEMP       = 0;
     public static int SENSOR_TEMP_BED   = 0;
 
+
     // 사용자 설정 온도 값
     public static int SENSOR_TEMP_USER      = 0;
     public static int SENSOR_TEMP_BED_USER  = 0;
@@ -151,6 +152,7 @@ public class Application_manager extends Application {
 
     // RFID모드 on/off값
     public final static String DB_RFID_ONOFF = "rfid_onoff";
+    public final static String RFID_ON_F = "rfid_on_f";
 
     //sleep mode flag
     public final static String DB_SLEEP_M = "sleep_m";
@@ -338,6 +340,8 @@ public class Application_manager extends Application {
     public static String f_time_buf = "00:00";
     public static int time_buf_f = 1;
 
+    public static int rfid_on_f = 0;
+
     //-------------------------------Img ---------------------------------------------------
 
     private UncaughtExceptionHandler mUncaughtExceptionHandler;
@@ -385,6 +389,9 @@ public class Application_manager extends Application {
         m_gap_clock_f = sharedPreferences.getBoolean(DB_TIME_GAP_F,true);
         Log.v("ss","m_gap_clock : "+m_gap_clock);
         Log.v("ss","m_gap_clock_f : "+m_gap_clock_f);
+
+        //rfid
+        rfid_on_f = sharedPreferences.getInt(RFID_ON_F,0);
 
         // 러닝타임 측정
         runningTime = sharedPreferences.getInt(DB_RUNNING_TIME,0);
@@ -523,6 +530,15 @@ public class Application_manager extends Application {
         editor.putBoolean(GW_1000, i);
         editor.commit();
         gw_1000 = i;
+    }
+
+    synchronized public static void set_rfid_on_f(int i){
+        sharedPreferences = context.getSharedPreferences(Application_manager.DB_NAME, 0);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putInt(RFID_ON_F, i);
+        editor.commit();
+        rfid_on_f = i;
+
     }
 
     synchronized public static void set_m_start_sleep(int i){

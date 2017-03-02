@@ -89,9 +89,11 @@ public class Activity_rfid extends Activity {
                         if (rfid_flag[2] == true) {
                             rfid_off.setBackgroundResource(Application_manager.save_setting_on[Application_manager.img_flag]);
                             rfid_flag[2] = false;
+                            Application_manager.set_rfid_on_f(1);
                         } else {
                             rfid_off.setBackgroundResource(Application_manager.save_setting_off[Application_manager.img_flag]);
                             rfid_flag[2] = true;
+                            Application_manager.set_rfid_on_f(0);
                         }
                         break;
                 }
@@ -142,7 +144,7 @@ public class Activity_rfid extends Activity {
                         rfid_check.setBackgroundResource(Application_manager.check_on[Application_manager.img_flag]);
                         break;
                     case R.id.rfid_back:
-                        rfid_back.setBackgroundResource(R.drawable.button_elipse_back_on);
+                        rfid_back.setBackgroundResource(Application_manager.button_elipse_back_on[Application_manager.img_flag]);
                         break;
                 }
             } else if (action == MotionEvent.ACTION_UP) {
@@ -203,7 +205,7 @@ public class Activity_rfid extends Activity {
 
                         break;
                     case R.id.rfid_back:
-                        rfid_back.setBackgroundResource(R.drawable.button_elipse_back_off);
+                        rfid_back.setBackgroundResource(Application_manager.button_elipse_back_off[Application_manager.img_flag]);
                         Application_manager.rfid_pass_f2 = false;
                         if(save_f == true)
                         {
@@ -232,6 +234,7 @@ public class Activity_rfid extends Activity {
         rfid_off.setBackgroundResource(Application_manager.save_setting_off[Application_manager.img_flag]);
 
         activity_rfid.setBackgroundResource(Application_manager.rfid_working_popup[Application_manager.img_flag]);
+        rfid_back.setBackgroundResource(Application_manager.button_elipse_back_off[Application_manager.img_flag]);
 
         // 슬립 모드 동작 재시작
         Application_manager.setSleep_f(0,true);

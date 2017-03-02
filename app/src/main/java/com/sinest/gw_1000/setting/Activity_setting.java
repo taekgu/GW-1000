@@ -864,7 +864,7 @@ public class Activity_setting extends AppCompatActivity {
         button_init();
 
         button2_flag[0] = Application_manager.rfid_pass_f;
-        if(button2_flag[0] == false){
+        if(button2_flag[0] == false && Application_manager.rfid_on_f == 1){
             b_rf.setBackgroundResource(Application_manager.on[Application_manager.img_flag]);
             //button2_flag[0] = false;
         }else{
