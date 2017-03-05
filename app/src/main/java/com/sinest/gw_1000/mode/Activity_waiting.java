@@ -75,9 +75,15 @@ public class Activity_waiting extends AppCompatActivity {
     ImageView waiting_door_open_button;
     ImageView waiting_door_close_button;
 
+    // 시간 업데이트 스레드 동작 플래그
+    boolean isRun_time = true;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        Log.i("JW_LIFECYCLE", "Activity_waiting - onCreate");
+
         setContentView(R.layout.activity_waiting);
         Application_manager.setFullScreen(this);
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
@@ -132,15 +138,7 @@ public class Activity_waiting extends AppCompatActivity {
         textView_temperature_bed.setOnTouchListener(mTouchEvent);
 
         fragment_waiting = new Fragment_waiting();
-/*
-        fragment_waiting = new Fragment_waiting();
-        for (int i = 0; i< Application_manager.MAX_CHECKED; i++) {
 
-            checked_loc[i] = sharedPreferences.getInt(Application_manager.DB_LIBRARY_LOC_ + i, i);
-            fragment_waiting.addCheckedIdx(checked_loc[i]);
-            Log.i("JW", "Selected library idx : " + checked_loc[i]);
-        }
-*/
         FragmentManager fragmentManager = getFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.add(R.id.frameLayout_fragment, fragment_waiting);
@@ -184,6 +182,9 @@ public class Activity_waiting extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+
+        Log.i("JW_LIFECYCLE", "Activity_waiting - onResume");
+
         Application_manager.setFullScreen(this);
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 
@@ -279,11 +280,24 @@ public class Activity_waiting extends AppCompatActivity {
 
             background_device.setBackgroundResource(R.drawable.close);
         }
+
+        // 동작 중에 액티비티 resume 시 애니메이션 재시작
+        if (mode == 1) {
+
+            if(Application_manager.img_flag == 0){
+                start_animation();
+            }else if(Application_manager.img_flag == 1){
+                start_animation_ch();
+            }
+        }
     }
 
     @Override
     protected void onPause() {
         super.onPause();
+
+        Log.i("JW_LIFECYCLE", "Activity_waiting - onPause");
+
         unregistReceiver();
         isRun = false;
         //clock.unregistReceiver();
@@ -295,24 +309,43 @@ public class Activity_waiting extends AppCompatActivity {
         editor.putInt(Application_manager.DB_VAL_PRESSURE, val_pressure);
         editor.putInt(Application_manager.DB_VAL_TIME, val_time);
         editor.commit();
+
+        // 동작 중에 액티비티 pause 시 애니메이션 정지
+        if (mode == 1) {
+
+            stop_animation();
+        }
     }
 
     @Override
     protected void onStart() {
         super.onStart();
+
+        Log.i("JW_LIFECYCLE", "Activity_waiting - onStart");
+
         isRun = true;
         Thread myThread = new Thread(new Runnable() {
             public void run() {
-                while (true) {
+                while (isRun_time) {
                     try {
                         handler.sendMessage(handler.obtainMessage());
                         Thread.sleep(1000);
                     } catch (Throwable t) {
                     }
                 }
+
+                Log.i("JW_LIFECYCLE", "Activity_waiting - time update thread 종료");
             }
         });
         myThread.start();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
+        Log.i("JW_LIFECYCLE", "Activity_waiting - onDestroy");
+        isRun_time = false;
     }
 
     public void changeFragment_working(int patternNum) {

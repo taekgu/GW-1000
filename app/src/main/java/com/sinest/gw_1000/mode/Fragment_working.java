@@ -114,7 +114,7 @@ public class Fragment_working extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_working, container, false);
 
-     //   Log.i("JW", "onCreateView - Fragment_working");
+        Log.i("JW_LIFECYCLE", "Fragment_working - onCreateView");
         state = 1;
 
         play = (Button) view.findViewById(R.id.button_play);
@@ -227,8 +227,22 @@ public class Fragment_working extends Fragment {
     public void onResume() {
         super.onResume();
 
+        Log.i("JW_LIFECYCLE", "Fragment_working - onResume");
         // 슬립 모드 동작 재시작
         Application_manager.setSleep_f(0, false);
     }
 
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+
+        Log.i("JW_LIFECYCLE", "Fragment_working - onDestroy");
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+
+        Log.i("JW_LIFECYCLE", "Fragment_working - onDetach");
+    }
 }

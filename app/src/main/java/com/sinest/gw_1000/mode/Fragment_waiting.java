@@ -3,6 +3,7 @@ package com.sinest.gw_1000.mode;
 import android.app.Fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -33,6 +34,7 @@ public class Fragment_waiting extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_waiting, container, false);
 
+        Log.i("JW_LIFECYCLE", "Fragment_waiting - onCreateView");
         refresh();
 
         return view;
@@ -109,5 +111,24 @@ public class Fragment_waiting extends Fragment {
         }
     };
 
+    @Override
+    public void onResume() {
+        super.onResume();
 
+        Log.i("JW_LIFECYCLE", "Fragment_waiting - onResume");
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+
+        Log.i("JW_LIFECYCLE", "Fragment_waiting - onDestroy");
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+
+        Log.i("JW_LIFECYCLE", "Fragment_waiting - onDetach");
+    }
 }

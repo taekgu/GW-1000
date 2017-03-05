@@ -14,7 +14,7 @@
         android:layout_centerInParent="true"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
-        android:background="@drawable/alarm_bar_1" />
+        android:background="@drawable/volume_bar" />
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"

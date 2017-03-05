@@ -76,6 +76,9 @@ public class Activity_waiting_rfid extends AppCompatActivity {
     ImageView waiting_door_open_button;
     ImageView waiting_door_close_button;
 
+    // 시간 업데이트 스레드 동작 플래그
+    boolean isRun_time = true;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -294,7 +297,7 @@ public class Activity_waiting_rfid extends AppCompatActivity {
         isRun = true;
         Thread myThread = new Thread(new Runnable() {
             public void run() {
-                while (true) {
+                while (isRun_time) {
                     try {
                         handler.sendMessage(handler.obtainMessage());
                         Thread.sleep(1000);
@@ -304,6 +307,13 @@ public class Activity_waiting_rfid extends AppCompatActivity {
             }
         });
         myThread.start();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
+        isRun_time = false;
     }
 
     Handler handler = new Handler() {

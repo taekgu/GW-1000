@@ -345,9 +345,6 @@ public class Application_manager extends Application {
     // 비정상 종료 플래그
     private static boolean isTerminated_by_uncaughtException = false;
     public final static String DB_IS_TERMINATED = "is_terminated";
-
-    //-------------------------------Img ---------------------------------------------------
-
     private UncaughtExceptionHandler mUncaughtExceptionHandler;
 
     public void onCreate() {
