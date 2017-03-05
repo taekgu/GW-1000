@@ -37,10 +37,8 @@ public class CustomSeekBar extends RelativeLayout{
     private double resultMax = 14.0;
     private View viewParent;
     private Context context;
-    private long startClickTime;
     private RelativeLayout relativeLayout;
-    private int minRange = 0, maxRange = 100;
-    private View viewInActiveTop, viewInActiveBottom;
+
 
     public CustomSeekBar(Context context) {
         super(context);

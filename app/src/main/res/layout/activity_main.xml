@@ -303,24 +303,19 @@
 
                 </LinearLayout>
 
-                <LinearLayout
+                <RelativeLayout
                     android:orientation="horizontal"
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:layout_weight="14">
 
-                    <SeekBar
-                        android:layout_width="match_parent"
+                    <com.sinest.gw_1000.mode.utils.CustomSeekbar_onethumb
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:id="@+id/seekBar"
-                        android:maxHeight="50dp"
-                        android:minHeight="50dp"
-                        android:max = "100"
-                        android:background="@drawable/alarm_bar_1"
-                        android:thumb="@drawable/alarm_bar_control"
-                        android:foregroundGravity="center">
-                    </SeekBar>
-                </LinearLayout>
+                        android:layout_centerInParent="true"
+                        android:id="@+id/custom_seek_bar_horizontal">
+                    </com.sinest.gw_1000.mode.utils.CustomSeekbar_onethumb>
+                </RelativeLayout>
 
                 <LinearLayout
                     android:orientation="horizontal"

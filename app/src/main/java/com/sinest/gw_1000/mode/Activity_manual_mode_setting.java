@@ -63,7 +63,6 @@ public class Activity_manual_mode_setting extends Activity{
         manual_mode_setting_save = (Button)findViewById(R.id.manual_mode_setting_save);
         manual_mode_setting_back = (Button)findViewById(R.id.manual_mode_setting_back);
 
-
         manual_mode_total = (TextView)findViewById(R.id.manual_mode_total);
         Typeface tf = Typeface.createFromAsset(getAssets(), "fonts/digital.ttf");
 

@@ -1,24 +1,21 @@
 package com.sinest.gw_1000.setting;
 
-import android.app.Activity;
 import android.app.admin.DevicePolicyManager;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Typeface;
-import android.media.AudioManager;
+import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.LinearLayout;
-import android.widget.SeekBar;
 import android.widget.TextView;
 
 import com.sinest.gw_1000.R;
@@ -26,6 +23,7 @@ import com.sinest.gw_1000.communication.Communicator;
 import com.sinest.gw_1000.management.Application_manager;
 import com.sinest.gw_1000.mode.Activity_waiting;
 import com.sinest.gw_1000.mode.Activity_waiting_rfid;
+import com.sinest.gw_1000.mode.utils.CustomSeekbar_onethumb;
 
 public class Activity_setting extends AppCompatActivity {
     public static final String TAG = "SCREEN";
@@ -106,7 +104,7 @@ public class Activity_setting extends AppCompatActivity {
 
     String t_buf;
 
-    SeekBar seekbar;
+    CustomSeekbar_onethumb custom_seekbar_horizontal;
     int volume;
     Typeface tf;
 
@@ -226,7 +224,7 @@ public class Activity_setting extends AppCompatActivity {
         b_5m = (Button)findViewById(R.id.b_5m);
         b_coutinue = (Button)findViewById(R.id.b_coutinue);
 
-        seekbar = (SeekBar)findViewById(R.id.seekBar);
+        custom_seekbar_horizontal = (CustomSeekbar_onethumb)findViewById(R.id.custom_seek_bar_horizontal);
 
         b_11 = (TextView) findViewById(R.id.button11);
         b_21 = (TextView) findViewById(R.id.button21);
@@ -259,39 +257,9 @@ public class Activity_setting extends AppCompatActivity {
         hidden_s_2 = (Button) findViewById(R.id.hidden_s_2);
         hidden_s_3 = (Button) findViewById(R.id.hidden_s_3);
         hidden_s_4 = (Button) findViewById(R.id.hidden_s_4);
+        Log.i("m_volume : ", "" + Application_manager.m_volume);
+        custom_seekbar_horizontal.setCurrentLoc(Application_manager.m_volume/10);
 
-        seekbar = (SeekBar) findViewById(R.id.seekBar);
-        seekbar.setProgress(Application_manager.m_volume);
-        seekbar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
-            @Override
-            public void onStartTrackingTouch(SeekBar seekBar) {
-                // 메소드 이름대로 사용자가 SeekBar를 터치했을때 실행됩니다
-                // TODO Auto-generated method stub
-                Log.v("test1", "v : " + volume);
-            }
-
-            @Override
-            public void onStopTrackingTouch(SeekBar seekBar) {
-                // 메소드 이름대로 사용자가 SeekBar를 손에서 땠을때 실행됩니다
-                // TODO Auto-generated method stub
-
-                volume = ((volume + 5) / 10) * 10;
-                seekBar.setProgress(volume);
-
-                Log.v("test2", "v : " + (volume));
-                Application_manager.set_m_volume(volume);
-                Application_manager.getSoundManager().setVolume_alarm(volume);
-            }
-
-            @Override
-            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                // 메소드 이름대로 사용자가 SeekBar를 움직일때 실행됩니다
-                // 주로 사용되는 메소드 입니다
-                // TODO Auto-generated method stub
-
-                volume = progress;
-            }
-        });
 
         //Application_manager.getRunningTime();
 
