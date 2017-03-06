@@ -31,6 +31,8 @@ public class Activity_library extends AppCompatActivity{
     int[] library_map = new int[20];
 
     int mode_setting = 0; // 0: 일반 모드 / 1: 매뉴얼 모드 세팅 모드
+
+    // 시간 업데이트 스레드 동작 플래그
     boolean isRun;
 
     TextView clock;
@@ -39,9 +41,6 @@ public class Activity_library extends AppCompatActivity{
     ImageView library_back_button;
     ImageView library_save_button;
     ImageView library_set_button;
-
-    // 시간 업데이트 스레드 동작 플래그
-    boolean isRun_time = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -146,7 +145,7 @@ public class Activity_library extends AppCompatActivity{
         isRun = true;
         Thread myThread = new Thread(new Runnable() {
             public void run() {
-                while (isRun_time) {
+                while (isRun) {
                     try {
                         handler.sendMessage(handler.obtainMessage());
                         Thread.sleep(1000);
@@ -161,8 +160,6 @@ public class Activity_library extends AppCompatActivity{
     @Override
     protected void onDestroy() {
         super.onDestroy();
-
-        isRun_time = false;
     }
 
     Handler handler = new Handler() {

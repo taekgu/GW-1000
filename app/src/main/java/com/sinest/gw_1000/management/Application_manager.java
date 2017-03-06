@@ -356,8 +356,8 @@ public class Application_manager extends Application {
             public void uncaughtException(Thread thread, Throwable throwable) {
 
                 Log.i("JW", "예외 발생. 어플리케이션 재시작");
-                Log.i("JW", throwable.getMessage());
-                Log.i("JW", throwable.getCause().getMessage());
+                //Log.i("JW", throwable.getMessage());
+                //Log.i("JW", throwable.getCause().getMessage());
 
                 //예외상황이 발행 되는 경우 작업
 
@@ -374,6 +374,7 @@ public class Application_manager extends Application {
                 am.set(AlarmManager.RTC, System.currentTimeMillis() + 5000, i);
 
                 //System.exit(2)
+                Log.i("JW", "Kill process");
                 android.os.Process.killProcess(android.os.Process.myPid());
 
                 //예외처리를 하지 않고 DefaultUncaughtException으로 넘긴다.

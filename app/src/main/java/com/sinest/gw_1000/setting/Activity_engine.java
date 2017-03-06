@@ -57,12 +57,10 @@ public class Activity_engine extends AppCompatActivity {
     Communicator communicator;
     TextView clock;
 
+    // 시간 업데이트 스레드 동작 플래그
     private boolean isRun = false;
 
     LinearLayout activity_engine;
-
-    // 시간 업데이트 스레드 동작 플래그
-    boolean isRun_time = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -575,7 +573,7 @@ public class Activity_engine extends AppCompatActivity {
         isRun = true;
         Thread myThread = new Thread(new Runnable() {
             public void run() {
-                while (isRun_time) {
+                while (isRun) {
                     try {
                         handler.sendMessage(handler.obtainMessage());
                         Thread.sleep(1000);
@@ -590,8 +588,6 @@ public class Activity_engine extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-
-        isRun_time = false;
     }
 
     Handler handler = new Handler() {

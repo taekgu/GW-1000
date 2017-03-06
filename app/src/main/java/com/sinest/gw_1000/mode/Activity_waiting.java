@@ -63,6 +63,7 @@ public class Activity_waiting extends AppCompatActivity {
 
     private int mode = 0; // 0: waiting, 1: working
 
+    // 시간 업데이트 스레드 동작 플래그
     boolean isRun;
 
     private ImageView background;
@@ -75,8 +76,9 @@ public class Activity_waiting extends AppCompatActivity {
     ImageView waiting_door_open_button;
     ImageView waiting_door_close_button;
 
-    // 시간 업데이트 스레드 동작 플래그
-    boolean isRun_time = true;
+    // 동작 중 화면 꺼짐 플래그
+    boolean isScreen_turned_off = false;
+    boolean isWork_finished = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -281,13 +283,25 @@ public class Activity_waiting extends AppCompatActivity {
             background_device.setBackgroundResource(R.drawable.close);
         }
 
-        // 동작 중에 액티비티 resume 시 애니메이션 재시작
+        // 동작 중에 액티비티 resume 시
         if (mode == 1) {
 
+            // 애니메이션 재시작
             if(Application_manager.img_flag == 0){
                 start_animation();
-            }else if(Application_manager.img_flag == 1){
+            }
+            else if(Application_manager.img_flag == 1){
                 start_animation_ch();
+            }
+
+            // 화면 꺼진 상태로 동작이 종료되었을 경우 프래그먼트 변경
+            if (isScreen_turned_off && isWork_finished) {
+
+                isScreen_turned_off = false;
+                Log.i("JW", "isScreen_turned_off = false");
+                changeFragment_waiting();
+                isWork_finished = false;
+                Log.i("JW", "isWork_finished = false");
             }
         }
     }
@@ -310,10 +324,15 @@ public class Activity_waiting extends AppCompatActivity {
         editor.putInt(Application_manager.DB_VAL_TIME, val_time);
         editor.commit();
 
-        // 동작 중에 액티비티 pause 시 애니메이션 정지
+        // 동작 중에 액티비티 pause 시
         if (mode == 1) {
 
+            // 애니메이션 정지
             stop_animation();
+
+            // 동작 시간 종료되어도 프래그먼트 전환되지 않게
+            isScreen_turned_off = true;
+            Log.i("JW", "isScreen_turned_off = true");
         }
     }
 
@@ -326,7 +345,7 @@ public class Activity_waiting extends AppCompatActivity {
         isRun = true;
         Thread myThread = new Thread(new Runnable() {
             public void run() {
-                while (isRun_time) {
+                while (isRun) {
                     try {
                         handler.sendMessage(handler.obtainMessage());
                         Thread.sleep(1000);
@@ -345,7 +364,6 @@ public class Activity_waiting extends AppCompatActivity {
         super.onDestroy();
 
         Log.i("JW_LIFECYCLE", "Activity_waiting - onDestroy");
-        isRun_time = false;
     }
 
     public void changeFragment_working(int patternNum) {
@@ -453,23 +471,8 @@ public class Activity_waiting extends AppCompatActivity {
 
     public void changeFragment_waiting() {
 
-
-        Log.i("JW", "changeFragment (working -> waiting)");
-        setTimeLeft(val_time);
-        FragmentManager fm = getFragmentManager();
-        FragmentTransaction fragmentTransaction = fm.beginTransaction();
-
-        fragmentTransaction.replace(R.id.frameLayout_fragment, fragment_waiting);
-        fragmentTransaction.commit();
-
-        mode = 0;
-        Application_manager.m_operation_f = false;
-
         // 중지 명령
         communicator.set_tx(1, (byte) 0x00);
-
-        // 동작 중지 시 라이브러리, 설정 버튼 보이게
-        handler_update_data.sendEmptyMessage(SET_BUTTON_VISIBLE);
 
         // 동작 시작 전 산소 농도, 압력, 시간 값 불러오기
         SharedPreferences sharedPreferences = getSharedPreferences(Application_manager.DB_NAME, 0);
@@ -490,33 +493,6 @@ public class Activity_waiting extends AppCompatActivity {
         communicator.set_tx(8, val);
         communicator.set_tx(5, (byte) (Application_manager.inverterVal | (byte) val_pressure));
 
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-
-                if (Application_manager.gw_1000) {
-                    oxygen_text.setText("" + val_oxygen);
-                } else {
-                    oxygen_text.setText("" + val_oxygen_spray);
-                }
-                pressure_text.setText("" + val_pressure);
-                time_text.setText("" + val_time);
-            }
-        });
-
-        // 애니메이션 정지
-        stop_animation();
-
-        // 동작 구간 숨김
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-
-                seekBar.setVisibility(View.INVISIBLE);
-                //seekBar_water.setVisibility(View.INVISIBLE);
-            }
-        });
-
         // 치료 음악 재생 종료
         if (Application_manager.sound_mode_num != 0) {
 
@@ -524,11 +500,61 @@ public class Activity_waiting extends AppCompatActivity {
             Application_manager.getSoundManager().play_therapy(Application_manager.sound_mode_num, false);
         }
 
-        // 슬립 모드 재시작
-        Application_manager.setSleep_f(0, true);
-
         // tx 메시지의 DATA1에 패턴 초기화
         communicator.set_tx(2, (byte) 0x00);
+
+        // UI 관련 작업의 경우 화면이 켜져있을 때 실행
+        if (isScreen_turned_off) {
+
+            isWork_finished = true;
+            Log.i("JW", "isWork_finished = true");
+        }
+        else {
+
+            Log.i("JW", "changeFragment (working -> waiting)");
+            setTimeLeft(val_time);
+            FragmentManager fm = getFragmentManager();
+            FragmentTransaction fragmentTransaction = fm.beginTransaction();
+
+            fragmentTransaction.replace(R.id.frameLayout_fragment, fragment_waiting);
+            fragmentTransaction.commit();
+
+            mode = 0;
+            Application_manager.m_operation_f = false;
+
+            // 동작 중지 시 라이브러리, 설정 버튼 보이게
+            handler_update_data.sendEmptyMessage(SET_BUTTON_VISIBLE);
+
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+
+                    if (Application_manager.gw_1000) {
+                        oxygen_text.setText("" + val_oxygen);
+                    } else {
+                        oxygen_text.setText("" + val_oxygen_spray);
+                    }
+                    pressure_text.setText("" + val_pressure);
+                    time_text.setText("" + val_time);
+                }
+            });
+
+            // 애니메이션 정지
+            stop_animation();
+
+            // 동작 구간 숨김
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+
+                    seekBar.setVisibility(View.INVISIBLE);
+                    //seekBar_water.setVisibility(View.INVISIBLE);
+                }
+            });
+
+            // 슬립 모드 재시작
+            Application_manager.setSleep_f(0, true);
+        }
     }
 
     private void start_animation() {
@@ -980,6 +1006,8 @@ public class Activity_waiting extends AppCompatActivity {
         switch(keyCode){
             case KeyEvent.KEYCODE_BACK:
 
+                TextView tv = null;
+                tv.getText();
                 return false;
         }
         return super.onKeyDown(keyCode, event);
