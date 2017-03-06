@@ -26,12 +26,6 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="81">
-            <com.sinest.gw_1000.mode.utils.CustomSeekbar_onethumb
-                android:layout_width="400dp"
-                android:layout_height="40dp"
-                android:layout_centerInParent="true"
-                android:id="@+id/seekbar_test">
-            </com.sinest.gw_1000.mode.utils.CustomSeekbar_onethumb>
         </RelativeLayout>
 
         <LinearLayout
