@@ -321,11 +321,11 @@ public class Activity_engine extends AppCompatActivity {
                         if (eng_b_flag[2] == true) {
                             eng_b_sol.setBackgroundResource(R.drawable.button_blue);
                             eng_b_flag[2] = false;
-                            communicator.set_engineer(7,(byte)0x01);
+                            //communicator.set_engineer(7,(byte)0x01);
                         } else {
                             eng_b_sol.setBackgroundResource(R.drawable.button_gry);
                             eng_b_flag[2] = true;
-                            communicator.set_engineer(7,(byte)0x00);
+                            //communicator.set_engineer(7,(byte)0x00);
                         }
                         break;
                     case R.id.eng_b_ven:
@@ -496,28 +496,28 @@ public class Activity_engine extends AppCompatActivity {
                         break;
                     case R.id.eng_b_left:
                         eng_b_left.setBackgroundResource(R.drawable.moving_left_on);
-                        communicator.set_engineer(9,(byte)0x01);
+                        communicator.set_engineer(8,(byte)0x01);
                         break;
                     case R.id.eng_b_right:
                         eng_b_right.setBackgroundResource(R.drawable.moving_right_on);
-                        communicator.set_engineer(9,(byte)0x02);
+                        communicator.set_engineer(8,(byte)0x02);
                         break;
                     case R.id.eng_r_left:
                         eng_r_left.setBackgroundResource(R.drawable.rotation_left_on);
-                        communicator.set_engineer(9,(byte)0x10);
+                        communicator.set_engineer(8,(byte)0x10);
                         break;
                     case R.id.eng_r_right:
                         eng_r_right.setBackgroundResource(R.drawable.rotation_right_on);
-                        communicator.set_engineer(9,(byte)0x20);
+                        communicator.set_engineer(8,(byte)0x20);
                         break;
 
                     case R.id.eng_door_open:
                         eng_door_open.setBackgroundResource(Application_manager.door_open_on[Application_manager.img_flag]);
-                        communicator.set_engineer(9,(byte)0x01);
+                        communicator.set_engineer(7,(byte)0x01);
                         break;
                     case R.id.eng_door_close:
                         eng_door_close.setBackgroundResource(Application_manager.door_close_on[Application_manager.img_flag]);
-                        communicator.set_engineer(9,(byte)0x02);
+                        communicator.set_engineer(7,(byte)0x02);
                         break;
                 }
             } else if (action == MotionEvent.ACTION_UP) {
@@ -538,28 +538,28 @@ public class Activity_engine extends AppCompatActivity {
                         break;
                     case R.id.eng_b_left:
                         eng_b_left.setBackgroundResource(R.drawable.moving_left_off);
-                        communicator.set_engineer(9,(byte)0x00);
+                        communicator.set_engineer(8,(byte)0x00);
                         break;
                     case R.id.eng_b_right:
                         eng_b_right.setBackgroundResource(R.drawable.moving_right_off);
-                        communicator.set_engineer(9,(byte)0x00);
+                        communicator.set_engineer(8,(byte)0x00);
                         break;
                     case R.id.eng_r_left:
                         eng_r_left.setBackgroundResource(R.drawable.rotation_left_off);
-                        communicator.set_engineer(9,(byte)0x00);
+                        communicator.set_engineer(8,(byte)0x00);
                         break;
                     case R.id.eng_r_right:
                         eng_r_right.setBackgroundResource(R.drawable.rotation_right_off);
-                        communicator.set_engineer(9,(byte)0x00);
+                        communicator.set_engineer(8,(byte)0x00);
                         break;
 
                     case R.id.eng_door_open:
                         eng_door_open.setBackgroundResource(Application_manager.door_open_off[Application_manager.img_flag]);
-                        communicator.set_engineer(9,(byte)0x00);
+                        communicator.set_engineer(7,(byte)0x00);
                         break;
                     case R.id.eng_door_close:
                         eng_door_close.setBackgroundResource(Application_manager.door_close_off[Application_manager.img_flag]);
-                        communicator.set_engineer(9,(byte)0x00);
+                        communicator.set_engineer(7,(byte)0x00);
                         break;
                 }
             }
@@ -600,7 +600,7 @@ public class Activity_engine extends AppCompatActivity {
     private void updateThread() {
         clock.setText(Application_manager.doInit_time());
         operation_t.setText(""+ Application_manager.getRunningTime()/60);
-        Log.i("JW_RT", ""+Application_manager.getRunningTime());
+        Log.i("JW_ENGINE", "Running time: "+Application_manager.getRunningTime());
     }
 
     @Override
@@ -668,7 +668,7 @@ public class Activity_engine extends AppCompatActivity {
         int val_pressure = 0;
         SharedPreferences sharedPreferences = getSharedPreferences(Application_manager.DB_NAME, 0);
         sharedPreferences.getInt(Application_manager.DB_VAL_PRESSURE, val_pressure);
-        communicator.set_tx(5, (byte)(Application_manager.inverterVal | (byte)val_pressure));
+        communicator.set_tx(3, (byte)(Application_manager.inverterVal | (byte)val_pressure));
     }
 
     void setZerosWaterPressure()

@@ -19,24 +19,27 @@ public class Communicator {
     private Handler handler_data;
 
     // Define length of protocols
-    private final static int LENGTH_TX          = 14;
+    private final static int LENGTH_TX          = 11;
     private final static int LENGTH_SETTING     = 7;
+    private final static int LENGTH_MANUAL      = 17;
     private final static int LENGTH_RFID        = 5;
-    private final static int LENGTH_ENGINEER    = 12;
-    private final static int LENGTH_RX          = 25;
+    private final static int LENGTH_ENGINEER    = 11;
+    private final static int LENGTH_RX          = 21;
 
     // Define default protocols
     private final static byte STX               = (byte) 0xFD;
     private final static byte ETX               = (byte) 0xFE;
 
-    private final byte[] msg_tx_default         = {STX, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x01, 0x00, 0x00, 0x00, 0x00, 0x01, ETX};
+    private final byte[] msg_tx_default         = {STX, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, ETX};
     private final byte[] msg_setting_default    = {STX, 0x0A, 0x00, 0x00, 0x00, 0x0A, ETX};
+    private final byte[] msg_manual_default     = {STX, 0x09, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, ETX};
     private final byte[] msg_rfid_default       = {STX, 0x0B, 0x00, 0x0B, ETX};
-    private final byte[] msg_engineer_default   = {STX, 0x0D, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x0D, ETX};
+    private final byte[] msg_engineer_default   = {STX, 0x0D, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x0D, ETX};
 
     // Tx messages
     private byte[] msg_tx       = new byte[LENGTH_TX];
     private byte[] msg_setting  = new byte[LENGTH_SETTING];
+    private byte[] msg_manual   = new byte[LENGTH_MANUAL];
     private byte[] msg_rfid     = new byte[LENGTH_RFID];
     private byte[] msg_engineer = new byte[LENGTH_ENGINEER];
 
@@ -75,7 +78,7 @@ public class Communicator {
 
         //mWidiWrapper = new WifiDirectWrapper(mContext, handler_data);
         //mWidiWrapper.start();
-        wifiConnector = new WifiConnector(mContext, handler_data, this);
+        wifiConnector = new WifiConnector(mContext);
         wifiConnector.registReceiver();
 
         socketManager = new SocketManager(handler_data, this);
@@ -89,6 +92,7 @@ public class Communicator {
             @Override
             public void handleMessage(Message msg) {
 
+                Log.i("JW_COMM", "handleMessage");
                 Bundle data = msg.getData();
 
                 for (int i=0; i<data.size(); i++) {
@@ -98,49 +102,80 @@ public class Communicator {
                 }
                 if (!checkCheckSum(msg_rx)) {
 
-                    Log.i("JW", "Rx data is wrong (checkSum error)");
+                    Log.i("JW_COMM", "Rx data is wrong (checkSum error)");
                     calcCheckSum(msg_rx);
                 }
 
-                switch (get_rx_idx(1)) {
+                byte signal_deviceState = (byte)(0xf0 & get_rx_idx(1));
+                byte signal_ack = (byte)(0x0f & get_rx_idx(1));
 
+                //Log.i("JW", "받아온 checkSum: " + String.format("%02x", msg[len-2] & 0xff));
+                Log.i("JW_COMM", "Signal (device state) : " + String.format("%02x", signal_deviceState & 0xff));
+                Log.i("JW_COMM", "Signal (ACK)          : " + String.format("%02x", signal_ack & 0xff));
+
+                switch (signal_ack) {
+
+                    case 0x00:
+
+                        Log.i("JW_COMM_ACK", "정지 ACK");
+                        break;
+                    case 0x01:
+
+                        Log.i("JW_COMM_ACK", "동작 ACK");
+                        break;
+                    case 0x02:
+
+                        Log.i("JW_COMM_ACK", "일시정지 ACK");
+                        break;
+                    case 0x0A:
+
+                        Log.i("JW_COMM_ACK", "설정 ACK");
+                        break;
+                    case 0x0B:
+
+                        Log.i("JW_COMM_ACK", "RFID 읽기 ACK");
+                        break;
+                    case 0x0C:
+
+                        Log.i("JW_COMM_ACK", "RFID 쓰기 ACK");
+                        break;
+                    case 0x0D:
+
+                        Log.i("JW_COMM_ACK", "엔지니어모드 ACK");
+                        break;
+                }
+
+                switch (signal_deviceState) {
+
+                    case 0x00:
+
+                        Log.i("JW_COMM_STATE", "전원 인가 후 원점이동 중");
+                        break;
                     case 0x10:
 
-                        Log.i("JW_COM", "정지 ACK");
-                        break;
-                    case 0x11:
-
-                        Log.i("JW_COM", "동작 ACK");
-                        break;
-                    case 0x12:
-
-                        Log.i("JW_COM", "일시정지 ACK");
-                        break;
-                    case 0x1A:
-
-                        Log.i("JW_COM", "설정 ACK");
-                        break;
-                    case 0x1B:
-
-                        Log.i("JW_COM", "RFID 읽기 ACK");
-                        break;
-                    case 0x1C:
-
-                        Log.i("JW_COM", "RFID 쓰기 ACK");
-                        break;
-                    case 0x1D:
-
-                        Log.i("JW_COM", "엔지니어모드 ACK");
+                        Log.i("JW_COMM_STATE", "원점상태 (인버터 정지 중)");
                         break;
                     case 0x20:
 
-                        Log.i("JW_COM", "Warm-up");
+                        Log.i("JW_COMM_STATE", "원점상태 (인버터 정지)");
+                        break;
+                    case 0x30:
+
+                        Log.i("JW_COMM_STATE", "정지하여 원점 이동 중");
+                        break;
+                    case 0x40:
+
+                        Log.i("JW_COMM_STATE", "동작 중");
+                        break;
+                    case 0x50:
+
+                        Log.i("JW_COMM_STATE", "일시정지 중");
                         break;
                 }
 
                 Intent intent = new Intent("update.data");
                 mContext.sendBroadcast(intent);
-                Log.i("jW", "sendBroadcast");
+                //Log.i("JW_COMM", "sendBroadcast");
             }
         };
     }
@@ -154,6 +189,10 @@ public class Communicator {
         for (int i=0; i<LENGTH_SETTING; i++) {
 
             msg_setting[i] = msg_setting_default[i];
+        }
+        for (int i=0; i<LENGTH_MANUAL; i++) {
+
+            msg_manual[i] = msg_manual_default[i];
         }
         for (int i=0; i<LENGTH_RFID; i++) {
 
@@ -190,11 +229,9 @@ public class Communicator {
         for (int i=2; i<len-2; i++) {
 
             res = (byte)(res ^ msg[i]);
-            Log.i("JW_CHECKSUM", String.format("%02x", res));
-            res = (byte) (res & 0xff);
-            Log.i("JW_CHECKSUM", String.format("%02x", res));
-            Log.i("JW_CHECKSUM", "---");
         }
+        //Log.i("JW_CHECKSUM", String.format("%02x", res));
+        res = (byte) (res & 0xff);
 
         return res;
     }
@@ -272,5 +309,10 @@ public class Communicator {
     synchronized public byte get_rx_idx(int idx) {
 
         return msg_rx[idx];
+    }
+
+    synchronized public byte[] get_manual() {
+
+        return msg_manual;
     }
 }

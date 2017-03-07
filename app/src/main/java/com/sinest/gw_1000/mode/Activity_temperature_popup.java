@@ -140,7 +140,7 @@ public class Activity_temperature_popup extends Activity {
 
                         if (temperature >= TEMP_MIN && temperature <= TEMP_MAX) {
 
-                            SharedPreferences sharedPreferences = getSharedPreferences(Application_manager.DB_NAME, 0);
+                            SharedPreferences sharedPreferences = Application_manager.getSharedPreferences();
                             SharedPreferences.Editor editor = sharedPreferences.edit();
 
                             if (mode == TEMPERATURE_ABOVE) {

@@ -122,7 +122,7 @@ public class Activity_manual_mode_pattern_popup extends Activity implements Cust
                 switch (id) {
                     case R.id.manual_popup_save:
                         b = (ImageView) view;
-                        SharedPreferences sharedPreferences = getSharedPreferences(Application_manager.DB_NAME, 0);
+                        SharedPreferences sharedPreferences = Application_manager.getSharedPreferences();
                         SharedPreferences.Editor editor = sharedPreferences.edit();
 
                         b.setBackgroundResource(R.drawable.save_mode_off);

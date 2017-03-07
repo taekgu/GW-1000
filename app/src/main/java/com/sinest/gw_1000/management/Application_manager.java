@@ -86,7 +86,11 @@ public class Application_manager extends Application {
     public static boolean up = true;
     // 설정한 시간이 크면 true 작으면 false
 
-    static SharedPreferences sharedPreferences;
+    private static SharedPreferences sharedPreferences = null;
+    public static SharedPreferences getSharedPreferences() {
+
+        return sharedPreferences;
+    }
 
     // DB name
     public final static String DB_NAME = "myData";
@@ -142,7 +146,7 @@ public class Application_manager extends Application {
     public final static String DB_LIBRARY_LOC_ = "library_location_";
 
     // 매뉴얼 모드 man_pattern_*_*
-    public final static String DB_MANUAL_MODE_PATTERN_ = "man_pattern_"; // man_pattern_(1-5)_(
+    public final static String DB_MANUAL_MODE_PATTERN_ = "man_pattern_"; // man_pattern_(1-5)_(0-3)
     public final static String DB_MANUAL_MODE_TIME_ = "man_time_";
     public final static String DB_MANUAL_MODE_SECTION_MIN_ = "man_section_min_";
     public final static String DB_MANUAL_MODE_SECTION_MAX_ = "man_section_max_"; //man
@@ -349,6 +353,8 @@ public class Application_manager extends Application {
 
     public void onCreate() {
 
+        sharedPreferences = getSharedPreferences(DB_NAME, 0);
+
         mUncaughtExceptionHandler = Thread.getDefaultUncaughtExceptionHandler();
 
         Thread.setDefaultUncaughtExceptionHandler(new UncaughtExceptionHandler() {
@@ -362,7 +368,7 @@ public class Application_manager extends Application {
                 //예외상황이 발행 되는 경우 작업
 
                 isTerminated_by_uncaughtException = true;
-                SharedPreferences sharedPreferences = getSharedPreferences(DB_NAME, 0);
+                sharedPreferences = getSharedPreferences(DB_NAME, 0);
                 SharedPreferences.Editor editor = sharedPreferences.edit();
                 editor.putBoolean(DB_IS_TERMINATED, isTerminated_by_uncaughtException);
                 editor.commit();
@@ -394,7 +400,7 @@ public class Application_manager extends Application {
         Log.i("JW", "densityDPI = " + metrics.densityDpi);
 
         //시간차 저장
-        SharedPreferences sharedPreferences = context.getSharedPreferences(DB_NAME, 0);
+        sharedPreferences = context.getSharedPreferences(DB_NAME, 0);
         //m_gap_clock = sharedPreferences.getString(DB_TIME_GAP,"00:00");
         m_gap_clock_f = sharedPreferences.getBoolean(DB_TIME_GAP_F,true);
         Log.v("ss","m_gap_clock : "+m_gap_clock);
@@ -433,7 +439,7 @@ public class Application_manager extends Application {
 
     private void load_data(){
 
-        SharedPreferences sharedPreferences = context.getSharedPreferences(Application_manager.DB_NAME, 0);
+        sharedPreferences = context.getSharedPreferences(Application_manager.DB_NAME, 0);
 
         // 비정상 종료인지 확인
         isTerminated_by_uncaughtException = sharedPreferences.getBoolean(DB_IS_TERMINATED, false);
@@ -540,7 +546,7 @@ public class Application_manager extends Application {
 
     public static void set_door_state(boolean i) {
 
-        SharedPreferences sharedPreferences = context.getSharedPreferences(Application_manager.DB_NAME, 0);
+        sharedPreferences = context.getSharedPreferences(Application_manager.DB_NAME, 0);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putBoolean(DB_DOOR_STATE, i);
         editor.commit();
@@ -671,7 +677,7 @@ public class Application_manager extends Application {
     }
 
     synchronized public static String get_m_password(){
-        SharedPreferences sharedPreferences = context.getSharedPreferences(DB_NAME, 0);
+        sharedPreferences = context.getSharedPreferences(DB_NAME, 0);
         m_password = sharedPreferences.getString(DB_PASSWORD,"0000");
         return m_password;
     }

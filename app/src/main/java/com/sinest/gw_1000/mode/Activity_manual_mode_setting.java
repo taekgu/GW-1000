@@ -36,6 +36,7 @@ public class Activity_manual_mode_setting extends Activity{
     private int[] time = new int[3]; // 선택되어있던 시간
     private int[] time_prev = new int[3]; // 팝업에서 변경되기 전 초기 시간
     private int[][] section = new int[3][2];
+    private int[][] section_prev = new int[3][2];
 
     private ImageView[] manual_mode_setting = new ImageView[3];
     private TextView[] manual_mode_time = new TextView[3];
@@ -79,7 +80,7 @@ public class Activity_manual_mode_setting extends Activity{
         }
 
         // 선택한 매뉴얼 모드 정보 로드
-        SharedPreferences sharedPreferences = getSharedPreferences(Application_manager.DB_NAME, 0);
+        SharedPreferences sharedPreferences = Application_manager.getSharedPreferences();
         int resourceId;
         for (int i=0; i<3; i++) {
 
@@ -89,6 +90,8 @@ public class Activity_manual_mode_setting extends Activity{
             time_prev[i] = time[i];
             section[i][0] = sharedPreferences.getInt(Application_manager.DB_MANUAL_MODE_SECTION_MIN_ + modeNum + "_" + i, 1);
             section[i][1] = sharedPreferences.getInt(Application_manager.DB_MANUAL_MODE_SECTION_MAX_ + modeNum + "_" + i, 1);
+            section_prev[i][0] = section[i][0];
+            section_prev[i][1] = section[i][1];
 
             resourceId = getResources().getIdentifier("manual_mode_progress_bar_" + (i+1), "id", "com.sinest.gw_1000");
             custom_progress_bar[i] = (CustomProgressBar)findViewById(resourceId);
@@ -183,11 +186,13 @@ public class Activity_manual_mode_setting extends Activity{
 
                         if (num_of_enabled_pattern != 0) {
                             // 변경된 값 저장 후 액티비티 종료
-                            sharedPreferences = getSharedPreferences(Application_manager.DB_NAME, 0);
+                            sharedPreferences = Application_manager.getSharedPreferences();
                             editor = sharedPreferences.edit();
 
                             for (int i = 0; i < 3; i++) {
                                 editor.putInt(Application_manager.DB_MANUAL_MODE_PATTERN_ + modeNum + "_" + i, pattern[i]);
+                                editor.putInt(Application_manager.DB_MANUAL_MODE_SECTION_MIN_ + modeNum + "_" + i, section[i][0]);
+                                editor.putInt(Application_manager.DB_MANUAL_MODE_SECTION_MAX_ + modeNum + "_" + i, section[i][1]);
                                 editor.putInt(Application_manager.DB_MANUAL_MODE_TIME_ + modeNum + "_" + i, time[i]);
                             }
                             editor.commit();
@@ -206,6 +211,8 @@ public class Activity_manual_mode_setting extends Activity{
 
                             time[i] = time_prev[i];
                             pattern[i] = pattern_prev[i];
+                            section[i][0] = section_prev[i][0];
+                            section[i][1] = section_prev[i][1];
                         }
                         // 시간 이전 시간값으로 되돌린 후 종료
                         sharedPreferences = getSharedPreferences(Application_manager.DB_NAME, 0);
@@ -213,6 +220,8 @@ public class Activity_manual_mode_setting extends Activity{
 
                         for (int i=0; i<3; i++) {
                             editor.putInt(Application_manager.DB_MANUAL_MODE_PATTERN_ + modeNum + "_" + i, pattern[i]);
+                            editor.putInt(Application_manager.DB_MANUAL_MODE_SECTION_MIN_ + modeNum + "_" + i, section[i][0]);
+                            editor.putInt(Application_manager.DB_MANUAL_MODE_SECTION_MAX_ + modeNum + "_" + i, section[i][1]);
                             editor.putInt(Application_manager.DB_MANUAL_MODE_TIME_ + modeNum + "_" + i, time[i]);
                         }
                         editor.commit();
@@ -231,7 +240,7 @@ public class Activity_manual_mode_setting extends Activity{
         isRun = true;
         num_of_enabled_pattern = 0;
 
-        SharedPreferences sharedPreferences = getSharedPreferences(Application_manager.DB_NAME, 0);
+        SharedPreferences sharedPreferences = Application_manager.getSharedPreferences();
         int resourceId;
 
         Log.i("onResume", "onResume");

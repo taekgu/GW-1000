@@ -37,22 +37,11 @@ public class WifiConnector {
     private final static int WIFI_CONNECTED       = 1003;
     private final static int WIFI_DISCONNECTED    = 1004;
 
-    //private static final String AP_KEYWORD  = "MALAB";
-    //private static final String AP_PSWD     = "malab123";
-    //private static final String IP_ADDRESS  = "192.168.0.22";
-
     private static final String AP_KEYWORD  = "GW1000";
     private static final String AP_PSWD     = "1234567890";
-    private static final String IP_ADDRESS  = "192.168.0.1";
-    private static final int PORT           = 20002;
-    private SocketManager socketManager     = null;
-    private Handler handler_data;
 
     private Context context;
     private Handler handler_for_toast;
-
-    private boolean isRun = false; // 반복 위한 플래그
-    private boolean isSet = true; // 스레드가 정상 종료 되었는지
 
     private WifiManager wifiManager;
     private BroadcastReceiver broadcastReceiver;
@@ -61,20 +50,11 @@ public class WifiConnector {
     private String bssid = null;
     private WifiConfiguration wfc;
 
-    private Thread thread;
-    private Runnable runnable;
-
     public int permission = 0;
 
-    private Communicator communicator;
-    private WifiConnector wifiConnector;
-
-    public WifiConnector(Context _context, Handler _handler_data, Communicator _communicator) {
+    public WifiConnector(Context _context) {
 
         context = _context;
-        handler_data = _handler_data;
-        communicator = _communicator;
-        wifiConnector = this;
         init();
     }
 
@@ -147,62 +127,7 @@ public class WifiConnector {
             }
         };
     }
-/*
-    private void setThread() {
 
-        if (runnable == null) {
-
-            runnable = new Runnable() {
-
-                @Override
-                public void run() {
-
-                    Log.i("JW", "서버소켓 연결 스레드 시작");
-                    while (isRun) {
-
-                        if (!isConnected_server) {
-
-                            try {
-
-                                Socket socket = new Socket(IP_ADDRESS, PORT);
-                                if (socket != null) {
-
-                                    if (socket.isConnected()) {
-
-                                        handler_for_toast.sendEmptyMessage(SERVER_CONNECTED);
-
-                                        isConnected_server = true;
-                                        //isRun = false;
-
-                                        socketManager = null;
-                                        socketManager = new SocketManager();
-                                        socketManager.init(socket, handler_data, communicator, wifiConnector);
-                                        socketManager.start_thread();
-                                        Log.i("JW", "Start socketManager");
-                                    } else {
-
-                                        Log.i("JW", "Socket is not connected");
-                                    }
-                                } else {
-
-                                    Log.i("JW", "socket is null");
-                                }
-
-                            } catch (IOException e) {
-
-                                //Log.i("JW", "서버에 연결 실패 :" + e.getMessage() + ", " + e.getCause());
-                            }
-                        }
-                    }
-                    isSet = true;
-                    Log.i("JW", "서버소켓 연결 스레드 종료");
-                }
-            };
-        }
-
-        thread = new Thread(runnable);
-    }
-*/
     public void registReceiver() {
 
         if (broadcastReceiver == null) {

@@ -80,6 +80,8 @@ public class Activity_waiting extends AppCompatActivity {
     boolean isScreen_turned_off = false;
     boolean isWork_finished = false;
 
+    private SharedPreferences sharedPreferences = null;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -89,6 +91,8 @@ public class Activity_waiting extends AppCompatActivity {
         setContentView(R.layout.activity_waiting);
         Application_manager.setFullScreen(this);
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+
+        sharedPreferences = Application_manager.getSharedPreferences();
 
         communicator = Application_manager.getCommunicator();
 
@@ -103,19 +107,18 @@ public class Activity_waiting extends AppCompatActivity {
         clock.setText(Application_manager.doInit_time());
 
         // 산소 농도, 압력, 시간 값 불러오기
-        SharedPreferences sharedPreferences = getSharedPreferences(Application_manager.DB_NAME, 0);
         val_oxygen = sharedPreferences.getInt(Application_manager.DB_VAL_OXYGEN, 0);
         val_oxygen_spray = sharedPreferences.getInt(Application_manager.DB_VAL_OXYGEN_SPRAY, 0);
         val_pressure = sharedPreferences.getInt(Application_manager.DB_VAL_PRESSURE, 0);
         val_time = sharedPreferences.getInt(Application_manager.DB_VAL_TIME, 10);
 
-        // tx 메시지의 DATA4, 7에 수압, 산소투입량 입력
-        communicator.set_tx(5, (byte)(Application_manager.inverterVal | (byte)val_pressure));
+        // tx 메시지의 DATA2, 5에 수압, 산소투입량 입력
+        communicator.set_tx(3, (byte)(Application_manager.inverterVal | (byte)val_pressure));
         if (Application_manager.gw_1000) {
-            communicator.set_tx(8, (byte) val_oxygen);
+            communicator.set_tx(6, (byte) val_oxygen);
         }
         else if (!Application_manager.gw_1000) {
-            communicator.set_tx(8, (byte) val_oxygen_spray);
+            communicator.set_tx(6, (byte) val_oxygen_spray);
         }
 
         time_text = (TextView)findViewById(R.id.waiting_time_text);
@@ -231,8 +234,6 @@ public class Activity_waiting extends AppCompatActivity {
             imageView_device.setVisibility(View.INVISIBLE);
         }
 
-        SharedPreferences sharedPreferences = getSharedPreferences(Application_manager.DB_NAME, 0);
-
         if (mode == 0) {
 
             // 선택된 모드 갱신
@@ -316,7 +317,6 @@ public class Activity_waiting extends AppCompatActivity {
         isRun = false;
         //clock.unregistReceiver();
 
-        SharedPreferences sharedPreferences = getSharedPreferences(Application_manager.DB_NAME, 0);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putInt(Application_manager.DB_VAL_OXYGEN, val_oxygen);
         editor.putInt(Application_manager.DB_VAL_OXYGEN_SPRAY, val_oxygen_spray);
@@ -404,7 +404,6 @@ public class Activity_waiting extends AppCompatActivity {
                     handler_update_data.sendEmptyMessage(SET_BUTTON_INVISIBLE);
 
                     // 동작 모드로 바뀌기 이전 산소농도, 수압, 시간 값 저장
-                    SharedPreferences sharedPreferences = getSharedPreferences(Application_manager.DB_NAME, 0);
                     SharedPreferences.Editor editor = sharedPreferences.edit();
                     editor.putInt(Application_manager.DB_VAL_OXYGEN, val_oxygen);
                     editor.putInt(Application_manager.DB_VAL_OXYGEN_SPRAY, val_oxygen_spray);
@@ -475,7 +474,6 @@ public class Activity_waiting extends AppCompatActivity {
         communicator.set_tx(1, (byte) 0x00);
 
         // 동작 시작 전 산소 농도, 압력, 시간 값 불러오기
-        SharedPreferences sharedPreferences = getSharedPreferences(Application_manager.DB_NAME, 0);
         val_oxygen = sharedPreferences.getInt(Application_manager.DB_VAL_OXYGEN, 0);
         val_oxygen_spray = sharedPreferences.getInt(Application_manager.DB_VAL_OXYGEN_SPRAY, 0);
         val_pressure = sharedPreferences.getInt(Application_manager.DB_VAL_PRESSURE, 0);
@@ -490,8 +488,8 @@ public class Activity_waiting extends AppCompatActivity {
 
             val = (byte) val_oxygen_spray;
         }
-        communicator.set_tx(8, val);
-        communicator.set_tx(5, (byte) (Application_manager.inverterVal | (byte) val_pressure));
+        communicator.set_tx(6, val);
+        communicator.set_tx(3, (byte) (Application_manager.inverterVal | (byte) val_pressure));
 
         // 치료 음악 재생 종료
         if (Application_manager.sound_mode_num != 0) {
@@ -655,8 +653,6 @@ public class Activity_waiting extends AppCompatActivity {
 
                 if (msg.what == 1) {
 
-                    SharedPreferences sharedPreferences = getSharedPreferences(Application_manager.DB_NAME, 0);
-
                     int[] onoff_flag = new int[12];
                     for (int i=1; i<=4; i++) { // 세로
 
@@ -740,37 +736,37 @@ public class Activity_waiting extends AppCompatActivity {
 
                 // 내부온도, 수온 설정 값과 디바이스 실제 값을 비교하여 물히터와 히터 작동 여부 판별
                 // 물히터
-                // 온도 높을 때 - 끄기
+                // 온도 높을 때 - 냉
                 if (Application_manager.SENSOR_TEMP_BED_USER + 1 < Application_manager.SENSOR_TEMP_BED) {
 
-                    communicator.set_tx(6, (byte) 0x00);
+                    communicator.set_tx(4, (byte) 0x01);
                 }
-                // 온도 낮을 때 - 켜기
+                // 온도 낮을 때 - 온
                 else if (Application_manager.SENSOR_TEMP_BED_USER - 1 > Application_manager.SENSOR_TEMP_BED) {
 
-                    communicator.set_tx(6, (byte) 0x01);
+                    communicator.set_tx(4, (byte) 0x02);
                 }
                 // 설정 범위 +-1 이내일 때 - 끄기
                 else {
 
-                    communicator.set_tx(6, (byte) 0x00);
+                    communicator.set_tx(4, (byte) 0x00);
                 }
 
                 // 히터
-                // 온도 높을 때 - 끄기
+                // 온도 높을 때 - 냉
                 if (Application_manager.SENSOR_TEMP_USER + 1 < Application_manager.SENSOR_TEMP) {
 
-                    communicator.set_tx(7, (byte) 0x00);
+                    communicator.set_tx(5, (byte) 0x01);
                 }
-                // 온도 낮을 때 - 켜기
+                // 온도 낮을 때 - 온
                 else if (Application_manager.SENSOR_TEMP_USER - 1 > Application_manager.SENSOR_TEMP) {
 
-                    communicator.set_tx(7, (byte) 0x01);
+                    communicator.set_tx(5, (byte) 0x02);
                 }
                 // 설정 범위 +-1 이내일 때 - 끄기
                 else {
 
-                    communicator.set_tx(7, (byte) 0x00);
+                    communicator.set_tx(5, (byte) 0x00);
                 }
             }
         };
@@ -865,7 +861,7 @@ public class Activity_waiting extends AppCompatActivity {
                             val = (byte) val_oxygen_spray;
                         }
 
-                        communicator.set_tx(8, val);
+                        communicator.set_tx(6, val);
                         break;
                     case R.id.waiting_oxygen_down_button:
                         view.setBackgroundResource(R.drawable.button_down);
@@ -885,7 +881,7 @@ public class Activity_waiting extends AppCompatActivity {
                             val = (byte) val_oxygen_spray;
                         }
 
-                        communicator.set_tx(8, val);
+                        communicator.set_tx(6, val);
                         break;
                     case R.id.waiting_pressure_up_button:
                         view.setBackgroundResource(R.drawable.button_up);
@@ -896,7 +892,7 @@ public class Activity_waiting extends AppCompatActivity {
                         if (val_pressure > 6) val_pressure = 6;
                         pressure_text.setText("" + val_pressure);
 
-                        communicator.set_tx(5, (byte)(Application_manager.inverterVal | (byte)val_pressure));
+                        communicator.set_tx(3, (byte)(Application_manager.inverterVal | (byte)val_pressure));
                         //}
                         break;
                     case R.id.waiting_pressure_down_button:
@@ -908,7 +904,7 @@ public class Activity_waiting extends AppCompatActivity {
                         if (val_pressure < 0) val_pressure = 0;
                         pressure_text.setText("" + val_pressure);
 
-                        communicator.set_tx(5, (byte)(Application_manager.inverterVal | (byte)val_pressure));
+                        communicator.set_tx(3, (byte)(Application_manager.inverterVal | (byte)val_pressure));
                         //}
                         break;
                     case R.id.waiting_time_up_button:
@@ -955,7 +951,7 @@ public class Activity_waiting extends AppCompatActivity {
                             Application_manager.set_door_state(true);
 
                             val = 0x01;
-                            communicator.set_tx(11, val);
+                            communicator.set_tx(8, val);
                         }
                         break;
                     case R.id.waiting_doorclose_button:
@@ -968,7 +964,7 @@ public class Activity_waiting extends AppCompatActivity {
                             Application_manager.set_door_state(false);
 
                             val = 0x02;
-                            communicator.set_tx(11, val);
+                            communicator.set_tx(8, val);
                         }
                         break;
                     case R.id.waiting_time_text:

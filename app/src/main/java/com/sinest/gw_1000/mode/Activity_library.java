@@ -62,7 +62,7 @@ public class Activity_library extends AppCompatActivity{
             library_map[i] = 0;
         }
 
-        SharedPreferences sharedPreferences = getSharedPreferences(Application_manager.DB_NAME, 0);
+        SharedPreferences sharedPreferences = Application_manager.getSharedPreferences();
 
         int imageView_id, image_id;
         ImageView imageView;
@@ -207,7 +207,7 @@ public class Activity_library extends AppCompatActivity{
 
                             if (cnt == 4) {
 
-                                SharedPreferences sharedPreferences = getSharedPreferences(Application_manager.DB_NAME, 0);
+                                SharedPreferences sharedPreferences = Application_manager.getSharedPreferences();
                                 SharedPreferences.Editor editor = sharedPreferences.edit();
                                 for (int i = 0; i < Application_manager.MAX_CHECKED; i++) {
 
