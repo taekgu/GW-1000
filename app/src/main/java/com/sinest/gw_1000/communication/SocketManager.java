@@ -26,7 +26,7 @@ public class SocketManager {
     private final static int LENGTH_TX = 11;
     private final static int LENGTH_RX = 21;
 
-    //private static final String IP_ADDRESS  = "192.168.219.135";
+    //private static final String IP_ADDRESS  = "192.168.219.152";
     private static final String IP_ADDRESS  = "192.168.0.1";
     private static final int PORT           = 20002;
 
@@ -91,7 +91,7 @@ public class SocketManager {
 
                     isConnected = true;
                     send_setting();
-                    send_manual();
+                    send_manual(0);
 
                     // setting, manual 정보가 모두 전달될 때까지 대기
                     while (!get_isSent_predata());
@@ -351,7 +351,11 @@ public class SocketManager {
         }
     }
 
-    public void send_manual() {
+    /**
+     * This method sends manual mode setting messages to device.
+     * @param manualNum 전송할 매뉴얼 모드 번호를 입력 (1-5). 0 입력 시 5개 모두 전송.
+     */
+    public void send_manual(final int manualNum) {
 
         if (isConnected) {
 
@@ -359,13 +363,31 @@ public class SocketManager {
                 @Override
                 public void run() {
 
+                    int min_i_manualNum, max_i_manualNum;
+                    int start_of_loop, end_of_loop;
+
+                    if (manualNum == 0) {
+
+                        min_i_manualNum = 1;
+                        max_i_manualNum = 5;
+                        start_of_loop = 0;
+                        end_of_loop = 5;
+                    }
+                    else {
+
+                        min_i_manualNum = manualNum;
+                        max_i_manualNum = manualNum;
+                        start_of_loop = manualNum - 1;
+                        end_of_loop = manualNum;
+                    }
+
                     // 매뉴얼 모드 정보 불러오기
                     int patternNum[][] = new int[5][3];
                     int patternStart[][] = new int[5][3];
                     int patternEnd[][] = new int[5][3];
                     int patternTime[][] = new int[5][3];
 
-                    for (int i_manualNum = 1; i_manualNum <= 5; i_manualNum++) {
+                    for (int i_manualNum = min_i_manualNum; i_manualNum <= max_i_manualNum; i_manualNum++) {
 
                         int manualIdx = i_manualNum - 1;
                         for (int i_patternNum = 0; i_patternNum < 3; i_patternNum++) {
@@ -386,7 +408,7 @@ public class SocketManager {
                         // 매뉴얼모드 가져오기
                         msg_out = communicator.get_manual();
 
-                        for (int i_manualNum = 0; i_manualNum < 5; i_manualNum++) {
+                        for (int i_manualNum = start_of_loop; i_manualNum < end_of_loop; i_manualNum++) {
 
                             msg_out[2] = (byte) (i_manualNum + 16);
 

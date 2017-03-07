@@ -196,6 +196,10 @@ public class Activity_manual_mode_setting extends Activity{
                                 editor.putInt(Application_manager.DB_MANUAL_MODE_TIME_ + modeNum + "_" + i, time[i]);
                             }
                             editor.commit();
+
+                            // 변경 값 디바이스로 전송
+                            Application_manager.getCommunicator().getSocketManager().send_manual(modeNum);
+
                             finish();
                         }
                         else {
