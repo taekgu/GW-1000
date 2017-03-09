@@ -288,7 +288,7 @@ public class Activity_setting extends AppCompatActivity {
                         //
                         if (button_flag[0] == true) {
                             b_11.setBackgroundResource(Application_manager.button_on[Application_manager.img_flag]);
-                            b_11.setText("" + communicator.get_rx_idx(11));
+                            b_11.setText("" + communicator.get_rx_idx(11) + "%");
                             b_11.setTypeface(tf);
                             button_flag[0] = false;
                             Application_manager.wakeLock(getApplicationContext());
@@ -304,7 +304,7 @@ public class Activity_setting extends AppCompatActivity {
                         //
                         if (button_flag[1] == true) {
                             b_21.setBackgroundResource(Application_manager.button_on[Application_manager.img_flag]);
-                            b_21.setText("" + communicator.get_rx_idx(12));
+                            b_21.setText("" + communicator.get_rx_idx(12) + "%");
                             b_21.setTypeface(tf);
                             button_flag[1] = false;
                         } else {
@@ -317,7 +317,7 @@ public class Activity_setting extends AppCompatActivity {
                         //
                         if (button_flag[2] == true) {
                             b_31.setBackgroundResource(Application_manager.button_on[Application_manager.img_flag]);
-                            b_31.setText("" + communicator.get_rx_idx(13));
+                            b_31.setText("" + communicator.get_rx_idx(13) + "%");
                             b_31.setTypeface(tf);
                             button_flag[2] = false;
                         } else {
@@ -330,7 +330,7 @@ public class Activity_setting extends AppCompatActivity {
                         //
                         if (button_flag[3] == true) {
                             b_41.setBackgroundResource(Application_manager.button_on[Application_manager.img_flag]);
-                            b_41.setText("" + communicator.get_rx_idx(14));
+                            b_41.setText("" + communicator.get_rx_idx(14) + "%");
                             b_41.setTypeface(tf);
                             button_flag[3] = false;
                         } else {
@@ -343,7 +343,7 @@ public class Activity_setting extends AppCompatActivity {
                         //
                         if (button_flag[4] == true) {
                             b_12.setBackgroundResource(Application_manager.button_on[Application_manager.img_flag]);
-                            b_12.setText("" + communicator.get_rx_idx(3));
+                            b_12.setText("" + communicator.get_rx_idx(3) + "℃");
                             b_12.setTypeface(tf);
                             button_flag[4] = false;
                         } else {
@@ -356,7 +356,7 @@ public class Activity_setting extends AppCompatActivity {
                         //
                         if (button_flag[5] == true) {
                             b_22.setBackgroundResource(Application_manager.button_on[Application_manager.img_flag]);
-                            b_22.setText("" + communicator.get_rx_idx(4));
+                            b_22.setText("" + communicator.get_rx_idx(4) + "℃");
                             b_22.setTypeface(tf);
                             button_flag[5] = false;
                         } else {
@@ -369,7 +369,7 @@ public class Activity_setting extends AppCompatActivity {
                         //
                         if (button_flag[6] == true) {
                             b_32.setBackgroundResource(Application_manager.button_on[Application_manager.img_flag]);
-                            b_32.setText("" + communicator.get_rx_idx(5));
+                            b_32.setText("" + communicator.get_rx_idx(5) + "℃");
                             b_32.setTypeface(tf);
                             button_flag[6] = false;
                         } else {
@@ -382,7 +382,7 @@ public class Activity_setting extends AppCompatActivity {
                         //
                         if (button_flag[7] == true) {
                             b_42.setBackgroundResource(Application_manager.button_on[Application_manager.img_flag]);
-                            b_42.setText("" + communicator.get_rx_idx(6));
+                            b_42.setText("" + communicator.get_rx_idx(6) + "℃");
                             b_42.setTypeface(tf);
                             button_flag[7] = false;
                         } else {
@@ -395,7 +395,7 @@ public class Activity_setting extends AppCompatActivity {
                         //
                         if (button_flag[8] == true) {
                             b_13.setBackgroundResource(Application_manager.button_on[Application_manager.img_flag]);
-                            b_13.setText("" + communicator.get_rx_idx(7));
+                            b_13.setText("" + communicator.get_rx_idx(7) + "%");
                             b_13.setTypeface(tf);
                             button_flag[8] = false;
                         } else {
@@ -408,7 +408,7 @@ public class Activity_setting extends AppCompatActivity {
                         //
                         if (button_flag[9] == true) {
                             b_23.setBackgroundResource(Application_manager.button_on[Application_manager.img_flag]);
-                            b_23.setText("" + communicator.get_rx_idx(8));
+                            b_23.setText("" + communicator.get_rx_idx(8) + "%");
                             b_23.setTypeface(tf);
                             button_flag[9] = false;
                         } else {
@@ -421,7 +421,7 @@ public class Activity_setting extends AppCompatActivity {
                         //
                         if (button_flag[10] == true) {
                             b_33.setBackgroundResource(Application_manager.button_on[Application_manager.img_flag]);
-                            b_33.setText("" + communicator.get_rx_idx(9));
+                            b_33.setText("" + communicator.get_rx_idx(9) + "%");
                             b_33.setTypeface(tf);
                             button_flag[10] = false;
                         } else {
@@ -434,7 +434,7 @@ public class Activity_setting extends AppCompatActivity {
                         //
                         if (button_flag[11] == true) {
                             b_43.setBackgroundResource(Application_manager.button_on[Application_manager.img_flag]);
-                            b_43.setText("" + communicator.get_rx_idx(10));
+                            b_43.setText("" + communicator.get_rx_idx(10) + "%");
                             b_43.setTypeface(tf);
                             button_flag[11] = false;
                         } else {
