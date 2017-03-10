@@ -82,6 +82,7 @@ public class Fragment_waiting extends Fragment {
 
             if (motionEvent.getAction() == MotionEvent.ACTION_DOWN) {
 
+                activity.setIsTouched_work(true);
                 for (int i=0; i<4; i++) {
 
                     if (button_clicked == mode[i]) {
@@ -94,6 +95,7 @@ public class Fragment_waiting extends Fragment {
             }
             else if (motionEvent.getAction() == MotionEvent.ACTION_UP) {
 
+                activity.setIsTouched_work(false);
                 for (int i=0; i<4; i++) {
 
                     if (button_clicked == mode[i]) {
@@ -101,8 +103,12 @@ public class Fragment_waiting extends Fragment {
                         int resourceId = -1;
                         resourceId = getResources().getIdentifier("mode" + (checked_idx[i]+1), "drawable", "com.sinest.gw_1000");
                         mode[i].setBackgroundResource(resourceId);
-                        // i+1 번째 모드
-                        activity.changeFragment_working(checked_idx[i]+1);
+
+                        if (!activity.getIsTouched()) {
+
+                            // i+1 번째 모드
+                            activity.changeFragment_working(checked_idx[i] + 1);
+                        }
                     }
                 }
             }

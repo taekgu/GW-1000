@@ -286,14 +286,19 @@ public class Activity_waiting_rfid extends AppCompatActivity {
                 start_animation_ch();
             }
 
-            // 화면 꺼진 상태로 동작이 종료되었을 경우 프래그먼트 변경
-            if (isScreen_turned_off && isWork_finished) {
+            // 화면 껐다가 켜진 경우
+            if (isScreen_turned_off) {
 
                 isScreen_turned_off = false;
                 Log.i("JW", "isScreen_turned_off = false");
-                changeFragment_waiting();
-                isWork_finished = false;
-                Log.i("JW", "isWork_finished = false");
+
+                // 동작이 종료되었을 경우 프래그먼트 변경
+                if (isWork_finished) {
+
+                    changeFragment_waiting();
+                    isWork_finished = false;
+                    Log.i("JW", "isWork_finished = false");
+                }
             }
         }
     }
@@ -419,6 +424,9 @@ public class Activity_waiting_rfid extends AppCompatActivity {
 
                     Log.i("JW", "changeFragment (waiting_rfid -> working)");
 
+                    // 동작 시 설정 버튼 안보이게
+                    handler_update_data.sendEmptyMessage(SET_BUTTON_INVISIBLE);
+
                     val_time_work = val_time;
 
                     FragmentManager fm = getFragmentManager();
@@ -434,8 +442,9 @@ public class Activity_waiting_rfid extends AppCompatActivity {
 
                     mode = 1;
                     Application_manager.m_operation_f = true;
+
+                    // 시작 명령
                     communicator.set_tx(1, (byte)0x01);
-                    handler_update_data.sendEmptyMessage(SET_BUTTON_INVISIBLE);
 
                     // 동작 모드로 바뀌기 이전 산소농도, 수압, 시간 값 저장
                     SharedPreferences.Editor editor = sharedPreferences.edit();
@@ -830,7 +839,6 @@ public class Activity_waiting_rfid extends AppCompatActivity {
     private View.OnTouchListener mTouchEvent = new View.OnTouchListener() {
         @Override
         public boolean onTouch(View view, MotionEvent motionEvent) {
-            ImageView background;
             Application_manager.set_m_start_sleep(0);
             Intent intent;
             Intent intent_setting;

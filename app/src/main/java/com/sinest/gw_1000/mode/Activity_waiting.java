@@ -17,6 +17,7 @@ import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -81,6 +82,28 @@ public class Activity_waiting extends AppCompatActivity {
     boolean isWork_finished = false;
 
     private SharedPreferences sharedPreferences = null;
+
+    // 라이브러리 세팅, 세팅 버튼 중 하나라도 터치된 버튼이 있는지 확인
+    private boolean isTouched = false;
+    synchronized public boolean getIsTouched() {
+
+        return isTouched;
+    }
+    synchronized public void setIsTouched(boolean val) {
+
+        isTouched = val;
+    }
+
+    // 동작 버튼 중 터치된 버튼이 있는지 확인
+    private boolean isTouched_work = false;
+    synchronized public boolean getIsTouched_work() {
+
+        return isTouched_work;
+    }
+    synchronized public void setIsTouched_work(boolean val) {
+
+        isTouched_work = val;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -387,6 +410,9 @@ public class Activity_waiting extends AppCompatActivity {
 
                     Log.i("JW", "changeFragment (waiting -> working)");
 
+                    // 동작 시 라이브러리, 설정 버튼 안보이게
+                    handler_update_data.sendEmptyMessage(SET_BUTTON_INVISIBLE);
+
                     val_time_work = val_time;
 
                     FragmentManager fm = getFragmentManager();
@@ -404,9 +430,6 @@ public class Activity_waiting extends AppCompatActivity {
 
                     // 시작 명령
                     communicator.set_tx(1, (byte)0x01);
-
-                    // 동작 시 라이브러리, 설정 버튼 안보이게
-                    handler_update_data.sendEmptyMessage(SET_BUTTON_INVISIBLE);
 
                     // 동작 모드로 바뀌기 이전 산소농도, 수압, 시간 값 저장
                     SharedPreferences.Editor editor = sharedPreferences.edit();
@@ -791,19 +814,21 @@ public class Activity_waiting extends AppCompatActivity {
     private View.OnTouchListener mTouchEvent = new View.OnTouchListener() {
         @Override
         public boolean onTouch(View view, MotionEvent motionEvent) {
-            ImageView background;
             Application_manager.set_m_start_sleep(0);
             Intent intent;
             Intent intent_setting;
             int action = motionEvent.getAction();
             int id = view.getId();
+
             if (action == MotionEvent.ACTION_DOWN) {
                 switch (id) {
                     case R.id.waiting_library_button:
                         view.setBackgroundResource(R.drawable.library_on);
+                        setIsTouched(true);
                         break;
                     case R.id.waiting_setting_button:
                         view.setBackgroundResource(R.drawable.setting_on);
+                        setIsTouched(true);
                         break;
                     case R.id.waiting_oxygen_up_button:
                         view.setBackgroundResource(R.drawable.button_up_on);
@@ -838,15 +863,25 @@ public class Activity_waiting extends AppCompatActivity {
                 switch (id) {
                     case R.id.waiting_library_button:
                         view.setBackgroundResource(R.drawable.library);
-                        intent = new Intent(getApplicationContext(), Activity_library.class);
-                        startActivity(intent);
+                        setIsTouched(false);
+
+                        if (!getIsTouched_work()) {
+
+                            intent = new Intent(getApplicationContext(), Activity_library.class);
+                            startActivity(intent);
+                        }
                         break;
                     case R.id.waiting_setting_button:
                         view.setBackgroundResource(R.drawable.setting);
-                        //setting
-                        intent_setting = new Intent(getApplicationContext(), Activity_setting.class);
-                        startActivity(intent_setting);
-                        finish();
+                        setIsTouched(false);
+
+                        if (!getIsTouched_work()) {
+
+                            //setting
+                            intent_setting = new Intent(getApplicationContext(), Activity_setting.class);
+                            startActivity(intent_setting);
+                            finish();
+                        }
                         break;
                     case R.id.waiting_oxygen_up_button:
                         view.setBackgroundResource(R.drawable.button_up);
