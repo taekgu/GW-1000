@@ -975,8 +975,60 @@ public class Activity_setting extends AppCompatActivity {
             b_21.setVisibility(View.VISIBLE);b_22.setVisibility(View.VISIBLE);b_23.setVisibility(View.VISIBLE);
             b_31.setVisibility(View.VISIBLE);b_32.setVisibility(View.VISIBLE);b_33.setVisibility(View.VISIBLE);
             b_41.setVisibility(View.VISIBLE);b_42.setVisibility(View.VISIBLE);b_43.setVisibility(View.VISIBLE);
-        }
 
+            init_nume();
+        }
+    }
+
+    void init_nume(){
+        if (button_flag[0] == false) {
+            b_11.setText("" + communicator.get_rx_idx(11) + "%");
+            b_11.setTypeface(tf);
+        }
+        if (button_flag[1] == false) {
+            b_21.setText("" + communicator.get_rx_idx(12) + "%");
+            b_21.setTypeface(tf);
+        }
+        if (button_flag[2] == false) {
+            b_31.setText("" + communicator.get_rx_idx(13) + "%");
+            b_31.setTypeface(tf);
+        }
+        if (button_flag[3] == false) {
+            b_41.setText("" + communicator.get_rx_idx(14) + "%");
+            b_41.setTypeface(tf);
+        }
+        if (button_flag[4] == false) {
+            b_12.setText("" + communicator.get_rx_idx(3) + "℃");
+            b_12.setTypeface(tf);
+        }
+        if (button_flag[5] == false) {
+            b_22.setText("" + communicator.get_rx_idx(4) + "℃");
+            b_22.setTypeface(tf);
+        }
+        if (button_flag[6] == false) {
+            b_32.setText("" + communicator.get_rx_idx(5) + "℃");
+            b_32.setTypeface(tf);
+        }
+        if (button_flag[7] == false) {
+            b_42.setText("" + communicator.get_rx_idx(6) + "℃");
+            b_42.setTypeface(tf);
+        }
+        if (button_flag[8] == false) {
+            b_13.setText("" + communicator.get_rx_idx(7) + "%");
+            b_13.setTypeface(tf);
+        }
+        if (button_flag[9] == false) {
+            b_23.setText("" + communicator.get_rx_idx(8) + "%");
+            b_23.setTypeface(tf);
+        }
+        if (button_flag[10] == false) {
+            b_33.setText("" + communicator.get_rx_idx(9) + "%");
+            b_33.setTypeface(tf);
+        }
+        if (button_flag[11] == false) {
+            b_43.setText("" + communicator.get_rx_idx(10) + "%");
+            b_43.setTypeface(tf);
+        }
     }
 
     @Override
