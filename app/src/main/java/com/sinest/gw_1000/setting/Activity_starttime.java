@@ -38,6 +38,12 @@ public class Activity_starttime extends Activity {
     int int_r;
     int check;
 
+    int check_ent;
+    int l_ent;
+    int r_ent;
+    String buf_l_ent;
+    String buf_r_ent;
+
     Intent start_result;
 
     ImageView start_time_id;
@@ -126,9 +132,19 @@ public class Activity_starttime extends Activity {
                     case R.id.start_time_enter:
                         //
                         //change
-                        Application_manager.s_time_buf = s_buf;
-                        //Application_manager.set_m_water_stime(s_buf);
-                        finish();
+                        check_ent = s_buf.indexOf(":");
+                        buf_l_ent = s_buf.substring(0,check);
+                        buf_r_ent = s_buf.substring(check+1);
+                        l_ent = Integer.parseInt(buf_l);
+                        r_ent = Integer.parseInt(buf_r);
+                        if(l_ent >= 24 || r_ent > 59){
+                            Application_manager.getToastManager().popToast(11);
+                        }else
+                        {
+                            Application_manager.s_time_buf = s_buf;
+                            //Application_manager.set_m_water_stime(s_buf);
+                            finish();
+                        }
                         break;
                     case R.id.start_time_back:
                         //
