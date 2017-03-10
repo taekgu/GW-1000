@@ -295,14 +295,19 @@ public class Activity_waiting extends AppCompatActivity {
                 start_animation_ch();
             }
 
-            // 화면 꺼진 상태로 동작이 종료되었을 경우 프래그먼트 변경
-            if (isScreen_turned_off && isWork_finished) {
+            // 화면 껐다가 켜진 경우
+            if (isScreen_turned_off) {
 
                 isScreen_turned_off = false;
                 Log.i("JW", "isScreen_turned_off = false");
-                changeFragment_waiting();
-                isWork_finished = false;
-                Log.i("JW", "isWork_finished = false");
+
+                // 동작이 종료되었을 경우 프래그먼트 변경
+                if (isWork_finished) {
+
+                    changeFragment_waiting();
+                    isWork_finished = false;
+                    Log.i("JW", "isWork_finished = false");
+                }
             }
         }
     }
