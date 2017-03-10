@@ -88,8 +88,11 @@ public class Activity_manual_mode_setting extends Activity{
             pattern_prev[i] = pattern[i];
             time[i] = sharedPreferences.getInt(Application_manager.DB_MANUAL_MODE_TIME_ + modeNum + "_" + i, 30);
             time_prev[i] = time[i];
-            section[i][0] = sharedPreferences.getInt(Application_manager.DB_MANUAL_MODE_SECTION_MIN_ + modeNum + "_" + i, 1);
-            section[i][1] = sharedPreferences.getInt(Application_manager.DB_MANUAL_MODE_SECTION_MAX_ + modeNum + "_" + i, 1);
+            section[i][0] = sharedPreferences.getInt(Application_manager.DB_MANUAL_MODE_SECTION_MIN_ + modeNum + "_" + i, 0);
+            section[i][1] = sharedPreferences.getInt(Application_manager.DB_MANUAL_MODE_SECTION_MAX_ + modeNum + "_" + i, 14);
+
+            Log.i("section_debug", "section0 : " + section[i][0] + ", section1 : " + section[i][1]);
+
             section_prev[i][0] = section[i][0];
             section_prev[i][1] = section[i][1];
 
