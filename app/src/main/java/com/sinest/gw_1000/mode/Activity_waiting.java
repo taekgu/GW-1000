@@ -1,8 +1,11 @@
 package com.sinest.gw_1000.mode;
 
+import android.app.Activity;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.app.ProgressDialog;
 import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
@@ -83,6 +86,8 @@ public class Activity_waiting extends AppCompatActivity {
 
     private SharedPreferences sharedPreferences = null;
 
+    private Context mContext;
+
     // 라이브러리 세팅, 세팅 버튼 중 하나라도 터치된 버튼이 있는지 확인
     private boolean isTouched = false;
     synchronized public boolean getIsTouched() {
@@ -114,6 +119,8 @@ public class Activity_waiting extends AppCompatActivity {
         setContentView(R.layout.activity_waiting);
         Application_manager.setFullScreen(this);
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+
+        mContext = this;
 
         sharedPreferences = Application_manager.getSharedPreferences();
 
@@ -583,6 +590,61 @@ public class Activity_waiting extends AppCompatActivity {
         }
     }
 
+    public void wait_motor_back() {
+
+        Application_manager.setIsWaiting_init(true);
+
+        final Activity activity = this;
+        final ProgressDialog progressDialog = Application_manager.getDefaultProgressDialog(this);
+
+        if (!progressDialog.isShowing()) {
+
+            changeFragment_waiting();
+            progressDialog.show();
+            progressDialog.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE);
+
+            final Handler handler = new Handler() {
+
+                @Override
+                public void handleMessage(Message msg) {
+                    super.handleMessage(msg);
+
+                    if (progressDialog.isShowing()) {
+
+                        progressDialog.dismiss();
+
+                        Application_manager.setFullScreen(activity);
+                        activity.getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+                    }
+                }
+            };
+
+            Thread thread = new Thread(new Runnable() {
+                @Override
+                public void run() {
+
+                    while (true) {
+
+                        try {
+
+                            Thread.sleep(5000);
+                            if (!Application_manager.getIsWaiting_init()) {
+
+                                break;
+                            }
+
+                        } catch (Exception e) {
+
+                            Log.i("JW", "예외 발생: progress dialog 동작");
+                        }
+                    }
+                    handler.sendEmptyMessage(0);
+                }
+            });
+            thread.start();
+        }
+    }
+
     private void start_animation() {
         if(Application_manager.gw_1000 == true){
             background.setBackgroundResource(R.drawable.animation_working);
@@ -1042,8 +1104,6 @@ public class Activity_waiting extends AppCompatActivity {
         switch(keyCode){
             case KeyEvent.KEYCODE_BACK:
 
-                TextView tv = null;
-                tv.getText();
                 return false;
         }
         return super.onKeyDown(keyCode, event);

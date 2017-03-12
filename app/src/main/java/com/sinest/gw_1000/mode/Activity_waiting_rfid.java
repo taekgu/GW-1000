@@ -1,8 +1,10 @@
 package com.sinest.gw_1000.mode;
 
+import android.app.Activity;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.app.PendingIntent;
+import android.app.ProgressDialog;
 import android.content.BroadcastReceiver;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
@@ -594,6 +596,61 @@ public class Activity_waiting_rfid extends AppCompatActivity {
 
             // 슬립 모드 재시작
             Application_manager.setSleep_f(0, true);
+        }
+    }
+
+    public void wait_motor_back() {
+
+        Application_manager.setIsWaiting_init(true);
+
+        final Activity activity = this;
+        final ProgressDialog progressDialog = Application_manager.getDefaultProgressDialog(this);
+
+        if (!progressDialog.isShowing()) {
+
+            changeFragment_waiting();
+            progressDialog.show();
+            progressDialog.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE);
+
+            final Handler handler = new Handler() {
+
+                @Override
+                public void handleMessage(Message msg) {
+                    super.handleMessage(msg);
+
+                    if (progressDialog.isShowing()) {
+
+                        progressDialog.dismiss();
+
+                        Application_manager.setFullScreen(activity);
+                        activity.getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+                    }
+                }
+            };
+
+            Thread thread = new Thread(new Runnable() {
+                @Override
+                public void run() {
+
+                    while (true) {
+
+                        try {
+
+                            Thread.sleep(5000);
+                            if (!Application_manager.getIsWaiting_init()) {
+
+                                break;
+                            }
+
+                        } catch (Exception e) {
+
+                            Log.i("JW", "예외 발생: progress dialog 동작");
+                        }
+                    }
+                    handler.sendEmptyMessage(0);
+                }
+            });
+            thread.start();
         }
     }
 

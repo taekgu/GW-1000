@@ -7,6 +7,8 @@ import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
 
+import com.sinest.gw_1000.management.Application_manager;
+
 import java.net.Socket;
 
 /**
@@ -108,6 +110,15 @@ public class Communicator {
 
                 byte signal_deviceState = (byte)(0xf0 & get_rx_idx(1));
                 byte signal_ack = (byte)(0x0f & get_rx_idx(1));
+
+                // 원점 복귀 완료 신호 받으면 isWaiting_init -> false
+                if (signal_deviceState == 0x20) {
+
+                    if (Application_manager.getIsWaiting_init()) {
+
+                        Application_manager.setIsWaiting_init(false);
+                    }
+                }
 
                 //Log.i("JW", "받아온 checkSum: " + String.format("%02x", msg[len-2] & 0xff));
                 Log.i("JW_COMM", "Signal (device state) : " + String.format("%02x", signal_deviceState & 0xff));

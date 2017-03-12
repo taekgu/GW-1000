@@ -4,14 +4,18 @@ import android.app.Activity;
 import android.app.AlarmManager;
 import android.app.Application;
 import android.app.PendingIntent;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.media.MediaPlayer;
+import android.os.Handler;
+import android.os.Message;
 import android.os.PowerManager;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
+import android.view.Window;
 import android.view.WindowManager;
 
 import com.sinest.gw_1000.R;
@@ -1037,4 +1041,132 @@ public class Application_manager extends Application {
     synchronized public static void setLangueage() {
 
     }
+
+    // ProgressDialog (원점 복귀 대기용)
+    private static boolean isWaiting_init = false;
+    public synchronized static boolean getIsWaiting_init() {
+
+        return isWaiting_init;
+    }
+    public synchronized static void setIsWaiting_init(boolean val) {
+
+        isWaiting_init = val;
+    }
+
+    public static ProgressDialog getDefaultProgressDialog(final Context _context) {
+
+        ProgressDialog progressDialog = null;
+
+        // 언어별 메시지 설정
+        String msg = "";
+
+        // 한
+        if (m_language == 0) {
+
+            msg = "잠시만 기다려 주십시오";
+        }
+        // 영
+        else if (m_language == 1) {
+
+            msg = "Please wait a moment";
+        }
+        // 중
+        else if (m_language == 2) {
+
+            msg = "请稍等一会儿";
+        }
+
+        // 다이얼로그 생성 및 설정
+        if (progressDialog == null) {
+
+            progressDialog = new ProgressDialog(_context);
+            progressDialog.setCancelable(false);
+            progressDialog.setIndeterminate(true);
+            progressDialog.setMessage(msg);
+
+            // 전체화면
+            progressDialog.getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE, WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE);
+            progressDialog.getWindow().getDecorView().setSystemUiVisibility(
+                    View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+                            | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+                            | View.SYSTEM_UI_FLAG_FULLSCREEN
+                            | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
+
+            );
+        }
+
+        return progressDialog;
+    }
+/*
+    public static void showProgressDialog(final Context _context, final Activity activity) {
+
+        // 언어별 메시지 설정
+        String msg = "";
+
+        // 한
+        if (m_language == 0) {
+
+            msg = "잠시만 기다려 주십시오";
+        }
+        // 영
+        else if (m_language == 1) {
+
+            msg = "Please wait a moment";
+        }
+        // 중
+        else if (m_language == 2) {
+
+            msg = "请稍等一会儿";
+        }
+
+        // 다이얼로그 생성 및 설정
+        if (progressDialog == null) {
+
+            progressDialog = new ProgressDialog(_context);
+            progressDialog.setCancelable(false);
+            progressDialog.setIndeterminate(true);
+            progressDialog.setMessage(msg);
+
+            // 전체화면
+            progressDialog.getWindow().getDecorView().setSystemUiVisibility(
+                    View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+                            | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+                            | View.SYSTEM_UI_FLAG_FULLSCREEN
+                            | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
+
+            );
+        }
+
+        if (!progressDialog.isShowing()) {
+
+            progressDialog.show();
+
+            final Handler handler = new Handler() {
+
+                @Override
+                public void handleMessage(Message msg) {
+                    super.handleMessage(msg);
+
+                    if (progressDialog.isShowing()) {
+
+                        progressDialog.dismiss();
+                        progressDialog = null;
+
+                        Application_manager.setFullScreen(activity);
+                        activity.getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+                    }
+                }
+            };
+
+            Thread thread = new Thread(new Runnable() {
+                @Override
+                public void run() {
+
+                    while (getIsWaiting_init());
+                    handler.sendEmptyMessage(0);
+                }
+            });
+            thread.start();
+        }
+    }*/
 }

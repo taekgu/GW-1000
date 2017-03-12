@@ -1,13 +1,17 @@
 package com.sinest.gw_1000.mode;
 
 import android.app.Fragment;
+import android.app.ProgressDialog;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.annotation.Nullable;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.Button;
 
 import com.sinest.gw_1000.R;
@@ -33,6 +37,9 @@ public class Fragment_working extends Fragment {
     private boolean isPause = false;
     private boolean isAlive = false;
 
+    // 대기 화면으로 돌아가기 전 모터원점복귀 대기
+    private Handler handler = null;
+
     public Fragment_working() {
 
     }
@@ -43,6 +50,26 @@ public class Fragment_working extends Fragment {
         this.time_m_left = _time;
         this.time_s = 0;
         this.parent = _parent;
+
+        handler = new Handler() {
+
+            @Override
+            public void handleMessage(Message msg) {
+                super.handleMessage(msg);
+
+                if (parent == 0) {
+
+                    Activity_waiting activity_waiting = (Activity_waiting) getActivity();
+                    //activity_waiting.changeFragment_waiting();
+                    activity_waiting.wait_motor_back();
+                }
+                else {
+
+                    Activity_waiting_rfid activity_waiting_rfid = (Activity_waiting_rfid) getActivity();
+                    activity_waiting_rfid.wait_motor_back();
+                }
+            }
+        };
 
         thread_timer = new Thread(new Runnable() {
             @Override
@@ -93,16 +120,7 @@ public class Fragment_working extends Fragment {
 
                     Log.i("JW", "치료 종료");
                     Application_manager.getSoundManager().play(Application_manager.m_language, 2);
-                    if (parent == 0) {
-
-                        Activity_waiting activity_waiting = (Activity_waiting) getActivity();
-                        activity_waiting.changeFragment_waiting();
-                    }
-                    else {
-
-                        Activity_waiting_rfid activity_waiting_rfid = (Activity_waiting_rfid) getActivity();
-                        activity_waiting_rfid.changeFragment_waiting();
-                    }
+                    handler.sendEmptyMessage(0);
                 }
                 isAlive = false;
             }
@@ -207,14 +225,7 @@ public class Fragment_working extends Fragment {
                             state = 1;
                             communicator.set_tx(1, (byte) 0x00);
 
-                            if (parent == 0) {
-                                Activity_waiting activity_waiting = (Activity_waiting) getActivity();
-                                activity_waiting.changeFragment_waiting();
-                            } else {
-
-                                Activity_waiting_rfid activity_waiting_rfid = (Activity_waiting_rfid) getActivity();
-                                activity_waiting_rfid.changeFragment_waiting();
-                            }
+                            handler.sendEmptyMessage(0);
                         }
                         break;
                 }

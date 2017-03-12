@@ -1,5 +1,7 @@
 package com.sinest.gw_1000.setting;
 
+import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Typeface;
@@ -526,14 +528,8 @@ public class Activity_engine extends AppCompatActivity {
                     case R.id.eng_b_back:
                         eng_b_back.setBackgroundResource(Application_manager.button_circle_back_off[Application_manager.img_flag]);
                         Log.v("test","check_activity : " + check_activity);
-                        if(check_activity.equals("setting")){
-                            onStop();
-                        }
-                        else{
-                            onStop();
-                            startActivity(main_intent);
-                        }
-                        finish();
+
+                        wait_motor_back(check_activity);
 
                         break;
                     case R.id.eng_b_left:
@@ -698,5 +694,68 @@ public class Activity_engine extends AppCompatActivity {
         eng_step_flag[3] = true;
         eng_5step.setBackgroundResource(Application_manager.oxygen_5step_off[Application_manager.img_flag]);
         eng_step_flag[4] = true;
+    }
+
+
+    public void wait_motor_back(final String whatActivity) {
+
+        Application_manager.setIsWaiting_init(true);
+
+        final Activity activity = this;
+        final ProgressDialog progressDialog = Application_manager.getDefaultProgressDialog(this);
+
+        if (!progressDialog.isShowing()) {
+
+            progressDialog.show();
+            progressDialog.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE);
+
+            final Handler handler = new Handler() {
+
+                @Override
+                public void handleMessage(Message msg) {
+                    super.handleMessage(msg);
+
+                    if (progressDialog.isShowing()) {
+
+                        progressDialog.dismiss();
+
+                        Application_manager.setFullScreen(activity);
+                        activity.getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+
+                        onStop();
+                        if (whatActivity.equals("main")) {
+
+                            startActivity(main_intent);
+                        }
+
+                        activity.finish();
+                    }
+                }
+            };
+
+            Thread thread = new Thread(new Runnable() {
+                @Override
+                public void run() {
+
+                    while (true) {
+
+                        try {
+
+                            Thread.sleep(5000);
+                            if (!Application_manager.getIsWaiting_init()) {
+
+                                break;
+                            }
+
+                        } catch (Exception e) {
+
+                            Log.i("JW", "예외 발생: progress dialog 동작");
+                        }
+                    }
+                    handler.sendEmptyMessage(0);
+                }
+            });
+            thread.start();
+        }
     }
 }
