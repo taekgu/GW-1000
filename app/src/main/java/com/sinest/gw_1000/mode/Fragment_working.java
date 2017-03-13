@@ -60,7 +60,6 @@ public class Fragment_working extends Fragment {
                 if (parent == 0) {
 
                     Activity_waiting activity_waiting = (Activity_waiting) getActivity();
-                    //activity_waiting.changeFragment_waiting();
                     activity_waiting.wait_motor_back();
                 }
                 else {

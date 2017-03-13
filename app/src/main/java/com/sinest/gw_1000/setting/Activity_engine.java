@@ -20,6 +20,7 @@ import android.widget.TextView;
 import com.sinest.gw_1000.R;
 import com.sinest.gw_1000.communication.Communicator;
 import com.sinest.gw_1000.management.Application_manager;
+import com.sinest.gw_1000.management.CustomProgressDialog;
 import com.sinest.gw_1000.mode.Activity_waiting;
 
 public class Activity_engine extends AppCompatActivity {
@@ -701,61 +702,22 @@ public class Activity_engine extends AppCompatActivity {
 
         Application_manager.setIsWaiting_init(true);
 
-        final Activity activity = this;
-        final ProgressDialog progressDialog = Application_manager.getDefaultProgressDialog(this);
+        Handler handler = new Handler() {
 
-        if (!progressDialog.isShowing()) {
+            @Override
+            public void handleMessage(Message msg) {
+                super.handleMessage(msg);
 
-            progressDialog.show();
-            progressDialog.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE);
+                onStop();
+                if (whatActivity.equals("main")) {
 
-            final Handler handler = new Handler() {
-
-                @Override
-                public void handleMessage(Message msg) {
-                    super.handleMessage(msg);
-
-                    if (progressDialog.isShowing()) {
-
-                        progressDialog.dismiss();
-
-                        Application_manager.setFullScreen(activity);
-                        activity.getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
-
-                        onStop();
-                        if (whatActivity.equals("main")) {
-
-                            startActivity(main_intent);
-                        }
-
-                        activity.finish();
-                    }
+                    startActivity(main_intent);
                 }
-            };
+                finish();
+            }
+        };
 
-            Thread thread = new Thread(new Runnable() {
-                @Override
-                public void run() {
-
-                    while (true) {
-
-                        try {
-
-                            Thread.sleep(5000);
-                            if (!Application_manager.getIsWaiting_init()) {
-
-                                break;
-                            }
-
-                        } catch (Exception e) {
-
-                            Log.i("JW", "예외 발생: progress dialog 동작");
-                        }
-                    }
-                    handler.sendEmptyMessage(0);
-                }
-            });
-            thread.start();
-        }
+        CustomProgressDialog progressDialog = new CustomProgressDialog(this);
+        progressDialog.showDialog(handler);
     }
 }
