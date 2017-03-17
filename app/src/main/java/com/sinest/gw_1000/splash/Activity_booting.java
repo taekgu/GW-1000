@@ -24,7 +24,6 @@ public class Activity_booting extends AppCompatActivity {
 
     private final static int MY_PERMISSIONS_ACCESS_COARSE_LOCATION = 1000;
     public static final int REQUEST_CODE_ANOTHER = 1001;
-    Communicator communicator;
 
     AnimationDrawable frameAnimation;
     boolean isRun = true;
@@ -52,7 +51,7 @@ public class Activity_booting extends AppCompatActivity {
                     try {
                         Thread.sleep(1000);
                         time++;
-                        //Log.i("TEST", "thread is alive");
+
                         if (time == 7) {
                             time = 0;
                             isRun = false;

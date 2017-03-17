@@ -1,33 +1,25 @@
 package com.sinest.gw_1000.communication;
 
-import android.Manifest;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.content.pm.PackageManager;
 import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.net.wifi.ScanResult;
 import android.net.wifi.WifiConfiguration;
-import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
 import android.os.Handler;
 import android.os.Message;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.ContextCompat;
 import android.util.Log;
-import android.widget.Toast;
 
 import com.sinest.gw_1000.management.Application_manager;
-import com.sinest.gw_1000.mode.Activity_waiting;
 
-import java.io.IOException;
-import java.net.Socket;
 import java.util.List;
 
 /**
  * Created by Jinwook on 2016-12-14.
+ *
+ * WIFI 연결 관리
  */
 
 public class WifiConnector {
@@ -37,6 +29,7 @@ public class WifiConnector {
     private final static int WIFI_CONNECTED       = 1003;
     private final static int WIFI_DISCONNECTED    = 1004;
 
+    // AP 정보
     private static final String AP_KEYWORD  = "GW1000";
     private static final String AP_PSWD     = "1234567890";
 
@@ -60,11 +53,11 @@ public class WifiConnector {
 
     private void init() {
 
-        setHandler_for_toast();
+        setHandler();
 
         wifiManager = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);
 
-        // 와이파이 사용가능여부
+        // 디바이스의 와이파이 사용가능여부 확인
         Log.i("JW", "와이파이 사용가능여부: " + wifiManager.isWifiEnabled());
         if (!wifiManager.isWifiEnabled()) {
 
@@ -88,7 +81,7 @@ public class WifiConnector {
         wifiManager.startScan();
     }
 
-    private void setHandler_for_toast() {
+    private void setHandler() {
 
         handler_for_toast = new Handler() {
 
@@ -102,7 +95,6 @@ public class WifiConnector {
 
                         Log.i("JW", "Socket is connected");
                         Application_manager.getToastManager().popToast(8);
-                        //Toast.makeText(context, "서버 연결 완료", Toast.LENGTH_SHORT).show();
                         break;
                     case SERVER_DISCONNECTED:
 
@@ -115,19 +107,20 @@ public class WifiConnector {
                         }
                         Log.i("JW", "WIFI 연결 완료");
                         Application_manager.getToastManager().popToast(9);
-                        //Toast.makeText(context, "WIFI 연결 완료: " + ssid, Toast.LENGTH_SHORT).show();
                         break;
                     case WIFI_DISCONNECTED:
 
                         Log.i("JW", "WIFI 연결 해제");
                         Application_manager.getToastManager().popToast(10);
-                        //Toast.makeText(context, "WIFI 연결 해제", Toast.LENGTH_SHORT).show();
                         break;
                 }
             }
         };
     }
 
+    /**
+     * 와이파이 상태 감지 리시버 등록
+     */
     public void registReceiver() {
 
         if (broadcastReceiver == null) {
@@ -209,6 +202,9 @@ public class WifiConnector {
         }
     }
 
+    /**
+     * 리시버 등록 해제
+     */
     public void unregistReceiver() {
 
         if (broadcastReceiver != null) {
@@ -217,7 +213,9 @@ public class WifiConnector {
         }
     }
 
-    // 정의된 SSID/PW로 와이파이 연결 시도
+    /**
+     * 정의된 SSID 와 PW 로 와이파이 연결 시도
+     */
     private void tryToConnect() {
 
         Log.i("JW", "와이파이 연결 시도");

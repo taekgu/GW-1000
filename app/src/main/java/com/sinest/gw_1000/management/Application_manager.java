@@ -27,11 +27,13 @@ import java.lang.Thread.UncaughtExceptionHandler;
 
 /**
  * Created by Jinwook on 2016-11-20.
+ *
+ * 액티비티에서 공용으로 사용되는 자원 관리
  */
 
 public class Application_manager extends Application {
 
-    // 문 열림 닫힘
+    // 도어 상태
     public static boolean isDoorOpened = false;
     public static final String DB_DOOR_STATE = "door_state";
 
@@ -40,7 +42,7 @@ public class Application_manager extends Application {
     public static byte inverterVal = 0x00;
     public static final String DB_INVERT_TYPE = "invert_type";
 
-    // 엔지니어 모드인지
+    // 활성 액티비티 대기모드인지 엔지니어모드인지 확인
     private static boolean isEngineerMode = false;
     synchronized public static boolean getIsEngineerMode() {
 
@@ -89,13 +91,12 @@ public class Application_manager extends Application {
     public static boolean up = true;
     // 설정한 시간이 크면 true 작으면 false
 
+    // 내부 DB
     private static SharedPreferences sharedPreferences = null;
     public static SharedPreferences getSharedPreferences() {
 
         return sharedPreferences;
     }
-
-    // DB name
     public final static String DB_NAME = "myData";
 
     // 대기모드 산소농도 / 수압세기 / 사용시간 값
@@ -141,9 +142,6 @@ public class Application_manager extends Application {
     //DB_VOLUME
     public final static String DB_VOLUME = "volume";
 
-    // 대기모드 동작시간
-    // public final static String WAITING_WORKING_TIME = "waiting_working_time";
-
     // 라이브러리 20개중 선택된 값
     public final static int MAX_CHECKED = 4;
     public final static String DB_LIBRARY_LOC_ = "library_location_";
@@ -168,19 +166,13 @@ public class Application_manager extends Application {
     public final static String DB_TEMPERATURE_USER = "temp_above_user";
     public final static String DB_TEMPERATURE_BED_USER = "temp_below_user";
 
-    //GW-1000
+    // GW-1000 모드 확인 Key
     public final static String GW_1000 = "GW_1000";
 
     // 사운드 id
     public final static int NUM_OF_LANG = 3;
     public final static int NUM_OF_SOUND = 5;
-    public final static int[] ID_KOR = new int[5];
-    public final static int[] ID_ENG = new int[5];
-    public final static int[] ID_CHI = new int[5];
-    public final static int[][] ID_LANG_SOUND = new int[NUM_OF_LANG][NUM_OF_SOUND];
     public final static MediaPlayer[][] mediaPlayer = new MediaPlayer[NUM_OF_LANG][NUM_OF_SOUND];
-
-    public static int[] t_flag = {0,0,0,0};
 
     // App context
     private static Context context;
@@ -200,8 +192,6 @@ public class Application_manager extends Application {
     private boolean isRun = false;
     private static int runningTime = 0;
     private Thread thread_runningTime;
-
-    public static String m_time = "start";
 
     private static final String TAG = "AlarmWakeLock";
     public static PowerManager.WakeLock mWakeLock;
@@ -259,7 +249,6 @@ public class Application_manager extends Application {
     public static int[] button_off = {R.drawable.button_off, R.drawable.button_off_ch};
     public static int[] on = {R.drawable.on, R.drawable.on_ch};
     public static int[] off = {R.drawable.off, R.drawable.off_ch};
-    public static int[] button_play_on = {R.drawable.button_play_on, R.drawable.button_play_on};//
     public static int[] button_circle_back_on = {R.drawable.button_circle_back_on, R.drawable.button_circle_back_on_ch};
     public static int[] button_circle_back_off = {R.drawable.button_circle_back_off, R.drawable.button_circle_back_off_ch};
     public static int[] sleepmode_1min_on = {R.drawable.sleepmode_1min_on, R.drawable.sleepmode_1min_on_ch};
@@ -322,11 +311,6 @@ public class Application_manager extends Application {
 
     //waiting
     public static int[] waiting_backimage = {R.drawable.workingmotion0, R.drawable.workingmotion0_ch};
-    public static int[] waiting_backimage_l = {R.drawable.workingmotion0_l, R.drawable.workingmotion0_l_ch};
-
-    //waiting rfid
-    public static int[] waiting_rfid_doorclose_back = {R.drawable.waiting_rfid_doorclose_back, R.drawable.waiting_rfid_doorclose_back_ch};
-    public static int[] waiting_rfid_dooropen_back = {R.drawable.waiting_rfid_dooropen_back, R.drawable.waiting_rfid_dooropen_back_ch};
 
     //library
     public static int[] ribrary_back_image = {R.drawable.ribrary_back_image, R.drawable.ribrary_back_image_ch};
@@ -341,7 +325,7 @@ public class Application_manager extends Application {
     public static int time_buf_f = 1;
     public static int rfid_on_f = 0;
 
-    // 비정상 종료 플래그
+    // 비정상 종료 플래그 및 비정상 종료 처리 핸들러
     private static boolean isTerminated_by_uncaughtException = false;
     public final static String DB_IS_TERMINATED = "is_terminated";
     private UncaughtExceptionHandler mUncaughtExceptionHandler;
@@ -349,8 +333,8 @@ public class Application_manager extends Application {
     public void onCreate() {
 
         sharedPreferences = getSharedPreferences(DB_NAME, 0);
-        mUncaughtExceptionHandler = Thread.getDefaultUncaughtExceptionHandler();
 
+        mUncaughtExceptionHandler = Thread.getDefaultUncaughtExceptionHandler();
         Thread.setDefaultUncaughtExceptionHandler(new UncaughtExceptionHandler() {
             @Override
             public void uncaughtException(Thread thread, Throwable throwable) {
@@ -363,14 +347,17 @@ public class Application_manager extends Application {
                 editor.putBoolean(DB_IS_TERMINATED, isTerminated_by_uncaughtException);
                 editor.commit();
 
+                // 재시작 알람 등록
                 Intent intent = new Intent(getApplicationContext(), Activity_booting.class);
                 PendingIntent i = PendingIntent.getActivity(getApplicationContext(), 0, intent, 0);
 
                 AlarmManager am = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
                 am.set(AlarmManager.RTC, System.currentTimeMillis() + 5000, i);
 
+                // 프로세스 종료
                 //System.exit(2)
                 android.os.Process.killProcess(android.os.Process.myPid());
+
                 //예외처리를 하지 않고 DefaultUncaughtException으로 넘긴다.
                 //mUncaughtExceptionHandler.uncaughtException(thread, throwable);
             }
@@ -388,7 +375,6 @@ public class Application_manager extends Application {
 
         //시간차 저장
         sharedPreferences = context.getSharedPreferences(DB_NAME, 0);
-        //m_gap_clock = sharedPreferences.getString(DB_TIME_GAP,"00:00");
         m_gap_clock_f = sharedPreferences.getBoolean(DB_TIME_GAP_F,true);
 
         //rfid
@@ -421,6 +407,9 @@ public class Application_manager extends Application {
         }
     }
 
+    /**
+     * DB에서 초기값 로드
+     */
     private void load_data(){
 
         sharedPreferences = context.getSharedPreferences(Application_manager.DB_NAME, 0);
@@ -528,13 +517,17 @@ public class Application_manager extends Application {
         }
     }
 
-    public static void set_door_state(boolean i) {
+    /**
+     * Door open/close 상태 저장
+     * @param state true: open / false: close
+     */
+    public static void set_door_state(boolean state) {
 
         sharedPreferences = context.getSharedPreferences(Application_manager.DB_NAME, 0);
         SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putBoolean(DB_DOOR_STATE, i);
+        editor.putBoolean(DB_DOOR_STATE, state);
         editor.commit();
-        isDoorOpened = i;
+        isDoorOpened = state;
     }
 
     synchronized public static void set_m_gw_1000(boolean i){
@@ -827,7 +820,6 @@ public class Application_manager extends Application {
         editor.commit();
     }
 
-
     public static String doInit_time()
     {
         String p_time = Application_manager.getText();
@@ -993,61 +985,12 @@ public class Application_manager extends Application {
         );
     }
 
-    private void initImg(){
-
-    }
-
-    // 언어 이미지 변경
-    synchronized public static void setLangueage() {
-
-    }
-
-    // ProgressDialog (원점 복귀 대기용)
+    // 원점 복귀 대기 ProgressDialog 종료 시점 확인 위한 플래그(디바이스 상태가 0x20 일 때 true)
     private static boolean isWaiting_init = false;
     public synchronized static boolean getIsWaiting_init() {
         return isWaiting_init;
     }
     public synchronized static void setIsWaiting_init(boolean val) {
         isWaiting_init = val;
-    }
-
-    public static ProgressDialog getDefaultProgressDialog(final Context _context) {
-
-        ProgressDialog progressDialog = null;
-        // 언어별 메시지 설정
-        String msg = "";
-
-        // 한
-        if (m_language == 0) {
-            msg = "잠시만 기다려 주십시오";
-        }
-        // 영
-        else if (m_language == 1) {
-            msg = "Please wait a moment";
-        }
-        // 중
-        else if (m_language == 2) {
-            msg = "请稍等一会儿";
-        }
-
-        // 다이얼로그 생성 및 설정
-        if (progressDialog == null) {
-
-            progressDialog = new ProgressDialog(_context);
-            progressDialog.setCancelable(false);
-            progressDialog.setIndeterminate(true);
-            progressDialog.setMessage(msg);
-
-            // 전체화면
-            progressDialog.getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE, WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE);
-            progressDialog.getWindow().getDecorView().setSystemUiVisibility(
-                    View.SYSTEM_UI_FLAG_LAYOUT_STABLE
-                            | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
-                            | View.SYSTEM_UI_FLAG_FULLSCREEN
-                            | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
-
-            );
-        }
-        return progressDialog;
     }
 }

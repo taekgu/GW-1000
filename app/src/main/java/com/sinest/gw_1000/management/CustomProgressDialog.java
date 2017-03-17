@@ -10,6 +10,8 @@ import android.view.WindowManager;
 
 /**
  * Created by Administrator on 2017-03-14.
+ *
+ * 원점 복귀 신호 대기용 progressDialog
  */
 
 public class CustomProgressDialog extends ProgressDialog {

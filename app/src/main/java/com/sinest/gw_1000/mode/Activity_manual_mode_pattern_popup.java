@@ -16,6 +16,7 @@ import com.sinest.gw_1000.management.Application_manager;
 import com.sinest.gw_1000.mode.utils.CustomSeekBar;
 
 public class Activity_manual_mode_pattern_popup extends Activity implements CustomSeekBar.OnRangeBarChangeListener  {
+
     int patternNum, ImageResourceId;
     int section_min, section_max;
     Intent intent;

@@ -19,6 +19,12 @@ import android.widget.Toast;
 import com.sinest.gw_1000.R;
 import com.sinest.gw_1000.management.Application_manager;
 
+/**
+ * Created by Jinwook on 2017-01-03.
+ *
+ * 동작 시간 설정 팝업 (대기/동작 화면에서, 매뉴얼모드 설정 팝업에서 진입 가능)
+ */
+
 public class Activity_waiting_working_time_popup extends Activity {
 
     TextView textView_workingTime;

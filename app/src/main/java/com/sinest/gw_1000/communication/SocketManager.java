@@ -19,6 +19,8 @@ import java.util.Arrays;
 
 /**
  * Created by Jinwook on 2016-11-18.
+ *
+ * 서버와의 연결, 데이터 교환
  */
 
 public class SocketManager {
@@ -27,6 +29,7 @@ public class SocketManager {
     private final static int LENGTH_RX = 21;
 
     //private static final String IP_ADDRESS  = "192.168.219.152";
+    //private static final String IP_ADDRESS  = "192.168.0.22";
     private static final String IP_ADDRESS  = "192.168.0.1";
     private static final int PORT           = 20002;
 
@@ -46,6 +49,7 @@ public class SocketManager {
 
     private SharedPreferences sharedPreferences = null;
 
+    // 초기 데이터(세팅값, 매뉴얼 모드 설정값) 전송되었는지 확인
     private boolean isSent_predata = false;
     private synchronized void set_isSent_predata(boolean val) {
 
@@ -71,6 +75,9 @@ public class SocketManager {
         }).start();
     }
 
+    /**
+     * 지정 IP, PORT 로 연결 시도
+     */
     private void init() {
 
         if (!isRun) {
@@ -81,7 +88,6 @@ public class SocketManager {
                 Thread.sleep(3000);
 
                 mSocket = new Socket(IP_ADDRESS, PORT);
-                //      if (mSocket != null) {
 
                 if (mSocket.isConnected()) {
 
@@ -100,7 +106,6 @@ public class SocketManager {
                     setThread();
                     start_thread();
                 }
-                //      }
             } catch (SocketException e) {
 
                 Log.i("JW_COMM", "Socket timeout 설정 exception");
@@ -117,6 +122,9 @@ public class SocketManager {
         }
     }
 
+    /**
+     * 서버 연결 이후의 통신 담당 스레드
+     */
     private void setThread() {
 
         Log.i("JW_COMM", "setThread()");
@@ -136,9 +144,10 @@ public class SocketManager {
 
                         while (isRun) {
 
+                            // 통신 주기 500ms
                             Thread.sleep(500);
 
-                            // TX / Engineer 보내기
+                            // 활성 액티비티에 따라 TX / Engineer 보내기
                             if (Application_manager.getIsEngineerMode()) {
 
                                 msg_out = communicator.get_engineer();
@@ -163,7 +172,7 @@ public class SocketManager {
 
                                 Log.i("JW_COMM", "Received: " + read_len + "byte");
 
-                                // Communicator 에서 처리
+                                // Communicator 의 핸들러에서 처리
                                 Bundle data = new Bundle();
                                 for (int i = 0; i < read_len; i++) {
 
@@ -197,6 +206,9 @@ public class SocketManager {
         thread = new Thread(runnable);
     }
 
+    /**
+     * 통신 스레드 시작
+     */
     private void start_thread() {
 
         Log.i("JW_COMM", "start_thread()");
@@ -214,6 +226,9 @@ public class SocketManager {
         }
     }
 
+    /**
+     * 통신 스레드 정지, 서버 재연결 시도
+     */
     private void stop_thread() {
 
         Log.i("JW_COMM", "stop_thread()");
@@ -235,6 +250,9 @@ public class SocketManager {
         init();
     }
 
+    /**
+     * This method sends setting message to device.
+     */
     public void send_setting() {
 
         if (isConnected) {
@@ -293,6 +311,9 @@ public class SocketManager {
         }
     }
 
+    /**
+     * This method sends RFID message to device.
+     */
     public void send_rfid() {
 
         if (isConnected) {

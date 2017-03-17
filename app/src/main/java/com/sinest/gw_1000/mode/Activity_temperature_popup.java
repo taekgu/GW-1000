@@ -21,6 +21,8 @@ import com.sinest.gw_1000.management.Application_manager;
 
 /**
  * Created by Jinwook on 2017-01-03.
+ *
+ * 수온, 내부온도 설정 팝업
  */
 
 public class Activity_temperature_popup extends Activity {
@@ -33,7 +35,7 @@ public class Activity_temperature_popup extends Activity {
 
     TextView textView_time;
     private int temperature;
-    private int mode; // 위 온도 0, 아래 온도 1
+    private int mode; // 0: 내부온도 설정 팝업, 1: 수온 설정 팝업
     private Context mContext;
 
     private ImageView background;
@@ -158,7 +160,6 @@ public class Activity_temperature_popup extends Activity {
                         else {
 
                             Application_manager.getToastManager().popToast(3);
-                            //Toast.makeText(mContext, "25~40 사이의 값을 입력해주세요", Toast.LENGTH_SHORT).show();
                         }
                         break;
                     case R.id.popup_keypad_back:

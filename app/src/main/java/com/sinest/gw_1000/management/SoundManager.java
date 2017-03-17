@@ -4,9 +4,7 @@ import android.content.Context;
 import android.content.res.AssetFileDescriptor;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
-import android.media.SoundPool;
 import android.util.Log;
-import android.widget.Toast;
 
 import java.io.IOException;
 
@@ -14,16 +12,19 @@ import static android.content.Context.AUDIO_SERVICE;
 
 /**
  * Created by Jinwook on 2016-11-25.
+ *
+ * 어플리케이션에서 사용되는 음원 관리
  */
 
 public class SoundManager {
 
-    private final static int MAX_STREAMS = 1; // 동시 재생 가능한 음원 수
-
+    // 마지막에 재생된 음악
     private MediaPlayer latest_player;
+
     public boolean isPlaying = false;
     private boolean isRun = false;
     private Thread thread_isPlaying;
+
     private MediaPlayer.OnPreparedListener preparedListener;
     private MediaPlayer.OnPreparedListener preparedListener_for_therapy;
     private int prepare_cnt = 0;
@@ -37,7 +38,6 @@ public class SoundManager {
 
     public SoundManager(Context _context) {
 
-//        soundPool = new SoundPool(MAX_STREAMS, AudioManager.STREAM_MUSIC, 0);
         context = _context;
 
         thread_isPlaying = new Thread(new Runnable() {
@@ -56,9 +56,13 @@ public class SoundManager {
         isRun = true;
         thread_isPlaying.start();
 
-        loadSounds2();
+        loadSounds();
     }
 
+    /**
+     * 치료음악 볼륨 설정
+     * @param step Emotion therapy setting 팝업창에서 Emotion sound volume 값 1~5
+     */
     public void setVolume_therapy(int step) {
 
         final AudioManager audioManager = (AudioManager) context.getSystemService(AUDIO_SERVICE);
@@ -71,6 +75,10 @@ public class SoundManager {
         Log.i("JW_VOL", "max = " + max + " / level = " + level + " / volume = " + step);
     }
 
+    /**
+     * 알림음악 볼륨 설정
+     * @param volume 세팅 액티비티에서 시크바로 설정한 볼륨 값 (0~10)
+     */
     public void setVolume_alarm(int volume) {
 
         volume /= 10;
@@ -94,7 +102,10 @@ public class SoundManager {
         return isPlaying;
     }
 
-    private void loadSounds2() {
+    /**
+     * 음원 파일 로드
+     */
+    private void loadSounds() {
 
         try {
 
@@ -205,6 +216,11 @@ public class SoundManager {
         }
     }
 
+    /**
+     * 선택 알림음원 재생
+     * @param lang 언어
+     * @param sound 재생 음원 번호 (0: 치료 시작, 1: 치료 일시정지, 2: 치료 정지, 3: 도어 오픈, 4: 도어 클로즈)
+     */
     public int play(int lang, int sound) {
 
         if (prepare_cnt == TOTAL_CNT) {
@@ -233,6 +249,11 @@ public class SoundManager {
         }
     }
 
+    /**
+     * 선택 치료음원 재생/정지
+     * @param sound 재생 음원 번호
+     * @param isPlay true: 재생 / false: 정지
+     */
     public void play_therapy(int sound, boolean isPlay) {
 
         int idx = sound - 1;

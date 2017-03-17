@@ -5,6 +5,8 @@ import android.widget.Toast;
 
 /**
  * Created by Jinwook on 2017-02-22.
+ *
+ * 어플리케이션에서 사용되는 Toast 메시지 관리
  */
 
 public class ToastManager {
@@ -55,11 +57,20 @@ public class ToastManager {
 
     }
 
+    /**
+     * 현재 화면에 선택 토스트 메시지 출력
+     * @param msg_num 토스트 메시지 번호
+     */
     public static void popToast(int msg_num) {
 
         Toast.makeText(Application_manager.getContext(), toastMsgs[Application_manager.m_language][msg_num], Toast.LENGTH_SHORT).show();
     }
 
+    /**
+     * 현재 화면에 "'min' ~ 'max' 사이의 값을 입력해주세요" 메시지 출력
+     * @param min 입력 가능한 최솟값
+     * @param max 입력 가능한 최댓값
+     */
     public static void popToast_time_range(int min, int max) {
 
         String msg = "";

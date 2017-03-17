@@ -1,9 +1,7 @@
 package com.sinest.gw_1000.mode;
 
-import android.app.Activity;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
-import android.app.ProgressDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -19,9 +17,7 @@ import android.util.Log;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.Window;
 import android.view.WindowManager;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -33,6 +29,12 @@ import com.sinest.gw_1000.management.Application_manager;
 import com.sinest.gw_1000.management.CustomProgressDialog;
 import com.sinest.gw_1000.mode.utils.CustomProgressBarBlock;
 import com.sinest.gw_1000.setting.Activity_setting;
+
+/**
+ * Created by Jinwook.
+ *
+ * 대기 화면
+ */
 
 public class Activity_waiting extends AppCompatActivity {
 
@@ -76,8 +78,8 @@ public class Activity_waiting extends AppCompatActivity {
     private ImageView background_device;
     private AnimationDrawable frameAnimation;
 
-    CustomProgressBarBlock seekBar;
-    //ImageView seekBar_water;
+    // 동작 중 노즐 위치 표시 바
+    CustomProgressBarBlock progressBar_nozzle_loc;
 
     ImageView waiting_door_open_button;
     ImageView waiting_door_close_button;
@@ -88,9 +90,7 @@ public class Activity_waiting extends AppCompatActivity {
 
     private SharedPreferences sharedPreferences = null;
 
-    private Context mContext;
-
-    // 라이브러리 세팅, 세팅 버튼 중 하나라도 터치된 버튼이 있는지 확인
+    // 라이브러리 세팅, 세팅 버튼 중 하나라도 터치된 버튼이 있는지 확인용 플래그 (동작과 동시 실행 방지)
     private boolean isTouched = false;
     synchronized public boolean getIsTouched() {
 
@@ -101,7 +101,7 @@ public class Activity_waiting extends AppCompatActivity {
         isTouched = val;
     }
 
-    // 동작 버튼 중 터치된 버튼이 있는지 확인
+    // 동작 버튼 중 터치된 버튼이 있는지 확인용 플래그 (라이브러리 세팅, 세팅과 동시 실행 방지)
     private boolean isTouched_work = false;
     synchronized public boolean getIsTouched_work() {
 
@@ -116,13 +116,9 @@ public class Activity_waiting extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        Log.i("JW_LIFECYCLE", "Activity_waiting - onCreate");
-
         setContentView(R.layout.activity_waiting);
         Application_manager.setFullScreen(this);
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
-
-        mContext = this;
 
         sharedPreferences = Application_manager.getSharedPreferences();
 
@@ -212,15 +208,12 @@ public class Activity_waiting extends AppCompatActivity {
         background = (ImageView) findViewById(R.id.activity_waiting_background);
         background_device = (ImageView) findViewById(R.id.imageView_device);
 
-        seekBar = (CustomProgressBarBlock) findViewById(R.id.seekBar2);
-        //seekBar_water = (ImageView) findViewById(R.id.water);
+        progressBar_nozzle_loc = (CustomProgressBarBlock) findViewById(R.id.seekBar2);
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-
-        Log.i("JW_LIFECYCLE", "Activity_waiting - onResume");
 
         Application_manager.setFullScreen(this);
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
@@ -266,6 +259,7 @@ public class Activity_waiting extends AppCompatActivity {
             imageView_device.setVisibility(View.INVISIBLE);
         }
 
+        // 선택 모드 변경시 프래그먼트 갱신
         if (mode == 0) {
 
             // 선택된 모드 갱신
@@ -348,8 +342,6 @@ public class Activity_waiting extends AppCompatActivity {
     protected void onPause() {
         super.onPause();
 
-        Log.i("JW_LIFECYCLE", "Activity_waiting - onPause");
-
         unregistReceiver();
         isRun = false;
         //clock.unregistReceiver();
@@ -377,8 +369,6 @@ public class Activity_waiting extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
 
-        Log.i("JW_LIFECYCLE", "Activity_waiting - onStart");
-
         isRun = true;
         Thread myThread = new Thread(new Runnable() {
             public void run() {
@@ -396,13 +386,10 @@ public class Activity_waiting extends AppCompatActivity {
         myThread.start();
     }
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-
-        Log.i("JW_LIFECYCLE", "Activity_waiting - onDestroy");
-    }
-
+    /**
+     * 동작 시작 시 동작 프래그먼트로 변경
+     * @param patternNum 선택 모드 번호
+     */
     public void changeFragment_working(int patternNum) {
 
         if (val_time > 0) {
@@ -460,7 +447,7 @@ public class Activity_waiting extends AppCompatActivity {
                         @Override
                         public void run() {
 
-                            seekBar.setVisibility(View.VISIBLE);
+                            progressBar_nozzle_loc.setVisibility(View.VISIBLE);
                             //seekBar_water.setVisibility(View.VISIBLE);
                         }
                     });
@@ -505,6 +492,9 @@ public class Activity_waiting extends AppCompatActivity {
         }
     }
 
+    /**
+     * 동작 종료/정지 시 대기 프래그먼트로 변경
+     */
     public void changeFragment_waiting() {
 
         // 중지 명령
@@ -582,7 +572,7 @@ public class Activity_waiting extends AppCompatActivity {
                 @Override
                 public void run() {
 
-                    seekBar.setVisibility(View.INVISIBLE);
+                    progressBar_nozzle_loc.setVisibility(View.INVISIBLE);
                     //seekBar_water.setVisibility(View.INVISIBLE);
                 }
             });
@@ -592,6 +582,9 @@ public class Activity_waiting extends AppCompatActivity {
         }
     }
 
+    /**
+     * progressDialog 출력 후, 모터 원점 복귀 신호 대기
+     */
     public void wait_motor_back() {
 
         Application_manager.setIsWaiting_init(true);
@@ -602,6 +595,9 @@ public class Activity_waiting extends AppCompatActivity {
         progressDialog.showDialog(null);
     }
 
+    /**
+     * 동작 애니메이션 시작 - 영문
+     */
     private void start_animation() {
         if(Application_manager.gw_1000 == true){
             background.setBackgroundResource(R.drawable.animation_working);
@@ -612,6 +608,9 @@ public class Activity_waiting extends AppCompatActivity {
         frameAnimation.start();
     }
 
+    /**
+     * 동작 애니메이션 시작 - 중문
+     */
     private void start_animation_ch() {
         if(Application_manager.gw_1000 == true){
             background.setBackgroundResource(R.drawable.animation_working_ch);
@@ -622,6 +621,9 @@ public class Activity_waiting extends AppCompatActivity {
         frameAnimation.start();
     }
 
+    /**
+     * 동작 애니메이션 정지
+     */
     private void stop_animation() {
 
         if (frameAnimation != null) {
@@ -652,6 +654,10 @@ public class Activity_waiting extends AppCompatActivity {
         }
     }
 
+    /**
+     * 동작 중 남은 시간 변경
+     * @param min 변경값
+     */
     public void setTimeLeft(final int min) {
 
         runOnUiThread(new Runnable() {
@@ -664,6 +670,9 @@ public class Activity_waiting extends AppCompatActivity {
         });
     }
 
+    /**
+     * 디바이스 메시지 수신 확인을 위한 리시버
+     */
     private void registReceiver() {
 
         if (broadcastReceiver != null) {
@@ -680,6 +689,9 @@ public class Activity_waiting extends AppCompatActivity {
         Log.i("JW", "registerReceiver");
     }
 
+    /**
+     * 수신 확인 리시버 등록 해제
+     */
     private void unregistReceiver() {
 
         if (broadcastReceiver != null) {
@@ -690,6 +702,9 @@ public class Activity_waiting extends AppCompatActivity {
         }
     }
 
+    /**
+     * 디바이스 메시지 수신 시 값(내부온도, 수온, 산소농도, 습도) 업데이트 처리를 위한 핸들러
+     */
     private void setHandler_update_data() {
 
         handler_update_data = new Handler() {
@@ -768,7 +783,7 @@ public class Activity_waiting extends AppCompatActivity {
 
                     // 노즐 위치 0~14
                     //Log.i("JW", "노즐 위치: "+Application_manager.getCommunicator().get_rx_idx(15));
-                    seekBar.setProgress(communicator.get_rx_idx(15));
+                    progressBar_nozzle_loc.setProgress(communicator.get_rx_idx(15));
                 }
                 else if (msg.what == SET_BUTTON_INVISIBLE) {
 
@@ -1055,7 +1070,9 @@ public class Activity_waiting extends AppCompatActivity {
         }
     };
 
-    // back키 작동 중지
+    /**
+     * Back 버튼 터치 이벤트
+     */
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event){
         switch(keyCode){

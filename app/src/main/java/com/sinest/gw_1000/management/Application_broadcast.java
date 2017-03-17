@@ -10,6 +10,8 @@ import com.sinest.gw_1000.R;
 
 /**
  * Created by Jinwook on 2016-11-20.
+ *
+ * 디바이스로부터 메시지가 수신되었을 때 대기화면 업데이트 요청하기 위한 BroadcastRecevier
  */
 
 public class Application_broadcast extends BroadcastReceiver {

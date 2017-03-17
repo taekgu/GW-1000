@@ -8,6 +8,8 @@ import com.sinest.gw_1000.splash.Activity_booting;
 
 /**
  * Created by taekg on 2017-01-31.
+ *
+ * 디바이스 부팅시 자동 시작
  */
 
 public class StartReceiver extends BroadcastReceiver {

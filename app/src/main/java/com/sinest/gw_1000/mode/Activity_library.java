@@ -18,16 +18,19 @@ import android.widget.TextView;
 import com.sinest.gw_1000.R;
 import com.sinest.gw_1000.management.Application_manager;
 
-public class Activity_library extends AppCompatActivity{
+/**
+ * Created by Jinwook.
+ *
+ * 사용 모드 선택, 메뉴얼 모드 관리
+ */
 
-    public static final int REQUEST_CODE_LIBRARY = 1002;
-    public static final int REQUEST_CODE_MANUAL_MODE_SETTING = 1003;
+public class Activity_library extends AppCompatActivity{
 
     int cnt = 0;
     int manual_cnt = 0;
 
     int[] checked_loc = new int[Application_manager.MAX_CHECKED];
-    int[] library_map = new int[20];
+    int[] library_map = new int[20]; // 20개 모드 선택 유무 (0: 선택x, 1: 선택o)
 
     int mode_setting = 0; // 0: 일반 모드 / 1: 매뉴얼 모드 세팅 모드
 
@@ -36,7 +39,7 @@ public class Activity_library extends AppCompatActivity{
 
     TextView clock;
 
-    LinearLayout ribrary_back_image;
+    LinearLayout library_back_image;
     ImageView library_back_button;
     ImageView library_save_button;
     ImageView library_set_button;
@@ -54,7 +57,7 @@ public class Activity_library extends AppCompatActivity{
         clock.setTypeface(tf);
         clock.setText(Application_manager.doInit_time());
 
-        ribrary_back_image = (LinearLayout) findViewById(R.id.ribrary_back_image);
+        library_back_image = (LinearLayout) findViewById(R.id.ribrary_back_image);
 
         for (int i=0; i<20; i++) {
 
@@ -93,7 +96,6 @@ public class Activity_library extends AppCompatActivity{
         library_save_button = (ImageView)findViewById(R.id.library_save_button);
         library_set_button = (ImageView)findViewById(R.id.library_set_button);
 
-
         library_back_button.setOnTouchListener(mTouchEvent);
         library_save_button.setOnTouchListener(mTouchEvent);
         library_set_button.setOnTouchListener(mTouchEvent);
@@ -121,7 +123,7 @@ public class Activity_library extends AppCompatActivity{
         Application_manager.setFullScreen(this);
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 
-        ribrary_back_image.setBackgroundResource(Application_manager.ribrary_back_image[Application_manager.img_flag]);
+        library_back_image.setBackgroundResource(Application_manager.ribrary_back_image[Application_manager.img_flag]);
         library_back_button.setBackgroundResource(Application_manager.button_circle_back_off[Application_manager.img_flag]);
         library_save_button.setBackgroundResource(Application_manager.save_mode_off[Application_manager.img_flag]);
         library_set_button.setBackgroundResource(Application_manager.library_setting_off[Application_manager.img_flag]);
@@ -156,11 +158,6 @@ public class Activity_library extends AppCompatActivity{
         myThread.start();
     }
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-    }
-
     Handler handler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
@@ -176,9 +173,9 @@ public class Activity_library extends AppCompatActivity{
         @Override
         public boolean onTouch(View view, MotionEvent motionEvent) {
             Application_manager.set_m_start_sleep(0);
-            Intent intent;
             int action = motionEvent.getAction();
             int id = view.getId();
+
             if (action == MotionEvent.ACTION_DOWN) {
                 switch (id) {
                     case R.id.library_back_button:
@@ -199,11 +196,13 @@ public class Activity_library extends AppCompatActivity{
                         view.setBackgroundResource(Application_manager.button_circle_back_off[Application_manager.img_flag]);
                         finish();
                         break;
+                    // Save 버튼 터치 이벤트
                     case R.id.library_save_button:
                         view.setBackgroundResource(Application_manager.save_mode_off[Application_manager.img_flag]);
 
                         if (mode_setting == 0) {
 
+                            // 4개 모드 선택됐는지 확인
                             if (cnt == 4) {
 
                                 SharedPreferences sharedPreferences = Application_manager.getSharedPreferences();
@@ -219,7 +218,6 @@ public class Activity_library extends AppCompatActivity{
                             else {
 
                                 Application_manager.getToastManager().popToast(0);
-                                //Toast.makeText(getApplicationContext(), "4개의 모드를 선택하세요", Toast.LENGTH_SHORT).show();
                             }
                         }
                         break;
@@ -244,6 +242,7 @@ public class Activity_library extends AppCompatActivity{
             return true;
             }
     };
+
     public void onClicked(View v)
     {
         Application_manager.set_m_start_sleep(0);
@@ -336,7 +335,10 @@ public class Activity_library extends AppCompatActivity{
         }
     }
 
-
+    /**
+     * 모드 선택 / 매뉴얼 모드 세팅 모드 전환
+     * @param mode 0: 모드 선택 / 1: 매뉴얼 모드 세팅
+     */
     private void change_mode(int mode) {
 
         if (mode == 1) {
@@ -381,10 +383,5 @@ public class Activity_library extends AppCompatActivity{
                 imageView.setEnabled(true);
             }
         }
-
-
     }
-
-
-
 }

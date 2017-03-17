@@ -1,10 +1,8 @@
 package com.sinest.gw_1000.mode;
 
-import android.app.Activity;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.app.PendingIntent;
-import android.app.ProgressDialog;
 import android.content.BroadcastReceiver;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
@@ -32,6 +30,12 @@ import com.sinest.gw_1000.management.Application_manager;
 import com.sinest.gw_1000.management.CustomProgressDialog;
 import com.sinest.gw_1000.mode.utils.CustomProgressBarBlock;
 import com.sinest.gw_1000.setting.Activity_setting;
+
+/**
+ * Created by Jinwook.
+ *
+ * 대기 화면 - RFID 모드
+ */
 
 public class Activity_waiting_rfid extends AppCompatActivity {
 
@@ -226,11 +230,6 @@ public class Activity_waiting_rfid extends AppCompatActivity {
             imageView_device.setVisibility(View.INVISIBLE);
         }
 
-/*
-        background.setBackgroundResource(Application_manager.waiting_rfid_doorclose_back[Application_manager.img_flag]);
-        waiting_door_open_button.setBackgroundResource(Application_manager.door_open_off[Application_manager.img_flag]);
-        waiting_door_close_button.setBackgroundResource(Application_manager.door_close_off[Application_manager.img_flag]);
-*/
         if (mode == 0) {
 
             // 동작 시간 갱신 (시간 설정 팝업 -> 웨이팅 복귀 시)
@@ -354,11 +353,6 @@ public class Activity_waiting_rfid extends AppCompatActivity {
         myThread.start();
     }
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-    }
-
     Handler handler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
@@ -370,6 +364,18 @@ public class Activity_waiting_rfid extends AppCompatActivity {
         clock.setText(Application_manager.doInit_time());
     }
 
+    /**
+     * NFC 태그 정보 수신 함수. 인텐트에 포함된 정보를 분석해서 화면에 표시
+     */
+    @Override
+    public void onNewIntent(Intent intent) {
+        setIntent(intent);
+        resolveIntent(intent);
+    }
+
+    /**
+     * RFID 태그 처리 이벤트
+     */
     private void resolveIntent(Intent intent) {
         String action = intent.getAction();
         if (NfcAdapter.ACTION_TAG_DISCOVERED.equals(action)
@@ -672,7 +678,9 @@ public class Activity_waiting_rfid extends AppCompatActivity {
         });
     }
 
-    // 버퍼 데이터를 디코딩해서 String 으로 변환
+    /**
+     * 버퍼 데이터를 디코딩해서 String 으로 변환
+     */
     private String getHex(byte[] bytes) {
 
         StringBuilder sb = new StringBuilder();
@@ -688,13 +696,6 @@ public class Activity_waiting_rfid extends AppCompatActivity {
             }
         }
         return sb.toString();
-    }
-
-    // NFC 태그 정보 수신 함수. 인텐트에 포함된 정보를 분석해서 화면에 표시
-    @Override
-    public void onNewIntent(Intent intent) {
-        setIntent(intent);
-        resolveIntent(intent);
     }
 
     private void registReceiver() {

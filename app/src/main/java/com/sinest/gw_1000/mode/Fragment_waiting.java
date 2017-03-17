@@ -15,6 +15,8 @@ import com.sinest.gw_1000.management.Application_manager;
 
 /**
  * Created by Jinwook on 2016-11-21.
+ *
+ * 대기 상태에서 선택된 모드를 표시하는 프래그먼트
  */
 
 public class Fragment_waiting extends Fragment {

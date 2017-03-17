@@ -13,11 +13,12 @@ import java.net.Socket;
 
 /**
  * Created by Jinwook on 2016-11-15.
+ *
+ * 통신, 메시지 관리
  */
 
 public class Communicator {
 
-    //private static Communicator instance = new Communicator();
     private Handler handler_data;
 
     // Define length of protocols
@@ -48,13 +49,13 @@ public class Communicator {
     // Rx message
     private byte[] msg_rx       = new byte[LENGTH_RX];
 
-    // Wifi direct
     private Context mContext;
-//    private WifiDirectWrapper mWidiWrapper;
-    private WifiConnector wifiConnector;
-    private SocketManager socketManager;
 
-    // Socket
+    // Wifi 연결 매니저
+    private WifiConnector wifiConnector;
+
+    // 소켓 통신 매니저
+    private SocketManager socketManager;
 
     public Communicator(Context context) {
 
@@ -78,23 +79,23 @@ public class Communicator {
 
         initMessages();
 
-        //mWidiWrapper = new WifiDirectWrapper(mContext, handler_data);
-        //mWidiWrapper.start();
         wifiConnector = new WifiConnector(mContext);
         wifiConnector.registReceiver();
 
         socketManager = new SocketManager(handler_data, this);
     }
 
+    /**
+     * 수신 메시지 관리 핸들러
+     */
     private void setHandler() {
 
-        // SocketReceiver에서 수신한 메시지 byte 단위로 쪼개어 msg_rx에 저장
+        // SocketManager 에서 수신한 메시지 byte 단위로 쪼개어 msg_rx에 저장
         handler_data = new Handler() {
 
             @Override
             public void handleMessage(Message msg) {
 
-                Log.i("JW_COMM", "handleMessage");
                 Bundle data = msg.getData();
 
                 for (int i=0; i<data.size(); i++) {
@@ -102,12 +103,15 @@ public class Communicator {
                     byte b = data.getByte(""+i);
                     set_rx(i, b);
                 }
+
+                // CheckSum 검사
                 if (!checkCheckSum(msg_rx)) {
 
                     Log.i("JW_COMM", "Rx data is wrong (checkSum error)");
                     calcCheckSum(msg_rx);
                 }
 
+                // 디바이스 상태와 ACK 신호 확인
                 byte signal_deviceState = (byte)(0xf0 & get_rx_idx(1));
                 byte signal_ack = (byte)(0x0f & get_rx_idx(1));
 
@@ -184,13 +188,16 @@ public class Communicator {
                         break;
                 }
 
+                // waiting 화면 업데이트 (수온, 내부온도, 산소농도, 습도)
                 Intent intent = new Intent("update.data");
                 mContext.sendBroadcast(intent);
-                //Log.i("JW_COMM", "sendBroadcast");
             }
         };
     }
 
+    /**
+     * 메시지 초기값 세팅
+     */
     private void initMessages() {
 
         for (int i=0; i<LENGTH_TX; i++) {
@@ -219,6 +226,10 @@ public class Communicator {
         }
     }
 
+    /**
+     * 메시지의 checkSum 올바른지 확인
+     * @param msg 검증할 메시지
+     */
     synchronized private Boolean checkCheckSum(byte[] msg) {
 
         int len = msg.length;
@@ -232,6 +243,10 @@ public class Communicator {
         return false;
     }
 
+    /**
+     * 인자로 받은 메시지의 체크섬 계산
+     * @param msg checkSum 계산할 메시지
+     */
     synchronized public byte calcCheckSum(byte[] msg) {
 
         int len = msg.length;

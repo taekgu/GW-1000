@@ -20,6 +20,8 @@ import com.sinest.gw_1000.management.Application_manager;
 
 /**
  * Created by Jinwook on 2016-11-21.
+ *
+ * 동작 시 동작시작, 일시정지, 정지 버튼 표시할 프래그먼트
  */
 
 public class Fragment_working extends Fragment {
@@ -37,7 +39,7 @@ public class Fragment_working extends Fragment {
     private boolean isPause = false;
     private boolean isAlive = false;
 
-    // 대기 화면으로 돌아가기 전 모터원점복귀 대기
+    // 대기 화면으로 돌아갈 때 모터원점복귀 대기 위한 핸들러
     private Handler handler = null;
 
     public Fragment_working() {
@@ -90,7 +92,6 @@ public class Fragment_working extends Fragment {
 
                             time_s = 0;
                             setTime_m_left(time_m_left-1);
-                            //time_m_left--;
 
                             if (parent == 0) {
 
@@ -115,6 +116,8 @@ public class Fragment_working extends Fragment {
                         Log.i("JW", "Exception was caught on timer thread");
                     }
                 }
+
+                // 치료 종료 시 처리 (남은시간 0)
                 if (time_m_left == 0) {
 
                     Log.i("JW", "치료 종료");
@@ -202,7 +205,6 @@ public class Fragment_working extends Fragment {
                             isPause = true;
                             button_clicked.setBackgroundResource(R.drawable.button_play_off);
                             communicator.set_tx(1, (byte)0x02);
-                        //    Application_manager.getSoundManager().play(Application_manager.ID_LANG_SOUND[Application_manager.m_language][1]);
                         }
                         // pause 중이면
                         else {
@@ -211,7 +213,6 @@ public class Fragment_working extends Fragment {
                             isPause = false;
                             button_clicked.setBackgroundResource(R.drawable.button_pause_off);
                             communicator.set_tx(1, (byte)0x01);
-                        //    Application_manager.getSoundManager().play(Application_manager.ID_LANG_SOUND[Application_manager.m_language][0]);
                         }
                         break;
                     case R.id.button_stop:
@@ -237,22 +238,7 @@ public class Fragment_working extends Fragment {
     public void onResume() {
         super.onResume();
 
-        Log.i("JW_LIFECYCLE", "Fragment_working - onResume");
         // 슬립 모드 동작 재시작
         Application_manager.setSleep_f(0, false);
-    }
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-
-        Log.i("JW_LIFECYCLE", "Fragment_working - onDestroy");
-    }
-
-    @Override
-    public void onDetach() {
-        super.onDetach();
-
-        Log.i("JW_LIFECYCLE", "Fragment_working - onDetach");
     }
 }
