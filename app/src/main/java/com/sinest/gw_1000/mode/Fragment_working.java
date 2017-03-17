@@ -199,7 +199,7 @@ public class Fragment_working extends Fragment {
                         if (state == 1) {
 
                             state = 0;
-                            //isPause = true;
+                            isPause = true;
                             button_clicked.setBackgroundResource(R.drawable.button_play_off);
                             communicator.set_tx(1, (byte)0x02);
                         //    Application_manager.getSoundManager().play(Application_manager.ID_LANG_SOUND[Application_manager.m_language][1]);
