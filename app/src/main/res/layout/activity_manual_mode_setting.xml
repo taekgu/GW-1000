@@ -190,18 +190,18 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_weight="20">
+                android:layout_weight="15">
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_weight="40"
+                android:layout_weight="50"
                 android:gravity="left|center_vertical">
 
                 <com.sinest.gw_1000.mode.utils.CustomProgressBar
                     android:layout_width="20dp"
-                    android:layout_height="300dp"
+                    android:layout_height="match_parent"
                     android:gravity="center"
                     android:layout_marginLeft="10dp"
                     android:id="@+id/manual_mode_progress_bar_1">
@@ -295,17 +295,17 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_weight="20">
+                android:layout_weight="15">
             </LinearLayout>
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_weight="40"
+                android:layout_weight="50"
                 android:gravity="left|center_vertical">
 
                 <com.sinest.gw_1000.mode.utils.CustomProgressBar
                     android:layout_width="20dp"
-                    android:layout_height="300dp"
+                    android:layout_height="match_parent"
                     android:layout_marginLeft="10dp"
                     android:gravity="center"
                     android:id="@+id/manual_mode_progress_bar_2">
@@ -399,17 +399,17 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_weight="20">
+                android:layout_weight="15">
             </LinearLayout>
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_weight="40"
+                android:layout_weight="50"
                 android:gravity="left|center_vertical">
 
                 <com.sinest.gw_1000.mode.utils.CustomProgressBar
                     android:layout_width="20dp"
-                    android:layout_height="300dp"
+                    android:layout_height="match_parent"
                     android:gravity="center"
                     android:layout_marginLeft="10dp"
                     android:id="@+id/manual_mode_progress_bar_3">

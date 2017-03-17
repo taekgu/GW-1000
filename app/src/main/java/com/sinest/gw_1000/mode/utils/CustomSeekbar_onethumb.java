@@ -111,7 +111,7 @@ public class CustomSeekbar_onethumb extends RelativeLayout{
             }
         });
 }
-    private void init() {
+    private void init() { //초기값 설정
         initialWidthMin = (int) convertDpToPixel(30, context);
         final ViewTreeObserver viewTreeObserver = relativeLayout.getViewTreeObserver();
         //  if (viewTreeObserver.isAlive())
@@ -126,16 +126,14 @@ public class CustomSeekbar_onethumb extends RelativeLayout{
                 dRightMax = dLeftMin+viewParent.getWidth();
                 currentWidthMin = relFilterMin.getWidth();
                 widthParent = viewParent.getWidth();
-
-                Log.i("seekbar_debug", "dLeftMin : " + dLeftMin + " dRightMax : " + dRightMax);
             }
         });
     }
-    public void getCurrentLoc() {
+    public void getCurrentLoc() { //너비를 0~10단계로 계산하여 current_loc에 저장
         //Max
         current_loc = Math.floor(10 * ((currentWidthMin - initialWidthMin + 10) / widthParent));
     }
-    public void setProgress(int current_loc)
+    public void setProgress(int current_loc) //현재 loc의 칸까지를 VISIBLE
     {
         int i, resourceId;
         ImageView b;
@@ -148,7 +146,7 @@ public class CustomSeekbar_onethumb extends RelativeLayout{
                 b.setVisibility(INVISIBLE);
         }
     }
-    public void setCurrentLoc(final int progress) {
+    public void setCurrentLoc(final int progress) { //Thumb의 위치를 설정해줌
         current_loc = progress;
         viewParent.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
                 @Override

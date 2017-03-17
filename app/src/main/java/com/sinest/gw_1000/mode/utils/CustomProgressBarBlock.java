@@ -1,10 +1,7 @@
 package com.sinest.gw_1000.mode.utils;
 
 import android.content.Context;
-import android.content.res.Resources;
 import android.util.AttributeSet;
-import android.util.DisplayMetrics;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
@@ -28,27 +25,19 @@ public class CustomProgressBarBlock extends RelativeLayout {
         this.context = context;
         initialize(context);
     }
-
-    public static float convertDpToPixel(float dp, Context context) {
-        Resources resources = context.getResources();
-        DisplayMetrics metrics = resources.getDisplayMetrics();
-        return dp * ((float) metrics.densityDpi / DisplayMetrics.DENSITY_DEFAULT);
-    }
     private void initialize(Context context) {
         inflate(context, R.layout.layout_custom_progress_bar_block, this);
         viewParent = findViewById(R.id.progress_filter_parent_block);
         relFilter = (RelativeLayout) findViewById(R.id.rel_progress_block);
         currentWidth = relFilter.getWidth();
     }
-    public void setProgress(final int loc) {
+    public void setProgress(final int loc) { //분사 위치 loc 맞게 레이아웃 크기 변환
 
         currentWidth = ((loc * (viewParent.getWidth()) / 14));
         ViewGroup.LayoutParams layoutParams = relFilter.getLayoutParams();
         layoutParams.width = currentWidth;
         relFilter.setLayoutParams(layoutParams);
 
-        //Log.i("TEST", "loc: " + loc);
-        //Log.i("TEST", "currentWidth: " + currentWidth);
     }
 }
 

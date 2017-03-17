@@ -82,16 +82,16 @@ public class CustomSeekBar extends RelativeLayout{
 
         init();
         viewThumbMin.setOnTouchListener(new View.OnTouchListener() {
-            public boolean onTouch(View v, MotionEvent event) {
+            public boolean onTouch(View v, MotionEvent event) { // 시크 바의 위쪽 Thumb의 터치리스너
                 dTopMin = relFilterMin.getY();
                 dTopMax = relFilterMax.getY();
                 switch (event.getAction()) {
-                    case MotionEvent.ACTION_DOWN:
+                    case MotionEvent.ACTION_DOWN: //터치되는 순간의 Y좌표를 받아옴
                         startYMin = event.getRawY();
                         // startClickTime = Calendar.getInstance().getTimeInMillis();
                         break;
 
-                    case MotionEvent.ACTION_MOVE:
+                    case MotionEvent.ACTION_MOVE: //터치된 상태에서의 움직인 거리를 계산하고 그에맞게 레이아웃 사이즈 변경
                         movedYMin = event.getRawY() - startYMin;
                         startYMin = event.getRawY();
                         if (relFilterMin.getHeight() + movedYMin <= initialHeightMin || dTopMin + relFilterMin.getHeight()+ movedYMin >= dTopMax - (heightParent/14*2)+10) {
@@ -108,7 +108,7 @@ public class CustomSeekBar extends RelativeLayout{
                         getResultMin();
                         setProgress((int)resultMin, (int)resultMax);
                         break;
-                    case MotionEvent.ACTION_UP:
+                    case MotionEvent.ACTION_UP: //손을 뗄 때 구간(칸)별로 나눠지게 설정
                         ViewGroup.LayoutParams _layoutParams = relFilterMin.getLayoutParams();
                         _layoutParams.height = (int)(resultMin * (heightParent/14) + initialHeightMin);
                         Log.i("BE", "min height : "+_layoutParams.height + ", resultMin : " + resultMin);
@@ -123,7 +123,7 @@ public class CustomSeekBar extends RelativeLayout{
         });
 
         viewThumbMax.setOnTouchListener(new View.OnTouchListener() {
-            public boolean onTouch(View v, MotionEvent event) {
+            public boolean onTouch(View v, MotionEvent event) { //아래쪽 Thumb이며 내용은 위와 동일
                 dTopMin = relFilterMin.getY();
                 dTopMax = relFilterMax.getY();
                 switch (event.getAction()) {
@@ -165,7 +165,7 @@ public class CustomSeekBar extends RelativeLayout{
 
     }
 
-    private void init() {
+    private void init() { //thumb의 크기인 initialHeightMin을 설정하고 뷰가 변경될 떄의 값을 실시간으로 받아올수 있게 ViewTressObserver 적용
         initialHeightMin = (int) convertDpToPixel(20, context);
         final ViewTreeObserver viewTreeObserver = relativeLayout.getViewTreeObserver();
         //  if (viewTreeObserver.isAlive())
@@ -185,26 +185,25 @@ public class CustomSeekBar extends RelativeLayout{
         });
     }
 
-    public void getResultMin() {
+    public void getResultMin() { //레이아웃의 높이를 0~14단계로 계산하여 resultMin에 입력
         //Max
         resultMin = Math.floor(14 * (Math.abs(currentHeightMin)-initialHeightMin) / heightParent);
         onRangeBarChangeListener.onRangeBarChange((int) resultMin, (int) resultMax);
-
     }
 
-    public void getResultMax() {
+    public void getResultMax() { //레이아웃의 높이를 0~14단계로 계산하여 resultMax에 입력
         resultMax = Math.floor(14 * (Math.abs(currentHeightMax)-initialHeightMin) / heightParent);
         resultMax = Math.abs(resultMax - 14);
         onRangeBarChangeListener.onRangeBarChange((int) resultMin, (int) resultMax);
     }
-    public void setSectionInit(int min, int max) {
+    public void setSectionInit(int min, int max) { //시크바의 프로그래스를 세팅함
         resultMin = min;
         resultMax = max;
-        setProgress(min, max);
-        setMinimumProgress(min);
-        setMaximumProgress(max);
+        setProgress(min, max); //시크바의 칸부분
+        setMinimumProgress(min); //시크바의 thumb_min
+        setMaximumProgress(max); //시크바의 thumb_max
     }
-    public void setProgress(int minProgress, int maxProgress)
+    public void setProgress(int minProgress, int maxProgress) //시크바 칸부분 세팅
     {
         int i, resourceId;
         ImageView b;
@@ -217,7 +216,7 @@ public class CustomSeekBar extends RelativeLayout{
                 b.setVisibility(INVISIBLE);
         }
     }
-    public void setMinimumProgress(final int minProgress) {
+    public void setMinimumProgress(final int minProgress) { //시크바 thumb_min 부분
         if (minProgress >= 0 && minProgress <= resultMax) {
             resultMin = minProgress;
             viewParent.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
@@ -238,7 +237,7 @@ public class CustomSeekBar extends RelativeLayout{
         }
     }
 
-    public void setMaximumProgress(final int maxProgress) {
+    public void setMaximumProgress(final int maxProgress) { //시크바 thumb_max 부분
         if (maxProgress >= resultMin && maxProgress <= 14) {
             resultMax = maxProgress;
             viewParent.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {

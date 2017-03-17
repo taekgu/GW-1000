@@ -10,7 +10,6 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 
 import com.sinest.gw_1000.R;
 import com.sinest.gw_1000.management.Application_manager;
@@ -50,7 +49,7 @@ public class Activity_manual_mode_pattern_popup extends Activity implements Cust
         Log.i("RR", "rr_section_min : " + section_min);
         Log.i("RR", "rr_section_max : " + section_max);
 
-        customSeekBar.setSectionInit(section_min, section_max);
+        customSeekBar.setSectionInit(section_min, section_max); //시크바 초기값 설정
 
         int resourceId;
         img = (ImageView)findViewById(R.id.manual_popup_imageview);
@@ -59,7 +58,7 @@ public class Activity_manual_mode_pattern_popup extends Activity implements Cust
         resourceId = getResources().getIdentifier("manual_mode_pattern_" + intent.getIntExtra("currentPattern",1), "drawable", "com.sinest.gw_1000");
         img.setBackgroundResource(resourceId);
 
-        for(int i=1; i<=12; i++){
+        for(int i=1; i<=12; i++){ //각 버튼에 클릭리스너 적용
             resourceId = getResources().getIdentifier("pattern_"+i,"id","com.sinest.gw_1000");
             ImageView btn = (ImageView) findViewById(resourceId);
             btn.setOnClickListener(mClickListener);
@@ -107,7 +106,7 @@ public class Activity_manual_mode_pattern_popup extends Activity implements Cust
             int action = motionEvent.getAction();
             int id = view.getId();
 
-            if (action == MotionEvent.ACTION_DOWN) {
+            if (action == MotionEvent.ACTION_DOWN) { //눌렀을 때 아이콘 색깔 변경을 위한 작업
                 switch (id) {
                     case R.id.manual_popup_save:
                         b = (ImageView) view;
@@ -118,9 +117,9 @@ public class Activity_manual_mode_pattern_popup extends Activity implements Cust
                         b.setBackgroundResource(R.drawable.button_circle_back_on);
                         break;
                 }
-            } else if (action == MotionEvent.ACTION_UP) {
+            } else if (action == MotionEvent.ACTION_UP) { //
                 switch (id) {
-                    case R.id.manual_popup_save:
+                    case R.id.manual_popup_save: //저장버튼 클릭시
                         b = (ImageView) view;
                         SharedPreferences sharedPreferences = Application_manager.getSharedPreferences();
                         SharedPreferences.Editor editor = sharedPreferences.edit();
@@ -165,7 +164,7 @@ public class Activity_manual_mode_pattern_popup extends Activity implements Cust
     };
 
     @Override
-    public void onRangeBarChange(int min, int max) {
+    public void onRangeBarChange(int min, int max) { //seekbar에서 변경된 값을 seekbar함수로 전달 (override)
         section_min = min;
         section_max = max;
         Log.d("TAG","min:"+min);

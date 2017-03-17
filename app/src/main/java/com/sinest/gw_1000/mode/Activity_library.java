@@ -14,7 +14,6 @@ import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.sinest.gw_1000.R;
 import com.sinest.gw_1000.management.Application_manager;
@@ -225,7 +224,7 @@ public class Activity_library extends AppCompatActivity{
                         }
                         break;
                     case R.id.library_set_button:
-                        view.setBackgroundResource(Application_manager.library_setting_on[Application_manager.img_flag]);
+                        view.setBackgroundResource(Application_manager.library_setting_off[Application_manager.img_flag]);
 
                         if (mode_setting == 0) {
 

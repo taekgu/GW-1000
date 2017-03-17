@@ -240,7 +240,7 @@ public class Activity_manual_mode_setting extends Activity{
         }
     };
 
-    protected void onResume() {
+    protected void onResume() { //재시작 되었을 때 변경된 값 적용
         super.onResume();
         Application_manager.setFullScreen(this);
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
@@ -257,7 +257,7 @@ public class Activity_manual_mode_setting extends Activity{
         manual_mode_setting_back.setBackgroundResource(Application_manager.button_circle_back_off[Application_manager.img_flag]);
 
         num_of_enabled_pattern = 0;
-        for (int i=0; i<3; i++) {
+        for (int i=0; i<3; i++) {  //변경된 값을 받아와 적용함
             section[i][0] = sharedPreferences.getInt(Application_manager.DB_MANUAL_MODE_SECTION_MIN_ + modeNum + "_" + i, 0);
             section[i][1] = sharedPreferences.getInt(Application_manager.DB_MANUAL_MODE_SECTION_MAX_ + modeNum + "_" + i, 14);
             pattern[i] = sharedPreferences.getInt(Application_manager.DB_MANUAL_MODE_PATTERN_ + modeNum + "_" + i, 1);
@@ -328,7 +328,7 @@ public class Activity_manual_mode_setting extends Activity{
         clock.setText(Application_manager.doInit_time());
     }
 
-    public void onClicked(View v)
+    public void onClicked(View v) //각 버튼이 클릭되었을 때 작동하는 기능 구현
     {
         Application_manager.set_m_start_sleep(0);
         Intent intent;

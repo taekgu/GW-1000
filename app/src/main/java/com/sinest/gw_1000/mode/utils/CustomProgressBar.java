@@ -24,11 +24,11 @@ public class CustomProgressBar extends RelativeLayout {
         this.context = context;
         initialize(context);
     }
-    private void initialize(Context context) {
+    private void initialize(Context context) { //레이아웃 inflate
         inflate(context, R.layout.layout_custom_progress_bar_vertical, this);
     }
 
-    public void setProgress(final int minProgress, final int maxProgress) {
+    public void setProgress(final int minProgress, final int maxProgress) { //받아온 범위의 이미지를 VISIBLE로 변환, 프로그래스 설정
         int i, resourceId;
         ImageView b;
         for(i=1; i<=14; i++) {
