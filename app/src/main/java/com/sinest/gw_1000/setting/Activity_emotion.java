@@ -117,6 +117,7 @@ public class Activity_emotion extends Activity {
     protected void onResume() {
         super.onResume();
 
+        // 언어에 따른 버튼 설정
         emotion_popup.setBackgroundResource(Application_manager.emotionpopup[Application_manager.img_flag]);
         emotion_back.setBackgroundResource(Application_manager.button_elipse_back_off[Application_manager.img_flag]);
 
@@ -129,6 +130,11 @@ public class Activity_emotion extends Activity {
         return false;
     }
 
+    /*
+    * 버튼을 누를시 -> ACTION_DOWN
+    * 버튼을 눌렀다 땔시 -> ACTION_UP
+    * 버튼의 이미지 변화 및 땔시 데이터 전송
+     */
     private View.OnTouchListener mTouchEvent = new View.OnTouchListener() {
         @Override
         public boolean onTouch(View view, MotionEvent motionEvent) {

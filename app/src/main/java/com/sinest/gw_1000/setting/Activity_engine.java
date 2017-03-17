@@ -129,6 +129,11 @@ public class Activity_engine extends AppCompatActivity {
 
         main_intent = new Intent(this, Activity_waiting.class);
 
+        /*
+        * 토글식 버튼
+        * on 될시 데이터 전송
+        * flag가 true이면 on false이면 off
+        */
         View.OnClickListener listener = new View.OnClickListener() {
             public void onClick(View v) {
                 Application_manager.set_m_start_sleep(0);
@@ -288,7 +293,6 @@ public class Activity_engine extends AppCompatActivity {
                         communicator.set_engineer(5,(byte)oxy);
                         break;
 //----------------------------------------------------------------------------------------------------------------------------
-
                     case R.id.eng_b_water:
                         //  그레이 / 블루 / 핑크 ??
                         if (eng_b_flag[0] == true) {
@@ -346,12 +350,9 @@ public class Activity_engine extends AppCompatActivity {
                         if (mode_f == true) {
                             program_m.setBackgroundResource(Application_manager.program_mode_on[Application_manager.img_flag]);
                             Application_manager.set_m_gw_1000(false);
-
                             // GW-1000L 버전 설정
                             Application_manager.setting_back_image[0] = R.drawable.setting_back_image_l;
                             Application_manager.setting_back_image[1] = R.drawable.setting_back_image_l_ch;
-
-
                             mode_f = false;
                         } else {
                             program_m.setBackgroundResource(Application_manager.program_mode_off[Application_manager.img_flag]);
@@ -359,8 +360,6 @@ public class Activity_engine extends AppCompatActivity {
                             // GW-1000H 버전 설정
                             Application_manager.setting_back_image[0] = R.drawable.setting_back_image;
                             Application_manager.setting_back_image[1] = R.drawable.setting_back_image_ch;
-
-
                             mode_f = true;
                         }
                         break;
@@ -386,7 +385,11 @@ public class Activity_engine extends AppCompatActivity {
                         Application_manager.set_inverter(Application_manager.inverterType);
                         communicator.set_engineer(2,(byte)((byte)inverter|(byte)w_press));
                         break;
-
+                    /*
+                    * 히든 버튼
+                    * hidden배열에 각 버튼이 눌렸는지 확인을 통해
+                    * 1,2,3,4,1번이 차례로 눌렸을시 작동
+                    */
                     case R.id.hidden_e_1:
                         //
                         if(hidden[3] == true)
@@ -424,7 +427,6 @@ public class Activity_engine extends AppCompatActivity {
                             hidden[3] = true;
                         }
                         break;
-
                 }
             }
         };
@@ -463,6 +465,10 @@ public class Activity_engine extends AppCompatActivity {
         eng_door_close.setOnTouchListener(mTouchEvent);
     }
 
+    /*
+    * 화면에 아무거나 눌렸을시 절전 time 초기화
+    * 설정 time은 그대로고 초단위로 세는 time 초기화
+     */
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         Application_manager.set_m_start_sleep(0);
@@ -478,6 +484,11 @@ public class Activity_engine extends AppCompatActivity {
         return super.onTouchEvent(event);
     }
 
+    /*
+    * 버튼을 누를시 -> ACTION_DOWN
+    * 버튼을 눌렀다 땔시 -> ACTION_UP
+    * 버튼의 이미지 변화시 데이터 전송
+    */
     private View.OnTouchListener mTouchEvent = new View.OnTouchListener() {
         @Override
         public boolean onTouch(View view, MotionEvent motionEvent) {
@@ -551,6 +562,7 @@ public class Activity_engine extends AppCompatActivity {
         }
     };
 
+
     @Override
     protected void onStart() {
         super.onStart();
@@ -601,11 +613,11 @@ public class Activity_engine extends AppCompatActivity {
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         isRun = true;
 
+        //언어에 따른 이미지 변화
         activity_engine.setBackgroundResource(Application_manager.engineermode_back_image[Application_manager.img_flag]);
         eng_door_open.setBackgroundResource(Application_manager.door_open_off[Application_manager.img_flag]);
         eng_door_close.setBackgroundResource(Application_manager.door_close_off[Application_manager.img_flag]);
         invert_choice.setBackgroundResource(Application_manager.inverter_ys[Application_manager.img_flag]);
-
         if(Application_manager.gw_1000 == true){
             program_m.setBackgroundResource(Application_manager.program_mode_off[Application_manager.img_flag]);
         }else if(Application_manager.gw_1000 == false){
@@ -646,12 +658,17 @@ public class Activity_engine extends AppCompatActivity {
         // 엔지니어모드 중지 플래그
         Application_manager.setIsEngineerMode(false);
 
+        // DB에 저장된 압력값을 다시 불러와 기기에 전달
         int val_pressure = 0;
         SharedPreferences sharedPreferences = getSharedPreferences(Application_manager.DB_NAME, 0);
         sharedPreferences.getInt(Application_manager.DB_VAL_PRESSURE, val_pressure);
         communicator.set_tx(3, (byte)(Application_manager.inverterVal | (byte)val_pressure));
     }
 
+    /*
+    * water 버튼중에 하나만 클릭 되도록 하는 함수
+    * 모두 off시키고 클릭 하는 것만 on
+    */
     void setZerosWaterPressure()
     {
         eng_28h.setBackgroundResource(R.drawable.water_28_off);
@@ -668,6 +685,10 @@ public class Activity_engine extends AppCompatActivity {
         eng_h_flag[5] = true;
     }
 
+    /*
+    * step 버튼중에 하나만 클릭 되도록 하는 함수
+    * 모두 off시키고 클릭 하는 것만 on
+    */
     void setZerosOXY(){
         eng_1step.setBackgroundResource(Application_manager.oxygen_1step_off[Application_manager.img_flag]);
         eng_step_flag[0] = true;
@@ -681,6 +702,10 @@ public class Activity_engine extends AppCompatActivity {
         eng_step_flag[4] = true;
     }
 
+    /*
+    *  프로그레스 다이얼로그
+    *  원점 복귀 완료신호 대기
+    */
     public void wait_motor_back(final String whatActivity) {
         Application_manager.setIsWaiting_init(true);
         Handler handler = new Handler() {
@@ -690,7 +715,6 @@ public class Activity_engine extends AppCompatActivity {
                 super.handleMessage(msg);
                 onStop();
                 if (whatActivity.equals("main")) {
-
                     startActivity(main_intent);
                 }
                 finish();

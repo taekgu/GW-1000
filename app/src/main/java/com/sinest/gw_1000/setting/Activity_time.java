@@ -76,6 +76,12 @@ public class Activity_time extends Activity {
         time.setText("00:00");
         time.setTypeface(tf);
 
+        /*
+        * 토글식 버튼
+        * 한번 누를 때마다 그 버튼의 값으로
+        * 시간을 만들어주는 함수 실행
+        * enter버튼은 시간이 시간범위에 있는지 확인후 끝낸다
+        */
         View.OnClickListener listener = new View.OnClickListener() {
             public void onClick(View v) {
                 Application_manager.set_m_start_sleep(0);
@@ -151,6 +157,7 @@ public class Activity_time extends Activity {
 
     protected void onResume() {
         super.onResume();
+        // 언어에 따른 이미지 초기설정
         time_keypad_id.setBackgroundResource(Application_manager.time_keypad[Application_manager.img_flag]);
         time_enter.setBackgroundResource(Application_manager.keypad_enter[Application_manager.img_flag]);
         time_back.setBackgroundResource(Application_manager.keypad_back[Application_manager.img_flag]);
@@ -159,6 +166,11 @@ public class Activity_time extends Activity {
         Application_manager.setSleep_f(0,true);
     }
 
+    /*
+    * 누른 버튼에 따라
+    * 시간을 만들어주는 함수
+    * 인자를 누른 버튼의 값으로 받는다
+     */
     void time_sum(int k)
     {
         if(int_c >= 4)

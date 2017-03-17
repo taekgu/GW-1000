@@ -75,6 +75,9 @@ public class Activity_rfidcardpassord extends Activity {
         intent_rfid = new Intent(this, Activity_rfid.class);
         intent_rfid.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_SINGLE_TOP);
 
+        /*
+        * 버튼 누를시 버튼에 해당하는 값이 뒤에 붙어서 나오게 한다
+         */
         View.OnClickListener listener = new View.OnClickListener() {
             public void onClick(View v) {
                 Application_manager.set_m_start_sleep(0);
@@ -145,6 +148,14 @@ public class Activity_rfidcardpassord extends Activity {
                         Application_manager.rfid_pass_f = true;
                         finish();
                         break;
+                    /*
+                    *  비밀번호를 바꾸는 경우인지 아닌지 확인후
+                    *  비밀번호를 바꾸는 경우라면 기존 비밀번호와 맞으면 입력하라는 명령어 출력
+                    *  아니면 실패 명령어 출력
+                    *  변경할 비밀번호를 입력후 enter버튼을 누르면 변경완료 명령어 출력
+                    *  변경할 경우가 아니라면 마스터 비밀번호와 일치시 비밀번호 0000으로 설정
+                    *  아니면 기존 비밀번호와 비교후 맞는지 아닌지 확인후 rfid모드 설정으로 전환
+                     */
                     case R.id.rfid_password_e:
                         if(check_c == true)
                         {
@@ -210,7 +221,7 @@ public class Activity_rfidcardpassord extends Activity {
 
     protected void onResume() {
         super.onResume();
-
+        // 언어에 따라 이미지 설정
         rfid_password_id.setBackgroundResource(Application_manager.rfid_password_popup[Application_manager.img_flag]);
         rfid_password_d.setBackgroundResource(Application_manager.keypad_delete[Application_manager.img_flag]);
         rfid_password_c.setBackgroundResource(Application_manager.keypad_change[Application_manager.img_flag]);
@@ -226,6 +237,7 @@ public class Activity_rfidcardpassord extends Activity {
         return false;
     }
 
+    // 추가된 번호로 비밀번호 표시
     void addps(char num){
         if(int_c == 0)
         {
@@ -252,6 +264,7 @@ public class Activity_rfidcardpassord extends Activity {
         rfid_p.setTextSize(50);
     }
 
+    // 비밀번호 표시에 뒤에서 부터 하니씩 지우기
     void delps(){
         if(int_c == 0)
         {
@@ -274,6 +287,7 @@ public class Activity_rfidcardpassord extends Activity {
         }
     }
 
+    // 비밀번호 표시를 모두 없이 만들기
     void setzeros()
     {
         int_buf = 0;

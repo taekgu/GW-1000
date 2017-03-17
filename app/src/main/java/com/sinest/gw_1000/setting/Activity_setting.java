@@ -249,6 +249,10 @@ public class Activity_setting extends AppCompatActivity {
         intent_rfid2 = new Intent(this, Activity_rfid.class);
         time = new Intent(this, Activity_time.class);
 
+        /*
+        * 토글식 버튼
+        * flag가 true이면 on false이면 off
+        */
         View.OnClickListener listener = new View.OnClickListener() {
             public void onClick(View v) {
                 Application_manager.set_m_start_sleep(0);

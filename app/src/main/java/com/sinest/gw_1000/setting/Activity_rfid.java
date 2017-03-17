@@ -77,6 +77,11 @@ public class Activity_rfid extends Activity {
 
         check = getIntent();
 
+        /*
+        * 토글식 버튼
+        * on 될시 데이터 전송
+        * flag가 true이면 on false이면 off
+        */
         View.OnClickListener listener = new View.OnClickListener() {
             public void onClick(View v) {
                 Application_manager.set_m_start_sleep(0);
@@ -111,6 +116,11 @@ public class Activity_rfid extends Activity {
         return false;
     }
 
+    /*
+    * 버튼을 누를시 -> ACTION_DOWN
+    * 버튼을 눌렀다 땔시 -> ACTION_UP
+    * 버튼의 이미지 변화 및 땔시 데이터 변환
+    */
     private View.OnTouchListener mTouchEvent = new View.OnTouchListener() {
         @Override
         public boolean onTouch(View view, MotionEvent motionEvent) {
@@ -220,6 +230,7 @@ public class Activity_rfid extends Activity {
         super.onResume();
         Application_manager.setFullScreen(this);
 
+        // 언어에 따른 이미지 초기설정
         rfid_save.setBackgroundResource(Application_manager.save_off[Application_manager.img_flag]);
         rfid_check.setBackgroundResource(Application_manager.check_off[Application_manager.img_flag]);
         rfid_off.setBackgroundResource(Application_manager.save_setting_off[Application_manager.img_flag]);
