@@ -68,7 +68,6 @@ public class Application_manager extends Application {
     public static int SENSOR_TEMP       = 0;
     public static int SENSOR_TEMP_BED   = 0;
 
-
     // 사용자 설정 온도 값
     public static int SENSOR_TEMP_USER      = 0;
     public static int SENSOR_TEMP_BED_USER  = 0;
@@ -254,7 +253,7 @@ public class Application_manager extends Application {
 
     //-------------------------------Img ---------------------------------------------------
     // 0-> 한국,영어 1-> 중국
-    //setting - o
+    //setting
     public static int img_flag = 0;
     public static int[] button_on = {R.drawable.button_on, R.drawable.button_on};//
     public static int[] button_off = {R.drawable.button_off, R.drawable.button_off_ch};
@@ -291,21 +290,16 @@ public class Application_manager extends Application {
     public static int[] emotionpopup = {R.drawable.emotionpopup, R.drawable.emotionpopup_ch};
     public static int[] rfid_working_popup = {R.drawable.rfid_working_popup, R.drawable.rfid_working_popup_ch};
     public static int[] water_heater_timer_popup = {R.drawable.water_heater_timer_popup, R.drawable.water_heater_timer_popup_ch};
-
-    // 저장버튼 추가 요청및 추가해야함  ,  팝업 배경 받고 진행
     public static int[] rfid_password_popup = {R.drawable.rfid_password_popup, R.drawable.rfid_password_popup_ch};
-
     public static int[] keypad_enter = {R.drawable.keypad_enter, R.drawable.keypad_enter_ch};
     public static int[] keypad_back = {R.drawable.keypad_back, R.drawable.keypad_back_ch};
     public static int[] keypad_change = {R.drawable.keypad_change, R.drawable.keypad_change_ch};
     public static int[] keypad_delete = {R.drawable.keypad_delete, R.drawable.keypad_delete_ch};
-
     public static int[] time_keypad = {R.drawable.time_keypad, R.drawable.time_keypad_ch};
     public static int[] water_heater_finishtimer_keyped = {R.drawable.water_heater_finishtimer_keyped, R.drawable.water_heater_finishtimer_keyped_ch};
     public static int[] water_heater_start_timer_keyped = {R.drawable.water_heater_start_timer_keyped, R.drawable.water_heater_start_timer_keyped_ch};
 
-
-    //engine - o
+    //engine
     public static int[] engineermode_back_image = {R.drawable.engineermode_back_image, R.drawable.engineermode_back_image_ch};
     public static int[] door_open_on = {R.drawable.door_open_on, R.drawable.door_open_on_ch};
     public static int[] door_open_off = {R.drawable.door_open_off, R.drawable.door_open_off_ch};
@@ -326,7 +320,7 @@ public class Application_manager extends Application {
     public static int[] program_mode_on = {R.drawable.program_mode_on, R.drawable.program_mode_on_ch};
     public static int[] program_mode_off = {R.drawable.program_mode_off, R.drawable.program_mode_off_ch};
 
-    //waiting - o
+    //waiting
     public static int[] waiting_backimage = {R.drawable.workingmotion0, R.drawable.workingmotion0_ch};
     public static int[] waiting_backimage_l = {R.drawable.workingmotion0_l, R.drawable.workingmotion0_l_ch};
 
@@ -334,20 +328,17 @@ public class Application_manager extends Application {
     public static int[] waiting_rfid_doorclose_back = {R.drawable.waiting_rfid_doorclose_back, R.drawable.waiting_rfid_doorclose_back_ch};
     public static int[] waiting_rfid_dooropen_back = {R.drawable.waiting_rfid_dooropen_back, R.drawable.waiting_rfid_dooropen_back_ch};
 
-
-    //library - o  popup 해야됨
+    //library
     public static int[] ribrary_back_image = {R.drawable.ribrary_back_image, R.drawable.ribrary_back_image_ch};
     public static int[] library_setting_off = {R.drawable.library_setting_off, R.drawable.library_setting_off_ch};
     public static int[] library_setting_on = {R.drawable.library_setting_on, R.drawable.library_setting_on_ch};
     public static int[] save_mode_off = {R.drawable.save_mode_off, R.drawable.save_mode_off_ch};
     public static int[] save_mode_on = {R.drawable.save_mode_on, R.drawable.save_mode_on_ch};
-
     public static int[] manual_mode_setting_backimage = {R.drawable.manual_mode_setting_backimage, R.drawable.manual_mode_setting_backimage_ch};
 
     public static String s_time_buf = "00:00";
     public static String f_time_buf = "00:00";
     public static int time_buf_f = 1;
-
     public static int rfid_on_f = 0;
 
     // 비정상 종료 플래그
@@ -358,16 +349,11 @@ public class Application_manager extends Application {
     public void onCreate() {
 
         sharedPreferences = getSharedPreferences(DB_NAME, 0);
-
         mUncaughtExceptionHandler = Thread.getDefaultUncaughtExceptionHandler();
 
         Thread.setDefaultUncaughtExceptionHandler(new UncaughtExceptionHandler() {
             @Override
             public void uncaughtException(Thread thread, Throwable throwable) {
-
-                Log.i("JW", "예외 발생. 어플리케이션 재시작");
-                //Log.i("JW", throwable.getMessage());
-                //Log.i("JW", throwable.getCause().getMessage());
 
                 //예외상황이 발행 되는 경우 작업
 
@@ -384,9 +370,7 @@ public class Application_manager extends Application {
                 am.set(AlarmManager.RTC, System.currentTimeMillis() + 5000, i);
 
                 //System.exit(2)
-                Log.i("JW", "Kill process");
                 android.os.Process.killProcess(android.os.Process.myPid());
-
                 //예외처리를 하지 않고 DefaultUncaughtException으로 넘긴다.
                 //mUncaughtExceptionHandler.uncaughtException(thread, throwable);
             }
@@ -401,21 +385,17 @@ public class Application_manager extends Application {
         DisplayMetrics metrics = new DisplayMetrics();
         WindowManager mgr = (WindowManager)context.getSystemService(Context.WINDOW_SERVICE);
         mgr.getDefaultDisplay().getMetrics(metrics);
-        Log.i("JW", "densityDPI = " + metrics.densityDpi);
 
         //시간차 저장
         sharedPreferences = context.getSharedPreferences(DB_NAME, 0);
         //m_gap_clock = sharedPreferences.getString(DB_TIME_GAP,"00:00");
         m_gap_clock_f = sharedPreferences.getBoolean(DB_TIME_GAP_F,true);
-        Log.v("ss","m_gap_clock : "+m_gap_clock);
-        Log.v("ss","m_gap_clock_f : "+m_gap_clock_f);
 
         //rfid
         rfid_on_f = sharedPreferences.getInt(RFID_ON_F,0);
 
         // 러닝타임 측정
         runningTime = sharedPreferences.getInt(DB_RUNNING_TIME,0);
-        Log.v("sss","START : "+runningTime);
         setThread_runningTime();
         isRun = true;
         thread_runningTime.start();
@@ -728,9 +708,6 @@ public class Application_manager extends Application {
             r_t = r_t-24;
         }
 
-        Log.v("sb","r_t : "+r_t);
-        Log.v("sb","r_m : "+r_m);
-
         if(r_t < 10){
             doTime_tt = "0"+String.valueOf(r_t);
         }
@@ -757,17 +734,12 @@ public class Application_manager extends Application {
 
     synchronized public static void setTime(String n_time){
         s_time = n_time;
-        Log.v("sb","n_time : "+n_time);
-        Log.v("sb","s_time : "+s_time);
         doCalculation_gap();
     }
     // 시간 차이 계산 및 DB 저장
     public static void doCalculation_gap()
     {
         String ss_time = getText();
-        // 시간차 구하기
-        Log.v("ss","s_time : "+s_time);
-        Log.v("ss","ss_time : "+ss_time);
         //설정 시간
         String a = s_time.substring(0,2);
         String b = s_time.substring(3,5);
@@ -833,10 +805,7 @@ public class Application_manager extends Application {
         else{
             gap_buf_m = String.valueOf(gap_m);
         }
-
         s_time_gap_t = gap_buf_t+":"+gap_buf_m;
-        Log.v("ss","gap_buf : "+s_time_gap_t + up);
-
         int g_buf;
 
         sharedPreferences = context.getSharedPreferences(Application_manager.DB_NAME, 0);
@@ -864,9 +833,6 @@ public class Application_manager extends Application {
         String p_time = Application_manager.getText();
         String g_time = Application_manager.m_gap_clock;
         boolean t_f = Application_manager.m_gap_clock_f;
-
-        Log.v("ss","p_time : "+p_time);
-        Log.v("ss","g_time : "+g_time);
 
         String aa = p_time.substring(0,2);
         String bb = p_time.substring(3,5);
@@ -924,8 +890,6 @@ public class Application_manager extends Application {
 
         String doTime = doTime_t+":"+doTime_m;
 
-        Log.v("ss","doTime : "+ doTime);
-
         return doTime;
         //clock.setText(doTime);
     }
@@ -938,14 +902,12 @@ public class Application_manager extends Application {
         PowerManager powerManager = (PowerManager)context.getSystemService(Context.POWER_SERVICE);
         mWakeLock = powerManager.newWakeLock(PowerManager.FULL_WAKE_LOCK,TAG);
         mWakeLock.acquire();
-        Log.v("mm","2");
     }
 
     synchronized public static void releaseWakeLock() {
         if(mWakeLock != null){
             mWakeLock.release();
             mWakeLock = null;
-            Log.v("mm","1");
         }
     }
 
@@ -981,7 +943,6 @@ public class Application_manager extends Application {
                         if(m_operation_f == true){
                             runningTime++;
                             save_Running_time();
-                            Log.v("sss","STOP : "+runningTime);
                         }
 
                         if(m_sleep_f == true){
@@ -989,7 +950,6 @@ public class Application_manager extends Application {
                             if(start_m == end_m){
                                 Activity_setting.devicePolicyManager.lockNow();
                             }
-                            Log.v("sb_test","start_m : "+start_m+"  end_m : "+end_m);
                         }
                     }
                     catch (Exception e) {
@@ -1045,34 +1005,28 @@ public class Application_manager extends Application {
     // ProgressDialog (원점 복귀 대기용)
     private static boolean isWaiting_init = false;
     public synchronized static boolean getIsWaiting_init() {
-
         return isWaiting_init;
     }
     public synchronized static void setIsWaiting_init(boolean val) {
-
         isWaiting_init = val;
     }
 
     public static ProgressDialog getDefaultProgressDialog(final Context _context) {
 
         ProgressDialog progressDialog = null;
-
         // 언어별 메시지 설정
         String msg = "";
 
         // 한
         if (m_language == 0) {
-
             msg = "잠시만 기다려 주십시오";
         }
         // 영
         else if (m_language == 1) {
-
             msg = "Please wait a moment";
         }
         // 중
         else if (m_language == 2) {
-
             msg = "请稍等一会儿";
         }
 
@@ -1094,79 +1048,6 @@ public class Application_manager extends Application {
 
             );
         }
-
         return progressDialog;
     }
-/*
-    public static void showProgressDialog(final Context _context, final Activity activity) {
-
-        // 언어별 메시지 설정
-        String msg = "";
-
-        // 한
-        if (m_language == 0) {
-
-            msg = "잠시만 기다려 주십시오";
-        }
-        // 영
-        else if (m_language == 1) {
-
-            msg = "Please wait a moment";
-        }
-        // 중
-        else if (m_language == 2) {
-
-            msg = "请稍等一会儿";
-        }
-
-        // 다이얼로그 생성 및 설정
-        if (progressDialog == null) {
-
-            progressDialog = new ProgressDialog(_context);
-            progressDialog.setCancelable(false);
-            progressDialog.setIndeterminate(true);
-            progressDialog.setMessage(msg);
-
-            // 전체화면
-            progressDialog.getWindow().getDecorView().setSystemUiVisibility(
-                    View.SYSTEM_UI_FLAG_LAYOUT_STABLE
-                            | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
-                            | View.SYSTEM_UI_FLAG_FULLSCREEN
-                            | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
-
-            );
-        }
-
-        if (!progressDialog.isShowing()) {
-
-            progressDialog.show();
-
-            final Handler handler = new Handler() {
-
-                @Override
-                public void handleMessage(Message msg) {
-                    super.handleMessage(msg);
-
-                    if (progressDialog.isShowing()) {
-
-                        progressDialog.dismiss();
-                        progressDialog = null;
-
-                        Application_manager.setFullScreen(activity);
-                        activity.getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
-                    }
-                }
-            };
-
-            Thread thread = new Thread(new Runnable() {
-                @Override
-                public void run() {
-
-                    while (getIsWaiting_init());
-                    handler.sendEmptyMessage(0);
-                }
-            });
-            thread.start();
-        }
-    }*/
 }

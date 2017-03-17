@@ -43,8 +43,6 @@ public class Activity_time extends Activity {
 
     ImageView time_keypad_id;
 
-    //Intent result;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -72,63 +70,46 @@ public class Activity_time extends Activity {
         time0 = (Button) findViewById(R.id.time0);
         time_enter = (Button) findViewById(R.id.time_enter);
         time_back = (Button) findViewById(R.id.time_back);
-
-        //result = this.getIntent();
-
         time = (Chronometer) findViewById(R.id.time);
 
         Typeface tf = Typeface.createFromAsset(getAssets(), "fonts/digital.ttf");
-        //time.setText(result.getStringExtra("start"));
         time.setText("00:00");
         time.setTypeface(tf);
-
-
 
         View.OnClickListener listener = new View.OnClickListener() {
             public void onClick(View v) {
                 Application_manager.set_m_start_sleep(0);
                 switch (v.getId()) {
                     case R.id.time1:
-                        //
                         time_sum(1);
                         break;
                     case R.id.time2:
-                        //
                         time_sum(2);
                         break;
                     case R.id.time3:
-                        //
                         time_sum(3);
                         break;
                     case R.id.time4:
-                        //
                         time_sum(4);
                         break;
                     case R.id.time5:
-                        //
                         time_sum(5);
                         break;
                     case R.id.time6:
-                        //
                         time_sum(6);
                         break;
                     case R.id.time7:
-                        //
                         time_sum(7);
                         break;
                     case R.id.time8:
-                        //
                         time_sum(8);
                         break;
                     case R.id.time9:
-                        //
                         time_sum(9);
                         break;
                     case R.id.time0:
-                        //
                         time_sum(0);
                         break;
-
                     case R.id.time_enter:
                         check = s_buf.indexOf(":");
                         buf_l = s_buf.substring(0,check);
@@ -138,20 +119,17 @@ public class Activity_time extends Activity {
                         int_r = int_buf%100;
                         if(int_l >= 24 || int_r >=60){
                             Application_manager.getToastManager().popToast(11);
-                            //Toast.makeText(getApplicationContext(), "Check the time again", Toast.LENGTH_SHORT).show();
                         }else{
                             Application_manager.setTime(s_buf);
                         }
                         finish();
                         break;
                     case R.id.time_back:
-                        //
                         finish();
                         break;
                 }
             }
         };
-
         time1.setOnClickListener(listener);
         time2.setOnClickListener(listener);
         time3.setOnClickListener(listener);
@@ -173,7 +151,6 @@ public class Activity_time extends Activity {
 
     protected void onResume() {
         super.onResume();
-
         time_keypad_id.setBackgroundResource(Application_manager.time_keypad[Application_manager.img_flag]);
         time_enter.setBackgroundResource(Application_manager.keypad_enter[Application_manager.img_flag]);
         time_back.setBackgroundResource(Application_manager.keypad_back[Application_manager.img_flag]);
@@ -217,7 +194,6 @@ public class Activity_time extends Activity {
             }
 
             s_buf = buf_l+":"+buf_r;
-
             time.setText(s_buf);
 
         }else if(int_c == 0) {
@@ -256,7 +232,6 @@ public class Activity_time extends Activity {
             }
 
             s_buf = buf_l+":"+buf_r;
-
             time.setText(s_buf);
             int_c++;
         }

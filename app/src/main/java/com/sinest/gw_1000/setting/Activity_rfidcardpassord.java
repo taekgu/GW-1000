@@ -25,14 +25,10 @@ public class Activity_rfidcardpassord extends Activity {
     ImageView rfid_password_7; ImageView rfid_password_8; ImageView rfid_password_9; ImageView rfid_password_0;
     ImageView rfid_password_d; ImageView rfid_password_c; ImageView rfid_password_e; ImageView rfid_password_b;
 
-    boolean[] r_password_kflag = {true,true,true,true,true,true,true,true,true,true};
-    boolean[] r_password_flag = {true,true,true,true};
     boolean check_c = true;
     boolean check_m_c = false;
-
     TextView rfid_p;
     Intent intent_rfid;
-    Intent intent_pscheck;
 
     char[] s_buf = {' ',' ',' ',' '};
     String ps = "";
@@ -40,11 +36,6 @@ public class Activity_rfidcardpassord extends Activity {
     int int_c = 0;
     String mater_ps = "5866";
     String password = "0000";
-
-    Intent check;
-
-    private static Context context;
-
     ImageView rfid_password_id;
 
     @Override
@@ -59,11 +50,9 @@ public class Activity_rfidcardpassord extends Activity {
 
         Application_manager.setFullScreen(this);
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
-
         password = Application_manager.get_m_password();
 
         rfid_password_id = (ImageView) findViewById(R.id.rfid_password_id);
-
         rfid_password_1 = (ImageView) findViewById(R.id.rfid_password_1);
         rfid_password_2 = (ImageView) findViewById(R.id.rfid_password_2);
         rfid_password_3 = (ImageView) findViewById(R.id.rfid_password_3);
@@ -83,97 +72,80 @@ public class Activity_rfidcardpassord extends Activity {
         rfid_p = (TextView) findViewById(R.id.rfid_p);
         rfid_p.setTypeface(tf);
 
-
         intent_rfid = new Intent(this, Activity_rfid.class);
         intent_rfid.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_SINGLE_TOP);
-
 
         View.OnClickListener listener = new View.OnClickListener() {
             public void onClick(View v) {
                 Application_manager.set_m_start_sleep(0);
                 switch (v.getId()) {
                     case R.id.rfid_password_1:
-                        //
                         addps('1');
                         ps = ""+s_buf[0]+s_buf[1]+s_buf[2]+s_buf[3];
-                        Log.v("test","ps : "+ps);
                         rfid_p.setText(ps);
                         break;
                     case R.id.rfid_password_2:
-                        //
                         addps('2');
                         ps = ""+s_buf[0]+s_buf[1]+s_buf[2]+s_buf[3];
                         rfid_p.setText(ps);
                         break;
                     case R.id.rfid_password_3:
-                        //
                         addps('3');
                         ps = ""+s_buf[0]+s_buf[1]+s_buf[2]+s_buf[3];
                         rfid_p.setText(ps);
                         break;
                     case R.id.rfid_password_4:
-                        //
                         addps('4');
                         ps = ""+s_buf[0]+s_buf[1]+s_buf[2]+s_buf[3];
                         rfid_p.setText(ps);
                         break;
                     case R.id.rfid_password_5:
-                        //
                         addps('5');
                         ps = ""+s_buf[0]+s_buf[1]+s_buf[2]+s_buf[3];
                         rfid_p.setText(ps);
                         break;
                     case R.id.rfid_password_6:
-                        //
                         addps('6');
                         ps = ""+s_buf[0]+s_buf[1]+s_buf[2]+s_buf[3];
                         rfid_p.setText(ps);
                         break;
                     case R.id.rfid_password_7:
-                        //
                         addps('7');
                         ps = ""+s_buf[0]+s_buf[1]+s_buf[2]+s_buf[3];
                         rfid_p.setText(ps);
                         break;
                     case R.id.rfid_password_8:
-                        //
                         addps('8');
                         ps = ""+s_buf[0]+s_buf[1]+s_buf[2]+s_buf[3];
                         rfid_p.setText(ps);
                         break;
                     case R.id.rfid_password_9:
-                        //
                         addps('9');
                         ps = ""+s_buf[0]+s_buf[1]+s_buf[2]+s_buf[3];
                         rfid_p.setText(ps);
                         break;
                     case R.id.rfid_password_0:
-                        //
                         addps('0');
                         ps = ""+s_buf[0]+s_buf[1]+s_buf[2]+s_buf[3];
                         rfid_p.setText(ps);
                         break;
                     //-----------------------------------------------
                     case R.id.rfid_password_d:
-                        //
                         delps();
                         ps = ""+s_buf[0]+s_buf[1]+s_buf[2]+s_buf[3];
                         rfid_p.setText(ps);
                         break;
                     case R.id.rfid_password_c:
-                        //
                         check_c = false;
                         rfid_p.setText("Previous password");
                         rfid_p.setTextSize(25);
                         setzeros();
                         break;
                     case R.id.rfid_password_b:
-                        //
                         Application_manager.rfid_pass_f = true;
                         finish();
                         break;
                     case R.id.rfid_password_e:
-                        //
                         if(check_c == true)
                         {
                             if(ps.equals(mater_ps)){
@@ -195,7 +167,6 @@ public class Activity_rfidcardpassord extends Activity {
                             {
                                 password = ps;
                                 Application_manager.set_m_password(password);
-                                Log.v("test",""+password);
                                 rfid_p.setText("Password Change");
                                 rfid_p.setTextSize(25);
                                 setzeros();
@@ -216,13 +187,10 @@ public class Activity_rfidcardpassord extends Activity {
                                 }
                             }
                         }
-
                         break;
                 }
-                //Toast.makeText(Activity_rfidcardpassord.this, s_buf, Toast.LENGTH_SHORT).show();
             }
         };
-
         rfid_password_1.setOnClickListener(listener);
         rfid_password_2.setOnClickListener(listener);
         rfid_password_3.setOnClickListener(listener);

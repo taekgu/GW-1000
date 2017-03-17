@@ -41,7 +41,6 @@ public class Activity_water extends Activity {
     String finish_time = "00:00";
 
     private GoogleApiClient client;
-
     LinearLayout activity_water;
 
     @Override
@@ -58,7 +57,6 @@ public class Activity_water extends Activity {
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 
         activity_water = (LinearLayout) findViewById(R.id.activity_water);
-
         water_save = (Button) findViewById(R.id.water_save);
         water_off = (Button) findViewById(R.id.water_off);
         water_back = (Button) findViewById(R.id.water_back);
@@ -70,31 +68,19 @@ public class Activity_water extends Activity {
         water_f_c.setTypeface(tf);
 
         intent_start = new Intent(this, Activity_starttime.class);
-        //intent_start.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_SINGLE_TOP);
-
         intent_finish = new Intent(this, Activity_finishtime.class);
-        //intent_finish.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_SINGLE_TOP);
-
-        //change
-        //do_init_time();
-        //water_s_c.setText(start_time);
-        //water_f_c.setText(finish_time);
-
 
         View.OnClickListener listener = new View.OnClickListener() {
             public void onClick(View v) {
                 Application_manager.set_m_start_sleep(0);
                 switch (v.getId()) {
                     case R.id.water_off:
-                        //
                         if (water_flag[1] == true) {
                             water_off.setBackgroundResource(Application_manager.save_setting_on[Application_manager.img_flag]);
                             water_flag[1] = false;
-                            //Application_manager.set_m_water_ff(water_flag[1]);
                         } else {
                             water_off.setBackgroundResource(Application_manager.save_setting_off[Application_manager.img_flag]);
                             water_flag[1] = true;
-                            //Application_manager.set_m_water_ff(water_flag[1]);
                         }
                         break;
                     case R.id.water_s_c:
@@ -106,13 +92,9 @@ public class Activity_water extends Activity {
                 }
             }
         };
-
-        //water_save.setOnClickListener(listener);
         water_off.setOnClickListener(listener);
-        //water_back.setOnClickListener(listener);
         water_s_c.setOnClickListener(listener);
         water_f_c.setOnClickListener(listener);
-
         water_save.setOnTouchListener(mTouchEvent);
         water_back.setOnTouchListener(mTouchEvent);
     }
@@ -180,7 +162,6 @@ public class Activity_water extends Activity {
     }
 
     private void do_init_time(){
-        Log.v("sb11","" +Application_manager.time_buf_f);
         if(Application_manager.time_buf_f == 1){
             start_time = Application_manager.m_water_heater_time_stime;
             water_s_c.setText(start_time);
@@ -190,7 +171,6 @@ public class Activity_water extends Activity {
             water_s_c.setText(Application_manager.s_time_buf);
             water_f_c.setText(Application_manager.f_time_buf);
         }
-        Log.v("sb_test","s_time_buf : "+Application_manager.s_time_buf+"  f_time_buf : "+Application_manager.f_time_buf+"  time_buf_f:"+Application_manager.time_buf_f);
         water_flag[1] = Application_manager.m_water_heater_f;
         Application_manager.time_buf_f = 0;
     }
@@ -199,6 +179,5 @@ public class Activity_water extends Activity {
     protected void onStop() {
         super.onStop();
         Application_manager.time_buf_f = 1;
-        Log.v("sb11","" +Application_manager.time_buf_f);
     }
 }

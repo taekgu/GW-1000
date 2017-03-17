@@ -120,9 +120,7 @@ public class Activity_setting extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         Application_manager.setFullScreen(this);
-
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
-
         devicePolicyManager = (DevicePolicyManager) getApplicationContext().getSystemService(Context.DEVICE_POLICY_SERVICE);
         componentName = new ComponentName(getApplicationContext(), ShutdownAdminReceiver.class);
 
@@ -139,12 +137,9 @@ public class Activity_setting extends AppCompatActivity {
         s_clock.setText(Application_manager.doInit_time());
 
         flag = true;
-
         communicator = Application_manager.getCommunicator();
-
         activity_setting = (LinearLayout)findViewById(R.id.activity_main);
 
-        Log.v("sb_test",""+Application_manager.img_flag);
         b_11 = (TextView)findViewById(R.id.button11);
         b_21 = (TextView)findViewById(R.id.button21);
         b_31 = (TextView)findViewById(R.id.button31);
@@ -165,38 +160,28 @@ public class Activity_setting extends AppCompatActivity {
         SharedPreferences sharedPreferences = getSharedPreferences(Application_manager.DB_NAME, 0);
         int resourceID;
         int rx_idx = -1;
-        Log.i("JW", "onCreate");
         for (int i=1; i<=4; i++) { // 세로
-
             for (int j=1; j<=3; j++) { // 가로
-
                 resourceID = getResources().getIdentifier("button" + i + "" + j, "id", "com.sinest.gw_1000");
                 TextView resource = (TextView) findViewById(resourceID);
-
                 // buttonij가 OFF 상태일 때
                 if (sharedPreferences.getInt((Application_manager.DB_SETTING_ONOFF_VAL_ + i + "" + j), 0) == 0) {
 
                     button_flag[((j-1)*4 + i - 1)] = true;
                     resource.setBackgroundResource(Application_manager.button_off[Application_manager.img_flag]);
                     resource.setText("");
-                    //    Log.i("JW", "button_flag[" + ((j-1)*4 + i - 1) + "] / button" + i + "" + j + " = OFF");
                 }
                 // buttonij가 ON 상태일 때
                 else {
-
                     button_flag[((j-1)*4 + i - 1)] = false;
                     resource.setBackgroundResource(Application_manager.button_on[Application_manager.img_flag]);
-                    //    Log.i("JW", "button_flag[" + ((j-1)*4 + i - 1) + "] / button" + i + "" + j + " = ON");
                     if (j == 1) {
-
                         rx_idx = 10 + i;
                     }
                     else if (j == 2) {
-
                         rx_idx = 2 + i;
                     }
                     else if (j == 3) {
-
                         rx_idx = 6 + i;
                     }
                     resource.setText(""+communicator.get_rx_idx(rx_idx));
@@ -209,11 +194,9 @@ public class Activity_setting extends AppCompatActivity {
         rfid_state = sharedPreferences.getBoolean(Application_manager.DB_RFID_ONOFF, false);
         button2_flag[0] = !rfid_state;
         if (rfid_state) {
-
             b_rf.setBackgroundResource(Application_manager.on[Application_manager.img_flag]);
         }
         else {
-
             b_rf.setBackgroundResource(Application_manager.off[Application_manager.img_flag]);
         }
         b_ex = (Button)findViewById(R.id.b_ex);
@@ -257,42 +240,26 @@ public class Activity_setting extends AppCompatActivity {
         hidden_s_2 = (Button) findViewById(R.id.hidden_s_2);
         hidden_s_3 = (Button) findViewById(R.id.hidden_s_3);
         hidden_s_4 = (Button) findViewById(R.id.hidden_s_4);
-        Log.i("m_volume : ", "" + Application_manager.m_volume);
         custom_seekbar_horizontal.setCurrentLoc(Application_manager.m_volume/10);
 
-
-        //Application_manager.getRunningTime();
-
         intent_emotion = new Intent(this, Activity_emotion.class);
-        //intent_emotion.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_SINGLE_TOP);
-
         intent_rfid = new Intent(this, Activity_rfidcardpassord.class);
-        //intent_rfid.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_SINGLE_TOP);
-
         intent_wa = new Intent(this, Activity_water.class);
-        //intent_wa.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_SINGLE_TOP);
-
         intent_hidden = new Intent(this, Activity_engine.class);
-
         intent_rfid2 = new Intent(this, Activity_rfid.class);
-        //intent_rfid2.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_SINGLE_TOP);
-
         time = new Intent(this, Activity_time.class);
 
         View.OnClickListener listener = new View.OnClickListener() {
             public void onClick(View v) {
                 Application_manager.set_m_start_sleep(0);
-                Log.v("sb1","test");
                 switch (v.getId()) {
                     case R.id.button11:
-                        //
                         if (button_flag[0] == true) {
                             b_11.setBackgroundResource(Application_manager.button_on[Application_manager.img_flag]);
                             b_11.setText("" + communicator.get_rx_idx(11) + "%");
                             b_11.setTypeface(tf);
                             button_flag[0] = false;
                             Application_manager.wakeLock(getApplicationContext());
-
                         } else {
                             b_11.setBackgroundResource(Application_manager.button_off[Application_manager.img_flag]);
                             b_11.setText("");
@@ -301,7 +268,6 @@ public class Activity_setting extends AppCompatActivity {
                         }
                         break;
                     case R.id.button21:
-                        //
                         if (button_flag[1] == true) {
                             b_21.setBackgroundResource(Application_manager.button_on[Application_manager.img_flag]);
                             b_21.setText("" + communicator.get_rx_idx(12) + "%");
@@ -314,7 +280,6 @@ public class Activity_setting extends AppCompatActivity {
                         }
                         break;
                     case R.id.button31:
-                        //
                         if (button_flag[2] == true) {
                             b_31.setBackgroundResource(Application_manager.button_on[Application_manager.img_flag]);
                             b_31.setText("" + communicator.get_rx_idx(13) + "%");
@@ -327,7 +292,6 @@ public class Activity_setting extends AppCompatActivity {
                         }
                         break;
                     case R.id.button41:
-                        //
                         if (button_flag[3] == true) {
                             b_41.setBackgroundResource(Application_manager.button_on[Application_manager.img_flag]);
                             b_41.setText("" + communicator.get_rx_idx(14) + "%");
@@ -340,7 +304,6 @@ public class Activity_setting extends AppCompatActivity {
                         }
                         break;
                     case R.id.button12:
-                        //
                         if (button_flag[4] == true) {
                             b_12.setBackgroundResource(Application_manager.button_on[Application_manager.img_flag]);
                             b_12.setText("" + communicator.get_rx_idx(3) + "℃");
@@ -353,7 +316,6 @@ public class Activity_setting extends AppCompatActivity {
                         }
                         break;
                     case R.id.button22:
-                        //
                         if (button_flag[5] == true) {
                             b_22.setBackgroundResource(Application_manager.button_on[Application_manager.img_flag]);
                             b_22.setText("" + communicator.get_rx_idx(4) + "℃");
@@ -366,7 +328,6 @@ public class Activity_setting extends AppCompatActivity {
                         }
                         break;
                     case R.id.button32:
-                        //
                         if (button_flag[6] == true) {
                             b_32.setBackgroundResource(Application_manager.button_on[Application_manager.img_flag]);
                             b_32.setText("" + communicator.get_rx_idx(5) + "℃");
@@ -379,7 +340,6 @@ public class Activity_setting extends AppCompatActivity {
                         }
                         break;
                     case R.id.button42:
-                        //
                         if (button_flag[7] == true) {
                             b_42.setBackgroundResource(Application_manager.button_on[Application_manager.img_flag]);
                             b_42.setText("" + communicator.get_rx_idx(6) + "℃");
@@ -392,7 +352,6 @@ public class Activity_setting extends AppCompatActivity {
                         }
                         break;
                     case R.id.button13:
-                        //
                         if (button_flag[8] == true) {
                             b_13.setBackgroundResource(Application_manager.button_on[Application_manager.img_flag]);
                             b_13.setText("" + communicator.get_rx_idx(7) + "%");
@@ -405,7 +364,6 @@ public class Activity_setting extends AppCompatActivity {
                         }
                         break;
                     case R.id.button23:
-                        //
                         if (button_flag[9] == true) {
                             b_23.setBackgroundResource(Application_manager.button_on[Application_manager.img_flag]);
                             b_23.setText("" + communicator.get_rx_idx(8) + "%");
@@ -418,7 +376,6 @@ public class Activity_setting extends AppCompatActivity {
                         }
                         break;
                     case R.id.button33:
-                        //
                         if (button_flag[10] == true) {
                             b_33.setBackgroundResource(Application_manager.button_on[Application_manager.img_flag]);
                             b_33.setText("" + communicator.get_rx_idx(9) + "%");
@@ -431,7 +388,6 @@ public class Activity_setting extends AppCompatActivity {
                         }
                         break;
                     case R.id.button43:
-                        //
                         if (button_flag[11] == true) {
                             b_43.setBackgroundResource(Application_manager.button_on[Application_manager.img_flag]);
                             b_43.setText("" + communicator.get_rx_idx(10) + "%");
@@ -445,7 +401,6 @@ public class Activity_setting extends AppCompatActivity {
                         break;
 //----------------------------------------------------------------------------------------
                     case R.id.b_rf:
-                        //
                         if (button2_flag[0] == true) {
                             b_rf.setBackgroundResource(Application_manager.on[Application_manager.img_flag]);
                             button2_flag[0] = false;
@@ -457,7 +412,6 @@ public class Activity_setting extends AppCompatActivity {
                         }
                         break;
                     case R.id.b_ex:
-                        //
                         if (ex_f == 0) {
                             b_ex.setBackgroundResource(Application_manager.on[Application_manager.img_flag]);
                             ex_f = 1;
@@ -472,7 +426,6 @@ public class Activity_setting extends AppCompatActivity {
                         communicator.getSocketManager().send_setting();
                         break;
                     case R.id.b_wa:
-                        //
                         if (button2_flag[2] == true) {
                             //b_wa.setBackgroundResource(Application_manager.on[Application_manager.img_flag]);
                             //b_wa.setBackgroundResource(Application_manager.on[Application_manager.img_flag]);
@@ -487,7 +440,6 @@ public class Activity_setting extends AppCompatActivity {
                         }
                         break;
                     case R.id.b_pa:
-                        //
                         if (button2_flag[3] == true) {
                             b_pa.setBackgroundResource(Application_manager.on[Application_manager.img_flag]);
                             button2_flag[3] = false;
@@ -500,24 +452,18 @@ public class Activity_setting extends AppCompatActivity {
                         }
                         communicator.getSocketManager().send_setting();
                         break;
-
                     //----------------------------------------------------------------------------------------
                     case R.id.b_1m:
-                        //
                         if (button3_flag[0] == true) {
                             setZerosSleep();
                             b_1m.setBackgroundResource(Application_manager.sleepmode_1min_on[Application_manager.img_flag]);
                             button3_flag[0] = false;
-
                             //----screen off----
                             sleep_f = true;
                             sleep_cnt = 0;
                             sleep_cnt_end = 60;
                             Application_manager.setSleep(sleep_cnt,sleep_cnt_end,sleep_f);
-
                             Application_manager.set_m_sleep_m(0);
-
-                            Log.v("test", "test");
                         } else {
                             b_1m.setBackgroundResource(Application_manager.sleepmode_1min[Application_manager.img_flag]);
                             sleep_f = false;
@@ -528,41 +474,32 @@ public class Activity_setting extends AppCompatActivity {
                         }
                         break;
                     case R.id.b_3m:
-                        //
                         if (button3_flag[1] == true) {
                             setZerosSleep();
                             b_3m.setBackgroundResource(Application_manager.sleepmode_3min_on[Application_manager.img_flag]);
-
                             sleep_f = true;
                             sleep_cnt = 0;
                             sleep_cnt_end = 3*60;
-
                             Application_manager.setSleep(sleep_cnt,sleep_cnt_end,sleep_f);
-
                             Application_manager.set_m_sleep_m(1);
-
                             button3_flag[1] = false;
                         } else {
                             b_3m.setBackgroundResource(Application_manager.sleepmode_3min[Application_manager.img_flag]);
                             sleep_f = false;
                             sleep_cnt = 0;
                             sleep_cnt_end = 0;
-
                             Application_manager.setSleep(sleep_cnt,sleep_cnt_end,sleep_f);
                             button3_flag[1] = true;
                         }
                         break;
                     case R.id.b_5m:
-                        //
                         if (button3_flag[2] == true) {
                             setZerosSleep();
                             b_5m.setBackgroundResource(Application_manager.sleepmode_5min_on[Application_manager.img_flag]);
                             sleep_f = true;
                             sleep_cnt = 0;
                             sleep_cnt_end = 5*60;
-
                             Application_manager.setSleep(sleep_cnt,sleep_cnt_end,sleep_f);
-
                             Application_manager.set_m_sleep_m(2);
                             button3_flag[2] = false;
                         } else {
@@ -570,22 +507,18 @@ public class Activity_setting extends AppCompatActivity {
                             sleep_f = false;
                             sleep_cnt = 0;
                             sleep_cnt_end = 0;
-
                             Application_manager.setSleep(sleep_cnt,sleep_cnt_end,sleep_f);
                             button3_flag[2] = true;
                         }
                         break;
                     case R.id.b_coutinue:
-                        //
                         if (button3_flag[3] == true) {
                             setZerosSleep();
                             b_coutinue.setBackgroundResource(Application_manager.sleepmode_continue_on[Application_manager.img_flag]);
                             sleep_f = false;
                             sleep_cnt = 0;
                             sleep_cnt_end = 0;
-
                             Application_manager.setSleep(sleep_cnt,sleep_cnt_end,sleep_f);
-
                             Application_manager.set_m_sleep_m(3);
                             button3_flag[3] = false;
                         } else {
@@ -593,14 +526,12 @@ public class Activity_setting extends AppCompatActivity {
                             sleep_f = false;
                             sleep_cnt = 0;
                             sleep_cnt_end = 0;
-
                             Application_manager.setSleep(sleep_cnt,sleep_cnt_end,sleep_f);
                             button3_flag[3] = true;
                         }
                         break;
 //------------------------------------------------------------------------------------
                     case R.id.b_language:
-                        //
                         if (b_language_f == 0) {
                             b_language.setBackgroundResource(R.drawable.language_en);
                             b_language_f = 1;
@@ -616,7 +547,6 @@ public class Activity_setting extends AppCompatActivity {
                         startActivity(intent);
                         break;
                     case R.id.b_inverter:
-                        //
                         if (b_inverter_f == 0) {
                             b_inverter.setBackgroundResource(Application_manager.inverter_50[Application_manager.img_flag]);
                             b_inverter_f = 1;
@@ -628,9 +558,7 @@ public class Activity_setting extends AppCompatActivity {
                             b_inverter_f = 0;
                         }
                         break;
-
                     case R.id.hidden_s_1:
-                        //
                         if (hidden[3] == true) {
                             hidden[0] = false;
                             hidden[1] = false;
@@ -640,34 +568,29 @@ public class Activity_setting extends AppCompatActivity {
                             startActivityForResult(intent_hidden, 22);
                         } else {
                             hidden[0] = true;
-                            Log.v("hidden", "hidden1");
                         }
                         break;
                     case R.id.hidden_s_2:
                         //
                         if (hidden[0] == true) {
                             hidden[1] = true;
-                            Log.v("hidden", "hidden2");
                         }
                         break;
                     case R.id.hidden_s_3:
                         //
                         if (hidden[1] == true) {
                             hidden[2] = true;
-                            Log.v("hidden", "hidden3");
                         }
                         break;
                     case R.id.hidden_s_4:
                         //
                         if (hidden[2] == true) {
                             hidden[3] = true;
-                            Log.v("hidden", "hidden4");
                         }
                         break;
                 }
             }
         };
-
         b_11.setOnClickListener(listener);
         b_21.setOnClickListener(listener);
         b_31.setOnClickListener(listener);
@@ -689,8 +612,6 @@ public class Activity_setting extends AppCompatActivity {
         b_3m.setOnClickListener(listener);
         b_5m.setOnClickListener(listener);
         b_coutinue.setOnClickListener(listener);
-        //b_back.setOnClickListener(listener);
-        //b_emotion.setOnClickListener(listener);
         b_language.setOnClickListener(listener);
         b_inverter.setOnClickListener(listener);
 
@@ -698,12 +619,9 @@ public class Activity_setting extends AppCompatActivity {
         hidden_s_2.setOnClickListener(listener);
         hidden_s_3.setOnClickListener(listener);
         hidden_s_4.setOnClickListener(listener);
-
         b_emotion.setOnTouchListener(mTouchEvent);
         b_back.setOnTouchListener(mTouchEvent);
         s_clock.setOnTouchListener(mTouchEvent);
-        // ATTENTION: This was auto-generated to implement the App Indexing API.
-        // See https://g.co/AppIndexing/AndroidStudio for more information.
     }
 
     void setZerosSleep()
@@ -726,37 +644,26 @@ public class Activity_setting extends AppCompatActivity {
         SharedPreferences.Editor editor = sharedPreferences.edit();
 
         isRun = false;
-
         rfid_state = !button2_flag[0];
         editor.putBoolean(Application_manager.DB_RFID_ONOFF, rfid_state);
-        //editor.putBoolean(Application_manager.DB_RFID_ONOFF, false);
-        Log.i("JW", "RFID mode = " + rfid_state);
 
         for (int i=1; i<=4; i++) { // 세로
-
             for (int j = 1; j <= 3; j++) { // 가로
-
                 // 버튼 플래그가 true(OFF)일 때
                 if (button_flag[((j-1)*4 + i - 1)]) {
-
                     editor.putInt(Application_manager.DB_SETTING_ONOFF_VAL_ + i + "" + j, 0);
-                    //    Log.i("JW", "button_flag[" + ((j-1)*4 + i - 1) + "] / button" + i + "" + j + " = OFF");
                 }
                 else {
-
                     editor.putInt(Application_manager.DB_SETTING_ONOFF_VAL_ + i + "" + j, 1);
-                    //   Log.i("JW", "button_flag[" + ((j-1)*4 + i - 1) + "] / button" + i + "" + j + " = ON");
                 }
             }
         }
-
         editor.commit();
     }
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         Application_manager.set_m_start_sleep(0);
-        Log.v("sb1","test");
         int action = event.getAction();
         switch(action) {
             case MotionEvent.ACTION_DOWN :    //화면을 터치했을때
@@ -769,7 +676,6 @@ public class Activity_setting extends AppCompatActivity {
         return super.onTouchEvent(event);
     }
 
-
     private View.OnTouchListener mTouchEvent = new View.OnTouchListener() {
         @Override
         public boolean onTouch(View view, MotionEvent motionEvent) {
@@ -780,11 +686,9 @@ public class Activity_setting extends AppCompatActivity {
                 switch (id) {
                     case R.id.b_emotion:
                         b_emotion.setBackgroundResource(Application_manager.emotion_on[Application_manager.img_flag]);
-
                         break;
                     case R.id.b_back:
                         b_back.setBackgroundResource(Application_manager.button_circle_back_on[Application_manager.img_flag]);
-
                         break;
                     case R.id.textClock_s:
                         startActivity(time);
@@ -799,17 +703,13 @@ public class Activity_setting extends AppCompatActivity {
                     case R.id.b_back:
                         b_back.setBackgroundResource(Application_manager.button_circle_back_off[Application_manager.img_flag]);
                         isRun = false;
-
                         // Modified by Jinwook
                         Intent intent = null;
                         rfid_state = !button2_flag[0];
-
                         if (rfid_state) {
-
                             intent = new Intent(getApplicationContext(), Activity_waiting_rfid.class);
                         }
                         else {
-
                             intent = new Intent(getApplicationContext(), Activity_waiting.class);
                         }
                         startActivity(intent);
@@ -834,10 +734,8 @@ public class Activity_setting extends AppCompatActivity {
         button2_flag[0] = Application_manager.rfid_pass_f;
         if(button2_flag[0] == false && Application_manager.rfid_on_f == 1){
             b_rf.setBackgroundResource(Application_manager.on[Application_manager.img_flag]);
-            //button2_flag[0] = false;
         }else{
             b_rf.setBackgroundResource(Application_manager.off[Application_manager.img_flag]);
-            //button2_flag[0] = true;
             if(Application_manager.rfid_pass_f2 == true)
             {
                 startActivity(intent_rfid2);
@@ -875,37 +773,26 @@ public class Activity_setting extends AppCompatActivity {
 
         rfid_state = !button2_flag[0];
         editor.putBoolean(Application_manager.DB_RFID_ONOFF, rfid_state);
-        //editor.putBoolean(Application_manager.DB_RFID_ONOFF, false);
-        Log.i("JW", "RFID mode = " + rfid_state);
 
         for (int i=1; i<=4; i++) { // 세로
-
             for (int j = 1; j <= 3; j++) { // 가로
-
                 // 버튼 플래그가 true(OFF)일 때
                 if (button_flag[((j-1)*4 + i - 1)]) {
-
                     editor.putInt(Application_manager.DB_SETTING_ONOFF_VAL_ + i + "" + j, 0);
-                    //    Log.i("JW", "button_flag[" + ((j-1)*4 + i - 1) + "] / button" + i + "" + j + " = OFF");
                 }
                 else {
-
                     editor.putInt(Application_manager.DB_SETTING_ONOFF_VAL_ + i + "" + j, 1);
-                    //   Log.i("JW", "button_flag[" + ((j-1)*4 + i - 1) + "] / button" + i + "" + j + " = ON");
                 }
             }
         }
-
         editor.commit();
     }
 
     private void button_init(){
-
         int sleep_ff = Application_manager.m_sleep_ff;
         if (sleep_ff == 0) {
             setZerosSleep();
             b_1m.setBackgroundResource(Application_manager.sleepmode_1min_on[Application_manager.img_flag]);
-
         }else if (sleep_ff == 1) {
             setZerosSleep();
             b_3m.setBackgroundResource(Application_manager.sleepmode_3min_on[Application_manager.img_flag]);
@@ -975,7 +862,6 @@ public class Activity_setting extends AppCompatActivity {
             b_21.setVisibility(View.VISIBLE);b_22.setVisibility(View.VISIBLE);b_23.setVisibility(View.VISIBLE);
             b_31.setVisibility(View.VISIBLE);b_32.setVisibility(View.VISIBLE);b_33.setVisibility(View.VISIBLE);
             b_41.setVisibility(View.VISIBLE);b_42.setVisibility(View.VISIBLE);b_43.setVisibility(View.VISIBLE);
-
             init_nume();
         }
     }
@@ -1053,14 +939,12 @@ public class Activity_setting extends AppCompatActivity {
     protected void onDestroy() {
         super.onDestroy();
     }
-
     Handler handler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
             updateThread();
         }
     };
-
     private void updateThread() {
         s_clock.setText(Application_manager.doInit_time());
     }

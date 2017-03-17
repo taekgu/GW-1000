@@ -145,7 +145,6 @@ public class Activity_engine extends AppCompatActivity {
                             eng_h_flag[0] = true;
                             w_press = 0;
                         }
-                        Log.v("test",""+w_press);
                         communicator.set_engineer(2,(byte)((byte)inverter|(byte)w_press));
                         break;
                     case R.id.eng_36h:
@@ -160,7 +159,6 @@ public class Activity_engine extends AppCompatActivity {
                             eng_h_flag[1] = true;
                             w_press = 0;
                         }
-                        Log.v("test",""+w_press);
                         communicator.set_engineer(2,(byte)((byte)inverter|(byte)w_press));
                         break;
                     case R.id.eng_43h:
@@ -397,14 +395,12 @@ public class Activity_engine extends AppCompatActivity {
                             hidden[1] = false;
                             hidden[2] = false;
                             hidden[3] = false;
-                            //operating time re-set
                             operation_t.setText("0");
                             Application_manager.setRunningTime(0);
                             Application_manager.save_Running_time();
                         }else
                         {
                             hidden[0] = true;
-                            Log.v("hidden","hidden1");
                         }
                         break;
                     case R.id.hidden_e_2:
@@ -412,7 +408,6 @@ public class Activity_engine extends AppCompatActivity {
                         if(hidden[0] == true)
                         {
                             hidden[1] = true;
-                            Log.v("hidden","hidden2");
                         }
                         break;
                     case R.id.hidden_e_3:
@@ -420,7 +415,6 @@ public class Activity_engine extends AppCompatActivity {
                         if(hidden[1] == true)
                         {
                             hidden[2] = true;
-                            Log.v("hidden","hidden3");
                         }
                         break;
                     case R.id.hidden_e_4:
@@ -428,7 +422,6 @@ public class Activity_engine extends AppCompatActivity {
                         if(hidden[2] == true)
                         {
                             hidden[3] = true;
-                            Log.v("hidden","hidden4");
                         }
                         break;
 
@@ -473,7 +466,6 @@ public class Activity_engine extends AppCompatActivity {
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         Application_manager.set_m_start_sleep(0);
-        Log.v("sb1","test");
         int action = event.getAction();
         switch(action) {
             case MotionEvent.ACTION_DOWN :    //화면을 터치했을때
@@ -513,7 +505,6 @@ public class Activity_engine extends AppCompatActivity {
                         eng_r_right.setBackgroundResource(R.drawable.rotation_right_on);
                         communicator.set_engineer(8,(byte)0x20);
                         break;
-
                     case R.id.eng_door_open:
                         eng_door_open.setBackgroundResource(Application_manager.door_open_on[Application_manager.img_flag]);
                         communicator.set_engineer(7,(byte)0x01);
@@ -528,10 +519,7 @@ public class Activity_engine extends AppCompatActivity {
                 switch (id) {
                     case R.id.eng_b_back:
                         eng_b_back.setBackgroundResource(Application_manager.button_circle_back_off[Application_manager.img_flag]);
-                        Log.v("test","check_activity : " + check_activity);
-
                         wait_motor_back(check_activity);
-
                         break;
                     case R.id.eng_b_left:
                         eng_b_left.setBackgroundResource(R.drawable.moving_left_off);
@@ -549,7 +537,6 @@ public class Activity_engine extends AppCompatActivity {
                         eng_r_right.setBackgroundResource(R.drawable.rotation_right_off);
                         communicator.set_engineer(8,(byte)0x00);
                         break;
-
                     case R.id.eng_door_open:
                         eng_door_open.setBackgroundResource(Application_manager.door_open_off[Application_manager.img_flag]);
                         communicator.set_engineer(7,(byte)0x00);
@@ -597,14 +584,12 @@ public class Activity_engine extends AppCompatActivity {
     private void updateThread() {
         clock.setText(Application_manager.doInit_time());
         operation_t.setText(""+ Application_manager.getRunningTime()/60);
-        Log.i("JW_ENGINE", "Running time: "+Application_manager.getRunningTime());
     }
 
     @Override
     protected void onStop() {
         super.onStop();
         isRun = false;
-
         // 중지 명령 -> 모터 원점 복귀
         communicator.set_tx(1, (byte)0x00);
     }
@@ -640,7 +625,6 @@ public class Activity_engine extends AppCompatActivity {
         Application_manager.setIsEngineerMode(true);
 
         // 인버터 타입 불러오기
-        // LS (0x10)
         if (Application_manager.inverterType) {
             invert_choice.setBackgroundResource(Application_manager.inverter_ls[Application_manager.img_flag]);
             invert_f = false;
@@ -697,17 +681,13 @@ public class Activity_engine extends AppCompatActivity {
         eng_step_flag[4] = true;
     }
 
-
     public void wait_motor_back(final String whatActivity) {
-
         Application_manager.setIsWaiting_init(true);
-
         Handler handler = new Handler() {
 
             @Override
             public void handleMessage(Message msg) {
                 super.handleMessage(msg);
-
                 onStop();
                 if (whatActivity.equals("main")) {
 
@@ -716,7 +696,6 @@ public class Activity_engine extends AppCompatActivity {
                 finish();
             }
         };
-
         CustomProgressDialog progressDialog = new CustomProgressDialog(this);
         progressDialog.showDialog(handler);
     }

@@ -17,17 +17,13 @@ public class AlarmWakeLock {
         if(mWakeLock != null){
             return;
         }
-
         PowerManager powerManager = (PowerManager)context.getSystemService(Context.POWER_SERVICE);
-
         mWakeLock = powerManager.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, TAG);
         mWakeLock.acquire();
     }
 
     public static void releaseWakeLock(){
-        Log.v("test","test : "+mWakeLock);
         if(mWakeLock != null){
-            Log.v("test","release");
             mWakeLock.release();
             mWakeLock = null;
         }

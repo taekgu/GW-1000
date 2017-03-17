@@ -30,11 +30,6 @@ public class Activity_emotion extends Activity {
     ImageView emotion_sound_up; ImageView emotion_sound_down;
     Button emotion_back;
 
-    boolean[] emotion_ledm_flag = {true,true};
-    boolean[] emotion_led_flag = {true,true};
-    boolean[] emotion_soundm_flag = {true,true};
-    boolean[] emotion_sound_flag = {true,true};
-
     boolean emotion_b_f = true;
 
     TextView led_mode; TextView sound_mode; TextView led_bright; TextView sound_volume;
@@ -93,7 +88,6 @@ public class Activity_emotion extends Activity {
         emotion_sound_up.setOnTouchListener(mTouchEvent);
         emotion_sound_down.setOnTouchListener(mTouchEvent);
         emotion_back.setOnTouchListener(mTouchEvent);
-
 
         //change
         led_mode_num = Application_manager.led_mode_num;
@@ -175,12 +169,9 @@ public class Activity_emotion extends Activity {
                 switch (id) {
                     case R.id.emotion_ledm_up:
                         emotion_ledm_up.setBackgroundResource(R.drawable.button_up_off);
-                        //s_buf = (String)led_bright.getText();
-                        //int_buf = Integer.parseInt(s_buf) + 1;
                         if(1 <= led_bright_num && 5 > led_bright_num)
                         {
                             led_bright_num++;
-                            //s_buf = Integer.toString(int_buf);
                             up = (byte)led_bright_num;
                             led_bright.setText(String.valueOf(led_bright_num));
                             communicator.set_setting(3,(byte)((byte)up|(byte)down));
@@ -189,12 +180,9 @@ public class Activity_emotion extends Activity {
                         break;
                     case R.id.emotion_ledm_down:
                         emotion_ledm_down.setBackgroundResource(R.drawable.button_down_off);
-                        //s_buf = (String)led_bright.getText();
-                        //int_buf = Integer.parseInt(s_buf) - 1;
                         if(1 < led_bright_num && 5 >= led_bright_num)
                         {
                             led_bright_num--;
-                            //s_buf = Integer.toString(int_buf);
                             up = (byte)led_bright_num;
                             led_bright.setText(String.valueOf(led_bright_num));
                             communicator.set_setting(3,(byte)((byte)up|(byte)down));
@@ -203,12 +191,9 @@ public class Activity_emotion extends Activity {
                         break;
                     case R.id.emotion_led_up:
                         emotion_led_up.setBackgroundResource(R.drawable.button_up_off);
-                        //s_buf = (String)led_mode.getText();
-                        //int_buf = Integer.parseInt(s_buf) + 1;
                         if(0 <= led_mode_num && 4 > led_mode_num)
                         {
                             led_mode_num++;
-                            //s_buf = Integer.toString(int_buf);
                             down = (byte)(led_mode_num * 16);
                             led_mode.setText(String.valueOf(led_mode_num));
                             communicator.set_setting(3,(byte)((byte)up|(byte)down));
@@ -217,12 +202,9 @@ public class Activity_emotion extends Activity {
                         break;
                     case R.id.emotion_led_down:
                         emotion_led_down.setBackgroundResource(R.drawable.button_down_off);
-                        //s_buf = (String)led_mode.getText();
-                        //int_buf = Integer.parseInt(s_buf) - 1;
                         if(0 < led_mode_num && 4 >= led_mode_num)
                         {
                             led_mode_num--;
-                            //s_buf = Integer.toString(int_buf);
                             down = (byte)(led_mode_num * 16);
                             led_mode.setText(String.valueOf(led_mode_num));
                             communicator.set_setting(3,(byte)((byte)up|(byte)down));
@@ -272,6 +254,4 @@ public class Activity_emotion extends Activity {
             return true;
         }
     };
-
-
 }

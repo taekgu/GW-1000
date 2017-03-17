@@ -54,9 +54,7 @@ public class Activity_rfid extends Activity {
 
         Application_manager.setFullScreen(this);
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
-
         activity_rfid = (LinearLayout) findViewById(R.id.activity_rfid);
-
         rfid_w_up = (Button) findViewById(R.id.rfid_w_up);
         rfid_w_down = (Button) findViewById(R.id.rfid_w_down);
         rfid_t_up = (Button) findViewById(R.id.rfid_t_up);
@@ -65,7 +63,6 @@ public class Activity_rfid extends Activity {
         rfid_check = (Button) findViewById(R.id.rfid_check);
         rfid_off = (Button) findViewById(R.id.rfid_off);
         rfid_back = (Button) findViewById(R.id.rfid_back);
-
         rfid_t_c = (TextView) findViewById(R.id.rfid_t_c);
         rfid_w_c = (TextView) findViewById(R.id.rfid_w_c);
 
@@ -85,7 +82,6 @@ public class Activity_rfid extends Activity {
                 Application_manager.set_m_start_sleep(0);
                 switch (v.getId()) {
                     case R.id.rfid_off:
-                        //
                         if (rfid_flag[2] == true) {
                             rfid_off.setBackgroundResource(Application_manager.save_setting_on[Application_manager.img_flag]);
                             rfid_flag[2] = false;
@@ -101,7 +97,6 @@ public class Activity_rfid extends Activity {
         };
 
         rfid_off.setOnClickListener(listener);
-
         rfid_w_up.setOnTouchListener(mTouchEvent);
         rfid_w_down.setOnTouchListener(mTouchEvent);
         rfid_t_up.setOnTouchListener(mTouchEvent);
@@ -109,7 +104,6 @@ public class Activity_rfid extends Activity {
         rfid_save.setOnTouchListener(mTouchEvent);
         rfid_check.setOnTouchListener(mTouchEvent);
         rfid_back.setOnTouchListener(mTouchEvent);
-
     }
 
     @Override
@@ -195,14 +189,11 @@ public class Activity_rfid extends Activity {
                         rfid_save.setBackgroundResource(Application_manager.save_off[Application_manager.img_flag]);
                         //save -> working_mode_num, treatment_num
                         if (rfid_flag[2] == false) {
-
                             save_f = true;
                         }
-
                         break;
                     case R.id.rfid_check:
                         rfid_check.setBackgroundResource(Application_manager.check_off[Application_manager.img_flag]);
-
                         break;
                     case R.id.rfid_back:
                         rfid_back.setBackgroundResource(Application_manager.button_elipse_back_off[Application_manager.img_flag]);
@@ -232,7 +223,6 @@ public class Activity_rfid extends Activity {
         rfid_save.setBackgroundResource(Application_manager.save_off[Application_manager.img_flag]);
         rfid_check.setBackgroundResource(Application_manager.check_off[Application_manager.img_flag]);
         rfid_off.setBackgroundResource(Application_manager.save_setting_off[Application_manager.img_flag]);
-
         activity_rfid.setBackgroundResource(Application_manager.rfid_working_popup[Application_manager.img_flag]);
         rfid_back.setBackgroundResource(Application_manager.button_elipse_back_off[Application_manager.img_flag]);
 

@@ -23,11 +23,8 @@ public class Activity_starttime extends Activity {
     Button start_time4; Button start_time5; Button start_time6;
     Button start_time7; Button start_time8; Button start_time9;
     Button start_time0; Button start_time_enter; Button start_time_back;
-
     boolean[] start_flag = {true,true,true,true,true,true,true,true,true,true,true,true};
-
     Chronometer start_time;
-
     String s_buf = Application_manager.m_water_heater_time_stime;
     int int_buf;
     int int_c = 0;
@@ -45,7 +42,6 @@ public class Activity_starttime extends Activity {
     String buf_r_ent;
 
     Intent start_result;
-
     ImageView start_time_id;
 
     @Override
@@ -89,48 +85,36 @@ public class Activity_starttime extends Activity {
                 Application_manager.set_m_start_sleep(0);
                 switch (v.getId()) {
                     case R.id.start_time1:
-                        //
                         time_sum(1);
                         break;
                     case R.id.start_time2:
-                        //
                         time_sum(2);
                         break;
                     case R.id.start_time3:
-                        //
                         time_sum(3);
                         break;
                     case R.id.start_time4:
-                        //
                         time_sum(4);
                         break;
                     case R.id.start_time5:
-                        //
                         time_sum(5);
                         break;
                     case R.id.start_time6:
-                        //
                         time_sum(6);
                         break;
                     case R.id.start_time7:
-                        //
                         time_sum(7);
                         break;
                     case R.id.start_time8:
-                        //
                         time_sum(8);
                         break;
                     case R.id.start_time9:
-                        //
                         time_sum(9);
                         break;
                     case R.id.start_time0:
-                        //
                         time_sum(0);
                         break;
-
                     case R.id.start_time_enter:
-                        //
                         //change
                         check_ent = s_buf.indexOf(":");
                         buf_l_ent = s_buf.substring(0,check);
@@ -147,13 +131,11 @@ public class Activity_starttime extends Activity {
                         }
                         break;
                     case R.id.start_time_back:
-                        //
                         finish();
                         break;
                 }
             }
         };
-
         start_time1.setOnClickListener(listener);
         start_time2.setOnClickListener(listener);
         start_time3.setOnClickListener(listener);
@@ -166,7 +148,6 @@ public class Activity_starttime extends Activity {
         start_time0.setOnClickListener(listener);
         start_time_enter.setOnClickListener(listener);
         start_time_back.setOnClickListener(listener);
-
     }
 
     @Override
@@ -180,7 +161,6 @@ public class Activity_starttime extends Activity {
         start_time_id.setBackgroundResource(Application_manager.water_heater_start_timer_keyped[Application_manager.img_flag]);
         start_time_enter.setBackgroundResource(Application_manager.keypad_enter[Application_manager.img_flag]);
         start_time_back.setBackgroundResource(Application_manager.keypad_back[Application_manager.img_flag]);
-
         start_time.setText(Application_manager.m_water_heater_time_stime);
 
         // 슬립 모드 동작 재시작
@@ -222,7 +202,6 @@ public class Activity_starttime extends Activity {
             }
 
             s_buf = buf_l+":"+buf_r;
-
             start_time.setText(s_buf);
 
         }else if(int_c == 0) {
@@ -238,7 +217,6 @@ public class Activity_starttime extends Activity {
             int_buf = Integer.parseInt(buf_l)*100 + Integer.parseInt(buf_r);
             //change
             int_buf = int_buf*10 + k;
-
             int_l = int_buf/100;
             int_r = int_buf%100;
 
@@ -262,7 +240,6 @@ public class Activity_starttime extends Activity {
             }
 
             s_buf = buf_l+":"+buf_r;
-
             start_time.setText(s_buf);
             int_c++;
         }
