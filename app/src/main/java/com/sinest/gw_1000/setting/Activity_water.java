@@ -149,6 +149,7 @@ public class Activity_water extends Activity {
         super.onResume();
         Application_manager.setFullScreen(this);
 
+        // 언어에 따른 이미지 변경
         water_off.setBackgroundResource(Application_manager.save_setting_off[Application_manager.img_flag]);
         water_back.setBackgroundResource(Application_manager.button_elipse_back_off[Application_manager.img_flag]);
         water_save.setBackgroundResource(Application_manager.save_off[Application_manager.img_flag]);
@@ -161,6 +162,10 @@ public class Activity_water extends Activity {
         Application_manager.setSleep_f(0,true);
     }
 
+    /*
+    * setting에서 들어오면 DB에 저장된 값을 출력
+    * 시작,끝 시간선택 창에서 들어오면 고른 시간을 출력
+    */
     private void do_init_time(){
         if(Application_manager.time_buf_f == 1){
             start_time = Application_manager.m_water_heater_time_stime;

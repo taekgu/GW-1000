@@ -5,9 +5,8 @@ import android.os.PowerManager;
 import android.util.Log;
 
 /**
- * Created by Administrator on 2016-11-30.
+ *  슬립모드를 위한 powerManger 권한 설정
  */
-
 public class AlarmWakeLock {
 
     private static final String TAG = "AlarmWakeLock";

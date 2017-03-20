@@ -340,7 +340,6 @@ public class Application_manager extends Application {
             public void uncaughtException(Thread thread, Throwable throwable) {
 
                 //예외상황이 발행 되는 경우 작업
-
                 isTerminated_by_uncaughtException = true;
                 sharedPreferences = getSharedPreferences(DB_NAME, 0);
                 SharedPreferences.Editor editor = sharedPreferences.edit();
@@ -687,13 +686,15 @@ public class Application_manager extends Application {
         return s_time_gap_n;
     }
 
+    /*
+    * 현제 시간을 받아오는 함수
+    */
     synchronized public static String getText(){
 
         String doTime_tt;
         String doTime_mm;
 
         long r_time = System.currentTimeMillis();
-        //DateFormat df = new SimpleDateFormat("HH:mm:ss");
         int r_t = (int)((r_time/1000/60/60)%24)+9;
         int r_m = (int)((r_time/1000/60)%60);
         if(r_t >= 24)
@@ -729,6 +730,7 @@ public class Application_manager extends Application {
         s_time = n_time;
         doCalculation_gap();
     }
+
     // 시간 차이 계산 및 DB 저장
     public static void doCalculation_gap()
     {
@@ -820,6 +822,10 @@ public class Application_manager extends Application {
         editor.commit();
     }
 
+    /*
+    * 시간차와 현재 시간을 가져와
+    * 그 차이를 가지고 계산하여 시간을 설정
+    */
     public static String doInit_time()
     {
         String p_time = Application_manager.getText();
@@ -883,10 +889,9 @@ public class Application_manager extends Application {
         String doTime = doTime_t+":"+doTime_m;
 
         return doTime;
-        //clock.setText(doTime);
     }
 
-
+    // 슬립모드 설정
     synchronized public static void wakeLock(Context context){
         if(mWakeLock != null){
             return;
@@ -895,7 +900,6 @@ public class Application_manager extends Application {
         mWakeLock = powerManager.newWakeLock(PowerManager.FULL_WAKE_LOCK,TAG);
         mWakeLock.acquire();
     }
-
     synchronized public static void releaseWakeLock() {
         if(mWakeLock != null){
             mWakeLock.release();
@@ -903,6 +907,9 @@ public class Application_manager extends Application {
         }
     }
 
+    /*
+    * 기기 구동시간 저장
+     */
     synchronized public static void save_Running_time(){
         sharedPreferences = context.getSharedPreferences(Application_manager.DB_NAME, 0);
         SharedPreferences.Editor editor = sharedPreferences.edit();
@@ -912,17 +919,19 @@ public class Application_manager extends Application {
 
 
     synchronized public static int getRunningTime() {
-
         return runningTime;
     }
 
     synchronized public static void setRunningTime(int sec) {
-
         runningTime = sec;
     }
 
+    /*
+    * 기기 구동시간과 슬립모드 시간을 계산
+    * m_operation_f 이 true이면 구동시간을 check
+    * m_sleep_f 이 true이면 슬립모드 시간을 check
+     */
     synchronized private void setThread_runningTime() {
-
         thread_runningTime = new Thread(new Runnable() {
             @Override
             public void run() {
@@ -952,12 +961,14 @@ public class Application_manager extends Application {
         });
     }
 
+    // 1,3,5에 따른 슬립 모드 설정
     synchronized public static void setSleep(int start, int end, boolean f) {
         m_sleep_f = f;
         start_m = start;
         end_m = end;
     }
 
+    // 움직일때 마다 슬립모드 flag 다시 셋팅
     synchronized public static void setSleep_f(int start, boolean f) {
         m_sleep_f = f;
         start_m = start;

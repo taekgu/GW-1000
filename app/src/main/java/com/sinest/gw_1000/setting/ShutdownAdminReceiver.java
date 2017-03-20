@@ -8,7 +8,7 @@ import android.widget.Toast;
 import com.sinest.gw_1000.management.Application_manager;
 
 /**
- * Created by Administrator on 2016-12-03.
+ * 슬립모드 설정
  */
 
 public class ShutdownAdminReceiver extends DeviceAdminReceiver {

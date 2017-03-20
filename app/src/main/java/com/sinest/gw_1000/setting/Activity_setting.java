@@ -419,27 +419,20 @@ public class Activity_setting extends AppCompatActivity {
                         if (ex_f == 0) {
                             b_ex.setBackgroundResource(Application_manager.on[Application_manager.img_flag]);
                             ex_f = 1;
-                            //communicator.set_engineer(6,(byte)0x01);
                             communicator.set_setting(2, (byte) 0x01);
                         } else if (ex_f == 1) {
                             b_ex.setBackgroundResource(Application_manager.off[Application_manager.img_flag]);
                             ex_f = 0;
-                            //communicator.set_engineer(6,(byte)0x00);
                             communicator.set_setting(2, (byte) 0x00);
                         }
                         communicator.getSocketManager().send_setting();
                         break;
                     case R.id.b_wa:
                         if (button2_flag[2] == true) {
-                            //b_wa.setBackgroundResource(Application_manager.on[Application_manager.img_flag]);
-                            //b_wa.setBackgroundResource(Application_manager.on[Application_manager.img_flag]);
-                            //button2_flag[2] = false;
                             startActivity(intent_wa);
                         } else {
                             b_wa.setBackgroundResource(Application_manager.off[Application_manager.img_flag]);
                             Application_manager.set_m_water_f(false);
-                            //Application_manager.set_m_water_stime("00:00");
-                            //Application_manager.set_m_water_ftime("00:00");
                             button2_flag[2] = true;
                         }
                         break;
@@ -628,6 +621,7 @@ public class Activity_setting extends AppCompatActivity {
         s_clock.setOnTouchListener(mTouchEvent);
     }
 
+    // 슬립 버튼을 모두 off시키는 함수
     void setZerosSleep()
     {
         b_1m.setBackgroundResource(Application_manager.sleepmode_1min[Application_manager.img_flag]);
@@ -665,6 +659,7 @@ public class Activity_setting extends AppCompatActivity {
         editor.commit();
     }
 
+    // 슬립모드 지난 시간 초기화
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         Application_manager.set_m_start_sleep(0);
@@ -680,6 +675,8 @@ public class Activity_setting extends AppCompatActivity {
         return super.onTouchEvent(event);
     }
 
+    // 눌렀다 뗏을때 이벤트 발생
+    // 시간설정은 눌렀을시 이벤트 발생
     private View.OnTouchListener mTouchEvent = new View.OnTouchListener() {
         @Override
         public boolean onTouch(View view, MotionEvent motionEvent) {
@@ -732,7 +729,7 @@ public class Activity_setting extends AppCompatActivity {
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         isRun = true;
 
-        //change
+        //image change
         button_init();
 
         button2_flag[0] = Application_manager.rfid_pass_f;
@@ -792,6 +789,7 @@ public class Activity_setting extends AppCompatActivity {
         editor.commit();
     }
 
+    // 언어에 따른 버튼 이미지 변경
     private void button_init(){
         int sleep_ff = Application_manager.m_sleep_ff;
         if (sleep_ff == 0) {
@@ -870,6 +868,7 @@ public class Activity_setting extends AppCompatActivity {
         }
     }
 
+    // 기호 표시
     void init_nume(){
         if (button_flag[0] == false) {
             b_11.setText("" + communicator.get_rx_idx(11) + "%");
