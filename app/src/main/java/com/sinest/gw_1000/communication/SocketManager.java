@@ -1,7 +1,6 @@
 package com.sinest.gw_1000.communication;
 
 import android.content.SharedPreferences;
-import android.icu.util.Output;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -70,6 +69,9 @@ public class SocketManager {
     }
 
     private boolean lock = false;
+    private boolean wait = false;
+
+    int cnt_tx = 0, cnt_rx = 0;
 
     public SocketManager(Handler handler, Communicator _communicator) {
 
@@ -125,7 +127,7 @@ public class SocketManager {
                 }
             } catch (SocketException e) {
 
-                Log.i("JW_COMM", "Socket timeout 설정 exception");
+                Log.i("JW_COMM", "Socket 연결 exception");
                 init();
             } catch (IOException e) {
 
@@ -153,9 +155,7 @@ public class SocketManager {
                 @Override
                 public void run() {
 
-                    byte[] msg_in = new byte[LENGTH_RX];
                     byte[] msg_out;
-                    int read_len;
 
                     try {
 
@@ -166,52 +166,23 @@ public class SocketManager {
 
                             if (!lock) {
 
-                                // 활성 액티비티에 따라 TX / Engineer 보내기
-                                if (Application_manager.getIsEngineerMode()) {
+                                if (!wait) {
 
-                                    msg_out = communicator.get_engineer();
-                                    Log.i("JW_COMM", "엔지니어링");
-                                } else {
+                                    // 활성 액티비티에 따라 TX / Engineer 보내기
+                                    if (Application_manager.getIsEngineerMode()) {
 
-                                    msg_out = communicator.get_tx();
-                                    Log.i("JW_COMM", "동작명령");
-                                }
-                                msg_out[msg_out.length - 2] = communicator.calcCheckSum(msg_out);
-                                outputStream.write(msg_out, 0, msg_out.length);
-                                Log.i("JW_COMM", "Transferred: " + msg_out.length + "byte");
+                                        msg_out = communicator.get_engineer();
+                                        Log.i("JW_COMM", "엔지니어링");
+                                    } else {
 
-                                // RX 초기화
-                                Arrays.fill(msg_in, (byte) 0x00);
-
-                                // RX 받기, timeout = 500ms
-                                read_len = inputStream.read(msg_in);
-
-                                if (LENGTH_RX == read_len) {
-
-                                    Log.i("JW_COMM", "Received: " + read_len + "byte");
-
-                                    // Communicator 의 핸들러에서 처리
-                                    Bundle data = new Bundle();
-                                    for (int i = 0; i < read_len; i++) {
-
-                                        data.putByte("" + i, msg_in[i]);
-                                        //Log.i("WIFI", "Received : " + String.format("%02x", msg_in[i] & 0xff));
+                                        msg_out = communicator.get_tx();
+                                        Log.i("JW_COMM", "동작명령");
                                     }
-                                    Message msg = new Message();
-                                    msg.setData(data);
-                                    mHandler.sendMessage(msg);
+                                    msg_out[msg_out.length - 2] = communicator.calcCheckSum(msg_out);
+                                    send_msg_and_receive_rx(msg_out);
                                 }
                             }
                         }
-
-                    } catch (SocketTimeoutException e) {
-
-                        Log.i("JW_COMM", "Socket timeout exception: " + e.getMessage());
-                        stop_thread();
-                    } catch (IOException e) {
-
-                        Log.i("JW_COMM", "IO stream exception: " + e.getMessage());
-                        stop_thread();
                     } catch (InterruptedException e) {
 
                         Log.i("JW_COMM", "InterruptedException exception on sleep(500): " + e.getMessage());
@@ -250,23 +221,28 @@ public class SocketManager {
      */
     private void stop_thread() {
 
-        Log.i("JW_COMM", "stop_thread()");
-        isConnected = false;
-        isRun = false;
-        handler_for_toast.sendEmptyMessage(SERVER_DISCONNECTED);
-        try {
+        if (isConnected) {
 
-            mSocket.close();
-            inputStream.close();
-            outputStream.close();
+            cnt_rx = 0;
+            cnt_tx = 0;
+            Log.i("JW_COMM", "stop_thread()");
+            isConnected = false;
+            isRun = false;
+            handler_for_toast.sendEmptyMessage(SERVER_DISCONNECTED);
+            try {
 
-        } catch (IOException e) {
+                mSocket.close();
+                inputStream.close();
+                outputStream.close();
 
-            Log.i("JW_COMM", "IO stream exception: " + e.getMessage());
+            } catch (IOException e) {
+
+                Log.i("JW_COMM", "IO stream exception (stopping): " + e.getMessage());
+            }
+            thread.interrupt();
+
+            init();
         }
-        thread.interrupt();
-
-        init();
     }
 
     /**
@@ -282,51 +258,14 @@ public class SocketManager {
 
                     lock = true;
 
-                    byte[] msg_in = new byte[LENGTH_RX];
                     byte[] msg_out;
-                    int read_len;
 
-                    try {
+                    // setting 보내기
+                    msg_out = communicator.get_setting();
+                    msg_out[msg_out.length - 2] = communicator.calcCheckSum(msg_out);
 
-                        // setting 보내기
-                        msg_out = communicator.get_setting();
-                        msg_out[msg_out.length - 2] = communicator.calcCheckSum(msg_out);
-
-                        outputStream.write(msg_out, 0, msg_out.length);
-                        Log.i("JW_COMM", "Transferred: " + msg_out.length + "byte");
-                        Log.i("JW_COMM", "설정명령");
-
-                        // RX 초기화
-                        Arrays.fill(msg_in, (byte) 0x00);
-
-                        // RX 받기, timeout = 500ms
-                        read_len = inputStream.read(msg_in);
-
-                        if (LENGTH_RX == read_len) {
-
-                            Log.i("JW_COMM", "Received: " + read_len + "byte");
-
-                            // Communicator 에서 처리
-                            Bundle data = new Bundle();
-                            for (int i = 0; i < read_len; i++) {
-
-                                data.putByte("" + i, msg_in[i]);
-                                //Log.i("WIFI", "Received : " + String.format("%02x", msg_in[i] & 0xff));
-                            }
-                            Message msg = new Message();
-                            msg.setData(data);
-                            mHandler.sendMessage(msg);
-                        }
-                    } catch (SocketTimeoutException e) {
-
-                        if(mSocket.isConnected()) {
-                            send_setting();
-                        }
-                        Log.i("JW_COMM", "Socket timeout exception: " + e.getMessage());
-                    } catch (IOException e) {
-
-                        Log.i("JW_COMM", "IO stream exception: " + e.getMessage());
-                    }
+                    send_msg_and_receive_rx(msg_out);
+                    Log.i("JW_COMM", "설정명령");
 
                     lock = false;
                     Log.i("JW_COMM", "setting msg 전송 완료");
@@ -404,11 +343,11 @@ public class SocketManager {
 
         if (isConnected) {
 
-            lock = true;
-
             new Thread(new Runnable() {
                 @Override
                 public void run() {
+
+                    lock = true;
 
                     int min_i_manualNum, max_i_manualNum;
                     int start_of_loop, end_of_loop;
@@ -419,8 +358,7 @@ public class SocketManager {
                         max_i_manualNum = 5;
                         start_of_loop = 0;
                         end_of_loop = 5;
-                    }
-                    else {
+                    } else {
 
                         min_i_manualNum = manualNum;
                         max_i_manualNum = manualNum;
@@ -446,71 +384,34 @@ public class SocketManager {
                         }
                     }
 
-                    byte[] msg_in = new byte[LENGTH_RX];
                     byte[] msg_out;
-                    int read_len;
 
-                    try {
+                    // 매뉴얼모드 가져오기
+                    msg_out = communicator.get_manual();
 
-                        // 매뉴얼모드 가져오기
-                        msg_out = communicator.get_manual();
+                    for (int i_manualNum = start_of_loop; i_manualNum < end_of_loop; i_manualNum++) {
 
-                        for (int i_manualNum = start_of_loop; i_manualNum < end_of_loop; i_manualNum++) {
+                        msg_out[2] = (byte) (i_manualNum + 16);
 
-                            msg_out[2] = (byte) (i_manualNum + 16);
+                        msg_out[3] = (byte) patternNum[i_manualNum][0];
+                        msg_out[4] = (byte) patternStart[i_manualNum][0];
+                        msg_out[5] = (byte) patternEnd[i_manualNum][0];
+                        msg_out[6] = (byte) patternTime[i_manualNum][0];
 
-                            msg_out[3] = (byte) patternNum[i_manualNum][0];
-                            msg_out[4] = (byte) patternStart[i_manualNum][0];
-                            msg_out[5] = (byte) patternEnd[i_manualNum][0];
-                            msg_out[6] = (byte) patternTime[i_manualNum][0];
+                        msg_out[7] = (byte) patternNum[i_manualNum][1];
+                        msg_out[8] = (byte) patternStart[i_manualNum][1];
+                        msg_out[9] = (byte) patternEnd[i_manualNum][1];
+                        msg_out[10] = (byte) patternTime[i_manualNum][1];
 
-                            msg_out[7] = (byte) patternNum[i_manualNum][1];
-                            msg_out[8] = (byte) patternStart[i_manualNum][1];
-                            msg_out[9] = (byte) patternEnd[i_manualNum][1];
-                            msg_out[10] = (byte) patternTime[i_manualNum][1];
+                        msg_out[11] = (byte) patternNum[i_manualNum][2];
+                        msg_out[12] = (byte) patternStart[i_manualNum][2];
+                        msg_out[13] = (byte) patternEnd[i_manualNum][2];
+                        msg_out[14] = (byte) patternTime[i_manualNum][2];
 
-                            msg_out[11] = (byte) patternNum[i_manualNum][2];
-                            msg_out[12] = (byte) patternStart[i_manualNum][2];
-                            msg_out[13] = (byte) patternEnd[i_manualNum][2];
-                            msg_out[14] = (byte) patternTime[i_manualNum][2];
+                        msg_out[msg_out.length - 2] = communicator.calcCheckSum(msg_out);
 
-                            msg_out[msg_out.length - 2] = communicator.calcCheckSum(msg_out);
-
-                            outputStream.write(msg_out, 0, msg_out.length);
-                            Log.i("JW_COMM", "Transferred: " + msg_out.length + "byte");
-                            Log.i("JW_COMM", "매뉴얼 모드 설정 명령");
-
-                            // RX 초기화
-                            Arrays.fill(msg_in, (byte) 0x00);
-
-                            // RX 받기, timeout = 500ms
-                            read_len = inputStream.read(msg_in);
-
-                            if (LENGTH_RX == read_len) {
-
-                                Log.i("JW_COMM", "Received: " + read_len + "byte");
-
-                                // Communicator 에서 처리
-                                Bundle data = new Bundle();
-                                for (int i = 0; i < read_len; i++) {
-
-                                    data.putByte("" + i, msg_in[i]);
-                                    //Log.i("WIFI", "Received : " + String.format("%02x", msg_in[i] & 0xff));
-                                }
-                                Message msg = new Message();
-                                msg.setData(data);
-                                mHandler.sendMessage(msg);
-                            }
-                        }
-                    } catch (SocketTimeoutException e) {
-
-                        if(mSocket.isConnected()) {
-                            send_manual(manualNum);
-                        }
-                        Log.i("JW_COMM", "Socket timeout exception: " + e.getMessage());
-                    } catch (IOException e) {
-
-                        Log.i("JW_COMM", "IO stream exception: " + e.getMessage());
+                        send_msg_and_receive_rx(msg_out);
+                        Log.i("JW_COMM", "매뉴얼 모드 설정 명령");
                     }
                     Log.i("JW_COMM", "메뉴얼 모드 설정 msg 전송 완료");
 
@@ -548,5 +449,60 @@ public class SocketManager {
                 }
             }
         };
+    }
+
+    private void send_msg_and_receive_rx(byte[] msg_out) {
+
+        wait = true;
+
+        try {
+
+            outputStream.write(msg_out, 0, msg_out.length);
+            Log.i("JW_COMM", "Transferred: " + msg_out.length + "byte");
+            cnt_tx++;
+
+            int read_len;
+            byte[] msg_in = new byte[LENGTH_RX];
+
+            // RX 초기화
+            Arrays.fill(msg_in, (byte) 0x00);
+
+            // RX 받기, timeout = 500ms
+            read_len = inputStream.read(msg_in);
+            cnt_rx++;
+
+            Log.i("JW_COMM_CNT", "TX = " + cnt_tx + ", RX = " + cnt_rx);
+
+            if (LENGTH_RX == read_len) {
+
+                Log.i("JW_COMM", "Received: " + read_len + "byte");
+
+                // Communicator 의 핸들러에서 처리
+                Bundle data = new Bundle();
+                for (int i = 0; i < read_len; i++) {
+
+                    data.putByte("" + i, msg_in[i]);
+                    //Log.i("WIFI", "Received : " + String.format("%02x", msg_in[i] & 0xff));
+                }
+                Message msg = new Message();
+                msg.setData(data);
+                mHandler.sendMessage(msg);
+            }
+
+        } catch (SocketTimeoutException e) {
+
+            Log.i("JW_COMM", "Socket timeout exception: " + e.getMessage());
+            if (mSocket.isConnected()) {
+
+                send_msg_and_receive_rx(msg_out);
+            }
+
+        } catch (IOException e) {
+
+            Log.i("JW_COMM", "IO stream exception (sending): " + e.getMessage());
+            stop_thread();
+        }
+
+        wait = false;
     }
 }
