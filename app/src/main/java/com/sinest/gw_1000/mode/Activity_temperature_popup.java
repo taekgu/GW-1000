@@ -31,7 +31,7 @@ public class Activity_temperature_popup extends Activity {
     private final static int TEMPERATURE_BELOW = 1;
 
     private final static int TEMP_MAX = 40;
-    private final static int TEMP_MIN = 25;
+    private final static int TEMP_MIN = 1;
 
     TextView textView_time;
     private int temperature;

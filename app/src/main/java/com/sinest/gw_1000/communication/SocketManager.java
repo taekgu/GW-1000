@@ -12,7 +12,9 @@ import com.sinest.gw_1000.management.Application_manager;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.net.InetSocketAddress;
 import java.net.Socket;
+import java.net.SocketAddress;
 import java.net.SocketException;
 import java.net.SocketTimeoutException;
 import java.util.Arrays;
@@ -28,13 +30,20 @@ public class SocketManager {
     private final static int LENGTH_TX = 11;
     private final static int LENGTH_RX = 21;
 
+    private final static int SERVER_CONNECTED     = 1001;
+    private final static int SERVER_DISCONNECTED  = 1002;
+
     //private static final String IP_ADDRESS  = "192.168.219.152";
-    //private static final String IP_ADDRESS  = "192.168.0.22";
+    //private static final String IP_ADDRESS  = "172.30.1.12";
     private static final String IP_ADDRESS  = "192.168.0.1";
     private static final int PORT           = 20002;
 
+    private SocketAddress socketAddress;
     private Socket mSocket;
+    private int timeout = 500;
+
     private Handler mHandler;
+    private Handler handler_for_toast;
 
     private InputStream inputStream;
     private OutputStream outputStream;
@@ -60,10 +69,14 @@ public class SocketManager {
         return isSent_predata;
     }
 
+    private boolean lock = false;
+
     public SocketManager(Handler handler, Communicator _communicator) {
 
         communicator = _communicator;
         this.mHandler = handler;
+        setHandler();
+
         sharedPreferences = Application_manager.getSharedPreferences();
 
         new Thread(new Runnable() {
@@ -87,15 +100,19 @@ public class SocketManager {
 
                 Thread.sleep(3000);
 
-                mSocket = new Socket(IP_ADDRESS, PORT);
+                socketAddress = new InetSocketAddress(IP_ADDRESS, PORT);
+                mSocket = new Socket();
+                mSocket.connect(socketAddress, timeout);
 
                 if (mSocket.isConnected()) {
 
-                    mSocket.setSoTimeout(500);
+                    mSocket.setSoTimeout(timeout); // InputStream 데이터 읽을 때의 timeout
                     outputStream = mSocket.getOutputStream();
                     inputStream = mSocket.getInputStream();
 
                     isConnected = true;
+                    handler_for_toast.sendEmptyMessage(SERVER_CONNECTED);
+
                     send_setting();
                     send_manual(0);
 
@@ -147,56 +164,58 @@ public class SocketManager {
                             // 통신 주기 500ms
                             Thread.sleep(500);
 
-                            // 활성 액티비티에 따라 TX / Engineer 보내기
-                            if (Application_manager.getIsEngineerMode()) {
+                            if (!lock) {
 
-                                msg_out = communicator.get_engineer();
-                                Log.i("JW_COMM", "엔지니어링");
-                            }
-                            else {
+                                // 활성 액티비티에 따라 TX / Engineer 보내기
+                                if (Application_manager.getIsEngineerMode()) {
 
-                                msg_out = communicator.get_tx();
-                                Log.i("JW_COMM", "동작명령");
-                            }
-                            msg_out[msg_out.length - 2] = communicator.calcCheckSum(msg_out);
-                            outputStream.write(msg_out, 0, msg_out.length);
-                            Log.i("JW_COMM", "Transferred: " + msg_out.length + "byte");
+                                    msg_out = communicator.get_engineer();
+                                    Log.i("JW_COMM", "엔지니어링");
+                                } else {
 
-                            // RX 초기화
-                            Arrays.fill(msg_in, (byte) 0x00);
-
-                            // RX 받기, timeout = 500ms
-                            read_len = inputStream.read(msg_in);
-
-                            if (LENGTH_RX == read_len) {
-
-                                Log.i("JW_COMM", "Received: " + read_len + "byte");
-
-                                // Communicator 의 핸들러에서 처리
-                                Bundle data = new Bundle();
-                                for (int i = 0; i < read_len; i++) {
-
-                                    data.putByte("" + i, msg_in[i]);
-                                    //Log.i("WIFI", "Received : " + String.format("%02x", msg_in[i] & 0xff));
+                                    msg_out = communicator.get_tx();
+                                    Log.i("JW_COMM", "동작명령");
                                 }
-                                Message msg = new Message();
-                                msg.setData(data);
-                                mHandler.sendMessage(msg);
+                                msg_out[msg_out.length - 2] = communicator.calcCheckSum(msg_out);
+                                outputStream.write(msg_out, 0, msg_out.length);
+                                Log.i("JW_COMM", "Transferred: " + msg_out.length + "byte");
+
+                                // RX 초기화
+                                Arrays.fill(msg_in, (byte) 0x00);
+
+                                // RX 받기, timeout = 500ms
+                                read_len = inputStream.read(msg_in);
+
+                                if (LENGTH_RX == read_len) {
+
+                                    Log.i("JW_COMM", "Received: " + read_len + "byte");
+
+                                    // Communicator 의 핸들러에서 처리
+                                    Bundle data = new Bundle();
+                                    for (int i = 0; i < read_len; i++) {
+
+                                        data.putByte("" + i, msg_in[i]);
+                                        //Log.i("WIFI", "Received : " + String.format("%02x", msg_in[i] & 0xff));
+                                    }
+                                    Message msg = new Message();
+                                    msg.setData(data);
+                                    mHandler.sendMessage(msg);
+                                }
                             }
                         }
 
                     } catch (SocketTimeoutException e) {
 
-                        stop_thread();
                         Log.i("JW_COMM", "Socket timeout exception: " + e.getMessage());
+                        stop_thread();
                     } catch (IOException e) {
 
-                        stop_thread();
                         Log.i("JW_COMM", "IO stream exception: " + e.getMessage());
+                        stop_thread();
                     } catch (InterruptedException e) {
 
-                        stop_thread();
                         Log.i("JW_COMM", "InterruptedException exception on sleep(500): " + e.getMessage());
+                        stop_thread();
                     }
                     Log.i("JW_COMM", "Socket manager 스레드 종료");
                 }
@@ -234,6 +253,7 @@ public class SocketManager {
         Log.i("JW_COMM", "stop_thread()");
         isConnected = false;
         isRun = false;
+        handler_for_toast.sendEmptyMessage(SERVER_DISCONNECTED);
         try {
 
             mSocket.close();
@@ -245,7 +265,6 @@ public class SocketManager {
             Log.i("JW_COMM", "IO stream exception: " + e.getMessage());
         }
         thread.interrupt();
-
 
         init();
     }
@@ -260,6 +279,8 @@ public class SocketManager {
             new Thread(new Runnable() {
                 @Override
                 public void run() {
+
+                    lock = true;
 
                     byte[] msg_in = new byte[LENGTH_RX];
                     byte[] msg_out;
@@ -295,6 +316,8 @@ public class SocketManager {
                             Message msg = new Message();
                             msg.setData(data);
                             mHandler.sendMessage(msg);
+
+                            lock = false;
                         }
                     } catch (SocketTimeoutException e) {
 
@@ -492,5 +515,33 @@ public class SocketManager {
                 }
             }).start();
         }
+    }
+
+    /**
+     * Toast 출력을 위한 핸들러 초기화
+     */
+    private void setHandler() {
+
+        handler_for_toast = new Handler() {
+
+            @Override
+            public void handleMessage(Message msg) {
+                super.handleMessage(msg);
+
+                switch (msg.what) {
+
+                    case SERVER_CONNECTED:
+
+                        Log.i("JW", "Socket is connected");
+                        Application_manager.getToastManager().popToast(8);
+                        break;
+                    case SERVER_DISCONNECTED:
+
+                        Log.i("JW", "Socket is disconnected");
+                        Application_manager.getToastManager().popToast(14);
+                        break;
+                }
+            }
+        };
     }
 }

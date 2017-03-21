@@ -24,8 +24,6 @@ import java.util.List;
 
 public class WifiConnector {
 
-    private final static int SERVER_CONNECTED     = 1001;
-    private final static int SERVER_DISCONNECTED  = 1002;
     private final static int WIFI_CONNECTED       = 1003;
     private final static int WIFI_DISCONNECTED    = 1004;
 
@@ -91,14 +89,6 @@ public class WifiConnector {
 
                 switch (msg.what) {
 
-                    case SERVER_CONNECTED:
-
-                        Log.i("JW", "Socket is connected");
-                        Application_manager.getToastManager().popToast(8);
-                        break;
-                    case SERVER_DISCONNECTED:
-
-                        break;
                     case WIFI_CONNECTED:
 
                         if (ssid == null) {
