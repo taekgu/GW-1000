@@ -33,8 +33,8 @@ public class SocketManager {
     private final static int SERVER_DISCONNECTED  = 1002;
 
     //private static final String IP_ADDRESS  = "192.168.219.152";
-    //private static final String IP_ADDRESS  = "172.30.1.12";
-    private static final String IP_ADDRESS  = "192.168.0.1";
+    private static final String IP_ADDRESS  = "172.30.1.12";
+    //private static final String IP_ADDRESS  = "192.168.0.1";
     private static final int PORT           = 20002;
 
     private SocketAddress socketAddress;
@@ -471,8 +471,6 @@ public class SocketManager {
             read_len = inputStream.read(msg_in);
             cnt_rx++;
 
-            Log.i("JW_COMM_CNT", "TX = " + cnt_tx + ", RX = " + cnt_rx);
-
             if (LENGTH_RX == read_len) {
 
                 Log.i("JW_COMM", "Received: " + read_len + "byte");
@@ -494,6 +492,7 @@ public class SocketManager {
             Log.i("JW_COMM", "Socket timeout exception: " + e.getMessage());
             if (mSocket.isConnected()) {
 
+                cnt_tx--;
                 send_msg_and_receive_rx(msg_out);
             }
 
@@ -504,5 +503,7 @@ public class SocketManager {
         }
 
         wait = false;
+
+        Log.i("JW_COMM_CNT", "TX = " + cnt_tx + ", RX = " + cnt_rx);
     }
 }
