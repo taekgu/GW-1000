@@ -158,6 +158,10 @@ public class Communicator {
 
                         Log.i("JW_COMM_ACK", "엔지니어모드 ACK");
                         break;
+                    case 0x09:
+
+                        Log.i("JW_COMM_ACK", "매뉴얼 ACK");
+                        break;
                 }
 
                 switch (signal_deviceState) {

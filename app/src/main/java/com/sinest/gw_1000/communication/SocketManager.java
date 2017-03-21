@@ -117,7 +117,7 @@ public class SocketManager {
                     send_manual(0);
 
                     // setting, manual 정보가 모두 전달될 때까지 대기
-                    while (!get_isSent_predata());
+                    while (!get_isSent_predata()) ;
                     set_isSent_predata(false);
 
                     setThread();
@@ -316,18 +316,19 @@ public class SocketManager {
                             Message msg = new Message();
                             msg.setData(data);
                             mHandler.sendMessage(msg);
-
-                            lock = false;
                         }
                     } catch (SocketTimeoutException e) {
 
-                        send_setting();
+                        if(mSocket.isConnected()) {
+                            send_setting();
+                        }
                         Log.i("JW_COMM", "Socket timeout exception: " + e.getMessage());
                     } catch (IOException e) {
 
-                        send_setting();
                         Log.i("JW_COMM", "IO stream exception: " + e.getMessage());
                     }
+
+                    lock = false;
                     Log.i("JW_COMM", "setting msg 전송 완료");
                 }
             }).start();
@@ -402,6 +403,8 @@ public class SocketManager {
     public void send_manual(final int manualNum) {
 
         if (isConnected) {
+
+            lock = true;
 
             new Thread(new Runnable() {
                 @Override
@@ -501,15 +504,17 @@ public class SocketManager {
                         }
                     } catch (SocketTimeoutException e) {
 
-                        send_setting();
+                        if(mSocket.isConnected()) {
+                            send_manual(manualNum);
+                        }
                         Log.i("JW_COMM", "Socket timeout exception: " + e.getMessage());
                     } catch (IOException e) {
 
-                        send_setting();
                         Log.i("JW_COMM", "IO stream exception: " + e.getMessage());
                     }
                     Log.i("JW_COMM", "메뉴얼 모드 설정 msg 전송 완료");
 
+                    lock = false;
                     set_isSent_predata(true);
 
                 }
