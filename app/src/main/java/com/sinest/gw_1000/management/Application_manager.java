@@ -832,6 +832,7 @@ public class Application_manager extends Application {
     {
         String p_time = Application_manager.getText();
         String g_time = Application_manager.m_gap_clock;
+        g_time = sharedPreferences.getString(DB_TIME_GAP,"00:00");
         boolean t_f = Application_manager.m_gap_clock_f;
 
         String aa = p_time.substring(0,2);
