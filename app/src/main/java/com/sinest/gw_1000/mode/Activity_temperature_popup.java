@@ -81,7 +81,12 @@ public class Activity_temperature_popup extends Activity {
         super.onResume();
 
         // 슬립 모드 동작 재시작
-        Application_manager.setSleep_f(0,true);
+        if(Application_manager.working_flag == false){
+            Application_manager.setSleep_f(0,true);
+        }else if(Application_manager.working_flag == true){
+            Application_manager.setSleep_f(0, false);
+        }
+
     }
 
     private void setScreen() {

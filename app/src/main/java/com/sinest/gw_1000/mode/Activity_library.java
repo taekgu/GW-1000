@@ -132,17 +132,7 @@ public class Activity_library extends AppCompatActivity{
 
         // 슬립 모드 동작 재시작
         Application_manager.setSleep_f(0,true);
-    }
 
-    @Override
-    protected void onPause() {
-        super.onPause();
-
-    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
         isRun = true;
         Thread myThread = new Thread(new Runnable() {
             public void run() {
@@ -156,6 +146,17 @@ public class Activity_library extends AppCompatActivity{
             }
         });
         myThread.start();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
     }
 
     Handler handler = new Handler() {

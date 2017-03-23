@@ -336,6 +336,21 @@ public class Activity_waiting extends AppCompatActivity {
                 }
             }
         }
+
+        isRun = true;
+        Thread myThread = new Thread(new Runnable() {
+            public void run() {
+                while (isRun) {
+                    try {
+                        handler.sendMessage(handler.obtainMessage());
+                        Thread.sleep(1000);
+                    } catch (Throwable t) {
+                    }
+                }
+                Log.i("JW_LIFECYCLE", "Activity_waiting - time update thread 종료");
+            }
+        });
+        myThread.start();
     }
 
     @Override
@@ -368,22 +383,6 @@ public class Activity_waiting extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-
-        isRun = true;
-        Thread myThread = new Thread(new Runnable() {
-            public void run() {
-                while (isRun) {
-                    try {
-                        handler.sendMessage(handler.obtainMessage());
-                        Thread.sleep(1000);
-                    } catch (Throwable t) {
-                    }
-                }
-
-                Log.i("JW_LIFECYCLE", "Activity_waiting - time update thread 종료");
-            }
-        });
-        myThread.start();
     }
 
     /**

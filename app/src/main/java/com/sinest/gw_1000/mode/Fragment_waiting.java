@@ -124,6 +124,7 @@ public class Fragment_waiting extends Fragment {
         super.onResume();
 
         Log.i("JW_LIFECYCLE", "Fragment_waiting - onResume");
+        Application_manager.working_flag = false;
     }
 
     @Override

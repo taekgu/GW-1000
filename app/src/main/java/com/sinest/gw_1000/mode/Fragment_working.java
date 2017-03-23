@@ -240,5 +240,6 @@ public class Fragment_working extends Fragment {
 
         // 슬립 모드 동작 재시작
         Application_manager.setSleep_f(0, false);
+        Application_manager.working_flag = true;
     }
 }

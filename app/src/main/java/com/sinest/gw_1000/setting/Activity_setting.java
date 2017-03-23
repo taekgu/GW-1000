@@ -728,7 +728,6 @@ public class Activity_setting extends AppCompatActivity {
         Application_manager.setFullScreen(this);
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         isRun = true;
-
         //image change
         button_init();
 
@@ -745,6 +744,19 @@ public class Activity_setting extends AppCompatActivity {
 
         // 슬립 모드 동작 재시작
         Application_manager.setSleep_f(0,true);
+
+        Thread myThread = new Thread(new Runnable() {
+            public void run() {
+                while (isRun) {
+                    try {
+                        handler.sendMessage(handler.obtainMessage());
+                        Thread.sleep(1000);
+                    } catch (Throwable t) {
+                    }
+                }
+            }
+        });
+        myThread.start();
     }
 
     @Override
@@ -923,19 +935,7 @@ public class Activity_setting extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        isRun = true;
-        Thread myThread = new Thread(new Runnable() {
-            public void run() {
-                while (isRun) {
-                    try {
-                        handler.sendMessage(handler.obtainMessage());
-                        Thread.sleep(1000);
-                    } catch (Throwable t) {
-                    }
-                }
-            }
-        });
-        myThread.start();
+
     }
 
     @Override

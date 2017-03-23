@@ -33,6 +33,9 @@ import java.lang.Thread.UncaughtExceptionHandler;
 
 public class Application_manager extends Application {
 
+    // 동작 중인지 확인 flag
+    public static boolean working_flag = false;
+
     // 도어 상태
     public static boolean isDoorOpened = false;
     public static final String DB_DOOR_STATE = "door_state";
