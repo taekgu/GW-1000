@@ -751,6 +751,7 @@ public class Activity_setting extends AppCompatActivity {
                     try {
                         handler.sendMessage(handler.obtainMessage());
                         Thread.sleep(1000);
+                        Log.v("SB_test",""+Application_manager.water_time_flage);
                     } catch (Throwable t) {
                     }
                 }
@@ -935,7 +936,6 @@ public class Activity_setting extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-
     }
 
     @Override
