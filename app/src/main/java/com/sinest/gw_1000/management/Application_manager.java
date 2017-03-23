@@ -4,18 +4,14 @@ import android.app.Activity;
 import android.app.AlarmManager;
 import android.app.Application;
 import android.app.PendingIntent;
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.media.MediaPlayer;
-import android.os.Handler;
-import android.os.Message;
 import android.os.PowerManager;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
-import android.view.Window;
 import android.view.WindowManager;
 
 import com.sinest.gw_1000.R;
@@ -37,7 +33,7 @@ public class Application_manager extends Application {
     public static boolean working_flag = false;
 
     // 설정된 water time에 포함되어 있는지 확인 flag
-    public static boolean water_time_flage = false;
+    public static boolean water_time_flag = false;
 
     // 도어 상태
     public static boolean isDoorOpened = false;
@@ -900,39 +896,47 @@ public class Application_manager extends Application {
     }
 
     // water_time 확인
-    private static void check_water_time(String h, String m){
+    private static void check_water_time(String h, String m) {
 
-        String sw_h = m_water_heater_time_stime.substring(0,2);
-        String sw_m = m_water_heater_time_stime.substring(3,5);
-        int sw_h_t = Integer.parseInt(sw_h);
-        int sw_m_t = Integer.parseInt(sw_m);
+        // water heater timer가 ON 일 경우
+        if (m_water_heater_f == false) {
 
-        String fw_h = m_water_heater_time_ftime.substring(0,2);
-        String fw_m = m_water_heater_time_ftime.substring(3,5);
-        int fw_h_t = Integer.parseInt(fw_h);
-        int fw_m_t = Integer.parseInt(fw_m);
+            String sw_h = m_water_heater_time_stime.substring(0, 2);
+            String sw_m = m_water_heater_time_stime.substring(3, 5);
+            int sw_h_t = Integer.parseInt(sw_h);
+            int sw_m_t = Integer.parseInt(sw_m);
 
-        int now_h = Integer.parseInt(h);
-        int now_m = Integer.parseInt(m);
+            String fw_h = m_water_heater_time_ftime.substring(0, 2);
+            String fw_m = m_water_heater_time_ftime.substring(3, 5);
+            int fw_h_t = Integer.parseInt(fw_h);
+            int fw_m_t = Integer.parseInt(fw_m);
 
-        int s_t = (sw_h_t*60)+sw_m_t;
-        int f_t = (fw_h_t*60)+fw_m_t;
-        int n_t = (now_h*60)+now_m;
+            int now_h = Integer.parseInt(h);
+            int now_m = Integer.parseInt(m);
 
-        if(s_t < f_t){
-            if(s_t <= n_t && n_t <= f_t){
-                water_time_flage = true; // 설정시간 o
-            }else{
-                water_time_flage = false;
+            int s_t = (sw_h_t * 60) + sw_m_t;
+            int f_t = (fw_h_t * 60) + fw_m_t;
+            int n_t = (now_h * 60) + now_m;
+
+            if (s_t < f_t) {
+                if (s_t <= n_t && n_t <= f_t) {
+                    water_time_flag = true; // 설정시간 o
+                } else {
+                    water_time_flag = false;
+                }
+            } else if (s_t > f_t) {
+                if (f_t < n_t && n_t < s_t) {
+                    water_time_flag = false; // 설정시간 x
+                } else {
+                    water_time_flag = true;
+                }
+            } else {
+                water_time_flag = false;
             }
-        }else if(s_t > f_t){
-            if(f_t < n_t && n_t < s_t){
-                water_time_flage = false; // 설정시간 x
-            }else{
-                water_time_flage = true;
-            }
-        }else{
-            water_time_flage = false;
+        }
+        else {
+
+            water_time_flag = true;
         }
     }
 

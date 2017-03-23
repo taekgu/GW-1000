@@ -751,7 +751,7 @@ public class Activity_setting extends AppCompatActivity {
                     try {
                         handler.sendMessage(handler.obtainMessage());
                         Thread.sleep(1000);
-                        Log.v("SB_test",""+Application_manager.water_time_flage);
+                        Log.v("SB_test",""+Application_manager.water_time_flag);
                     } catch (Throwable t) {
                     }
                 }

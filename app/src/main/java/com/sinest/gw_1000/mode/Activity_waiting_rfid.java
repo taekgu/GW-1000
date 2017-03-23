@@ -815,7 +815,7 @@ public class Activity_waiting_rfid extends AppCompatActivity {
                 // 내부온도, 수온 설정 값과 디바이스 실제 값을 비교하여 물히터와 히터 작동 여부 판별
                 // 물히터
                 // Water heater timer 에서 설정한 시간 내일 경우 - 현재 온도에 따라 동작여부 결정
-                if (Application_manager.water_time_flage) {
+                if (Application_manager.water_time_flag) {
                     // 온도 높을 때 - 냉
                     if (Application_manager.SENSOR_TEMP_BED_USER + 1 < Application_manager.SENSOR_TEMP_BED) {
 
