@@ -131,7 +131,7 @@ public class SocketManager {
                 init();
             } catch (IOException e) {
 
-                Log.i("JW_COMM_EX", "Input/output stream 초기화 exception");
+                Log.i("JW_COMM_EX", "IO exception: " + e.getMessage());
                 init();
             } catch (InterruptedException e) {
 
