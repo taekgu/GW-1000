@@ -32,9 +32,9 @@ public class SocketManager {
     private final static int SERVER_CONNECTED     = 1001;
     private final static int SERVER_DISCONNECTED  = 1002;
 
-    private static final String IP_ADDRESS  = "192.168.219.122";
+    //private static final String IP_ADDRESS  = "192.168.219.122";
     //private static final String IP_ADDRESS  = "172.30.1.12";
-    //private static final String IP_ADDRESS  = "192.168.0.1";
+    private static final String IP_ADDRESS  = "192.168.0.1";
     private static final int PORT           = 20002;
 
     private SocketAddress socketAddress;
@@ -489,7 +489,7 @@ public class SocketManager {
 
         } catch (SocketTimeoutException e) {
 
-            Log.i("JW_COMM_EX", "Socket timeout exception: " + e.getMessage());
+            Log.i("JW_COMM_EX", "Socket timeout exception - TX(" + cnt_tx + "): "+ e.getMessage());
             if (mSocket.isConnected()) {
 
                 cnt_tx--;
