@@ -32,8 +32,8 @@ public class SocketManager {
     private final static int SERVER_CONNECTED     = 1001;
     private final static int SERVER_DISCONNECTED  = 1002;
 
-    //private static final String IP_ADDRESS  = "192.168.219.152";
-    private static final String IP_ADDRESS  = "172.30.1.12";
+    private static final String IP_ADDRESS  = "192.168.219.122";
+    //private static final String IP_ADDRESS  = "172.30.1.12";
     //private static final String IP_ADDRESS  = "192.168.0.1";
     private static final int PORT           = 20002;
 
@@ -127,15 +127,15 @@ public class SocketManager {
                 }
             } catch (SocketException e) {
 
-                Log.i("JW_COMM", "Socket 연결 exception");
+                Log.i("JW_COMM_EX", "Socket 연결 exception");
                 init();
             } catch (IOException e) {
 
-                Log.i("JW_COMM", "Input/output stream 초기화 exception");
+                Log.i("JW_COMM_EX", "Input/output stream 초기화 exception");
                 init();
             } catch (InterruptedException e) {
 
-                Log.i("JW_COMM", "InterruptedException exception on sleep(3000): " + e.getMessage());
+                Log.i("JW_COMM_EX", "InterruptedException exception on sleep(3000): " + e.getMessage());
                 init();
             }
         }
@@ -185,7 +185,7 @@ public class SocketManager {
                         }
                     } catch (InterruptedException e) {
 
-                        Log.i("JW_COMM", "InterruptedException exception on sleep(500): " + e.getMessage());
+                        Log.i("JW_COMM_EX", "InterruptedException exception on sleep(500): " + e.getMessage());
                         stop_thread();
                     }
                     Log.i("JW_COMM", "Socket manager 스레드 종료");
@@ -237,7 +237,7 @@ public class SocketManager {
 
             } catch (IOException e) {
 
-                Log.i("JW_COMM", "IO stream exception (stopping): " + e.getMessage());
+                Log.i("JW_COMM_EX", "IO stream exception (stopping): " + e.getMessage());
             }
             thread.interrupt();
 
@@ -489,7 +489,7 @@ public class SocketManager {
 
         } catch (SocketTimeoutException e) {
 
-            Log.i("JW_COMM", "Socket timeout exception: " + e.getMessage());
+            Log.i("JW_COMM_EX", "Socket timeout exception: " + e.getMessage());
             if (mSocket.isConnected()) {
 
                 cnt_tx--;
@@ -498,7 +498,7 @@ public class SocketManager {
 
         } catch (IOException e) {
 
-            Log.i("JW_COMM", "IO stream exception (sending): " + e.getMessage());
+            Log.i("JW_COMM_EX", "IO stream exception (sending): " + e.getMessage());
             stop_thread();
         }
 
