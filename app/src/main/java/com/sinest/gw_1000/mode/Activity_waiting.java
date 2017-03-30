@@ -635,6 +635,8 @@ public class Activity_waiting extends AppCompatActivity {
                 public void run() {
 
                     frameAnimation.stop();
+                    // 리소스아이디 0을 넘김으로써 빈 drawable을 선택여 기존에 가지고 있던 리소스 자동 해제
+                    frameAnimation.selectDrawable(0);
                     if(Application_manager.gw_1000 == true) {
 
                         if (Application_manager.img_flag == 1) { // 중국어

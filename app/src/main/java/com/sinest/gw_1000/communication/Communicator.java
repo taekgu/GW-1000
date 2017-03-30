@@ -30,8 +30,8 @@ public class Communicator {
     private final static int LENGTH_RX          = 21;
 
     // Define default protocols
-    private final static byte STX               = (byte) 0xFD;
-    private final static byte ETX               = (byte) 0xFE;
+    public final static byte STX               = (byte) 0xFD;
+    public final static byte ETX               = (byte) 0xFE;
 
     private final byte[] msg_tx_default         = {STX, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, ETX};
     private final byte[] msg_setting_default    = {STX, 0x0A, 0x00, 0x00, 0x00, 0x0A, ETX};
@@ -98,98 +98,10 @@ public class Communicator {
 
                 Bundle data = msg.getData();
 
-                for (int i=0; i<data.size(); i++) {
+                for (int i = 0; i < data.size(); i++) {
 
-                    byte b = data.getByte(""+i);
+                    byte b = data.getByte("" + i);
                     set_rx(i, b);
-                }
-
-                // CheckSum 검사
-                if (!checkCheckSum(msg_rx)) {
-
-                    Log.i("JW_COMM", "Rx data is wrong (checkSum error)");
-                    calcCheckSum(msg_rx);
-                }
-
-                // 디바이스 상태와 ACK 신호 확인
-                byte signal_deviceState = (byte)(0xf0 & get_rx_idx(1));
-                byte signal_ack = (byte)(0x0f & get_rx_idx(1));
-
-                // 원점 복귀 완료 신호 받으면 isWaiting_init -> false
-                if (signal_deviceState == 0x20) {
-
-                    if (Application_manager.getIsWaiting_init()) {
-
-                        Application_manager.setIsWaiting_init(false);
-                    }
-                }
-
-                //Log.i("JW", "받아온 checkSum: " + String.format("%02x", msg[len-2] & 0xff));
-                Log.i("JW_COMM", "Signal (device state) : " + String.format("%02x", signal_deviceState & 0xff));
-                Log.i("JW_COMM", "Signal (ACK)          : " + String.format("%02x", signal_ack & 0xff));
-
-                switch (signal_ack) {
-
-                    case 0x00:
-
-                        Log.i("JW_COMM_ACK", "정지 ACK");
-                        break;
-                    case 0x01:
-
-                        Log.i("JW_COMM_ACK", "동작 ACK");
-                        break;
-                    case 0x02:
-
-                        Log.i("JW_COMM_ACK", "일시정지 ACK");
-                        break;
-                    case 0x0A:
-
-                        Log.i("JW_COMM_ACK", "설정 ACK");
-                        break;
-                    case 0x0B:
-
-                        Log.i("JW_COMM_ACK", "RFID 읽기 ACK");
-                        break;
-                    case 0x0C:
-
-                        Log.i("JW_COMM_ACK", "RFID 쓰기 ACK");
-                        break;
-                    case 0x0D:
-
-                        Log.i("JW_COMM_ACK", "엔지니어모드 ACK");
-                        break;
-                    case 0x09:
-
-                        Log.i("JW_COMM_ACK", "매뉴얼 ACK");
-                        break;
-                }
-
-                switch (signal_deviceState) {
-
-                    case 0x00:
-
-                        Log.i("JW_COMM_STATE", "전원 인가 후 원점이동 중");
-                        break;
-                    case 0x10:
-
-                        Log.i("JW_COMM_STATE", "원점상태 (인버터 정지 중)");
-                        break;
-                    case 0x20:
-
-                        Log.i("JW_COMM_STATE", "원점상태 (인버터 정지)");
-                        break;
-                    case 0x30:
-
-                        Log.i("JW_COMM_STATE", "정지하여 원점 이동 중");
-                        break;
-                    case 0x40:
-
-                        Log.i("JW_COMM_STATE", "동작 중");
-                        break;
-                    case 0x50:
-
-                        Log.i("JW_COMM_STATE", "일시정지 중");
-                        break;
                 }
 
                 // waiting 화면 업데이트 (수온, 내부온도, 산소농도, 습도)
@@ -234,7 +146,7 @@ public class Communicator {
      * 메시지의 checkSum 올바른지 확인
      * @param msg 검증할 메시지
      */
-    synchronized private Boolean checkCheckSum(byte[] msg) {
+    synchronized public Boolean checkCheckSum(byte[] msg) {
 
         int len = msg.length;
 

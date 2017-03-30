@@ -530,6 +530,12 @@ public class Activity_engine extends AppCompatActivity {
                 switch (id) {
                     case R.id.eng_b_back:
                         eng_b_back.setBackgroundResource(Application_manager.button_circle_back_off[Application_manager.img_flag]);
+
+                        // 엔지니어모드 중지 플래그
+                        Application_manager.setIsEngineerMode(false);
+
+                        // 중지 명령 -> 모터 원점 복귀
+                        communicator.set_tx(1, (byte)0x00);
                         wait_motor_back(check_activity);
                         break;
                     case R.id.eng_b_left:
@@ -602,8 +608,6 @@ public class Activity_engine extends AppCompatActivity {
     protected void onStop() {
         super.onStop();
         isRun = false;
-        // 중지 명령 -> 모터 원점 복귀
-        communicator.set_tx(1, (byte)0x00);
     }
 
     @Override
@@ -654,9 +658,6 @@ public class Activity_engine extends AppCompatActivity {
     protected void onPause() {
         super.onPause();
         isRun = false;
-
-        // 엔지니어모드 중지 플래그
-        Application_manager.setIsEngineerMode(false);
 
         // DB에 저장된 압력값을 다시 불러와 기기에 전달
         int val_pressure = 0;

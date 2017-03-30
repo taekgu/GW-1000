@@ -17,6 +17,7 @@ import java.net.SocketAddress;
 import java.net.SocketException;
 import java.net.SocketTimeoutException;
 import java.util.Arrays;
+import java.util.StringTokenizer;
 
 /**
  * Created by Jinwook on 2016-11-18.
@@ -58,6 +59,7 @@ public class SocketManager {
     private SharedPreferences sharedPreferences = null;
 
     // 초기 데이터(세팅값, 매뉴얼 모드 설정값) 전송되었는지 확인
+    public static byte ACK = 0x0f;
     private boolean isSent_predata = false;
     private synchronized void set_isSent_predata(boolean val) {
 
@@ -104,7 +106,8 @@ public class SocketManager {
 
                 socketAddress = new InetSocketAddress(IP_ADDRESS, PORT);
                 mSocket = new Socket();
-                mSocket.connect(socketAddress, timeout);
+                //mSocket.connect(socketAddress, timeout);
+                mSocket.connect(socketAddress);
 
                 if (mSocket.isConnected()) {
 
@@ -115,13 +118,19 @@ public class SocketManager {
                     isConnected = true;
                     handler_for_toast.sendEmptyMessage(SERVER_CONNECTED);
 
+                    set_isSent_predata(false);
                     send_setting();
+
+                    // setting 정보가 모두 전달될 때까지 대기
+                    while (!get_isSent_predata());
+
+                    set_isSent_predata(false);
                     send_manual(0);
 
-                    // setting, manual 정보가 모두 전달될 때까지 대기
-                    while (!get_isSent_predata()) ;
-                    set_isSent_predata(false);
+                    // manual 정보가 모두 전달될 때까지 대기
+                    while (!get_isSent_predata());
 
+                    set_isSent_predata(false);
                     setThread();
                     start_thread();
                 }
@@ -231,9 +240,17 @@ public class SocketManager {
             handler_for_toast.sendEmptyMessage(SERVER_DISCONNECTED);
             try {
 
-                mSocket.close();
-                inputStream.close();
-                outputStream.close();
+                if (!mSocket.isClosed()) {
+
+                    byte[] buf = {0x00};
+                    outputStream.close();
+                    // 서버가 보낸 남은 패킷 모두 전송받은 후 연결 종료
+                    Log.i("JW_COMM", "남은 패킷 읽기");
+                    while (inputStream.read(buf, 0, 1) != 0);
+                    Log.i("JW_COMM", "남은 패킷 읽기 완료");
+                    inputStream.close();
+                    mSocket.close();
+                }
 
             } catch (IOException e) {
 
@@ -268,6 +285,7 @@ public class SocketManager {
                     Log.i("JW_COMM", "설정명령");
 
                     lock = false;
+                    set_isSent_predata(true);
                     Log.i("JW_COMM", "setting msg 전송 완료");
                 }
             }).start();
@@ -412,6 +430,12 @@ public class SocketManager {
 
                         send_msg_and_receive_rx(msg_out);
                         Log.i("JW_COMM", "매뉴얼 모드 설정 명령");
+                        try {
+                            Thread.sleep(500);
+                        } catch (InterruptedException e) {
+
+
+                        }
                     }
                     Log.i("JW_COMM", "메뉴얼 모드 설정 msg 전송 완료");
 
@@ -457,9 +481,14 @@ public class SocketManager {
 
         try {
 
+            ACK = (byte) (msg_out[1] & 0x0f);
             outputStream.write(msg_out, 0, msg_out.length);
             Log.i("JW_COMM", "Transferred: " + msg_out.length + "byte");
             cnt_tx++;
+
+            /////////////////////// TEST
+            show_msg("TX", msg_out);
+            /////////////////////////
 
             int read_len;
             byte[] msg_in = new byte[LENGTH_RX];
@@ -471,22 +500,80 @@ public class SocketManager {
             read_len = inputStream.read(msg_in);
             cnt_rx++;
 
-            if (LENGTH_RX == read_len) {
+            /////////////////////// TEST
+            show_msg("RX", msg_in);
+            /////////////////////////
 
-                Log.i("JW_COMM", "Received: " + read_len + "byte");
+            // 읽어온 메시지 길이 검사
+            if (read_len == LENGTH_RX) {
 
-                // Communicator 의 핸들러에서 처리
-                Bundle data = new Bundle();
-                for (int i = 0; i < read_len; i++) {
+                // 시작 과 끝 올바른지 검사
+                if (msg_in[0] == (byte) communicator.STX && msg_in[LENGTH_RX - 1] == communicator.ETX) {
 
-                    data.putByte("" + i, msg_in[i]);
-                    //Log.i("WIFI", "Received : " + String.format("%02x", msg_in[i] & 0xff));
+                    // 체크섬 검사
+                    if (communicator.checkCheckSum(msg_in)) {
+
+                        Log.i("JW_COMM", "Received: " + read_len + "byte");
+
+                        // 디바이스 상태와 ACK 신호 확인
+                        byte signal_deviceState = (byte) (0xf0 & msg_in[1]);
+                        byte signal_ack = (byte) (0x0f & msg_in[1]);
+
+                        check_ack_and_state(signal_deviceState, signal_ack);
+
+                        // ACK 검사
+                        if (ACK == signal_ack) {
+
+                            ACK = 0x0f;
+
+                            // Communicator 의 핸들러에서 처리
+                            Bundle data = new Bundle();
+                            for (int i = 0; i < read_len; i++) {
+
+                                data.putByte("" + i, msg_in[i]);
+                            }
+                            Message msg = new Message();
+                            msg.setData(data);
+                            mHandler.sendMessage(msg);
+                        }
+                        else {
+
+                            Log.i("JW_COMM_ERROR", "ACK is wrong");
+                        }
+                    } else {
+
+                        Log.i("JW_COMM_ERROR", "Rx data is wrong (checkSum error)");
+                    }
                 }
-                Message msg = new Message();
-                msg.setData(data);
-                mHandler.sendMessage(msg);
-            }
+                // 읽어온 메시지의 시작점, 끝점이 맞지 않는 경우
+                else {
 
+                    Log.i("JW_COMM_ERROR", "Error: STX, ETX 불일치");
+
+
+                    for (int i=1; i<LENGTH_RX; i++) {
+
+                        if (msg_in[i] == communicator.STX ) {
+
+                            byte[] buf = {0x00};
+                            while (true) {
+
+                                inputStream.read(buf, 0, 1);
+                                if (buf[0] == communicator.ETX) {
+
+                                    break;
+                                }
+                            }
+                            Log.i("JW_COMM_ERROR", "Error: STX, ETX 위치 재설정 완료");
+                        }
+                    }
+                }
+            }
+            else {
+
+                Log.i("JW_COMM_ERROR", "Error: RX 길이만큼 읽어오지 못함");
+                send_msg_and_receive_rx(msg_out);
+            }
         } catch (SocketTimeoutException e) {
 
             Log.i("JW_COMM_EX", "Socket timeout exception - TX(" + cnt_tx + "): "+ e.getMessage());
@@ -505,5 +592,95 @@ public class SocketManager {
         wait = false;
 
         Log.i("JW_COMM_CNT", "TX = " + cnt_tx + ", RX = " + cnt_rx);
+    }
+
+    private void show_msg(String name, byte[] msg) {
+
+        String string_msg = "";
+        for (int i=0; i<msg.length; i++) {
+
+                string_msg = string_msg + String.format("%02x", msg[i] & 0xff) + " | ";
+        }
+        Log.i("JW_COMM_MSG", name + " : " + string_msg);
+    }
+
+    private void check_ack_and_state(byte signal_deviceState, byte signal_ack) {
+
+        // 원점 복귀 완료 신호 받으면 isWaiting_init -> false
+        if (signal_deviceState == 0x20 || signal_deviceState == 0x10) {
+
+            if (Application_manager.getIsWaiting_init()) {
+
+                Application_manager.setIsWaiting_init(false);
+            }
+        }
+
+        String ack = "";
+        switch (signal_ack) {
+
+            case 0x00:
+
+                ack = "정지 ACK - ";
+                break;
+            case 0x01:
+
+                ack = "동작 ACK - ";
+                break;
+            case 0x02:
+
+                ack = "일시정지 ACK - ";
+                break;
+            case 0x0A:
+
+                ack = "설정 ACK - ";
+                break;
+            case 0x0B:
+
+                ack = "RFID 읽기 ACK - ";
+                break;
+            case 0x0C:
+
+                ack = "RFID 쓰기 ACK - ";
+                break;
+            case 0x0D:
+
+                ack = "엔지니어모드 ACK - ";
+                break;
+            case 0x09:
+
+                ack = "매뉴얼 ACK - ";
+                break;
+        }
+        Log.i("JW_COMM_ACK", ack + String.format("%02x", signal_ack & 0xff));
+
+        String state = "";
+        switch (signal_deviceState) {
+
+            case 0x00:
+
+                state = "전원 인가 후 원점이동 중 - ";
+                break;
+            case 0x10:
+
+                state = "원점상태 (인버터 정지 중) - ";
+                break;
+            case 0x20:
+
+                state = "원점상태 (인버터 정지) - ";
+                break;
+            case 0x30:
+
+                state = "정지하여 원점 이동 중 - ";
+                break;
+            case 0x40:
+
+                state = "동작 중 - ";
+                break;
+            case 0x50:
+
+                state = "일시정지 중 - ";
+                break;
+        }
+        Log.i("JW_COMM_STATE", state + String.format("%02x", signal_deviceState & 0xff));
     }
 }
