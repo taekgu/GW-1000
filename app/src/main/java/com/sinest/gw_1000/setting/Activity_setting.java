@@ -440,12 +440,12 @@ public class Activity_setting extends AppCompatActivity {
                         if (button2_flag[3] == true) {
                             b_pa.setBackgroundResource(Application_manager.on[Application_manager.img_flag]);
                             button2_flag[3] = false;
-                            communicator.set_setting(4, (byte) 0x01);
+                            communicator.set_setting(4, (byte) 0x00);
                             Application_manager.set_m_pause_rotation(button2_flag[3]);
                         } else {
                             b_pa.setBackgroundResource(Application_manager.off[Application_manager.img_flag]);
                             button2_flag[3] = true;
-                            communicator.set_setting(4, (byte) 0x00);
+                            communicator.set_setting(4, (byte) 0x01);
                         }
                         communicator.getSocketManager().send_setting();
                         break;

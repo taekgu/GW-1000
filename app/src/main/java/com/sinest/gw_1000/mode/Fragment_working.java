@@ -36,7 +36,7 @@ public class Fragment_working extends Fragment {
 
     private Thread thread_timer;
     private boolean isRun = false;
-    private boolean isPause = false;
+    //private boolean isPause = false;
     private boolean isAlive = false;
 
     // 대기 화면으로 돌아갈 때 모터원점복귀 대기 위한 핸들러
@@ -80,7 +80,7 @@ public class Fragment_working extends Fragment {
 
                 while (isRun) {
 
-                    while(isPause);
+                    //while(isPause);
 
                     try {
 
@@ -202,7 +202,7 @@ public class Fragment_working extends Fragment {
                         if (state == 1) {
 
                             state = 0;
-                            isPause = true;
+                            //isPause = true;
                             button_clicked.setBackgroundResource(R.drawable.button_play_off);
                             communicator.set_tx(1, (byte)0x02);
                         }
@@ -210,7 +210,7 @@ public class Fragment_working extends Fragment {
                         else {
 
                             state = 1;
-                            isPause = false;
+                            //isPause = false;
                             button_clicked.setBackgroundResource(R.drawable.button_pause_off);
                             communicator.set_tx(1, (byte)0x01);
                         }
@@ -221,7 +221,7 @@ public class Fragment_working extends Fragment {
 
                         if (Application_manager.getSoundManager().play(Application_manager.m_language, 1) == 0) {
                             isRun = false;
-                            isPause = false;
+                            //isPause = false;
                             state = 1;
                             communicator.set_tx(1, (byte) 0x00);
 

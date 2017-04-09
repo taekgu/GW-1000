@@ -41,7 +41,7 @@ public class Application_manager extends Application {
 
     // 인버터 타입 false: 야스카와 / true: LS
     public static boolean inverterType = false;
-    public static byte inverterVal = 0x00;
+    public static byte inverterVal = 0x00; // LS: 0x10, 야스카와: 0x00
     public static final String DB_INVERT_TYPE = "invert_type";
 
     // 활성 액티비티 대기모드인지 엔지니어모드인지 확인
@@ -537,6 +537,12 @@ public class Application_manager extends Application {
         editor.putBoolean(GW_1000, i);
         editor.commit();
         gw_1000 = i;
+
+        // GW-1000L 버전일 경우 히터 끄기
+        if (!i) {
+
+            communicator.set_tx(5, (byte) 0x00);
+        }
     }
 
     synchronized public static void set_rfid_on_f(int i){

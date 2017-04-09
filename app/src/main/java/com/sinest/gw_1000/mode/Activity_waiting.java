@@ -141,7 +141,8 @@ public class Activity_waiting extends AppCompatActivity {
 
         // tx 메시지의 DATA2, 5에 수압, 산소투입량 입력
         //communicator.set_tx(3, (byte) (Application_manager.inverterVal | (byte) val_pressure));
-        communicator.set_tx(3, (byte) (Application_manager.inverterVal | (byte) (Application_manager.m_inverter * 3)));
+        //communicator.set_tx(3, (byte) (Application_manager.inverterVal | (byte) (Application_manager.m_inverter * 3)));
+        communicator.set_tx(3, (byte) (Application_manager.inverterVal | (byte) (val_pressure * Application_manager.m_inverter / 2)));
         if (Application_manager.gw_1000) {
             communicator.set_tx(6, (byte) val_oxygen);
         }
@@ -518,7 +519,8 @@ public class Activity_waiting extends AppCompatActivity {
         }
         communicator.set_tx(6, val);
         //communicator.set_tx(3, (byte) (Application_manager.inverterVal | (byte) val_pressure));
-        communicator.set_tx(3, (byte) (Application_manager.inverterVal | (byte) (Application_manager.m_inverter * 3)));
+        //communicator.set_tx(3, (byte) (Application_manager.inverterVal | (byte) (Application_manager.m_inverter * 3)));
+        communicator.set_tx(3, (byte) (Application_manager.inverterVal | (byte) (val_pressure * Application_manager.m_inverter / 2)));
 
         // 치료 음악 재생 종료
         if (Application_manager.sound_mode_num != 0) {
@@ -802,8 +804,10 @@ public class Activity_waiting extends AppCompatActivity {
 
                 // 내부온도, 수온 설정 값과 디바이스 실제 값을 비교하여 물히터와 히터 작동 여부 판별
                 // 물히터
-                // Water heater timer 에서 설정한 시간 내일 경우 - 현재 온도에 따라 동작여부 결정
+                // Water heater timer 에서 설정한 시간 내이고 GW-1000H 버전인 경우 - 현재 온도에 따라 동작여부 결정
+
                 if (Application_manager.water_time_flag) {
+                //if (Application_manager.water_time_flag && Application_manager.gw_1000) {
                     // 온도 높을 때 - 냉
                     if (Application_manager.SENSOR_TEMP_BED_USER + 1 < Application_manager.SENSOR_TEMP_BED) {
 
@@ -820,24 +824,33 @@ public class Activity_waiting extends AppCompatActivity {
                         communicator.set_tx(4, (byte) 0x00);
                     }
                 }
-                // Water heater timer 에서 설정한 시간 외일 경우 - 끄기
+                // Water heater timer 에서 설정한 시간 외거나 GW-1000L 버전인 경우 - 끄기
                 else {
 
                     communicator.set_tx(4, (byte) 0x00);
                 }
 
                 // 히터
-                // 온도 높을 때 - 냉
-                if (Application_manager.SENSOR_TEMP_USER + 1 < Application_manager.SENSOR_TEMP) {
+                // GW-1000H 버전인 경우
+                if (Application_manager.gw_1000) {
 
-                    communicator.set_tx(5, (byte) 0x01);
-                }
-                // 온도 낮을 때 - 온
-                else if (Application_manager.SENSOR_TEMP_USER - 1 > Application_manager.SENSOR_TEMP) {
+                    // 온도 높을 때 - 냉
+                    if (Application_manager.SENSOR_TEMP_USER + 1 < Application_manager.SENSOR_TEMP) {
 
-                    communicator.set_tx(5, (byte) 0x02);
+                        communicator.set_tx(5, (byte) 0x01);
+                    }
+                    // 온도 낮을 때 - 온
+                    else if (Application_manager.SENSOR_TEMP_USER - 1 > Application_manager.SENSOR_TEMP) {
+
+                        communicator.set_tx(5, (byte) 0x02);
+                    }
+                    // 설정 범위 +-1 이내일 때 - 끄기
+                    else {
+
+                        communicator.set_tx(5, (byte) 0x00);
+                    }
                 }
-                // 설정 범위 +-1 이내일 때 - 끄기
+                // GW-1000L 버전인 경우
                 else {
 
                     communicator.set_tx(5, (byte) 0x00);
