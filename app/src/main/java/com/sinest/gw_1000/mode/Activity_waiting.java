@@ -787,7 +787,7 @@ public class Activity_waiting extends AppCompatActivity {
 
                     // 노즐 위치 0~14
                     //Log.i("JW", "노즐 위치: "+Application_manager.getCommunicator().get_rx_idx(15));
-                    progressBar_nozzle_loc.setProgress(communicator.get_rx_idx(15));
+                    progressBar_nozzle_loc.setProgress(14-communicator.get_rx_idx(15));
                 }
                 else if (msg.what == SET_BUTTON_INVISIBLE) {
 
