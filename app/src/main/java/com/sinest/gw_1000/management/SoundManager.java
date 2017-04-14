@@ -1,9 +1,15 @@
 package com.sinest.gw_1000.management;
 
+import android.Manifest;
+import android.app.NotificationManager;
 import android.content.Context;
+import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.content.res.AssetFileDescriptor;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
+import android.os.Build;
+import android.support.v4.app.ActivityCompat;
 import android.util.Log;
 
 import java.io.IOException;
@@ -43,6 +49,29 @@ public class SoundManager {
     public SoundManager(Context _context) {
 
         context = _context;
+
+        NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+        if (!notificationManager.isNotificationPolicyAccessGranted()) {
+
+            context.startActivity(new Intent(android.provider.Settings.ACTION_NOTIFICATION_POLICY_ACCESS_SETTINGS));
+            android.os.Process.killProcess(android.os.Process.myPid());
+        }
+
+        AudioManager audioManager = (AudioManager) context.getSystemService(AUDIO_SERVICE);
+        // 진동 모드일 경우, 시스템 볼륨 설정이 불가능하므로 벨소리 모드로 변경
+        if (audioManager.getRingerMode() == AudioManager.RINGER_MODE_VIBRATE) {
+
+            Log.i("JW_SOUND", "진동 모드 감지");
+            audioManager.setRingerMode(AudioManager.RINGER_MODE_NORMAL);
+            Log.i("JW_SOUND", "벨소리 모드로 변경");
+        }
+        else if (audioManager.getRingerMode() == AudioManager.RINGER_MODE_SILENT) {
+
+
+            Log.i("JW_SOUND", "방해금지 모드 감지");
+            audioManager.setRingerMode(AudioManager.RINGER_MODE_NORMAL);
+            Log.i("JW_SOUND", "벨소리 모드로 변경");
+        }
 
         thread_isPlaying = new Thread(new Runnable() {
             @Override
@@ -90,12 +119,11 @@ public class SoundManager {
 
         int max = audioManager.getStreamMaxVolume(vol_type_of_alarm);
         double level = (double)max / 10;
-
-        // 무음, 진동 모드일 경우, 시스템 볼륨 설정이 불가능하므로 벨소리 모드로 변경
+        /*
         if (audioManager.getStreamVolume(AudioManager.STREAM_RING) == 0) {
 
             audioManager.setStreamVolume(AudioManager.STREAM_RING, 1, 0);
-        }
+        }*/
         audioManager.setStreamVolume(vol_type_of_alarm, (int)(level * volume), 0);
 
         Log.i("JW_VOL", "max = " + max + " / level = " + level + " / volume = " + volume);

@@ -1,17 +1,25 @@
 package com.sinest.gw_1000.splash;
 
 import android.Manifest;
+import android.app.Application;
+import android.app.NotificationManager;
+import android.app.admin.DevicePolicyManager;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.drawable.AnimationDrawable;
+import android.media.AudioManager;
+import android.os.Build;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.sinest.gw_1000.R;
 import com.sinest.gw_1000.communication.Communicator;
@@ -23,7 +31,6 @@ import com.sinest.gw_1000.setting.Activity_engine;
 public class Activity_booting extends AppCompatActivity {
 
     private final static int MY_PERMISSIONS_ACCESS_COARSE_LOCATION = 1000;
-    public static final int REQUEST_CODE_ANOTHER = 1001;
 
     AnimationDrawable frameAnimation;
     boolean isRun = true;
@@ -53,11 +60,19 @@ public class Activity_booting extends AppCompatActivity {
                         time++;
 
                         if (time == 7) {
+
+                            // 로딩이 끝나고 권한을 못받아왔으면 종료
+                            if (Application_manager.getCommunicator().getWifiConnector().permission == 0) {
+
+                                android.os.Process.killProcess(android.os.Process.myPid());
+                            }
+
                             time = 0;
                             isRun = false;
                             frameAnimation.stop();
                             SharedPreferences sharedPreferences = getSharedPreferences(Application_manager.DB_NAME, 0);
                             Intent intent;
+
                             // RFID 모드 ON
                             if (!sharedPreferences.getBoolean(Application_manager.DB_RFID_ONOFF, false)) {
 
@@ -72,7 +87,7 @@ public class Activity_booting extends AppCompatActivity {
                                 intent = new Intent(getApplicationContext(), Activity_waiting_rfid.class);
                                 Log.i("JW", "Start activity_waiting_rfid");
                             }
-                            startActivityForResult(intent, REQUEST_CODE_ANOTHER);
+                            startActivity(intent);
                             finish();
                         }
                     } catch (InterruptedException e) {}
@@ -101,7 +116,7 @@ public class Activity_booting extends AppCompatActivity {
             if(hidden_pattern[1]==1 && hidden_pattern[2]==2 && hidden_pattern[3]==3 && hidden_pattern[4]==4 &&hidden_pattern[5]==1){
                 isRun = false;
                 Intent intent = new Intent(getApplicationContext(), Activity_engine.class);
-                startActivityForResult(intent, REQUEST_CODE_ANOTHER);
+                startActivity(intent);
                 finish();
             }
         }
@@ -115,6 +130,11 @@ public class Activity_booting extends AppCompatActivity {
         // 권한 없음
         if (permissionCheck == PackageManager.PERMISSION_DENIED) {
 
+            // 권한 창에서 거절을 누른 경우 (다시보지 않음 체크 안한 상태)
+            if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.ACCESS_COARSE_LOCATION)) {
+
+                Log.i("JW_PERM", "shouldShowRequestPermissionRationale: true");
+            }
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_COARSE_LOCATION}, MY_PERMISSIONS_ACCESS_COARSE_LOCATION);
         }
         // 권한 있음
@@ -136,12 +156,15 @@ public class Activity_booting extends AppCompatActivity {
                     // permission was granted, yay! Do the
                     // contacts-related task you need to do.
                     Application_manager.getCommunicator().getWifiConnector().permission = 1;
+                    Log.i("JW_PERM", "ACCESS_COARSE_LOCATION 허가");
 
                 } else {
 
                     // permission denied, boo! Disable the
                     // functionality that depends on this permission.
                     Application_manager.getCommunicator().getWifiConnector().permission = 0;
+                    Log.i("JW_PERM", "ACCESS_COARSE_LOCATION 거부");
+                    Toast.makeText(this, "Permission is required to run this application", Toast.LENGTH_LONG).show();
                 }
                 return;
             }

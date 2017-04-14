@@ -1,14 +1,21 @@
 package com.sinest.gw_1000.management;
 
+import android.Manifest;
 import android.app.Activity;
 import android.app.AlarmManager;
 import android.app.Application;
+import android.app.NotificationManager;
 import android.app.PendingIntent;
+import android.app.admin.DevicePolicyManager;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.media.MediaPlayer;
+import android.os.Build;
 import android.os.PowerManager;
+import android.support.v4.app.ActivityCompat;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
@@ -17,6 +24,7 @@ import android.view.WindowManager;
 import com.sinest.gw_1000.R;
 import com.sinest.gw_1000.communication.Communicator;
 import com.sinest.gw_1000.setting.Activity_setting;
+import com.sinest.gw_1000.setting.ShutdownAdminReceiver;
 import com.sinest.gw_1000.splash.Activity_booting;
 
 import java.lang.Thread.UncaughtExceptionHandler;
@@ -334,16 +342,13 @@ public class Application_manager extends Application {
 
     public void onCreate() {
 
-        sharedPreferences = getSharedPreferences(DB_NAME, 0);
-
+        //예외 발생 시 앱 재시작
         mUncaughtExceptionHandler = Thread.getDefaultUncaughtExceptionHandler();
         Thread.setDefaultUncaughtExceptionHandler(new UncaughtExceptionHandler() {
             @Override
             public void uncaughtException(Thread thread, Throwable throwable) {
 
-                //예외상황이 발행 되는 경우 작업
                 isTerminated_by_uncaughtException = true;
-                sharedPreferences = getSharedPreferences(DB_NAME, 0);
                 SharedPreferences.Editor editor = sharedPreferences.edit();
                 editor.putBoolean(DB_IS_TERMINATED, isTerminated_by_uncaughtException);
                 editor.commit();
@@ -364,18 +369,41 @@ public class Application_manager extends Application {
             }
         });
 
+        sharedPreferences = getSharedPreferences(DB_NAME, 0);
+
         Application_manager.context = getApplicationContext();
-        Application_manager.communicator = new Communicator(context);
-        Application_manager.soundManager = new SoundManager(context);
-        Application_manager.toastManager = new ToastManager();
 
         // 기기 DPI 출력
         DisplayMetrics metrics = new DisplayMetrics();
         WindowManager mgr = (WindowManager)context.getSystemService(Context.WINDOW_SERVICE);
         mgr.getDefaultDisplay().getMetrics(metrics);
 
+        load_data();
+    }
+
+    /**
+     * DB에서 초기값 로드
+     */
+    private void load_data(){
+
+        Application_manager.communicator = new Communicator(context);
+        Application_manager.soundManager = new SoundManager(context);
+        Application_manager.toastManager = new ToastManager();
+
+        // 비정상 종료인지 확인
+        isTerminated_by_uncaughtException = sharedPreferences.getBoolean(DB_IS_TERMINATED, false);
+        if (isTerminated_by_uncaughtException) {
+
+            // 중지 명령 -> 모터 원점 복귀
+            communicator.set_tx(1, (byte)0x00);
+
+            isTerminated_by_uncaughtException = false;
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+            editor.putBoolean(DB_IS_TERMINATED, isTerminated_by_uncaughtException);
+            editor.commit();
+        }
+
         //시간차 저장
-        sharedPreferences = context.getSharedPreferences(DB_NAME, 0);
         m_gap_clock_f = sharedPreferences.getBoolean(DB_TIME_GAP_F,true);
 
         //rfid
@@ -386,8 +414,6 @@ public class Application_manager extends Application {
         setThread_runningTime();
         isRun = true;
         thread_runningTime.start();
-
-        load_data();
 
         if (gw_1000 == false) {
             // GW-1000L 버전 설정
@@ -405,27 +431,6 @@ public class Application_manager extends Application {
             waiting_backimage[0] = R.drawable.workingmotion0;
             waiting_backimage[1] = R.drawable.workingmotion0_ch;
 
-        }
-    }
-
-    /**
-     * DB에서 초기값 로드
-     */
-    private void load_data(){
-
-        sharedPreferences = context.getSharedPreferences(Application_manager.DB_NAME, 0);
-
-        // 비정상 종료인지 확인
-        isTerminated_by_uncaughtException = sharedPreferences.getBoolean(DB_IS_TERMINATED, false);
-        if (isTerminated_by_uncaughtException) {
-
-            // 중지 명령 -> 모터 원점 복귀
-            communicator.set_tx(1, (byte)0x00);
-
-            isTerminated_by_uncaughtException = false;
-            SharedPreferences.Editor editor = sharedPreferences.edit();
-            editor.putBoolean(DB_IS_TERMINATED, isTerminated_by_uncaughtException);
-            editor.commit();
         }
 
         // 감성 LED 모드 및 밝기 불러오기
@@ -524,7 +529,6 @@ public class Application_manager extends Application {
      */
     public static void set_door_state(boolean state) {
 
-        sharedPreferences = context.getSharedPreferences(Application_manager.DB_NAME, 0);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putBoolean(DB_DOOR_STATE, state);
         editor.commit();
@@ -532,7 +536,7 @@ public class Application_manager extends Application {
     }
 
     synchronized public static void set_m_gw_1000(boolean i){
-        sharedPreferences = context.getSharedPreferences(Application_manager.DB_NAME, 0);
+
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putBoolean(GW_1000, i);
         editor.commit();
@@ -546,7 +550,7 @@ public class Application_manager extends Application {
     }
 
     synchronized public static void set_rfid_on_f(int i){
-        sharedPreferences = context.getSharedPreferences(Application_manager.DB_NAME, 0);
+
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putInt(RFID_ON_F, i);
         editor.commit();
@@ -555,13 +559,13 @@ public class Application_manager extends Application {
     }
 
     synchronized public static void set_m_start_sleep(int i){
-        sharedPreferences = context.getSharedPreferences(Application_manager.DB_NAME, 0);
+
         SharedPreferences.Editor editor = sharedPreferences.edit();
         start_m = i;
     }
 
     synchronized public static void set_m_sleep_m(int i){
-        sharedPreferences = context.getSharedPreferences(Application_manager.DB_NAME, 0);
+
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putInt(DB_SLEEP_M, i);
         editor.commit();
@@ -569,7 +573,7 @@ public class Application_manager extends Application {
     }
 
     synchronized public static void set_m_volume(int i){
-        sharedPreferences = context.getSharedPreferences(Application_manager.DB_NAME, 0);
+
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putInt(DB_VOLUME, i);
         editor.commit();
@@ -577,7 +581,7 @@ public class Application_manager extends Application {
     }
 
     synchronized public static void set_m_language(int i){
-        sharedPreferences = context.getSharedPreferences(Application_manager.DB_NAME, 0);
+
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putInt(DB_LANGUEAGE, i);
         editor.commit();
@@ -590,7 +594,7 @@ public class Application_manager extends Application {
     }
 
     synchronized public static void set_m_inverter(int i){
-        sharedPreferences = context.getSharedPreferences(Application_manager.DB_NAME, 0);
+
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putInt(DB_INVERTER, i);
         editor.commit();
@@ -598,7 +602,7 @@ public class Application_manager extends Application {
     }
 
     synchronized public static void set_m_pause_rotation(boolean i){
-        sharedPreferences = context.getSharedPreferences(Application_manager.DB_NAME, 0);
+
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putBoolean(DB_PAUSE, i);
         editor.commit();
@@ -606,7 +610,7 @@ public class Application_manager extends Application {
     }
 
     synchronized public static void set_m_external_led(int i){
-        sharedPreferences = context.getSharedPreferences(Application_manager.DB_NAME, 0);
+
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putInt(DB_EXTERN_LED, i);
         editor.commit();
@@ -614,7 +618,7 @@ public class Application_manager extends Application {
     }
 
     synchronized public static void set_m_water_ftime(String ft){
-        sharedPreferences = context.getSharedPreferences(Application_manager.DB_NAME, 0);
+
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putString(DB_WATER_FT, ft);
         editor.commit();
@@ -622,7 +626,7 @@ public class Application_manager extends Application {
     }
 
     synchronized public static void set_m_water_stime(String st){
-        sharedPreferences = context.getSharedPreferences(Application_manager.DB_NAME, 0);
+
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putString(DB_WATER_ST, st);
         editor.commit();
@@ -630,7 +634,7 @@ public class Application_manager extends Application {
     }
 
     synchronized public static void set_m_water_ff(boolean flag){
-        sharedPreferences = context.getSharedPreferences(Application_manager.DB_NAME, 0);
+
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putBoolean(DB_WATER_FF, flag);
         editor.commit();
@@ -638,7 +642,7 @@ public class Application_manager extends Application {
     }
 
     synchronized public static void set_m_water_f(boolean flag){
-        sharedPreferences = context.getSharedPreferences(Application_manager.DB_NAME, 0);
+
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putBoolean(DB_WATER_F, flag);
         editor.commit();
@@ -646,7 +650,7 @@ public class Application_manager extends Application {
     }
 
     synchronized public static void set_m_emotion(int e1,int e2,int e3,int e4){
-        sharedPreferences = context.getSharedPreferences(Application_manager.DB_NAME, 0);
+
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putInt(DB_EMOTION1, e1);
         editor.putInt(DB_EMOTION2, e2);
@@ -661,13 +665,13 @@ public class Application_manager extends Application {
     }
 
     synchronized public static String get_m_password(){
-        sharedPreferences = context.getSharedPreferences(DB_NAME, 0);
+
         m_password = sharedPreferences.getString(DB_PASSWORD,"0000");
         return m_password;
     }
 
     synchronized public static void set_m_password(String pw){
-        sharedPreferences = context.getSharedPreferences(Application_manager.DB_NAME, 0);
+
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putString(DB_PASSWORD, pw);
         editor.commit();
@@ -811,7 +815,6 @@ public class Application_manager extends Application {
         s_time_gap_t = gap_buf_t+":"+gap_buf_m;
         int g_buf;
 
-        sharedPreferences = context.getSharedPreferences(Application_manager.DB_NAME, 0);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         // 설정한 시간이 더 크다
         if(up == true)
@@ -967,7 +970,7 @@ public class Application_manager extends Application {
     * 기기 구동시간 저장
      */
     synchronized public static void save_Running_time(){
-        sharedPreferences = context.getSharedPreferences(Application_manager.DB_NAME, 0);
+
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putInt(DB_RUNNING_TIME, runningTime);
         editor.commit();
