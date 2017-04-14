@@ -1,3 +1,0 @@
-파일명:		release_key.jks
-
-비밀번호:	gw1000

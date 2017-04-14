@@ -18,6 +18,10 @@ import static android.content.Context.AUDIO_SERVICE;
 
 public class SoundManager {
 
+    private final int vol_type_of_therapy =  AudioManager.STREAM_MUSIC;
+    private final int vol_type_of_alarm = AudioManager.STREAM_SYSTEM;
+
+
     // 마지막에 재생된 음악
     private MediaPlayer latest_player;
 
@@ -67,10 +71,10 @@ public class SoundManager {
 
         final AudioManager audioManager = (AudioManager) context.getSystemService(AUDIO_SERVICE);
 
-        int max = audioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC);
+        int max = audioManager.getStreamMaxVolume(vol_type_of_therapy);
         double level = (double)max / 5;
 
-        audioManager.setStreamVolume(AudioManager.STREAM_MUSIC, (int)(level * step), 0);
+        audioManager.setStreamVolume(vol_type_of_therapy, (int)(level * step), 0);
 
         Log.i("JW_VOL", "max = " + max + " / level = " + level + " / volume = " + step);
     }
@@ -84,10 +88,15 @@ public class SoundManager {
         volume /= 10;
         final AudioManager audioManager = (AudioManager) context.getSystemService(AUDIO_SERVICE);
 
-        int max = audioManager.getStreamMaxVolume(AudioManager.STREAM_RING);
+        int max = audioManager.getStreamMaxVolume(vol_type_of_alarm);
         double level = (double)max / 10;
 
-        audioManager.setStreamVolume(AudioManager.STREAM_RING, (int)(level * volume), 0);
+        // 무음, 진동 모드일 경우, 시스템 볼륨 설정이 불가능하므로 벨소리 모드로 변경
+        if (audioManager.getStreamVolume(AudioManager.STREAM_RING) == 0) {
+
+            audioManager.setStreamVolume(AudioManager.STREAM_RING, 1, 0);
+        }
+        audioManager.setStreamVolume(vol_type_of_alarm, (int)(level * volume), 0);
 
         Log.i("JW_VOL", "max = " + max + " / level = " + level + " / volume = " + volume);
     }
@@ -129,7 +138,7 @@ public class SoundManager {
 
                 mediaPlayer_therapy[i] = new MediaPlayer();
                 mediaPlayer_therapy[i].setLooping(true);
-                mediaPlayer_therapy[i].setAudioStreamType(AudioManager.STREAM_MUSIC);
+                mediaPlayer_therapy[i].setAudioStreamType(vol_type_of_therapy);
             }
 
             for (int lang=0; lang<Application_manager.NUM_OF_LANG; lang++) {
@@ -137,7 +146,7 @@ public class SoundManager {
                 for (int sound=0; sound<Application_manager.NUM_OF_SOUND; sound++) {
 
                     Application_manager.mediaPlayer[lang][sound] = new MediaPlayer();
-                    Application_manager.mediaPlayer[lang][sound].setAudioStreamType(AudioManager.STREAM_RING);
+                    Application_manager.mediaPlayer[lang][sound].setAudioStreamType(vol_type_of_alarm);
                 }
             }
 
