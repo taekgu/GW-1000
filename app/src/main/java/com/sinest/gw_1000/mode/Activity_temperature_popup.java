@@ -36,7 +36,6 @@ public class Activity_temperature_popup extends Activity {
     TextView textView_time;
     private int temperature;
     private int mode; // 0: 내부온도 설정 팝업, 1: 수온 설정 팝업
-    private Context mContext;
 
     private ImageView background;
     private ImageView popup_keypad_enter;
@@ -54,8 +53,6 @@ public class Activity_temperature_popup extends Activity {
         getWindow().setAttributes(layoutParams);
         setContentView(R.layout.activity_waiting_time_popup);
         Application_manager.setFullScreen(this);
-
-        mContext = this;
 
         Intent intent = getIntent();
         mode = intent.getIntExtra("mode", -1);

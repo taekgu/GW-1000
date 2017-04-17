@@ -36,7 +36,6 @@ public class Fragment_working extends Fragment {
 
     private Thread thread_timer;
     private boolean isRun = false;
-    //private boolean isPause = false;
     private boolean isAlive = false;
 
     // 대기 화면으로 돌아갈 때 모터원점복귀 대기 위한 핸들러
@@ -79,8 +78,6 @@ public class Fragment_working extends Fragment {
                 isAlive = true;
 
                 while (isRun) {
-
-                    //while(isPause);
 
                     try {
 

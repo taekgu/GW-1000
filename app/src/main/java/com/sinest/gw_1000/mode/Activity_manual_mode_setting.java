@@ -22,14 +22,6 @@ import com.sinest.gw_1000.mode.utils.CustomProgressBar;
 
 public class Activity_manual_mode_setting extends Activity{
 
-    public static final int REQUEST_CODE_MANUAL_PATTERN_01 = 1011;
-    public static final int REQUEST_CODE_MANUAL_PATTERN_02 = 1012;
-    public static final int REQUEST_CODE_MANUAL_PATTERN_03 = 1013;
-
-    public static final int REQUEST_CODE_MANUAL_TEXT_01 = 1021;
-    public static final int REQUEST_CODE_MANUAL_TEXT_02 = 1022;
-    public static final int REQUEST_CODE_MANUAL_TEXT_03 = 1023;
-
     private int modeNum; // 어떤 매뉴얼 모드인지 1~5
     private int[] pattern = new int[3]; // 선택되어있던 패턴
     private int[] pattern_prev = new int[3]; // 팝업에서 변경되기 전 초기 패턴
@@ -208,7 +200,6 @@ public class Activity_manual_mode_setting extends Activity{
                         else {
 
                             Application_manager.getToastManager().popToast(2);
-                            //Toast.makeText(getApplicationContext(), "하나 이상의 패턴을 사용해야합니다", Toast.LENGTH_SHORT).show();
                         }
                         break;
                     case R.id.manual_mode_setting_back:

@@ -140,8 +140,6 @@ public class Activity_waiting extends AppCompatActivity {
         val_time = sharedPreferences.getInt(Application_manager.DB_VAL_TIME, 10);
 
         // tx 메시지의 DATA2, 5에 수압, 산소투입량 입력
-        //communicator.set_tx(3, (byte) (Application_manager.inverterVal | (byte) val_pressure));
-        //communicator.set_tx(3, (byte) (Application_manager.inverterVal | (byte) (Application_manager.m_inverter * 3)));
         communicator.set_tx(3, (byte) (Application_manager.inverterVal | (byte) (val_pressure * Application_manager.m_inverter / 2)));
         if (Application_manager.gw_1000) {
             communicator.set_tx(6, (byte) val_oxygen);
@@ -518,8 +516,6 @@ public class Activity_waiting extends AppCompatActivity {
             val = (byte) val_oxygen_spray;
         }
         communicator.set_tx(6, val);
-        //communicator.set_tx(3, (byte) (Application_manager.inverterVal | (byte) val_pressure));
-        //communicator.set_tx(3, (byte) (Application_manager.inverterVal | (byte) (Application_manager.m_inverter * 3)));
         communicator.set_tx(3, (byte) (Application_manager.inverterVal | (byte) (val_pressure * Application_manager.m_inverter / 2)));
 
         // 치료 음악 재생 종료
@@ -577,7 +573,6 @@ public class Activity_waiting extends AppCompatActivity {
                 public void run() {
 
                     progressBar_nozzle_loc.setVisibility(View.INVISIBLE);
-                    //seekBar_water.setVisibility(View.INVISIBLE);
                 }
             });
 
@@ -807,7 +802,6 @@ public class Activity_waiting extends AppCompatActivity {
                 // Water heater timer 에서 설정한 시간 내이고 GW-1000H 버전인 경우 - 현재 온도에 따라 동작여부 결정
 
                 if (Application_manager.water_time_flag) {
-                //if (Application_manager.water_time_flag && Application_manager.gw_1000) {
                     // 온도 높을 때 - 냉
                     if (Application_manager.SENSOR_TEMP_BED_USER + 1 < Application_manager.SENSOR_TEMP_BED) {
 

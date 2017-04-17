@@ -3,9 +3,7 @@ package com.sinest.gw_1000.setting;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Typeface;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
@@ -16,7 +14,6 @@ import android.widget.TextView;
 
 import com.sinest.gw_1000.R;
 import com.sinest.gw_1000.management.Application_manager;
-import com.sinest.gw_1000.mode.Activity_library;
 
 public class Activity_rfid extends Activity {
 
@@ -33,7 +30,6 @@ public class Activity_rfid extends Activity {
 
     String s_buf;
     int int_buf;
-    int working_mode_num;
     int treatment_num;
 
     String[] w_mode = {"A1","A2","A3","A4","A5","A6","A7","A8","A9","A10","A11","A12","A13","A14","A15",

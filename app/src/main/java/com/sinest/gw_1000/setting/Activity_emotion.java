@@ -30,19 +30,12 @@ public class Activity_emotion extends Activity {
     ImageView emotion_sound_up; ImageView emotion_sound_down;
     Button emotion_back;
 
-    boolean emotion_b_f = true;
-
     TextView led_mode; TextView sound_mode; TextView led_bright; TextView sound_volume;
-
-    String s_buf;
-    int int_buf;
 
     int led_mode_num;
     int sound_mode_num;
     int led_bright_num;
     int sound_volume_num;
-
-    Intent get_intent;
 
     Byte up;
     Byte down;

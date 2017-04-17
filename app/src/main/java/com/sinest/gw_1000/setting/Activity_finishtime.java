@@ -3,9 +3,7 @@ package com.sinest.gw_1000.setting;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Typeface;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
@@ -23,8 +21,6 @@ public class Activity_finishtime extends Activity {
     Button finish_time4; Button finish_time5; Button finish_time6;
     Button finish_time7; Button finish_time8; Button finish_time9;
     Button finish_time0; Button finish_time_enter; Button finish_time_back;
-
-    boolean[] finish_flag = {true,true,true,true,true,true,true,true,true,true,true,true};
 
     Chronometer finish_time;
 

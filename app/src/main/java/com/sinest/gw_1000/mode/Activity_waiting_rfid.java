@@ -118,7 +118,6 @@ public class Activity_waiting_rfid extends AppCompatActivity {
         val_time = sharedPreferences.getInt(Application_manager.DB_VAL_TIME, 10);
 
         // tx 메시지의 DATA2, 5에 수압, 산소투입량 입력
-        //communicator.set_tx(3, (byte)(Application_manager.inverterVal | (byte)val_pressure));
         communicator.set_tx(3, (byte) (Application_manager.inverterVal | (byte) (Application_manager.m_inverter * 3)));
         if (Application_manager.gw_1000) {
             communicator.set_tx(6, (byte) val_oxygen);
@@ -543,7 +542,6 @@ public class Activity_waiting_rfid extends AppCompatActivity {
             val = (byte) val_oxygen_spray;
         }
         communicator.set_tx(6, val);
-        //communicator.set_tx(3, (byte)(Application_manager.inverterVal | (byte)val_pressure));
         communicator.set_tx(3, (byte) (Application_manager.inverterVal | (byte) (Application_manager.m_inverter * 3)));
 
         // 치료 음악 재생 종료

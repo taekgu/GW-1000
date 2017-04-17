@@ -27,7 +27,6 @@ public class SoundManager {
     private final int vol_type_of_therapy =  AudioManager.STREAM_MUSIC;
     private final int vol_type_of_alarm = AudioManager.STREAM_SYSTEM;
 
-
     // 마지막에 재생된 음악
     private MediaPlayer latest_player;
 

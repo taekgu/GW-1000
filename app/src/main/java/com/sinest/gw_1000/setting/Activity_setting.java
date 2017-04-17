@@ -26,7 +26,6 @@ import com.sinest.gw_1000.mode.Activity_waiting_rfid;
 import com.sinest.gw_1000.mode.utils.CustomSeekbar_onethumb;
 
 public class Activity_setting extends AppCompatActivity {
-    public static final String TAG = "SCREEN";
 
     private boolean rfid_state = false;
 
@@ -76,9 +75,6 @@ public class Activity_setting extends AppCompatActivity {
 
     int ex_f = 0;
 
-    boolean b_back_f = true;
-    boolean b_emotion_f = true;
-
     boolean flag = false;
 
     int b_language_f = 0;
@@ -91,22 +87,11 @@ public class Activity_setting extends AppCompatActivity {
     Intent intent_rfid2;
     Intent time;
 
-    String check;
-    String check2;
-
-    int led_mode_num = 0;
-    int sound_mode_num = 0;
-    int led_bright_num = 1;
-    int sound_volume_num = 1;
-
     boolean sleep_f = false;
     int sleep_cnt = 0;
     int sleep_cnt_end = 1000;
 
-    String t_buf;
-
     CustomSeekbar_onethumb custom_seekbar_horizontal;
-    int volume;
     Typeface tf;
 
     public static DevicePolicyManager devicePolicyManager;

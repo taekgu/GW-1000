@@ -33,8 +33,6 @@ public class SocketManager {
     private final static int SERVER_CONNECTED     = 1001;
     private final static int SERVER_DISCONNECTED  = 1002;
 
-    //private static final String IP_ADDRESS  = "192.168.219.122";
-    //private static final String IP_ADDRESS  = "172.30.1.12";
     private static final String IP_ADDRESS  = "192.168.0.1";
     private static final int PORT           = 20002;
 
@@ -106,7 +104,6 @@ public class SocketManager {
 
                 socketAddress = new InetSocketAddress(IP_ADDRESS, PORT);
                 mSocket = new Socket();
-                //mSocket.connect(socketAddress, timeout);
                 mSocket.connect(socketAddress);
 
                 if (mSocket.isConnected()) {
