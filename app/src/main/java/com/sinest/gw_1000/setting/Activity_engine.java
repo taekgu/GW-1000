@@ -7,6 +7,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
@@ -47,7 +48,11 @@ public class Activity_engine extends AppCompatActivity {
 
     boolean[] hidden = {false,false,false,false};
 
-    boolean mode_f = true; boolean invert_f = true;
+    boolean mode_f = true;
+
+    int programMode = -1;
+
+    boolean invert_f = true;
 
     int heater_f = 0;
     int w_press = 0;
@@ -350,6 +355,7 @@ public class Activity_engine extends AppCompatActivity {
                             // GW-1000L 버전 설정
                             Application_manager.setting_back_image[0] = R.drawable.setting_back_image_l;
                             Application_manager.setting_back_image[1] = R.drawable.setting_back_image_l_ch;
+                            Log.i("JW", "l버전 설정");
                             mode_f = false;
                         } else {
                             program_m.setBackgroundResource(Application_manager.program_mode_off[Application_manager.img_flag]);
@@ -533,7 +539,9 @@ public class Activity_engine extends AppCompatActivity {
 
                         // 중지 명령 -> 모터 원점 복귀
                         communicator.set_tx(1, (byte)0x00);
-                        wait_motor_back(check_activity);
+
+                        finish();
+                        //wait_motor_back(check_activity);
                         break;
                     case R.id.eng_b_left:
                         eng_b_left.setBackgroundResource(R.drawable.moving_left_off);

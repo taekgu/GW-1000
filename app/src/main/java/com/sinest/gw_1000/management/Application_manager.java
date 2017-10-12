@@ -1,31 +1,19 @@
 package com.sinest.gw_1000.management;
 
-import android.Manifest;
 import android.app.Activity;
-import android.app.AlarmManager;
 import android.app.Application;
-import android.app.NotificationManager;
-import android.app.PendingIntent;
-import android.app.admin.DevicePolicyManager;
-import android.content.ComponentName;
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.pm.PackageManager;
 import android.media.MediaPlayer;
-import android.os.Build;
 import android.os.PowerManager;
-import android.support.v4.app.ActivityCompat;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 
 import com.sinest.gw_1000.R;
+import com.sinest.gw_1000.Utils.LOG;
 import com.sinest.gw_1000.communication.Communicator;
 import com.sinest.gw_1000.setting.Activity_setting;
-import com.sinest.gw_1000.setting.ShutdownAdminReceiver;
-import com.sinest.gw_1000.splash.Activity_booting;
 
 import java.lang.Thread.UncaughtExceptionHandler;
 
@@ -177,7 +165,7 @@ public class Application_manager extends Application {
     public final static String DB_TEMPERATURE_BED_USER = "temp_below_user";
 
     // GW-1000 모드 확인 Key
-    public final static String GW_1000 = "GW_1000";
+    public final static String PROGRAM_MODE = "PROGRAM_MODE";
 
     // 사운드 id
     public final static int NUM_OF_LANG = 3;
@@ -250,6 +238,13 @@ public class Application_manager extends Application {
 
     //GW-1000H / GW-1000L    true -> H    false -> L
     public static boolean gw_1000 = true;
+
+    // GW-1000 L, A, H
+    public static final int UNDEFINED   = 0;
+    public static final int MODE_L      = 1;
+    public static final int MODE_A      = 2;
+    public static final int MODE_H      = 3;
+    public static int programMode = UNDEFINED;
 
     //-------------------------------Img ---------------------------------------------------
     // 0-> 한국,영어 1-> 중국
@@ -341,7 +336,7 @@ public class Application_manager extends Application {
     private UncaughtExceptionHandler mUncaughtExceptionHandler;
 
     public void onCreate() {
-
+/*
         //예외 발생 시 앱 재시작
         mUncaughtExceptionHandler = Thread.getDefaultUncaughtExceptionHandler();
         Thread.setDefaultUncaughtExceptionHandler(new UncaughtExceptionHandler() {
@@ -368,7 +363,7 @@ public class Application_manager extends Application {
                 //mUncaughtExceptionHandler.uncaughtException(thread, throwable);
             }
         });
-
+*/
         sharedPreferences = getSharedPreferences(DB_NAME, 0);
 
         Application_manager.context = getApplicationContext();
@@ -430,7 +425,19 @@ public class Application_manager extends Application {
 
             waiting_backimage[0] = R.drawable.workingmotion0;
             waiting_backimage[1] = R.drawable.workingmotion0_ch;
+        }
 
+        switch (programMode) {
+            case MODE_L:
+                LOG.D("programMode : L");
+                break;
+            case MODE_A:
+            case MODE_H:
+                LOG.D("programMode : " + programMode);
+                break;
+            default:
+                LOG.D("programMode : UNDEFINED");
+                break;
         }
 
         // 감성 LED 모드 및 밝기 불러오기
@@ -466,8 +473,8 @@ public class Application_manager extends Application {
             getCommunicator().set_setting(4, (byte)0x00);
         }
 
-        //GW_1000
-        gw_1000 = sharedPreferences.getBoolean(GW_1000,true);
+        //PROGRAM_MODE
+        gw_1000 = sharedPreferences.getBoolean(PROGRAM_MODE,true);
 
         //DB_LANGUEAGE
         m_language = sharedPreferences.getInt(DB_LANGUEAGE,0);
@@ -538,7 +545,7 @@ public class Application_manager extends Application {
     synchronized public static void set_m_gw_1000(boolean i){
 
         SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putBoolean(GW_1000, i);
+        editor.putBoolean(PROGRAM_MODE, i);
         editor.commit();
         gw_1000 = i;
 

@@ -184,36 +184,42 @@
                                 android:layout_width="0dp"
                                 android:layout_height="match_parent"
                                 android:layout_weight="13">
-
-                                <RelativeLayout
-                                    android:layout_width="match_parent"
-                                    android:layout_height="match_parent"
-                                    android:gravity="center">
-
-                                    <ImageView
-                                        android:id="@+id/waiting_humidity"
-                                        android:layout_width="match_parent"
-                                        android:layout_height="match_parent"
-                                        app:srcCompat="@drawable/humidity"/>
-
-                                    <TextView
-                                        android:id="@+id/textView_humidity"
-                                        android:layout_width="0dp"
-                                        android:layout_height="0dp"
-                                        android:alpha="100"
-                                        android:text="0"
-                                        android:textColor="#000000"
-                                        android:textSize="15dp"
-                                        android:gravity="center"
-                                        android:layout_alignStart="@+id/waiting_humidity"
-                                        android:layout_alignEnd="@+id/waiting_humidity"
-                                        android:layout_alignTop="@+id/waiting_humidity"
-                                        android:layout_alignBottom="@+id/waiting_humidity"
-                                        android:layout_marginRight="15dp"/>
-
-                                </RelativeLayout>
-
                             </LinearLayout>
+
+                            <!--<LinearLayout-->
+                                <!--android:layout_width="0dp"-->
+                                <!--android:layout_height="match_parent"-->
+                                <!--android:layout_weight="13">-->
+
+                                <!--<RelativeLayout-->
+                                    <!--android:layout_width="match_parent"-->
+                                    <!--android:layout_height="match_parent"-->
+                                    <!--android:gravity="center">-->
+
+                                    <!--<ImageView-->
+                                        <!--android:id="@+id/waiting_humidity"-->
+                                        <!--android:layout_width="match_parent"-->
+                                        <!--android:layout_height="match_parent"-->
+                                        <!--app:srcCompat="@drawable/humidity"/>-->
+
+                                    <!--<TextView-->
+                                        <!--android:id="@+id/textView_humidity"-->
+                                        <!--android:layout_width="0dp"-->
+                                        <!--android:layout_height="0dp"-->
+                                        <!--android:alpha="100"-->
+                                        <!--android:text="0"-->
+                                        <!--android:textColor="#000000"-->
+                                        <!--android:textSize="15dp"-->
+                                        <!--android:gravity="center"-->
+                                        <!--android:layout_alignStart="@+id/waiting_humidity"-->
+                                        <!--android:layout_alignEnd="@+id/waiting_humidity"-->
+                                        <!--android:layout_alignTop="@+id/waiting_humidity"-->
+                                        <!--android:layout_alignBottom="@+id/waiting_humidity"-->
+                                        <!--android:layout_marginRight="15dp"/>-->
+
+                                <!--</RelativeLayout>-->
+
+                            <!--</LinearLayout>-->
 
                             <LinearLayout
                                 android:layout_width="0dp"
@@ -263,46 +269,46 @@
 
                             </LinearLayout>
 
-                            <LinearLayout
-                                android:layout_width="0dp"
-                                android:layout_height="match_parent"
-                                android:layout_weight="5">
-                            </LinearLayout>
+                            <!--<LinearLayout-->
+                                <!--android:layout_width="0dp"-->
+                                <!--android:layout_height="match_parent"-->
+                                <!--android:layout_weight="5">-->
+                            <!--</LinearLayout>-->
 
-                            <LinearLayout
-                                android:layout_width="0dp"
-                                android:layout_height="match_parent"
-                                android:layout_weight="13">
+                            <!--<LinearLayout-->
+                                <!--android:layout_width="0dp"-->
+                                <!--android:layout_height="match_parent"-->
+                                <!--android:layout_weight="13">-->
 
-                                <RelativeLayout
-                                    android:layout_width="match_parent"
-                                    android:layout_height="match_parent"
-                                    android:gravity="center">
+                                <!--<RelativeLayout-->
+                                    <!--android:layout_width="match_parent"-->
+                                    <!--android:layout_height="match_parent"-->
+                                    <!--android:gravity="center">-->
 
-                                    <ImageView
-                                        android:id="@+id/waiting_oxygen"
-                                        android:layout_width="match_parent"
-                                        android:layout_height="match_parent"
-                                        app:srcCompat="@drawable/oxygen"/>
+                                    <!--<ImageView-->
+                                        <!--android:id="@+id/waiting_oxygen"-->
+                                        <!--android:layout_width="match_parent"-->
+                                        <!--android:layout_height="match_parent"-->
+                                        <!--app:srcCompat="@drawable/oxygen"/>-->
 
-                                    <TextView
-                                        android:id="@+id/textView_oxygen"
-                                        android:layout_width="0dp"
-                                        android:layout_height="0dp"
-                                        android:alpha="100"
-                                        android:text="0"
-                                        android:textColor="#000000"
-                                        android:textSize="15dp"
-                                        android:gravity="center"
-                                        android:layout_alignStart="@+id/waiting_oxygen"
-                                        android:layout_alignEnd="@+id/waiting_oxygen"
-                                        android:layout_alignTop="@+id/waiting_oxygen"
-                                        android:layout_alignBottom="@+id/waiting_oxygen"
-                                        android:layout_marginRight="15dp"/>
+                                    <!--<TextView-->
+                                        <!--android:id="@+id/textView_oxygen"-->
+                                        <!--android:layout_width="0dp"-->
+                                        <!--android:layout_height="0dp"-->
+                                        <!--android:alpha="100"-->
+                                        <!--android:text="0"-->
+                                        <!--android:textColor="#000000"-->
+                                        <!--android:textSize="15dp"-->
+                                        <!--android:gravity="center"-->
+                                        <!--android:layout_alignStart="@+id/waiting_oxygen"-->
+                                        <!--android:layout_alignEnd="@+id/waiting_oxygen"-->
+                                        <!--android:layout_alignTop="@+id/waiting_oxygen"-->
+                                        <!--android:layout_alignBottom="@+id/waiting_oxygen"-->
+                                        <!--android:layout_marginRight="15dp"/>-->
 
-                                </RelativeLayout>
+                                <!--</RelativeLayout>-->
 
-                            </LinearLayout>
+                            <!--</LinearLayout>-->
 
                         </LinearLayout>
 

@@ -848,6 +848,7 @@ public class Activity_setting extends AppCompatActivity {
         }
 
         activity_setting.setBackgroundResource(Application_manager.setting_back_image[Application_manager.img_flag]);
+        Log.i("JW", "1: " + R.drawable.setting_back_image_l + ", 2: " + Application_manager.setting_back_image[Application_manager.img_flag]);
         b_emotion.setBackgroundResource(Application_manager.emotion_off[Application_manager.img_flag]);
         b_back.setBackgroundResource(Application_manager.button_circle_back_off[Application_manager.img_flag]);
 

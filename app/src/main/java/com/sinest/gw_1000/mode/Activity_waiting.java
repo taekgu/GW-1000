@@ -280,12 +280,12 @@ public class Activity_waiting extends AppCompatActivity {
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-
-                TextView textView_oxygen = (TextView) findViewById(R.id.textView_oxygen);
-                textView_oxygen.setText(""+Application_manager.SENSOR_OXYGEN);
-
-                TextView textView_humidity = (TextView) findViewById(R.id.textView_humidity);
-                textView_humidity.setText(""+Application_manager.SENSOR_HUMIDITY);
+//
+//                TextView textView_oxygen = (TextView) findViewById(R.id.textView_oxygen);
+//                textView_oxygen.setText(""+Application_manager.SENSOR_OXYGEN);
+//
+//                TextView textView_humidity = (TextView) findViewById(R.id.textView_humidity);
+//                textView_humidity.setText(""+Application_manager.SENSOR_HUMIDITY);
 
                 // 수온 불러오기
                 textView_temperature.setText(""+Application_manager.SENSOR_TEMP);
@@ -738,8 +738,8 @@ public class Activity_waiting extends AppCompatActivity {
                     }
                     if (cnt != 0)
                         temp /= cnt;
-                    TextView textView_oxygen = (TextView) findViewById(R.id.textView_oxygen);
-                    textView_oxygen.setText(""+temp);
+//                    TextView textView_oxygen = (TextView) findViewById(R.id.textView_oxygen);
+//                    textView_oxygen.setText(""+temp);
                     Application_manager.SENSOR_OXYGEN = temp;
 
                     // 습도 평균
@@ -755,8 +755,8 @@ public class Activity_waiting extends AppCompatActivity {
                     }
                     if (cnt != 0)
                         temp /= cnt;
-                    TextView textView_humidity = (TextView) findViewById(R.id.textView_humidity);
-                    textView_humidity.setText(""+temp);
+//                    TextView textView_humidity = (TextView) findViewById(R.id.textView_humidity);
+//                    textView_humidity.setText(""+temp);
                     Application_manager.SENSOR_HUMIDITY = temp;
 
                     // 내부온도 평균
