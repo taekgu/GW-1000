@@ -98,8 +98,8 @@ public class Application_manager extends Application {
     public final static String DB_NAME = "myData";
 
     // 대기모드 산소농도 / 수압세기 / 사용시간 값
-    public final static String DB_VAL_OXYGEN = "val_oxygen";
-    public final static String DB_VAL_OXYGEN_SPRAY = "val_oxygen_spray";
+//    public final static String DB_VAL_OXYGEN = "val_oxygen";
+    public final static String DB_VAL_OXYGEN_INJECTION = "val_oxygen_spray";
     public final static String DB_VAL_PRESSURE = "val_pressure";
     public final static String DB_VAL_TIME = "val_time";
 
@@ -165,7 +165,8 @@ public class Application_manager extends Application {
     public final static String DB_TEMPERATURE_BED_USER = "temp_below_user";
 
     // GW-1000 모드 확인 Key
-    public final static String PROGRAM_MODE = "PROGRAM_MODE";
+    public final static String PROGRAM_MODE_OLD = "PROGRAM_MODE_OLD";
+    public final static String PROGRAM_MODE = "program_mode";
 
     // 사운드 id
     public final static int NUM_OF_LANG = 3;
@@ -249,7 +250,7 @@ public class Application_manager extends Application {
     //-------------------------------Img ---------------------------------------------------
     // 0-> 한국,영어 1-> 중국
     //setting
-    public static int img_flag = 0;
+    public static int useChineseImage = 0;
     public static int[] button_on = {R.drawable.button_on, R.drawable.button_on};//
     public static int[] button_off = {R.drawable.button_off, R.drawable.button_off_ch};
     public static int[] on = {R.drawable.on, R.drawable.on_ch};
@@ -311,11 +312,12 @@ public class Application_manager extends Application {
     public static int[] oxygen_4step_off = {R.drawable.oxygen_4step_off, R.drawable.oxygen_4step_off_ch};
     public static int[] oxygen_5step_on = {R.drawable.oxygen_5step_on, R.drawable.oxygen_5step_on_ch};
     public static int[] oxygen_5step_off = {R.drawable.oxygen_5step_off, R.drawable.oxygen_5step_off_ch};
-    public static int[] program_mode_on = {R.drawable.program_mode_on, R.drawable.program_mode_on_ch};
-    public static int[] program_mode_off = {R.drawable.program_mode_off, R.drawable.program_mode_off_ch};
+    public static int[] program_mode_L = {R.drawable.program_mode_on, R.drawable.program_mode_on_ch};
+    public static int[] program_mode_H = {R.drawable.program_mode_off, R.drawable.program_mode_off_ch};
+    public static int[] program_mode_A = {R.drawable.program_mode_a, R.drawable.program_mode_a};
 
     //waiting
-    public static int[] waiting_backimage = {R.drawable.workingmotion0, R.drawable.workingmotion0_ch};
+    public static int[] waiting_backimage = {R.drawable.h_workingmotion0_e, R.drawable.h_workingmotion0_c};
 
     //library
     public static int[] ribrary_back_image = {R.drawable.ribrary_back_image, R.drawable.ribrary_back_image_ch};
@@ -336,6 +338,7 @@ public class Application_manager extends Application {
     private UncaughtExceptionHandler mUncaughtExceptionHandler;
 
     public void onCreate() {
+        super.onCreate();
 /*
         //예외 발생 시 앱 재시작
         mUncaughtExceptionHandler = Thread.getDefaultUncaughtExceptionHandler();
@@ -410,30 +413,47 @@ public class Application_manager extends Application {
         isRun = true;
         thread_runningTime.start();
 
-        if (gw_1000 == false) {
-            // GW-1000L 버전 설정
-            setting_back_image[0] = R.drawable.setting_back_image_l;
-            setting_back_image[1] = R.drawable.setting_back_image_l_ch;
-
-            waiting_backimage[0] = R.drawable.waiting_backimage_l;
-            waiting_backimage[1] = R.drawable.waiting_backimage_l_ch;
-
-        } else {
-            // GW-1000H 버전 설정
-            setting_back_image[0] = R.drawable.setting_back_image;
-            setting_back_image[1] = R.drawable.setting_back_image_ch;
-
-            waiting_backimage[0] = R.drawable.workingmotion0;
-            waiting_backimage[1] = R.drawable.workingmotion0_ch;
-        }
+//        if (gw_1000 == false) {
+//            // GW-1000L 버전 설정
+//            setting_back_image[0] = R.drawable.setting_back_image_l;
+//            setting_back_image[1] = R.drawable.setting_back_image_l_ch;
+//
+//            waiting_backimage[0] = R.drawable.waiting_backimage_l;
+//            waiting_backimage[1] = R.drawable.waiting_backimage_l_ch;
+//
+//        } else {
+//            // GW-1000H 버전 설정
+//            setting_back_image[0] = R.drawable.setting_back_image;
+//            setting_back_image[1] = R.drawable.setting_back_image_ch;
+//
+//            waiting_backimage[0] = R.drawable.workingmotion0;
+//            waiting_backimage[1] = R.drawable.workingmotion0_ch;
+//        }
 
         switch (programMode) {
             case MODE_L:
                 LOG.D("programMode : L");
+                setting_back_image[0] = R.drawable.setting_back_image_l;
+                setting_back_image[1] = R.drawable.setting_back_image_l_ch;
+
+                waiting_backimage[0] = R.drawable.waiting_backimage_l;
+                waiting_backimage[1] = R.drawable.waiting_backimage_l_ch;
                 break;
             case MODE_A:
+                LOG.D("programMode : A");
+                setting_back_image[0] = R.drawable.setting_back_image;
+                setting_back_image[1] = R.drawable.setting_back_image_ch;
+
+                waiting_backimage[0] = R.drawable.a_workingmotion0_e;
+                waiting_backimage[1] = R.drawable.a_workingmotion0_c;
+                break;
             case MODE_H:
-                LOG.D("programMode : " + programMode);
+                LOG.D("programMode : H");
+                setting_back_image[0] = R.drawable.setting_back_image;
+                setting_back_image[1] = R.drawable.setting_back_image_ch;
+
+                waiting_backimage[0] = R.drawable.h_workingmotion0_e;
+                waiting_backimage[1] = R.drawable.h_workingmotion0_c;
                 break;
             default:
                 LOG.D("programMode : UNDEFINED");
@@ -473,8 +493,13 @@ public class Application_manager extends Application {
             getCommunicator().set_setting(4, (byte)0x00);
         }
 
-        //PROGRAM_MODE
-        gw_1000 = sharedPreferences.getBoolean(PROGRAM_MODE,true);
+        //PROGRAM_MODE_OLD
+//        gw_1000 = sharedPreferences.getBoolean(PROGRAM_MODE_OLD,true);
+        programMode = sharedPreferences.getInt(PROGRAM_MODE, UNDEFINED);
+        if (programMode == UNDEFINED) {
+            LOG.D(getClass().getName(), "programMode is undefined. Set default value (GW-1000H)");
+            programMode = MODE_H;
+        }
 
         //DB_LANGUEAGE
         m_language = sharedPreferences.getInt(DB_LANGUEAGE,0);
@@ -501,9 +526,9 @@ public class Application_manager extends Application {
         }
 
         if(m_language == 2){
-            img_flag = 1;
+            useChineseImage = 1;
         }else{
-            img_flag = 0;
+            useChineseImage = 0;
         }
 
         // DB에서 필요 정보 불러와서 변수에 저장
@@ -542,19 +567,34 @@ public class Application_manager extends Application {
         isDoorOpened = state;
     }
 
-    synchronized public static void set_m_gw_1000(boolean i){
+    synchronized public static void setProgramMode(int mode) {
 
+        LOG.D(getContext().getClass().getName(), "setProgramMode : " + mode);
         SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putBoolean(PROGRAM_MODE, i);
+        editor.putInt(PROGRAM_MODE, mode);
         editor.commit();
-        gw_1000 = i;
+        programMode = mode;
 
-        // GW-1000L 버전일 경우 히터 끄기
-        if (!i) {
-
+        if (programMode == MODE_L) {
             communicator.set_tx(5, (byte) 0x00);
         }
     }
+
+    public static int getProgramMode() { return programMode; }
+
+//    synchronized public static void set_m_gw_1000(boolean i){
+//
+//        SharedPreferences.Editor editor = sharedPreferences.edit();
+//        editor.putBoolean(PROGRAM_MODE_OLD, i);
+//        editor.commit();
+//        gw_1000 = i;
+//
+//        // GW-1000L 버전일 경우 히터 끄기
+//        if (!i) {
+//
+//            communicator.set_tx(5, (byte) 0x00);
+//        }
+//    }
 
     synchronized public static void set_rfid_on_f(int i){
 
@@ -594,9 +634,9 @@ public class Application_manager extends Application {
         editor.commit();
         m_language = i;
         if(m_language == 2){
-            img_flag = 1;
+            useChineseImage = 1;
         }else{
-            img_flag = 0;
+            useChineseImage = 0;
         }
     }
 

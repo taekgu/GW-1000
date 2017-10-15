@@ -219,11 +219,11 @@ public class Activity_rfidcardpassord extends Activity {
     protected void onResume() {
         super.onResume();
         // 언어에 따라 이미지 설정
-        rfid_password_id.setBackgroundResource(Application_manager.rfid_password_popup[Application_manager.img_flag]);
-        rfid_password_d.setBackgroundResource(Application_manager.keypad_delete[Application_manager.img_flag]);
-        rfid_password_c.setBackgroundResource(Application_manager.keypad_change[Application_manager.img_flag]);
-        rfid_password_e.setBackgroundResource(Application_manager.keypad_enter[Application_manager.img_flag]);
-        rfid_password_b.setBackgroundResource(Application_manager.keypad_back[Application_manager.img_flag]);
+        rfid_password_id.setBackgroundResource(Application_manager.rfid_password_popup[Application_manager.useChineseImage]);
+        rfid_password_d.setBackgroundResource(Application_manager.keypad_delete[Application_manager.useChineseImage]);
+        rfid_password_c.setBackgroundResource(Application_manager.keypad_change[Application_manager.useChineseImage]);
+        rfid_password_e.setBackgroundResource(Application_manager.keypad_enter[Application_manager.useChineseImage]);
+        rfid_password_b.setBackgroundResource(Application_manager.keypad_back[Application_manager.useChineseImage]);
 
         // 슬립 모드 동작 재시작
         Application_manager.setSleep_f(0,true);

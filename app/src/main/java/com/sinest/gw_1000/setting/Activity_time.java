@@ -1,13 +1,8 @@
 package com.sinest.gw_1000.setting;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.graphics.Typeface;
-import android.os.Handler;
-import android.os.Message;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
@@ -15,7 +10,6 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.Chronometer;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import com.sinest.gw_1000.R;
 import com.sinest.gw_1000.management.Application_manager;
@@ -158,9 +152,9 @@ public class Activity_time extends Activity {
     protected void onResume() {
         super.onResume();
         // 언어에 따른 이미지 초기설정
-        time_keypad_id.setBackgroundResource(Application_manager.time_keypad[Application_manager.img_flag]);
-        time_enter.setBackgroundResource(Application_manager.keypad_enter[Application_manager.img_flag]);
-        time_back.setBackgroundResource(Application_manager.keypad_back[Application_manager.img_flag]);
+        time_keypad_id.setBackgroundResource(Application_manager.time_keypad[Application_manager.useChineseImage]);
+        time_enter.setBackgroundResource(Application_manager.keypad_enter[Application_manager.useChineseImage]);
+        time_back.setBackgroundResource(Application_manager.keypad_back[Application_manager.useChineseImage]);
 
         // 슬립 모드 동작 재시작
         Application_manager.setSleep_f(0,true);

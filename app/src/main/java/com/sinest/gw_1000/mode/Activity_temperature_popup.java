@@ -1,20 +1,16 @@
 package com.sinest.gw_1000.mode;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.os.Bundle;
-import android.provider.ContactsContract;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.sinest.gw_1000.R;
 import com.sinest.gw_1000.management.Application_manager;
@@ -91,7 +87,7 @@ public class Activity_temperature_popup extends Activity {
         // 배경 설정
         background = (ImageView) findViewById(R.id.working_time_standard);
         // 언어 중국어일 때
-        if (Application_manager.img_flag == 1) {
+        if (Application_manager.useChineseImage == 1) {
 
             // 내부온도 창일 경우
             if (mode == TEMPERATURE_ABOVE) {

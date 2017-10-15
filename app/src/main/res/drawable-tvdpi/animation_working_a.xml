@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<animation-list xmlns:android="http://schemas.android.com/apk/res/android"
+    android:oneshot="false">
+
+    <item android:drawable="@drawable/a_workingmotion0_e" android:duration="500"/>
+    <item android:drawable="@drawable/a_workingmotion1_e" android:duration="500"/>
+    <item android:drawable="@drawable/a_workingmotion2_e" android:duration="500"/>
+    <item android:drawable="@drawable/a_workingmotion3_e" android:duration="500"/>
+    <item android:drawable="@drawable/a_workingmotion4_e" android:duration="500"/>
+    <item android:drawable="@drawable/a_workingmotion5_e" android:duration="500"/>
+</animation-list>

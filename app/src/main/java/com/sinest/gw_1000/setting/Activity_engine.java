@@ -7,7 +7,6 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
@@ -48,9 +47,7 @@ public class Activity_engine extends AppCompatActivity {
 
     boolean[] hidden = {false,false,false,false};
 
-    boolean mode_f = true;
-
-    int programMode = -1;
+//    boolean mode_f = true;
 
     boolean invert_f = true;
 
@@ -228,11 +225,11 @@ public class Activity_engine extends AppCompatActivity {
                         //
                         if (eng_step_flag[0] == true) {
                             setZerosOXY();
-                            eng_1step.setBackgroundResource(Application_manager.oxygen_1step_on[Application_manager.img_flag]);
+                            eng_1step.setBackgroundResource(Application_manager.oxygen_1step_on[Application_manager.useChineseImage]);
                             eng_step_flag[0] = false;
                             oxy = 1;
                         } else {
-                            eng_1step.setBackgroundResource(Application_manager.oxygen_1step_off[Application_manager.img_flag]);
+                            eng_1step.setBackgroundResource(Application_manager.oxygen_1step_off[Application_manager.useChineseImage]);
                             eng_step_flag[0] = true;
                             oxy = 0;
                         }
@@ -242,11 +239,11 @@ public class Activity_engine extends AppCompatActivity {
                         //
                         if (eng_step_flag[1] == true) {
                             setZerosOXY();
-                            eng_2step.setBackgroundResource(Application_manager.oxygen_2step_on[Application_manager.img_flag]);
+                            eng_2step.setBackgroundResource(Application_manager.oxygen_2step_on[Application_manager.useChineseImage]);
                             eng_step_flag[1] = false;
                             oxy = 2;
                         } else {
-                            eng_2step.setBackgroundResource(Application_manager.oxygen_2step_off[Application_manager.img_flag]);
+                            eng_2step.setBackgroundResource(Application_manager.oxygen_2step_off[Application_manager.useChineseImage]);
                             eng_step_flag[1] = true;
                             oxy = 0;
                         }
@@ -256,11 +253,11 @@ public class Activity_engine extends AppCompatActivity {
                         //
                         if (eng_step_flag[2] == true) {
                             setZerosOXY();
-                            eng_3step.setBackgroundResource(Application_manager.oxygen_3step_on[Application_manager.img_flag]);
+                            eng_3step.setBackgroundResource(Application_manager.oxygen_3step_on[Application_manager.useChineseImage]);
                             eng_step_flag[2] = false;
                             oxy = 3;
                         } else {
-                            eng_3step.setBackgroundResource(Application_manager.oxygen_3step_off[Application_manager.img_flag]);
+                            eng_3step.setBackgroundResource(Application_manager.oxygen_3step_off[Application_manager.useChineseImage]);
                             eng_step_flag[2] = true;
                             oxy = 0;
                         }
@@ -270,11 +267,11 @@ public class Activity_engine extends AppCompatActivity {
                         //
                         if (eng_step_flag[3] == true) {
                             setZerosOXY();
-                            eng_4step.setBackgroundResource(Application_manager.oxygen_4step_on[Application_manager.img_flag]);
+                            eng_4step.setBackgroundResource(Application_manager.oxygen_4step_on[Application_manager.useChineseImage]);
                             eng_step_flag[3] = false;
                             oxy = 4;
                         } else {
-                            eng_4step.setBackgroundResource(Application_manager.oxygen_4step_off[Application_manager.img_flag]);
+                            eng_4step.setBackgroundResource(Application_manager.oxygen_4step_off[Application_manager.useChineseImage]);
                             eng_step_flag[3] = true;
                             oxy = 0;
                         }
@@ -284,11 +281,11 @@ public class Activity_engine extends AppCompatActivity {
                         //
                         if (eng_step_flag[4] == true) {
                             setZerosOXY();
-                            eng_5step.setBackgroundResource(Application_manager.oxygen_5step_on[Application_manager.img_flag]);
+                            eng_5step.setBackgroundResource(Application_manager.oxygen_5step_on[Application_manager.useChineseImage]);
                             eng_step_flag[4] = false;
                             oxy = 5;
                         } else {
-                            eng_5step.setBackgroundResource(Application_manager.oxygen_5step_off[Application_manager.img_flag]);
+                            eng_5step.setBackgroundResource(Application_manager.oxygen_5step_off[Application_manager.useChineseImage]);
                             eng_step_flag[4] = true;
                             oxy = 0;
                         }
@@ -348,34 +345,59 @@ public class Activity_engine extends AppCompatActivity {
                         }
                         break;
                     case R.id.program_m:
-                        //
-                        if (mode_f == true) {
-                            program_m.setBackgroundResource(Application_manager.program_mode_on[Application_manager.img_flag]);
-                            Application_manager.set_m_gw_1000(false);
-                            // GW-1000L 버전 설정
-                            Application_manager.setting_back_image[0] = R.drawable.setting_back_image_l;
-                            Application_manager.setting_back_image[1] = R.drawable.setting_back_image_l_ch;
-                            Log.i("JW", "l버전 설정");
-                            mode_f = false;
-                        } else {
-                            program_m.setBackgroundResource(Application_manager.program_mode_off[Application_manager.img_flag]);
-                            Application_manager.set_m_gw_1000(true);
-                            // GW-1000H 버전 설정
-                            Application_manager.setting_back_image[0] = R.drawable.setting_back_image;
-                            Application_manager.setting_back_image[1] = R.drawable.setting_back_image_ch;
-                            mode_f = true;
+
+                        int programMode = Application_manager.getProgramMode();
+                        switch(programMode) {
+                            // Mode L to H
+                            case Application_manager.MODE_L:
+                                Application_manager.setProgramMode(Application_manager.MODE_H);
+                                program_m.setBackgroundResource(Application_manager.program_mode_H[Application_manager.useChineseImage]);
+                                Application_manager.setting_back_image[0] = R.drawable.setting_back_image;
+                                Application_manager.setting_back_image[1] = R.drawable.setting_back_image_ch;
+                                break;
+                            // Mode H to A
+                            case Application_manager.MODE_H:
+                                Application_manager.setProgramMode(Application_manager.MODE_A);
+                                program_m.setBackgroundResource(Application_manager.program_mode_A[Application_manager.useChineseImage]);
+                                Application_manager.setting_back_image[0] = R.drawable.setting_back_image;
+                                Application_manager.setting_back_image[1] = R.drawable.setting_back_image_ch;
+                                break;
+                            // Mode A to L
+                            case Application_manager.MODE_A:
+                                Application_manager.setProgramMode(Application_manager.MODE_L);
+                                program_m.setBackgroundResource(Application_manager.program_mode_L[Application_manager.useChineseImage]);
+                                Application_manager.setting_back_image[0] = R.drawable.setting_back_image_l;
+                                Application_manager.setting_back_image[1] = R.drawable.setting_back_image_l_ch;
+                                break;
                         }
+
+//                        if (mode_f == true) {
+//                            program_m.setBackgroundResource(Application_manager.program_mode_L[Application_manager.useChineseImage]);
+//                            Application_manager.set_m_gw_1000(false);
+//                            // GW-1000L 버전 설정
+//                            Application_manager.setting_back_image[0] = R.drawable.setting_back_image_l;
+//                            Application_manager.setting_back_image[1] = R.drawable.setting_back_image_l_ch;
+//                            Log.i("JW", "l버전 설정");
+//                            mode_f = false;
+//                        } else {
+//                            program_m.setBackgroundResource(Application_manager.program_mode_H[Application_manager.useChineseImage]);
+//                            Application_manager.set_m_gw_1000(true);
+//                            // GW-1000H 버전 설정
+//                            Application_manager.setting_back_image[0] = R.drawable.setting_back_image;
+//                            Application_manager.setting_back_image[1] = R.drawable.setting_back_image_ch;
+//                            mode_f = true;
+//                        }
                         break;
                     case R.id.invert_choice:
                         // LS (0x10)
                         if (invert_f == true) {
-                            invert_choice.setBackgroundResource(Application_manager.inverter_ls[Application_manager.img_flag]);
+                            invert_choice.setBackgroundResource(Application_manager.inverter_ls[Application_manager.useChineseImage]);
                             invert_f = false;
                             inverter = 0x10;
                         }
                         // 야스카와 (0x00)
                         else {
-                            invert_choice.setBackgroundResource(Application_manager.inverter_ys[Application_manager.img_flag]);
+                            invert_choice.setBackgroundResource(Application_manager.inverter_ys[Application_manager.useChineseImage]);
                             invert_f = true;
                             inverter = 0x00;
                         }
@@ -501,7 +523,7 @@ public class Activity_engine extends AppCompatActivity {
             if (action == MotionEvent.ACTION_DOWN) {
                 switch (id) {
                     case R.id.eng_b_back:
-                        eng_b_back.setBackgroundResource(Application_manager.button_circle_back_on[Application_manager.img_flag]);
+                        eng_b_back.setBackgroundResource(Application_manager.button_circle_back_on[Application_manager.useChineseImage]);
                         break;
                     case R.id.eng_b_left:
                         eng_b_left.setBackgroundResource(R.drawable.moving_left_on);
@@ -520,11 +542,11 @@ public class Activity_engine extends AppCompatActivity {
                         communicator.set_engineer(8,(byte)0x20);
                         break;
                     case R.id.eng_door_open:
-                        eng_door_open.setBackgroundResource(Application_manager.door_open_on[Application_manager.img_flag]);
+                        eng_door_open.setBackgroundResource(Application_manager.door_open_on[Application_manager.useChineseImage]);
                         communicator.set_engineer(7,(byte)0x01);
                         break;
                     case R.id.eng_door_close:
-                        eng_door_close.setBackgroundResource(Application_manager.door_close_on[Application_manager.img_flag]);
+                        eng_door_close.setBackgroundResource(Application_manager.door_close_on[Application_manager.useChineseImage]);
                         communicator.set_engineer(7,(byte)0x02);
                         break;
                 }
@@ -532,7 +554,7 @@ public class Activity_engine extends AppCompatActivity {
                 byte val = 0x00;
                 switch (id) {
                     case R.id.eng_b_back:
-                        eng_b_back.setBackgroundResource(Application_manager.button_circle_back_off[Application_manager.img_flag]);
+                        eng_b_back.setBackgroundResource(Application_manager.button_circle_back_off[Application_manager.useChineseImage]);
 
                         // 엔지니어모드 중지 플래그
                         Application_manager.setIsEngineerMode(false);
@@ -560,11 +582,11 @@ public class Activity_engine extends AppCompatActivity {
                         communicator.set_engineer(8,(byte)0x00);
                         break;
                     case R.id.eng_door_open:
-                        eng_door_open.setBackgroundResource(Application_manager.door_open_off[Application_manager.img_flag]);
+                        eng_door_open.setBackgroundResource(Application_manager.door_open_off[Application_manager.useChineseImage]);
                         communicator.set_engineer(7,(byte)0x00);
                         break;
                     case R.id.eng_door_close:
-                        eng_door_close.setBackgroundResource(Application_manager.door_close_off[Application_manager.img_flag]);
+                        eng_door_close.setBackgroundResource(Application_manager.door_close_off[Application_manager.useChineseImage]);
                         communicator.set_engineer(7,(byte)0x00);
                         break;
                 }
@@ -623,21 +645,32 @@ public class Activity_engine extends AppCompatActivity {
         isRun = true;
 
         //언어에 따른 이미지 변화
-        activity_engine.setBackgroundResource(Application_manager.engineermode_back_image[Application_manager.img_flag]);
-        eng_door_open.setBackgroundResource(Application_manager.door_open_off[Application_manager.img_flag]);
-        eng_door_close.setBackgroundResource(Application_manager.door_close_off[Application_manager.img_flag]);
-        invert_choice.setBackgroundResource(Application_manager.inverter_ys[Application_manager.img_flag]);
-        if(Application_manager.gw_1000 == true){
-            program_m.setBackgroundResource(Application_manager.program_mode_off[Application_manager.img_flag]);
-        }else if(Application_manager.gw_1000 == false){
-            program_m.setBackgroundResource(Application_manager.program_mode_on[Application_manager.img_flag]);
+        activity_engine.setBackgroundResource(Application_manager.engineermode_back_image[Application_manager.useChineseImage]);
+        eng_door_open.setBackgroundResource(Application_manager.door_open_off[Application_manager.useChineseImage]);
+        eng_door_close.setBackgroundResource(Application_manager.door_close_off[Application_manager.useChineseImage]);
+        invert_choice.setBackgroundResource(Application_manager.inverter_ys[Application_manager.useChineseImage]);
+//        if(Application_manager.gw_1000 == true){
+//            program_m.setBackgroundResource(Application_manager.program_mode_H[Application_manager.useChineseImage]);
+//        }else if(Application_manager.gw_1000 == false){
+//            program_m.setBackgroundResource(Application_manager.program_mode_L[Application_manager.useChineseImage]);
+//        }
+        switch(Application_manager.getProgramMode()) {
+            case Application_manager.MODE_L:
+                program_m.setBackgroundResource(Application_manager.program_mode_L[Application_manager.useChineseImage]);
+                break;
+            case Application_manager.MODE_H:
+                program_m.setBackgroundResource(Application_manager.program_mode_H[Application_manager.useChineseImage]);
+                break;
+            case Application_manager.MODE_A:
+                program_m.setBackgroundResource(Application_manager.program_mode_A[Application_manager.useChineseImage]);
+                break;
         }
-        eng_1step.setBackgroundResource(Application_manager.oxygen_1step_off[Application_manager.img_flag]);
-        eng_2step.setBackgroundResource(Application_manager.oxygen_2step_off[Application_manager.img_flag]);
-        eng_3step.setBackgroundResource(Application_manager.oxygen_3step_off[Application_manager.img_flag]);
-        eng_4step.setBackgroundResource(Application_manager.oxygen_4step_off[Application_manager.img_flag]);
-        eng_5step.setBackgroundResource(Application_manager.oxygen_5step_off[Application_manager.img_flag]);
-        eng_b_back.setBackgroundResource(Application_manager.button_circle_back_off[Application_manager.img_flag]);
+        eng_1step.setBackgroundResource(Application_manager.oxygen_1step_off[Application_manager.useChineseImage]);
+        eng_2step.setBackgroundResource(Application_manager.oxygen_2step_off[Application_manager.useChineseImage]);
+        eng_3step.setBackgroundResource(Application_manager.oxygen_3step_off[Application_manager.useChineseImage]);
+        eng_4step.setBackgroundResource(Application_manager.oxygen_4step_off[Application_manager.useChineseImage]);
+        eng_5step.setBackgroundResource(Application_manager.oxygen_5step_off[Application_manager.useChineseImage]);
+        eng_b_back.setBackgroundResource(Application_manager.button_circle_back_off[Application_manager.useChineseImage]);
 
         // 슬립 모드 동작 재시작
         Application_manager.setSleep_f(0,true);
@@ -647,13 +680,13 @@ public class Activity_engine extends AppCompatActivity {
 
         // 인버터 타입 불러오기
         if (Application_manager.inverterType) {
-            invert_choice.setBackgroundResource(Application_manager.inverter_ls[Application_manager.img_flag]);
+            invert_choice.setBackgroundResource(Application_manager.inverter_ls[Application_manager.useChineseImage]);
             invert_f = false;
             inverter = 0x10;
         }
         // 야스카와 (0x00)
         else {
-            invert_choice.setBackgroundResource(Application_manager.inverter_ys[Application_manager.img_flag]);
+            invert_choice.setBackgroundResource(Application_manager.inverter_ys[Application_manager.useChineseImage]);
             invert_f = true;
             inverter = 0x00;
         }
@@ -696,15 +729,15 @@ public class Activity_engine extends AppCompatActivity {
     * 모두 off시키고 클릭 하는 것만 on
     */
     void setZerosOXY(){
-        eng_1step.setBackgroundResource(Application_manager.oxygen_1step_off[Application_manager.img_flag]);
+        eng_1step.setBackgroundResource(Application_manager.oxygen_1step_off[Application_manager.useChineseImage]);
         eng_step_flag[0] = true;
-        eng_2step.setBackgroundResource(Application_manager.oxygen_2step_off[Application_manager.img_flag]);
+        eng_2step.setBackgroundResource(Application_manager.oxygen_2step_off[Application_manager.useChineseImage]);
         eng_step_flag[1] = true;
-        eng_3step.setBackgroundResource(Application_manager.oxygen_3step_off[Application_manager.img_flag]);
+        eng_3step.setBackgroundResource(Application_manager.oxygen_3step_off[Application_manager.useChineseImage]);
         eng_step_flag[2] = true;
-        eng_4step.setBackgroundResource(Application_manager.oxygen_4step_off[Application_manager.img_flag]);
+        eng_4step.setBackgroundResource(Application_manager.oxygen_4step_off[Application_manager.useChineseImage]);
         eng_step_flag[3] = true;
-        eng_5step.setBackgroundResource(Application_manager.oxygen_5step_off[Application_manager.img_flag]);
+        eng_5step.setBackgroundResource(Application_manager.oxygen_5step_off[Application_manager.useChineseImage]);
         eng_step_flag[4] = true;
     }
 

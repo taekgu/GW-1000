@@ -163,9 +163,9 @@ public class Activity_finishtime extends Activity {
     protected void onResume() {
         super.onResume();
         // 언어에 따른 이미지 초기설정
-        finish_time_id.setBackgroundResource(Application_manager.water_heater_finishtimer_keyped[Application_manager.img_flag]);
-        finish_time_enter.setBackgroundResource(Application_manager.keypad_enter[Application_manager.img_flag]);
-        finish_time_back.setBackgroundResource(Application_manager.keypad_back[Application_manager.img_flag]);
+        finish_time_id.setBackgroundResource(Application_manager.water_heater_finishtimer_keyped[Application_manager.useChineseImage]);
+        finish_time_enter.setBackgroundResource(Application_manager.keypad_enter[Application_manager.useChineseImage]);
+        finish_time_back.setBackgroundResource(Application_manager.keypad_back[Application_manager.useChineseImage]);
         finish_time.setText(Application_manager.m_water_heater_time_ftime);
         // 슬립 모드 동작 재시작
         Application_manager.setSleep_f(0,true);

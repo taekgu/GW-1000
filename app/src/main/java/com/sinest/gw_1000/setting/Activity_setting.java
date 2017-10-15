@@ -153,13 +153,13 @@ public class Activity_setting extends AppCompatActivity {
                 if (sharedPreferences.getInt((Application_manager.DB_SETTING_ONOFF_VAL_ + i + "" + j), 0) == 0) {
 
                     button_flag[((j-1)*4 + i - 1)] = true;
-                    resource.setBackgroundResource(Application_manager.button_off[Application_manager.img_flag]);
+                    resource.setBackgroundResource(Application_manager.button_off[Application_manager.useChineseImage]);
                     resource.setText("");
                 }
                 // buttonij가 ON 상태일 때
                 else {
                     button_flag[((j-1)*4 + i - 1)] = false;
-                    resource.setBackgroundResource(Application_manager.button_on[Application_manager.img_flag]);
+                    resource.setBackgroundResource(Application_manager.button_on[Application_manager.useChineseImage]);
                     if (j == 1) {
                         rx_idx = 10 + i;
                     }
@@ -179,10 +179,10 @@ public class Activity_setting extends AppCompatActivity {
         rfid_state = sharedPreferences.getBoolean(Application_manager.DB_RFID_ONOFF, false);
         button2_flag[0] = !rfid_state;
         if (rfid_state) {
-            b_rf.setBackgroundResource(Application_manager.on[Application_manager.img_flag]);
+            b_rf.setBackgroundResource(Application_manager.on[Application_manager.useChineseImage]);
         }
         else {
-            b_rf.setBackgroundResource(Application_manager.off[Application_manager.img_flag]);
+            b_rf.setBackgroundResource(Application_manager.off[Application_manager.useChineseImage]);
         }
         b_ex = (Button)findViewById(R.id.b_ex);
         b_wa = (Button)findViewById(R.id.b_wa);
@@ -244,13 +244,13 @@ public class Activity_setting extends AppCompatActivity {
                 switch (v.getId()) {
                     case R.id.button11:
                         if (button_flag[0] == true) {
-                            b_11.setBackgroundResource(Application_manager.button_on[Application_manager.img_flag]);
+                            b_11.setBackgroundResource(Application_manager.button_on[Application_manager.useChineseImage]);
                             b_11.setText("" + communicator.get_rx_idx(11) + "%");
                             b_11.setTypeface(tf);
                             button_flag[0] = false;
                             Application_manager.wakeLock(getApplicationContext());
                         } else {
-                            b_11.setBackgroundResource(Application_manager.button_off[Application_manager.img_flag]);
+                            b_11.setBackgroundResource(Application_manager.button_off[Application_manager.useChineseImage]);
                             b_11.setText("");
                             button_flag[0] = true;
                             Application_manager.releaseWakeLock();
@@ -258,132 +258,132 @@ public class Activity_setting extends AppCompatActivity {
                         break;
                     case R.id.button21:
                         if (button_flag[1] == true) {
-                            b_21.setBackgroundResource(Application_manager.button_on[Application_manager.img_flag]);
+                            b_21.setBackgroundResource(Application_manager.button_on[Application_manager.useChineseImage]);
                             b_21.setText("" + communicator.get_rx_idx(12) + "%");
                             b_21.setTypeface(tf);
                             button_flag[1] = false;
                         } else {
-                            b_21.setBackgroundResource(Application_manager.button_off[Application_manager.img_flag]);
+                            b_21.setBackgroundResource(Application_manager.button_off[Application_manager.useChineseImage]);
                             b_21.setText("");
                             button_flag[1] = true;
                         }
                         break;
                     case R.id.button31:
                         if (button_flag[2] == true) {
-                            b_31.setBackgroundResource(Application_manager.button_on[Application_manager.img_flag]);
+                            b_31.setBackgroundResource(Application_manager.button_on[Application_manager.useChineseImage]);
                             b_31.setText("" + communicator.get_rx_idx(13) + "%");
                             b_31.setTypeface(tf);
                             button_flag[2] = false;
                         } else {
-                            b_31.setBackgroundResource(Application_manager.button_off[Application_manager.img_flag]);
+                            b_31.setBackgroundResource(Application_manager.button_off[Application_manager.useChineseImage]);
                             button_flag[2] = true;
                             b_31.setText("");
                         }
                         break;
                     case R.id.button41:
                         if (button_flag[3] == true) {
-                            b_41.setBackgroundResource(Application_manager.button_on[Application_manager.img_flag]);
+                            b_41.setBackgroundResource(Application_manager.button_on[Application_manager.useChineseImage]);
                             b_41.setText("" + communicator.get_rx_idx(14) + "%");
                             b_41.setTypeface(tf);
                             button_flag[3] = false;
                         } else {
-                            b_41.setBackgroundResource(Application_manager.button_off[Application_manager.img_flag]);
+                            b_41.setBackgroundResource(Application_manager.button_off[Application_manager.useChineseImage]);
                             button_flag[3] = true;
                             b_41.setText("");
                         }
                         break;
                     case R.id.button12:
                         if (button_flag[4] == true) {
-                            b_12.setBackgroundResource(Application_manager.button_on[Application_manager.img_flag]);
+                            b_12.setBackgroundResource(Application_manager.button_on[Application_manager.useChineseImage]);
                             b_12.setText("" + communicator.get_rx_idx(3) + "℃");
                             b_12.setTypeface(tf);
                             button_flag[4] = false;
                         } else {
-                            b_12.setBackgroundResource(Application_manager.button_off[Application_manager.img_flag]);
+                            b_12.setBackgroundResource(Application_manager.button_off[Application_manager.useChineseImage]);
                             button_flag[4] = true;
                             b_12.setText("");
                         }
                         break;
                     case R.id.button22:
                         if (button_flag[5] == true) {
-                            b_22.setBackgroundResource(Application_manager.button_on[Application_manager.img_flag]);
+                            b_22.setBackgroundResource(Application_manager.button_on[Application_manager.useChineseImage]);
                             b_22.setText("" + communicator.get_rx_idx(4) + "℃");
                             b_22.setTypeface(tf);
                             button_flag[5] = false;
                         } else {
-                            b_22.setBackgroundResource(Application_manager.button_off[Application_manager.img_flag]);
+                            b_22.setBackgroundResource(Application_manager.button_off[Application_manager.useChineseImage]);
                             button_flag[5] = true;
                             b_22.setText("");
                         }
                         break;
                     case R.id.button32:
                         if (button_flag[6] == true) {
-                            b_32.setBackgroundResource(Application_manager.button_on[Application_manager.img_flag]);
+                            b_32.setBackgroundResource(Application_manager.button_on[Application_manager.useChineseImage]);
                             b_32.setText("" + communicator.get_rx_idx(5) + "℃");
                             b_32.setTypeface(tf);
                             button_flag[6] = false;
                         } else {
-                            b_32.setBackgroundResource(Application_manager.button_off[Application_manager.img_flag]);
+                            b_32.setBackgroundResource(Application_manager.button_off[Application_manager.useChineseImage]);
                             button_flag[6] = true;
                             b_32.setText("");
                         }
                         break;
                     case R.id.button42:
                         if (button_flag[7] == true) {
-                            b_42.setBackgroundResource(Application_manager.button_on[Application_manager.img_flag]);
+                            b_42.setBackgroundResource(Application_manager.button_on[Application_manager.useChineseImage]);
                             b_42.setText("" + communicator.get_rx_idx(6) + "℃");
                             b_42.setTypeface(tf);
                             button_flag[7] = false;
                         } else {
-                            b_42.setBackgroundResource(Application_manager.button_off[Application_manager.img_flag]);
+                            b_42.setBackgroundResource(Application_manager.button_off[Application_manager.useChineseImage]);
                             button_flag[7] = true;
                             b_42.setText("");
                         }
                         break;
                     case R.id.button13:
                         if (button_flag[8] == true) {
-                            b_13.setBackgroundResource(Application_manager.button_on[Application_manager.img_flag]);
+                            b_13.setBackgroundResource(Application_manager.button_on[Application_manager.useChineseImage]);
                             b_13.setText("" + communicator.get_rx_idx(7) + "%");
                             b_13.setTypeface(tf);
                             button_flag[8] = false;
                         } else {
-                            b_13.setBackgroundResource(Application_manager.button_off[Application_manager.img_flag]);
+                            b_13.setBackgroundResource(Application_manager.button_off[Application_manager.useChineseImage]);
                             button_flag[8] = true;
                             b_13.setText("");
                         }
                         break;
                     case R.id.button23:
                         if (button_flag[9] == true) {
-                            b_23.setBackgroundResource(Application_manager.button_on[Application_manager.img_flag]);
+                            b_23.setBackgroundResource(Application_manager.button_on[Application_manager.useChineseImage]);
                             b_23.setText("" + communicator.get_rx_idx(8) + "%");
                             b_23.setTypeface(tf);
                             button_flag[9] = false;
                         } else {
-                            b_23.setBackgroundResource(Application_manager.button_off[Application_manager.img_flag]);
+                            b_23.setBackgroundResource(Application_manager.button_off[Application_manager.useChineseImage]);
                             button_flag[9] = true;
                             b_23.setText("");
                         }
                         break;
                     case R.id.button33:
                         if (button_flag[10] == true) {
-                            b_33.setBackgroundResource(Application_manager.button_on[Application_manager.img_flag]);
+                            b_33.setBackgroundResource(Application_manager.button_on[Application_manager.useChineseImage]);
                             b_33.setText("" + communicator.get_rx_idx(9) + "%");
                             b_33.setTypeface(tf);
                             button_flag[10] = false;
                         } else {
-                            b_33.setBackgroundResource(Application_manager.button_off[Application_manager.img_flag]);
+                            b_33.setBackgroundResource(Application_manager.button_off[Application_manager.useChineseImage]);
                             button_flag[10] = true;
                             b_33.setText("");
                         }
                         break;
                     case R.id.button43:
                         if (button_flag[11] == true) {
-                            b_43.setBackgroundResource(Application_manager.button_on[Application_manager.img_flag]);
+                            b_43.setBackgroundResource(Application_manager.button_on[Application_manager.useChineseImage]);
                             b_43.setText("" + communicator.get_rx_idx(10) + "%");
                             b_43.setTypeface(tf);
                             button_flag[11] = false;
                         } else {
-                            b_43.setBackgroundResource(Application_manager.button_off[Application_manager.img_flag]);
+                            b_43.setBackgroundResource(Application_manager.button_off[Application_manager.useChineseImage]);
                             button_flag[11] = true;
                             b_43.setText("");
                         }
@@ -391,22 +391,22 @@ public class Activity_setting extends AppCompatActivity {
 //----------------------------------------------------------------------------------------
                     case R.id.b_rf:
                         if (button2_flag[0] == true) {
-                            b_rf.setBackgroundResource(Application_manager.on[Application_manager.img_flag]);
+                            b_rf.setBackgroundResource(Application_manager.on[Application_manager.useChineseImage]);
                             button2_flag[0] = false;
                             startActivity(intent_rfid);
                         } else {
-                            b_rf.setBackgroundResource(Application_manager.off[Application_manager.img_flag]);
+                            b_rf.setBackgroundResource(Application_manager.off[Application_manager.useChineseImage]);
                             Application_manager.rfid_pass_f = true;
                             button2_flag[0] = true;
                         }
                         break;
                     case R.id.b_ex:
                         if (ex_f == 0) {
-                            b_ex.setBackgroundResource(Application_manager.on[Application_manager.img_flag]);
+                            b_ex.setBackgroundResource(Application_manager.on[Application_manager.useChineseImage]);
                             ex_f = 1;
                             communicator.set_setting(2, (byte) 0x01);
                         } else if (ex_f == 1) {
-                            b_ex.setBackgroundResource(Application_manager.off[Application_manager.img_flag]);
+                            b_ex.setBackgroundResource(Application_manager.off[Application_manager.useChineseImage]);
                             ex_f = 0;
                             communicator.set_setting(2, (byte) 0x00);
                         }
@@ -416,19 +416,19 @@ public class Activity_setting extends AppCompatActivity {
                         if (button2_flag[2] == true) {
                             startActivity(intent_wa);
                         } else {
-                            b_wa.setBackgroundResource(Application_manager.off[Application_manager.img_flag]);
+                            b_wa.setBackgroundResource(Application_manager.off[Application_manager.useChineseImage]);
                             Application_manager.set_m_water_f(false);
                             button2_flag[2] = true;
                         }
                         break;
                     case R.id.b_pa:
                         if (button2_flag[3] == true) {
-                            b_pa.setBackgroundResource(Application_manager.on[Application_manager.img_flag]);
+                            b_pa.setBackgroundResource(Application_manager.on[Application_manager.useChineseImage]);
                             button2_flag[3] = false;
                             communicator.set_setting(4, (byte) 0x00);
                             Application_manager.set_m_pause_rotation(button2_flag[3]);
                         } else {
-                            b_pa.setBackgroundResource(Application_manager.off[Application_manager.img_flag]);
+                            b_pa.setBackgroundResource(Application_manager.off[Application_manager.useChineseImage]);
                             button2_flag[3] = true;
                             communicator.set_setting(4, (byte) 0x01);
                         }
@@ -438,7 +438,7 @@ public class Activity_setting extends AppCompatActivity {
                     case R.id.b_1m:
                         if (button3_flag[0] == true) {
                             setZerosSleep();
-                            b_1m.setBackgroundResource(Application_manager.sleepmode_1min_on[Application_manager.img_flag]);
+                            b_1m.setBackgroundResource(Application_manager.sleepmode_1min_on[Application_manager.useChineseImage]);
                             button3_flag[0] = false;
                             //----screen off----
                             sleep_f = true;
@@ -447,7 +447,7 @@ public class Activity_setting extends AppCompatActivity {
                             Application_manager.setSleep(sleep_cnt,sleep_cnt_end,sleep_f);
                             Application_manager.set_m_sleep_m(0);
                         } else {
-                            b_1m.setBackgroundResource(Application_manager.sleepmode_1min[Application_manager.img_flag]);
+                            b_1m.setBackgroundResource(Application_manager.sleepmode_1min[Application_manager.useChineseImage]);
                             sleep_f = false;
                             sleep_cnt = 0;
                             sleep_cnt_end = 0;
@@ -458,7 +458,7 @@ public class Activity_setting extends AppCompatActivity {
                     case R.id.b_3m:
                         if (button3_flag[1] == true) {
                             setZerosSleep();
-                            b_3m.setBackgroundResource(Application_manager.sleepmode_3min_on[Application_manager.img_flag]);
+                            b_3m.setBackgroundResource(Application_manager.sleepmode_3min_on[Application_manager.useChineseImage]);
                             sleep_f = true;
                             sleep_cnt = 0;
                             sleep_cnt_end = 3*60;
@@ -466,7 +466,7 @@ public class Activity_setting extends AppCompatActivity {
                             Application_manager.set_m_sleep_m(1);
                             button3_flag[1] = false;
                         } else {
-                            b_3m.setBackgroundResource(Application_manager.sleepmode_3min[Application_manager.img_flag]);
+                            b_3m.setBackgroundResource(Application_manager.sleepmode_3min[Application_manager.useChineseImage]);
                             sleep_f = false;
                             sleep_cnt = 0;
                             sleep_cnt_end = 0;
@@ -477,7 +477,7 @@ public class Activity_setting extends AppCompatActivity {
                     case R.id.b_5m:
                         if (button3_flag[2] == true) {
                             setZerosSleep();
-                            b_5m.setBackgroundResource(Application_manager.sleepmode_5min_on[Application_manager.img_flag]);
+                            b_5m.setBackgroundResource(Application_manager.sleepmode_5min_on[Application_manager.useChineseImage]);
                             sleep_f = true;
                             sleep_cnt = 0;
                             sleep_cnt_end = 5*60;
@@ -485,7 +485,7 @@ public class Activity_setting extends AppCompatActivity {
                             Application_manager.set_m_sleep_m(2);
                             button3_flag[2] = false;
                         } else {
-                            b_5m.setBackgroundResource(Application_manager.sleepmode_5min[Application_manager.img_flag]);
+                            b_5m.setBackgroundResource(Application_manager.sleepmode_5min[Application_manager.useChineseImage]);
                             sleep_f = false;
                             sleep_cnt = 0;
                             sleep_cnt_end = 0;
@@ -496,7 +496,7 @@ public class Activity_setting extends AppCompatActivity {
                     case R.id.b_coutinue:
                         if (button3_flag[3] == true) {
                             setZerosSleep();
-                            b_coutinue.setBackgroundResource(Application_manager.sleepmode_continue_on[Application_manager.img_flag]);
+                            b_coutinue.setBackgroundResource(Application_manager.sleepmode_continue_on[Application_manager.useChineseImage]);
                             sleep_f = false;
                             sleep_cnt = 0;
                             sleep_cnt_end = 0;
@@ -504,7 +504,7 @@ public class Activity_setting extends AppCompatActivity {
                             Application_manager.set_m_sleep_m(3);
                             button3_flag[3] = false;
                         } else {
-                            b_coutinue.setBackgroundResource(Application_manager.sleepmode_continue_off[Application_manager.img_flag]);
+                            b_coutinue.setBackgroundResource(Application_manager.sleepmode_continue_off[Application_manager.useChineseImage]);
                             sleep_f = false;
                             sleep_cnt = 0;
                             sleep_cnt_end = 0;
@@ -518,7 +518,7 @@ public class Activity_setting extends AppCompatActivity {
                             b_language.setBackgroundResource(R.drawable.language_en);
                             b_language_f = 1;
                         } else if (b_language_f == 1) {
-                            b_language.setBackgroundResource(Application_manager.language_ch[Application_manager.img_flag]);
+                            b_language.setBackgroundResource(Application_manager.language_ch[Application_manager.useChineseImage]);
                             b_language_f = 2;
                         } else if (b_language_f == 2) {
                             b_language.setBackgroundResource(R.drawable.language_ko);
@@ -530,13 +530,13 @@ public class Activity_setting extends AppCompatActivity {
                         break;
                     case R.id.b_inverter:
                         if (b_inverter_f == 0) {
-                            b_inverter.setBackgroundResource(Application_manager.inverter_50[Application_manager.img_flag]);
+                            b_inverter.setBackgroundResource(Application_manager.inverter_50[Application_manager.useChineseImage]);
                             b_inverter_f = 1;
                         } else if (b_inverter_f == 1) {
-                            b_inverter.setBackgroundResource(Application_manager.inverter_100[Application_manager.img_flag]);
+                            b_inverter.setBackgroundResource(Application_manager.inverter_100[Application_manager.useChineseImage]);
                             b_inverter_f = 2;
                         } else if (b_inverter_f == 2) {
-                            b_inverter.setBackgroundResource(Application_manager.inverter_0[Application_manager.img_flag]);
+                            b_inverter.setBackgroundResource(Application_manager.inverter_0[Application_manager.useChineseImage]);
                             b_inverter_f = 0;
                         }
                         break;
@@ -609,13 +609,13 @@ public class Activity_setting extends AppCompatActivity {
     // 슬립 버튼을 모두 off시키는 함수
     void setZerosSleep()
     {
-        b_1m.setBackgroundResource(Application_manager.sleepmode_1min[Application_manager.img_flag]);
+        b_1m.setBackgroundResource(Application_manager.sleepmode_1min[Application_manager.useChineseImage]);
         button3_flag[0] = true;
-        b_3m.setBackgroundResource(Application_manager.sleepmode_3min[Application_manager.img_flag]);
+        b_3m.setBackgroundResource(Application_manager.sleepmode_3min[Application_manager.useChineseImage]);
         button3_flag[1] = true;
-        b_5m.setBackgroundResource(Application_manager.sleepmode_5min[Application_manager.img_flag]);
+        b_5m.setBackgroundResource(Application_manager.sleepmode_5min[Application_manager.useChineseImage]);
         button3_flag[2] = true;
-        b_coutinue.setBackgroundResource(Application_manager.sleepmode_continue_off[Application_manager.img_flag]);
+        b_coutinue.setBackgroundResource(Application_manager.sleepmode_continue_off[Application_manager.useChineseImage]);
         button3_flag[3] = true;
 
     }
@@ -671,10 +671,10 @@ public class Activity_setting extends AppCompatActivity {
             if (action == MotionEvent.ACTION_DOWN) {
                 switch (id) {
                     case R.id.b_emotion:
-                        b_emotion.setBackgroundResource(Application_manager.emotion_on[Application_manager.img_flag]);
+                        b_emotion.setBackgroundResource(Application_manager.emotion_on[Application_manager.useChineseImage]);
                         break;
                     case R.id.b_back:
-                        b_back.setBackgroundResource(Application_manager.button_circle_back_on[Application_manager.img_flag]);
+                        b_back.setBackgroundResource(Application_manager.button_circle_back_on[Application_manager.useChineseImage]);
                         break;
                     case R.id.textClock_s:
                         startActivity(time);
@@ -683,11 +683,11 @@ public class Activity_setting extends AppCompatActivity {
                 byte val = 0x00;
                 switch (id) {
                     case R.id.b_emotion:
-                        b_emotion.setBackgroundResource(Application_manager.emotion_off[Application_manager.img_flag]);
+                        b_emotion.setBackgroundResource(Application_manager.emotion_off[Application_manager.useChineseImage]);
                         startActivity(intent_emotion);
                         break;
                     case R.id.b_back:
-                        b_back.setBackgroundResource(Application_manager.button_circle_back_off[Application_manager.img_flag]);
+                        b_back.setBackgroundResource(Application_manager.button_circle_back_off[Application_manager.useChineseImage]);
                         isRun = false;
                         // Modified by Jinwook
                         Intent intent = null;
@@ -718,9 +718,9 @@ public class Activity_setting extends AppCompatActivity {
 
         button2_flag[0] = Application_manager.rfid_pass_f;
         if(button2_flag[0] == false && Application_manager.rfid_on_f == 1){
-            b_rf.setBackgroundResource(Application_manager.on[Application_manager.img_flag]);
+            b_rf.setBackgroundResource(Application_manager.on[Application_manager.useChineseImage]);
         }else{
-            b_rf.setBackgroundResource(Application_manager.off[Application_manager.img_flag]);
+            b_rf.setBackgroundResource(Application_manager.off[Application_manager.useChineseImage]);
             if(Application_manager.rfid_pass_f2 == true)
             {
                 startActivity(intent_rfid2);
@@ -792,40 +792,40 @@ public class Activity_setting extends AppCompatActivity {
         int sleep_ff = Application_manager.m_sleep_ff;
         if (sleep_ff == 0) {
             setZerosSleep();
-            b_1m.setBackgroundResource(Application_manager.sleepmode_1min_on[Application_manager.img_flag]);
+            b_1m.setBackgroundResource(Application_manager.sleepmode_1min_on[Application_manager.useChineseImage]);
         }else if (sleep_ff == 1) {
             setZerosSleep();
-            b_3m.setBackgroundResource(Application_manager.sleepmode_3min_on[Application_manager.img_flag]);
+            b_3m.setBackgroundResource(Application_manager.sleepmode_3min_on[Application_manager.useChineseImage]);
         }else if (sleep_ff == 2) {
             setZerosSleep();
-            b_5m.setBackgroundResource(Application_manager.sleepmode_5min_on[Application_manager.img_flag]);
+            b_5m.setBackgroundResource(Application_manager.sleepmode_5min_on[Application_manager.useChineseImage]);
         }else if (sleep_ff == 3) {
             setZerosSleep();
-            b_coutinue.setBackgroundResource(Application_manager.sleepmode_continue_on[Application_manager.img_flag]);
+            b_coutinue.setBackgroundResource(Application_manager.sleepmode_continue_on[Application_manager.useChineseImage]);
         }
 
         ex_f = Application_manager.m_external_led;
         if (ex_f == 0) {
-            b_ex.setBackgroundResource(Application_manager.off[Application_manager.img_flag]);
+            b_ex.setBackgroundResource(Application_manager.off[Application_manager.useChineseImage]);
             //communicator.set_engineer(6,(byte)0x00);
         } else if (ex_f == 1) {
-            b_ex.setBackgroundResource(Application_manager.on[Application_manager.img_flag]);
+            b_ex.setBackgroundResource(Application_manager.on[Application_manager.useChineseImage]);
             //communicator.set_engineer(6,(byte)0x01);
         }
 
         button2_flag[2] = Application_manager.m_water_heater_f;
         if (button2_flag[2] == true) {
-            b_wa.setBackgroundResource(Application_manager.off[Application_manager.img_flag]);
+            b_wa.setBackgroundResource(Application_manager.off[Application_manager.useChineseImage]);
         } else {
-            b_wa.setBackgroundResource(Application_manager.on[Application_manager.img_flag]);
+            b_wa.setBackgroundResource(Application_manager.on[Application_manager.useChineseImage]);
         }
 
         button2_flag[3] = Application_manager.m_pause_rotation;
         if (button2_flag[3] == true) {
-            b_pa.setBackgroundResource(Application_manager.off[Application_manager.img_flag]);
+            b_pa.setBackgroundResource(Application_manager.off[Application_manager.useChineseImage]);
             communicator.set_setting(4, (byte) 0x00);
         } else {
-            b_pa.setBackgroundResource(Application_manager.on[Application_manager.img_flag]);
+            b_pa.setBackgroundResource(Application_manager.on[Application_manager.useChineseImage]);
             communicator.set_setting(4, (byte) 0x01);
         }
 
@@ -835,36 +835,41 @@ public class Activity_setting extends AppCompatActivity {
         } else if (b_language_f == 1) {
             b_language.setBackgroundResource(R.drawable.language_en);
         } else if (b_language_f == 2) {
-            b_language.setBackgroundResource(Application_manager.language_ch[Application_manager.img_flag]);
+            b_language.setBackgroundResource(Application_manager.language_ch[Application_manager.useChineseImage]);
         }
 
         b_inverter_f = Application_manager.m_inverter;
         if (b_inverter_f == 0) {
-            b_inverter.setBackgroundResource(Application_manager.inverter_0[Application_manager.img_flag]);
+            b_inverter.setBackgroundResource(Application_manager.inverter_0[Application_manager.useChineseImage]);
         } else if (b_inverter_f == 1) {
-            b_inverter.setBackgroundResource(Application_manager.inverter_50[Application_manager.img_flag]);
+            b_inverter.setBackgroundResource(Application_manager.inverter_50[Application_manager.useChineseImage]);
         } else if (b_inverter_f == 2) {
-            b_inverter.setBackgroundResource(Application_manager.inverter_100[Application_manager.img_flag]);
+            b_inverter.setBackgroundResource(Application_manager.inverter_100[Application_manager.useChineseImage]);
         }
 
-        activity_setting.setBackgroundResource(Application_manager.setting_back_image[Application_manager.img_flag]);
-        Log.i("JW", "1: " + R.drawable.setting_back_image_l + ", 2: " + Application_manager.setting_back_image[Application_manager.img_flag]);
-        b_emotion.setBackgroundResource(Application_manager.emotion_off[Application_manager.img_flag]);
-        b_back.setBackgroundResource(Application_manager.button_circle_back_off[Application_manager.img_flag]);
+        activity_setting.setBackgroundResource(Application_manager.setting_back_image[Application_manager.useChineseImage]);
+        Log.i("JW", "1: " + R.drawable.setting_back_image_l + ", 2: " + Application_manager.setting_back_image[Application_manager.useChineseImage]);
+        b_emotion.setBackgroundResource(Application_manager.emotion_off[Application_manager.useChineseImage]);
+        b_back.setBackgroundResource(Application_manager.button_circle_back_off[Application_manager.useChineseImage]);
 
-        if(Application_manager.gw_1000 == false)
-        {
-            b_11.setVisibility(View.INVISIBLE);b_12.setVisibility(View.INVISIBLE);b_13.setVisibility(View.INVISIBLE);
-            b_21.setVisibility(View.INVISIBLE);b_22.setVisibility(View.INVISIBLE);b_23.setVisibility(View.INVISIBLE);
-            b_31.setVisibility(View.INVISIBLE);b_32.setVisibility(View.INVISIBLE);b_33.setVisibility(View.INVISIBLE);
-            b_41.setVisibility(View.INVISIBLE);b_42.setVisibility(View.INVISIBLE);b_43.setVisibility(View.INVISIBLE);
-        }else{
-            b_11.setVisibility(View.VISIBLE);b_12.setVisibility(View.VISIBLE);b_13.setVisibility(View.VISIBLE);
-            b_21.setVisibility(View.VISIBLE);b_22.setVisibility(View.VISIBLE);b_23.setVisibility(View.VISIBLE);
-            b_31.setVisibility(View.VISIBLE);b_32.setVisibility(View.VISIBLE);b_33.setVisibility(View.VISIBLE);
-            b_41.setVisibility(View.VISIBLE);b_42.setVisibility(View.VISIBLE);b_43.setVisibility(View.VISIBLE);
-            init_nume();
-        }
+//        if(Application_manager.gw_1000 == false)
+//        {
+//            b_11.setVisibility(View.INVISIBLE);b_12.setVisibility(View.INVISIBLE);b_13.setVisibility(View.INVISIBLE);
+//            b_21.setVisibility(View.INVISIBLE);b_22.setVisibility(View.INVISIBLE);b_23.setVisibility(View.INVISIBLE);
+//            b_31.setVisibility(View.INVISIBLE);b_32.setVisibility(View.INVISIBLE);b_33.setVisibility(View.INVISIBLE);
+//            b_41.setVisibility(View.INVISIBLE);b_42.setVisibility(View.INVISIBLE);b_43.setVisibility(View.INVISIBLE);
+//        }else{
+//            b_11.setVisibility(View.VISIBLE);b_12.setVisibility(View.VISIBLE);b_13.setVisibility(View.VISIBLE);
+//            b_21.setVisibility(View.VISIBLE);b_22.setVisibility(View.VISIBLE);b_23.setVisibility(View.VISIBLE);
+//            b_31.setVisibility(View.VISIBLE);b_32.setVisibility(View.VISIBLE);b_33.setVisibility(View.VISIBLE);
+//            b_41.setVisibility(View.VISIBLE);b_42.setVisibility(View.VISIBLE);b_43.setVisibility(View.VISIBLE);
+//            init_nume();
+//        }
+        // 추가개발 - 개별 표시창 삭제
+        b_11.setVisibility(View.INVISIBLE);b_12.setVisibility(View.INVISIBLE);b_13.setVisibility(View.INVISIBLE);
+        b_21.setVisibility(View.INVISIBLE);b_22.setVisibility(View.INVISIBLE);b_23.setVisibility(View.INVISIBLE);
+        b_31.setVisibility(View.INVISIBLE);b_32.setVisibility(View.INVISIBLE);b_33.setVisibility(View.INVISIBLE);
+        b_41.setVisibility(View.INVISIBLE);b_42.setVisibility(View.INVISIBLE);b_43.setVisibility(View.INVISIBLE);
     }
 
     // 기호 표시

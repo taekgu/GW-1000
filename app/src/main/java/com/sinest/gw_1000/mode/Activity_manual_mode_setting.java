@@ -162,11 +162,11 @@ public class Activity_manual_mode_setting extends Activity{
                 switch (id) {
                     case R.id.manual_mode_setting_save:
                         b = (Button) view;
-                        b.setBackgroundResource(Application_manager.save_mode_on[Application_manager.img_flag]);
+                        b.setBackgroundResource(Application_manager.save_mode_on[Application_manager.useChineseImage]);
                         break;
                     case R.id.manual_mode_setting_back:
                         b = (Button) view;
-                        b.setBackgroundResource(Application_manager.button_circle_back_on[Application_manager.img_flag]);
+                        b.setBackgroundResource(Application_manager.button_circle_back_on[Application_manager.useChineseImage]);
                         break;
 
                 }
@@ -174,7 +174,7 @@ public class Activity_manual_mode_setting extends Activity{
                 switch (id) {
                     case R.id.manual_mode_setting_save:
                         b = (Button) view;
-                        b.setBackgroundResource(Application_manager.save_mode_off[Application_manager.img_flag]);
+                        b.setBackgroundResource(Application_manager.save_mode_off[Application_manager.useChineseImage]);
 
                         SharedPreferences sharedPreferences;
                         SharedPreferences.Editor editor;
@@ -204,7 +204,7 @@ public class Activity_manual_mode_setting extends Activity{
                         break;
                     case R.id.manual_mode_setting_back:
                         b = (Button) view;
-                        b.setBackgroundResource(Application_manager.button_circle_back_off[Application_manager.img_flag]);
+                        b.setBackgroundResource(Application_manager.button_circle_back_off[Application_manager.useChineseImage]);
                         for (int i=0; i<3; i++) {
 
                             time[i] = time_prev[i];
@@ -243,9 +243,9 @@ public class Activity_manual_mode_setting extends Activity{
 
         Log.i("onResume", "onResume");
 
-        activity_manual_mode_setting.setBackgroundResource(Application_manager.manual_mode_setting_backimage[Application_manager.img_flag]);
-        manual_mode_setting_save.setBackgroundResource(Application_manager.save_mode_off[Application_manager.img_flag]);
-        manual_mode_setting_back.setBackgroundResource(Application_manager.button_circle_back_off[Application_manager.img_flag]);
+        activity_manual_mode_setting.setBackgroundResource(Application_manager.manual_mode_setting_backimage[Application_manager.useChineseImage]);
+        manual_mode_setting_save.setBackgroundResource(Application_manager.save_mode_off[Application_manager.useChineseImage]);
+        manual_mode_setting_back.setBackgroundResource(Application_manager.button_circle_back_off[Application_manager.useChineseImage]);
 
         num_of_enabled_pattern = 0;
         for (int i=0; i<3; i++) {  //변경된 값을 받아와 적용함

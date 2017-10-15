@@ -15,6 +15,11 @@ public class LOG {
         Log.d(TAG, msg);
     }
 
+    public static void D(String className, String msg) {
+
+        Log.d(TAG, className + " | " + msg);
+    }
+
     public static void I(String msg) {
 
         Log.i(TAG, msg);

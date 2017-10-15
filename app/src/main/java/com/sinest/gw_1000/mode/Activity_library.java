@@ -123,10 +123,10 @@ public class Activity_library extends AppCompatActivity{
         Application_manager.setFullScreen(this);
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 
-        library_back_image.setBackgroundResource(Application_manager.ribrary_back_image[Application_manager.img_flag]);
-        library_back_button.setBackgroundResource(Application_manager.button_circle_back_off[Application_manager.img_flag]);
-        library_save_button.setBackgroundResource(Application_manager.save_mode_off[Application_manager.img_flag]);
-        library_set_button.setBackgroundResource(Application_manager.library_setting_off[Application_manager.img_flag]);
+        library_back_image.setBackgroundResource(Application_manager.ribrary_back_image[Application_manager.useChineseImage]);
+        library_back_button.setBackgroundResource(Application_manager.button_circle_back_off[Application_manager.useChineseImage]);
+        library_save_button.setBackgroundResource(Application_manager.save_mode_off[Application_manager.useChineseImage]);
+        library_set_button.setBackgroundResource(Application_manager.library_setting_off[Application_manager.useChineseImage]);
 
         change_mode(mode_setting);
 
@@ -180,13 +180,13 @@ public class Activity_library extends AppCompatActivity{
             if (action == MotionEvent.ACTION_DOWN) {
                 switch (id) {
                     case R.id.library_back_button:
-                        view.setBackgroundResource(Application_manager.button_circle_back_on[Application_manager.img_flag]);
+                        view.setBackgroundResource(Application_manager.button_circle_back_on[Application_manager.useChineseImage]);
                         break;
                     case R.id.library_save_button:
-                        view.setBackgroundResource(Application_manager.save_mode_on[Application_manager.img_flag]);
+                        view.setBackgroundResource(Application_manager.save_mode_on[Application_manager.useChineseImage]);
                         break;
                     case R.id.library_set_button:
-                        view.setBackgroundResource(Application_manager.library_setting_on[Application_manager.img_flag]);
+                        view.setBackgroundResource(Application_manager.library_setting_on[Application_manager.useChineseImage]);
                         break;
 
                 }
@@ -194,12 +194,12 @@ public class Activity_library extends AppCompatActivity{
             else if (action == MotionEvent.ACTION_UP) {
                 switch (id) {
                     case R.id.library_back_button:
-                        view.setBackgroundResource(Application_manager.button_circle_back_off[Application_manager.img_flag]);
+                        view.setBackgroundResource(Application_manager.button_circle_back_off[Application_manager.useChineseImage]);
                         finish();
                         break;
                     // Save 버튼 터치 이벤트
                     case R.id.library_save_button:
-                        view.setBackgroundResource(Application_manager.save_mode_off[Application_manager.img_flag]);
+                        view.setBackgroundResource(Application_manager.save_mode_off[Application_manager.useChineseImage]);
 
                         if (mode_setting == 0) {
 
@@ -223,7 +223,7 @@ public class Activity_library extends AppCompatActivity{
                         }
                         break;
                     case R.id.library_set_button:
-                        view.setBackgroundResource(Application_manager.library_setting_off[Application_manager.img_flag]);
+                        view.setBackgroundResource(Application_manager.library_setting_off[Application_manager.useChineseImage]);
 
                         if (mode_setting == 0) {
 

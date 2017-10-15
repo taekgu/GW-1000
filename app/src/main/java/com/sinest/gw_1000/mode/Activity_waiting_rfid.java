@@ -46,8 +46,8 @@ public class Activity_waiting_rfid extends AppCompatActivity {
     Handler handler_update_data;
     BroadcastReceiver broadcastReceiver;
 
-    private int val_oxygen = 0;
-    private int val_oxygen_spray = 0;
+//    private int val_oxygen = 0;
+    private int val_oxygen_injection = 0;
     private int val_pressure = 0;
     private int val_time = 0;// 동작 전 설정 시간
     private int val_time_work = 0; // 동작 시간
@@ -112,19 +112,20 @@ public class Activity_waiting_rfid extends AppCompatActivity {
         clock.setText(Application_manager.doInit_time());
 
         // 산소 농도, 압력, 시간 값 불러오기
-        val_oxygen = sharedPreferences.getInt(Application_manager.DB_VAL_OXYGEN, 0);
-        val_oxygen_spray = sharedPreferences.getInt(Application_manager.DB_VAL_OXYGEN_SPRAY, 0);
+//        val_oxygen = sharedPreferences.getInt(Application_manager.DB_VAL_OXYGEN, 0);
+        val_oxygen_injection = sharedPreferences.getInt(Application_manager.DB_VAL_OXYGEN_INJECTION, 0);
         val_pressure = sharedPreferences.getInt(Application_manager.DB_VAL_PRESSURE, 0);
         val_time = sharedPreferences.getInt(Application_manager.DB_VAL_TIME, 10);
 
         // tx 메시지의 DATA2, 5에 수압, 산소투입량 입력
-        communicator.set_tx(3, (byte) (Application_manager.inverterVal | (byte) (Application_manager.m_inverter * 3)));
-        if (Application_manager.gw_1000) {
-            communicator.set_tx(6, (byte) val_oxygen);
-        }
-        else if (!Application_manager.gw_1000) {
-            communicator.set_tx(6, (byte) val_oxygen_spray);
-        }
+//        communicator.set_tx(3, (byte) (Application_manager.inverterVal | (byte) (Application_manager.m_inverter * 3)));
+//        if (Application_manager.gw_1000) {
+//            communicator.set_tx(6, (byte) val_oxygen);
+//        }
+//        else if (!Application_manager.gw_1000) {
+//            communicator.set_tx(6, (byte) val_oxygen_injection);
+//        }
+        communicator.set_tx(6, (byte) val_oxygen_injection);
 
         time_text = (TextView)findViewById(R.id.waiting_rfid_time_text);
         time_text.setTypeface(tf);
@@ -133,12 +134,13 @@ public class Activity_waiting_rfid extends AppCompatActivity {
         pressure_text = (TextView)findViewById(R.id.waiting_rfid_pressure_text);
         pressure_text.setTypeface(tf);
 
-        if (Application_manager.gw_1000) {
-            oxygen_text.setText("" + val_oxygen);
-        }
-        else if (!Application_manager.gw_1000) {
-            oxygen_text.setText("" + val_oxygen_spray);
-        }
+//        if (Application_manager.gw_1000) {
+//            oxygen_text.setText("" + val_oxygen);
+//        }
+//        else if (!Application_manager.gw_1000) {
+//            oxygen_text.setText("" + val_oxygen_injection);
+//        }
+        oxygen_text.setText("" + val_oxygen_injection);
         pressure_text.setText(""+val_pressure);
         time_text.setText(""+val_time);
 
@@ -195,25 +197,48 @@ public class Activity_waiting_rfid extends AppCompatActivity {
         // 언어에 따라 배경
         if (mode == 0) {
 
-            if(Application_manager.gw_1000 == true) {
-
-                if (Application_manager.img_flag == 1) { // 중국어
-                    background.setBackgroundResource(R.drawable.workingmotion0_ch);
-                } else {
-                    background.setBackgroundResource(R.drawable.workingmotion0);
-                }
-            }
-            else if(Application_manager.gw_1000 == false) {
-
-                if (Application_manager.img_flag == 1) { // 중국어
-                    background.setBackgroundResource(R.drawable.workingmotion0_l_ch);
-                } else {
-                    background.setBackgroundResource(R.drawable.workingmotion0_l);
-                }
+//            if(Application_manager.gw_1000 == true) {
+//
+//                if (Application_manager.useChineseImage == 1) { // 중국어
+//                    background.setBackgroundResource(R.drawable.workingmotion0_ch);
+//                } else {
+//                    background.setBackgroundResource(R.drawable.workingmotion0);
+//                }
+//            }
+//            else if(Application_manager.gw_1000 == false) {
+//
+//                if (Application_manager.useChineseImage == 1) { // 중국어
+//                    background.setBackgroundResource(R.drawable.l_workingmotion0_c);
+//                } else {
+//                    background.setBackgroundResource(R.drawable.l_workingmotion0_e);
+//                }
+//            }
+            switch(Application_manager.getProgramMode()) {
+                case Application_manager.MODE_L:
+                    if (Application_manager.useChineseImage == 1) { // 중국어
+                        background.setBackgroundResource(R.drawable.l_workingmotion0_c);
+                    } else {
+                        background.setBackgroundResource(R.drawable.l_workingmotion0_e);
+                    }
+                    break;
+                case Application_manager.MODE_H:
+                    if (Application_manager.useChineseImage == 1) { // 중국어
+                        background.setBackgroundResource(R.drawable.h_workingmotion0_c);
+                    } else {
+                        background.setBackgroundResource(R.drawable.h_workingmotion0_e);
+                    }
+                    break;
+                case Application_manager.MODE_A:
+                    if (Application_manager.useChineseImage == 1) { // 중국어
+                        background.setBackgroundResource(R.drawable.a_workingmotion0_c);
+                    } else {
+                        background.setBackgroundResource(R.drawable.a_workingmotion0_e);
+                    }
+                    break;
             }
         }
-        waiting_door_open_button.setBackgroundResource(Application_manager.door_open_off[Application_manager.img_flag]);
-        waiting_door_close_button.setBackgroundResource(Application_manager.door_close_off[Application_manager.img_flag]);
+        waiting_door_open_button.setBackgroundResource(Application_manager.door_open_off[Application_manager.useChineseImage]);
+        waiting_door_close_button.setBackgroundResource(Application_manager.door_close_off[Application_manager.useChineseImage]);
 
         if(Application_manager.gw_1000 == true){
 
@@ -281,10 +306,10 @@ public class Activity_waiting_rfid extends AppCompatActivity {
         if (mode == 1) {
 
             // 애니메이션 재시작
-            if(Application_manager.img_flag == 0){
+            if(Application_manager.useChineseImage == 0){
                 start_animation();
             }
-            else if(Application_manager.img_flag == 1){
+            else if(Application_manager.useChineseImage == 1){
                 start_animation_ch();
             }
 
@@ -317,8 +342,8 @@ public class Activity_waiting_rfid extends AppCompatActivity {
         }
 
         SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putInt(Application_manager.DB_VAL_OXYGEN, val_oxygen);
-        editor.putInt(Application_manager.DB_VAL_OXYGEN_SPRAY, val_oxygen_spray);
+//        editor.putInt(Application_manager.DB_VAL_OXYGEN, val_oxygen);
+        editor.putInt(Application_manager.DB_VAL_OXYGEN_INJECTION, val_oxygen_injection);
         editor.putInt(Application_manager.DB_VAL_PRESSURE, val_pressure);
         editor.putInt(Application_manager.DB_VAL_TIME, val_time);
         editor.commit();
@@ -459,15 +484,16 @@ public class Activity_waiting_rfid extends AppCompatActivity {
 
                     // 동작 모드로 바뀌기 이전 산소농도, 수압, 시간 값 저장
                     SharedPreferences.Editor editor = sharedPreferences.edit();
-                    editor.putInt(Application_manager.DB_VAL_OXYGEN, val_oxygen);
+//                    editor.putInt(Application_manager.DB_VAL_OXYGEN, val_oxygen);
+                    editor.putInt(Application_manager.DB_VAL_OXYGEN_INJECTION, val_oxygen_injection);
                     editor.putInt(Application_manager.DB_VAL_PRESSURE, val_pressure);
                     editor.putInt(Application_manager.DB_VAL_TIME, val_time);
                     editor.commit();
 
                     // 애니메이션 시작
-                    if(Application_manager.img_flag == 0){
+                    if(Application_manager.useChineseImage == 0){
                         start_animation();
-                    }else if(Application_manager.img_flag == 1){
+                    }else if(Application_manager.useChineseImage == 1){
                         start_animation_ch();
                     }
 
@@ -526,21 +552,21 @@ public class Activity_waiting_rfid extends AppCompatActivity {
         communicator.set_tx(1, (byte) 0x00);
 
         // 동작 시작 전 산소 농도, 압력, 시간 값 불러오기
-        val_oxygen = sharedPreferences.getInt(Application_manager.DB_VAL_OXYGEN, 0);
-        val_oxygen_spray = sharedPreferences.getInt(Application_manager.DB_VAL_OXYGEN_SPRAY, 0);
+//        val_oxygen = sharedPreferences.getInt(Application_manager.DB_VAL_OXYGEN, 0);
+        val_oxygen_injection = sharedPreferences.getInt(Application_manager.DB_VAL_OXYGEN_INJECTION, 0);
         val_pressure = sharedPreferences.getInt(Application_manager.DB_VAL_PRESSURE, 0);
         val_time = sharedPreferences.getInt(Application_manager.DB_VAL_TIME, 10);
 
         // 동작 시작 전 값으로 tx 값 복원
-        byte val;
-        if (Application_manager.gw_1000 == true) { // GW-1000H
-
-            val = (byte) val_oxygen;
-        }
-        else { // GW-1000L
-
-            val = (byte) val_oxygen_spray;
-        }
+        byte val = (byte) val_oxygen_injection;
+//        if (Application_manager.gw_1000 == true) { // GW-1000H
+//
+//            val = (byte) val_oxygen;
+//        }
+//        else { // GW-1000L
+//
+//            val = (byte) val_oxygen_injection;
+//        }
         communicator.set_tx(6, val);
         communicator.set_tx(3, (byte) (Application_manager.inverterVal | (byte) (Application_manager.m_inverter * 3)));
 
@@ -579,11 +605,12 @@ public class Activity_waiting_rfid extends AppCompatActivity {
                 @Override
                 public void run() {
 
-                    if (Application_manager.gw_1000) {
-                        oxygen_text.setText("" + val_oxygen);
-                    } else {
-                        oxygen_text.setText("" + val_oxygen_spray);
-                    }
+//                    if (Application_manager.gw_1000) {
+//                        oxygen_text.setText("" + val_oxygen);
+//                    } else {
+//                        oxygen_text.setText("" + val_oxygen_injection);
+//                    }
+                    oxygen_text.setText("" + val_oxygen_injection);
                     pressure_text.setText("" + val_pressure);
                     time_text.setText("" + val_time);
                 }
@@ -620,7 +647,7 @@ public class Activity_waiting_rfid extends AppCompatActivity {
 
     private void start_animation() {
         if(Application_manager.gw_1000 == true){
-            background.setBackgroundResource(R.drawable.animation_working);
+            background.setBackgroundResource(R.drawable.animation_working_a);
         }else if(Application_manager.gw_1000 == false){
             background.setBackgroundResource(R.drawable.animation_working_l);
         }
@@ -630,7 +657,7 @@ public class Activity_waiting_rfid extends AppCompatActivity {
 
     private void start_animation_ch() {
         if(Application_manager.gw_1000 == true){
-            background.setBackgroundResource(R.drawable.animation_working_ch);
+            background.setBackgroundResource(R.drawable.animation_working_a_ch);
         }else if(Application_manager.gw_1000 == false){
             background.setBackgroundResource(R.drawable.animation_working_l_ch);
         }
@@ -647,21 +674,31 @@ public class Activity_waiting_rfid extends AppCompatActivity {
                 public void run() {
 
                     frameAnimation.stop();
-                    if(Application_manager.gw_1000 == true) {
+                    // 리소스아이디 0을 넘김으로써 빈 drawable을 선택여 기존에 가지고 있던 리소스 자동 해제
+                    frameAnimation.selectDrawable(0);
 
-                        if (Application_manager.img_flag == 1) { // 중국어
-                            background.setBackgroundResource(R.drawable.workingmotion0_ch);
-                        } else {
-                            background.setBackgroundResource(R.drawable.workingmotion0);
-                        }
-                    }
-                    else if(Application_manager.gw_1000 == false) {
-
-                        if (Application_manager.img_flag == 1) { // 중국어
-                            background.setBackgroundResource(R.drawable.workingmotion0_l_ch);
-                        } else {
-                            background.setBackgroundResource(R.drawable.workingmotion0_l);
-                        }
+                    switch(Application_manager.getProgramMode()) {
+                        case Application_manager.MODE_L:
+                            if (Application_manager.useChineseImage == 1) { // 중국어
+                                background.setBackgroundResource(R.drawable.l_workingmotion0_c);
+                            } else {
+                                background.setBackgroundResource(R.drawable.l_workingmotion0_e);
+                            }
+                            break;
+                        case Application_manager.MODE_H:
+                            if (Application_manager.useChineseImage == 1) { // 중국어
+                                background.setBackgroundResource(R.drawable.h_workingmotion0_c);
+                            } else {
+                                background.setBackgroundResource(R.drawable.h_workingmotion0_e);
+                            }
+                            break;
+                        case Application_manager.MODE_A:
+                            if (Application_manager.useChineseImage == 1) { // 중국어
+                                background.setBackgroundResource(R.drawable.a_workingmotion0_c);
+                            } else {
+                                background.setBackgroundResource(R.drawable.a_workingmotion0_e);
+                            }
+                            break;
                     }
                 }
             });
@@ -892,10 +929,10 @@ public class Activity_waiting_rfid extends AppCompatActivity {
                         view.setBackgroundResource(R.drawable.button_down_on);
                         break;
                     case R.id.waiting_rfid_dooropen_button:
-                        view.setBackgroundResource(Application_manager.door_open_on[Application_manager.img_flag]);
+                        view.setBackgroundResource(Application_manager.door_open_on[Application_manager.useChineseImage]);
                         break;
                     case R.id.waiting_rfid_doorclose_button:
-                        view.setBackgroundResource(Application_manager.door_close_on[Application_manager.img_flag]);
+                        view.setBackgroundResource(Application_manager.door_close_on[Application_manager.useChineseImage]);
                         break;
                     case R.id.waiting_rfid_time_text:
                         break;
@@ -914,40 +951,48 @@ public class Activity_waiting_rfid extends AppCompatActivity {
                     case R.id.waiting_rfid_oxygen_up_button:
                         view.setBackgroundResource(R.drawable.button_up);
 
-                        if (Application_manager.gw_1000 == true) { // GW-1000H
-
-                            val_oxygen++;
-                            if (val_oxygen > 5) val_oxygen = 5;
-                            oxygen_text.setText("" + val_oxygen);
-                            val = (byte) val_oxygen;
-                        }
-                        else { // GW-1000L
-
-                            val_oxygen_spray++;
-                            if (val_oxygen_spray > 3) val_oxygen_spray = 3;
-                            oxygen_text.setText("" + val_oxygen_spray);
-                            val = (byte) val_oxygen_spray;
-                        }
+//                        if (Application_manager.gw_1000 == true) { // GW-1000H
+//
+//                            val_oxygen++;
+//                            if (val_oxygen > 5) val_oxygen = 5;
+//                            oxygen_text.setText("" + val_oxygen);
+//                            val = (byte) val_oxygen;
+//                        }
+//                        else { // GW-1000L
+//
+//                            val_oxygen_injection++;
+//                            if (val_oxygen_injection > 3) val_oxygen_injection = 3;
+//                            oxygen_text.setText("" + val_oxygen_injection);
+//                            val = (byte) val_oxygen_injection;
+//                        }
+                        val_oxygen_injection++;
+                        if (val_oxygen_injection > 3) val_oxygen_injection = 3;
+                        oxygen_text.setText("" + val_oxygen_injection);
+                        val = (byte) val_oxygen_injection;
 
                         communicator.set_tx(6, val);
                         break;
                     case R.id.waiting_rfid_oxygen_down_button:
                         view.setBackgroundResource(R.drawable.button_down);
 
-                        if (Application_manager.gw_1000 == true) { // GW-1000H
-
-                            val_oxygen--;
-                            if (val_oxygen < 0) val_oxygen = 0;
-                            oxygen_text.setText("" + val_oxygen);
-                            val = (byte) val_oxygen;
-                        }
-                        else { // GW-1000L
-
-                            val_oxygen_spray--;
-                            if (val_oxygen_spray < 0) val_oxygen_spray = 0;
-                            oxygen_text.setText("" + val_oxygen_spray);
-                            val = (byte) val_oxygen_spray;
-                        }
+//                        if (Application_manager.gw_1000 == true) { // GW-1000H
+//
+//                            val_oxygen--;
+//                            if (val_oxygen < 0) val_oxygen = 0;
+//                            oxygen_text.setText("" + val_oxygen);
+//                            val = (byte) val_oxygen;
+//                        }
+//                        else { // GW-1000L
+//
+//                            val_oxygen_injection--;
+//                            if (val_oxygen_injection < 0) val_oxygen_injection = 0;
+//                            oxygen_text.setText("" + val_oxygen_injection);
+//                            val = (byte) val_oxygen_injection;
+//                        }
+                        val_oxygen_injection--;
+                        if (val_oxygen_injection < 0) val_oxygen_injection = 0;
+                        oxygen_text.setText("" + val_oxygen_injection);
+                        val = (byte) val_oxygen_injection;
 
                         communicator.set_tx(6, val);
                         break;
@@ -1011,7 +1056,7 @@ public class Activity_waiting_rfid extends AppCompatActivity {
                         break;
                     case R.id.waiting_rfid_dooropen_button:
 
-                        view.setBackgroundResource(Application_manager.door_open_off[Application_manager.img_flag]);
+                        view.setBackgroundResource(Application_manager.door_open_off[Application_manager.useChineseImage]);
 
                         if (Application_manager.getSoundManager().play(Application_manager.m_language, 3) == 0) {
 
@@ -1024,7 +1069,7 @@ public class Activity_waiting_rfid extends AppCompatActivity {
                         break;
                     case R.id.waiting_rfid_doorclose_button:
 
-                        view.setBackgroundResource(Application_manager.door_close_off[Application_manager.img_flag]);
+                        view.setBackgroundResource(Application_manager.door_close_off[Application_manager.useChineseImage]);
 
                         if (Application_manager.getSoundManager().play(Application_manager.m_language, 4) == 0) {
 

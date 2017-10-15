@@ -2,10 +2,10 @@
 <animation-list xmlns:android="http://schemas.android.com/apk/res/android"
     android:oneshot="false">
 
-    <item android:drawable="@drawable/workingmotion0_l_ch" android:duration="500"/>
-    <item android:drawable="@drawable/workingmotion1_l_ch" android:duration="500"/>
-    <item android:drawable="@drawable/workingmotion2_l_ch" android:duration="500"/>
-    <item android:drawable="@drawable/workingmotion3_l_ch" android:duration="500"/>
-    <item android:drawable="@drawable/workingmotion4_l_ch" android:duration="500"/>
-    <item android:drawable="@drawable/workingmotion5_l_ch" android:duration="500"/>
+    <item android:drawable="@drawable/l_workingmotion0_c" android:duration="500"/>
+    <item android:drawable="@drawable/l_workingmotion1_c" android:duration="500"/>
+    <item android:drawable="@drawable/l_workingmotion2_c" android:duration="500"/>
+    <item android:drawable="@drawable/l_workingmotion3_c" android:duration="500"/>
+    <item android:drawable="@drawable/l_workingmotion4_c" android:duration="500"/>
+    <item android:drawable="@drawable/l_workingmotion5_c" android:duration="500"/>
 </animation-list>

@@ -76,7 +76,7 @@ public class Activity_manual_mode_pattern_popup extends Activity implements Cust
         popup_keypad_back = (ImageView) findViewById(R.id.manual_popup_back);
 
         // 언어 중국어일 때
-        if (Application_manager.img_flag == 1) {
+        if (Application_manager.useChineseImage == 1) {
 
             // 엔터, 백 버튼 배경
             popup_keypad_save.setBackgroundResource(R.drawable.save_mode_off_ch);

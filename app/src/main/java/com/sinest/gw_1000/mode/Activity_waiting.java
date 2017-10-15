@@ -44,8 +44,8 @@ public class Activity_waiting extends AppCompatActivity {
     Handler handler_update_data;
     BroadcastReceiver broadcastReceiver;
 
-    private int val_oxygen = 0;
-    private int val_oxygen_spray = 0;
+//    private int val_oxygen = 0;
+    private int val_oxygen_injection = 0;
     private int val_pressure = 0;
     private int val_time = 0; // 동작 전 설정 시간
     private int val_time_work = 0; // 동작 시간
@@ -134,19 +134,29 @@ public class Activity_waiting extends AppCompatActivity {
         clock.setText(Application_manager.doInit_time());
 
         // 산소 농도, 압력, 시간 값 불러오기
-        val_oxygen = sharedPreferences.getInt(Application_manager.DB_VAL_OXYGEN, 0);
-        val_oxygen_spray = sharedPreferences.getInt(Application_manager.DB_VAL_OXYGEN_SPRAY, 0);
+//        val_oxygen = sharedPreferences.getInt(Application_manager.DB_VAL_OXYGEN, 0);
+        val_oxygen_injection = sharedPreferences.getInt(Application_manager.DB_VAL_OXYGEN_INJECTION, 0);
         val_pressure = sharedPreferences.getInt(Application_manager.DB_VAL_PRESSURE, 0);
         val_time = sharedPreferences.getInt(Application_manager.DB_VAL_TIME, 10);
 
         // tx 메시지의 DATA2, 5에 수압, 산소투입량 입력
         communicator.set_tx(3, (byte) (Application_manager.inverterVal | (byte) (val_pressure * Application_manager.m_inverter / 2)));
-        if (Application_manager.gw_1000) {
-            communicator.set_tx(6, (byte) val_oxygen);
-        }
-        else if (!Application_manager.gw_1000) {
-            communicator.set_tx(6, (byte) val_oxygen_spray);
-        }
+//        if (Application_manager.gw_1000) {
+//            communicator.set_tx(6, (byte) val_oxygen);
+//        }
+//        else if (!Application_manager.gw_1000) {
+//            communicator.set_tx(6, (byte) val_oxygen_injection);
+//        }
+//        switch(Application_manager.getProgramMode()) {
+//            case Application_manager.MODE_L:
+//                communicator.set_tx(6, (byte) val_oxygen_injection);
+//                break;
+//            case Application_manager.MODE_H:
+//            case Application_manager.MODE_A:
+//                communicator.set_tx(6, (byte) val_oxygen);
+//                break;
+//        }
+        communicator.set_tx(6, (byte) val_oxygen_injection);
 
         time_text = (TextView)findViewById(R.id.waiting_time_text);
         time_text.setTypeface(tf);
@@ -155,12 +165,23 @@ public class Activity_waiting extends AppCompatActivity {
         pressure_text = (TextView)findViewById(R.id.waiting_pressure_text);
         pressure_text.setTypeface(tf);
 
-        if (Application_manager.gw_1000) {
-            oxygen_text.setText("" + val_oxygen);
-        }
-        else if (!Application_manager.gw_1000) {
-            oxygen_text.setText("" + val_oxygen_spray);
-        }
+//        if (Application_manager.gw_1000) {
+//            oxygen_text.setText("" + val_oxygen);
+//        }
+//        else if (!Application_manager.gw_1000) {
+//            oxygen_text.setText("" + val_oxygen_injection);
+//        }
+//        switch(Application_manager.getProgramMode()) {
+//            case Application_manager.MODE_L:
+//                oxygen_text.setText("" + val_oxygen_injection);
+//                break;
+//            case Application_manager.MODE_H:
+//            case Application_manager.MODE_A:
+//                oxygen_text.setText("" + val_oxygen);
+//                break;
+//        }
+        oxygen_text.setText("" + val_oxygen_injection);
+
         pressure_text.setText(""+val_pressure);
         time_text.setText(""+val_time);
 
@@ -223,39 +244,83 @@ public class Activity_waiting extends AppCompatActivity {
         // 언어에 따라 배경
         if (mode == 0) {
 
-            if(Application_manager.gw_1000 == true) {
-
-                if (Application_manager.img_flag == 1) { // 중국어
-                    background.setBackgroundResource(R.drawable.workingmotion0_ch);
-                } else {
-                    background.setBackgroundResource(R.drawable.workingmotion0);
-                }
-            }
-            else if(Application_manager.gw_1000 == false) {
-
-                if (Application_manager.img_flag == 1) { // 중국어
-                    background.setBackgroundResource(R.drawable.workingmotion0_l_ch);
-                } else {
-                    background.setBackgroundResource(R.drawable.workingmotion0_l);
-                }
+//            if(Application_manager.gw_1000 == true) {
+//
+//                if (Application_manager.useChineseImage == 1) { // 중국어
+//                    background.setBackgroundResource(R.drawable.workingmotion0_ch);
+//                } else {
+//                    background.setBackgroundResource(R.drawable.workingmotion0);
+//                }
+//            }
+//            else if(Application_manager.gw_1000 == false) {
+//
+//                if (Application_manager.useChineseImage == 1) { // 중국어
+//                    background.setBackgroundResource(R.drawable.workingmotion0_l_ch);
+//                } else {
+//                    background.setBackgroundResource(R.drawable.l_workingmotion0_e);
+//                }
+//            }
+            switch(Application_manager.getProgramMode()) {
+                case Application_manager.MODE_L:
+                    if (Application_manager.useChineseImage == 1) { // 중국어
+                        background.setBackgroundResource(R.drawable.l_workingmotion0_c);
+                    } else {
+                        background.setBackgroundResource(R.drawable.l_workingmotion0_e);
+                    }
+                    break;
+                case Application_manager.MODE_H:
+                    if (Application_manager.useChineseImage == 1) { // 중국어
+                        background.setBackgroundResource(R.drawable.h_workingmotion0_c);
+                    } else {
+                        background.setBackgroundResource(R.drawable.h_workingmotion0_e);
+                    }
+                    break;
+                case Application_manager.MODE_A:
+                    if (Application_manager.useChineseImage == 1) { // 중국어
+                        background.setBackgroundResource(R.drawable.a_workingmotion0_c);
+                    } else {
+                        background.setBackgroundResource(R.drawable.a_workingmotion0_e);
+                    }
+                    break;
             }
         }
-        waiting_door_open_button.setBackgroundResource(Application_manager.door_open_off[Application_manager.img_flag]);
-        waiting_door_close_button.setBackgroundResource(Application_manager.door_close_off[Application_manager.img_flag]);
+        waiting_door_open_button.setBackgroundResource(Application_manager.door_open_off[Application_manager.useChineseImage]);
+        waiting_door_close_button.setBackgroundResource(Application_manager.door_close_off[Application_manager.useChineseImage]);
 
-        if(Application_manager.gw_1000 == true){
-
-            layout_switchable1.setVisibility(View.VISIBLE);
-            layout_switchable2.setVisibility(View.VISIBLE);
-            ImageView imageView_device = (ImageView) findViewById(R.id.imageView_device);
-            imageView_device.setVisibility(View.VISIBLE);
-        }
-        else if(Application_manager.gw_1000 == false){
-
-            layout_switchable1.setVisibility(View.INVISIBLE);
-            layout_switchable2.setVisibility(View.INVISIBLE);
-            ImageView imageView_device = (ImageView) findViewById(R.id.imageView_device);
-            imageView_device.setVisibility(View.INVISIBLE);
+//        if(Application_manager.gw_1000 == true){
+//
+//            layout_switchable1.setVisibility(View.VISIBLE);
+//            layout_switchable2.setVisibility(View.VISIBLE);
+//            ImageView imageView_device = (ImageView) findViewById(R.id.imageView_device);
+//            imageView_device.setVisibility(View.VISIBLE);
+//        }
+//        else if(Application_manager.gw_1000 == false){
+//
+//            layout_switchable1.setVisibility(View.INVISIBLE);
+//            layout_switchable2.setVisibility(View.INVISIBLE);
+//            ImageView imageView_device = (ImageView) findViewById(R.id.imageView_device);
+//            imageView_device.setVisibility(View.INVISIBLE);
+//        }
+        ImageView imageView_device;
+        switch(Application_manager.getProgramMode()) {
+            case Application_manager.MODE_L:
+                layout_switchable1.setVisibility(View.INVISIBLE);
+                layout_switchable2.setVisibility(View.INVISIBLE);
+                imageView_device = (ImageView) findViewById(R.id.imageView_device);
+                imageView_device.setVisibility(View.INVISIBLE);
+                break;
+            case Application_manager.MODE_H:
+                layout_switchable1.setVisibility(View.VISIBLE);
+                layout_switchable2.setVisibility(View.INVISIBLE);
+                imageView_device = (ImageView) findViewById(R.id.imageView_device);
+                imageView_device.setVisibility(View.VISIBLE);
+                break;
+            case Application_manager.MODE_A:
+                layout_switchable1.setVisibility(View.VISIBLE);
+                layout_switchable2.setVisibility(View.VISIBLE);
+                imageView_device = (ImageView) findViewById(R.id.imageView_device);
+                imageView_device.setVisibility(View.VISIBLE);
+                break;
         }
 
         // 선택 모드 변경시 프래그먼트 갱신
@@ -313,10 +378,10 @@ public class Activity_waiting extends AppCompatActivity {
         if (mode == 1) {
 
             // 애니메이션 재시작
-            if(Application_manager.img_flag == 0){
+            if(Application_manager.useChineseImage == 0){
                 start_animation();
             }
-            else if(Application_manager.img_flag == 1){
+            else if(Application_manager.useChineseImage == 1){
                 start_animation_ch();
             }
 
@@ -361,8 +426,8 @@ public class Activity_waiting extends AppCompatActivity {
         //clock.unregistReceiver();
 
         SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putInt(Application_manager.DB_VAL_OXYGEN, val_oxygen);
-        editor.putInt(Application_manager.DB_VAL_OXYGEN_SPRAY, val_oxygen_spray);
+//        editor.putInt(Application_manager.DB_VAL_OXYGEN, val_oxygen);
+        editor.putInt(Application_manager.DB_VAL_OXYGEN_INJECTION, val_oxygen_injection);
         editor.putInt(Application_manager.DB_VAL_PRESSURE, val_pressure);
         editor.putInt(Application_manager.DB_VAL_TIME, val_time);
         editor.commit();
@@ -429,16 +494,16 @@ public class Activity_waiting extends AppCompatActivity {
 
                     // 동작 모드로 바뀌기 이전 산소농도, 수압, 시간 값 저장
                     SharedPreferences.Editor editor = sharedPreferences.edit();
-                    editor.putInt(Application_manager.DB_VAL_OXYGEN, val_oxygen);
-                    editor.putInt(Application_manager.DB_VAL_OXYGEN_SPRAY, val_oxygen_spray);
+//                    editor.putInt(Application_manager.DB_VAL_OXYGEN, val_oxygen);
+                    editor.putInt(Application_manager.DB_VAL_OXYGEN_INJECTION, val_oxygen_injection);
                     editor.putInt(Application_manager.DB_VAL_PRESSURE, val_pressure);
                     editor.putInt(Application_manager.DB_VAL_TIME, val_time);
                     editor.commit();
 
                     // 애니메이션 시작
-                    if(Application_manager.img_flag == 0){
+                    if(Application_manager.useChineseImage == 0){
                         start_animation();
-                    }else if(Application_manager.img_flag == 1){
+                    }else if(Application_manager.useChineseImage == 1){
                         start_animation_ch();
                     }
 
@@ -501,20 +566,29 @@ public class Activity_waiting extends AppCompatActivity {
         communicator.set_tx(1, (byte) 0x00);
 
         // 동작 시작 전 산소 농도, 압력, 시간 값 불러오기
-        val_oxygen = sharedPreferences.getInt(Application_manager.DB_VAL_OXYGEN, 0);
-        val_oxygen_spray = sharedPreferences.getInt(Application_manager.DB_VAL_OXYGEN_SPRAY, 0);
+//        val_oxygen = sharedPreferences.getInt(Application_manager.DB_VAL_OXYGEN, 0);
+        val_oxygen_injection = sharedPreferences.getInt(Application_manager.DB_VAL_OXYGEN_INJECTION, 0);
         val_pressure = sharedPreferences.getInt(Application_manager.DB_VAL_PRESSURE, 0);
         val_time = sharedPreferences.getInt(Application_manager.DB_VAL_TIME, 10);
 
         // 동작 시작 전 값으로 tx 값 복원
-        byte val;
-        if (Application_manager.gw_1000 == true) { // GW-1000H
-
-            val = (byte) val_oxygen;
-        } else { // GW-1000L
-
-            val = (byte) val_oxygen_spray;
-        }
+        byte val = (byte) val_oxygen_injection;
+//        if (Application_manager.gw_1000 == true) { // GW-1000H
+//
+//        } else { // GW-1000L
+//
+//        }
+//        switch(Application_manager.getProgramMode()) {
+//            case Application_manager.MODE_L:
+//                val = (byte) val_oxygen_injection;
+//                break;
+//            case Application_manager.MODE_H:
+//            case Application_manager.MODE_A:
+//                val = (byte) val_oxygen;
+//                break;
+//            default: val = 0;
+//                break;
+//        }
         communicator.set_tx(6, val);
         communicator.set_tx(3, (byte) (Application_manager.inverterVal | (byte) (val_pressure * Application_manager.m_inverter / 2)));
 
@@ -554,11 +628,21 @@ public class Activity_waiting extends AppCompatActivity {
                 @Override
                 public void run() {
 
-                    if (Application_manager.gw_1000) {
-                        oxygen_text.setText("" + val_oxygen);
-                    } else {
-                        oxygen_text.setText("" + val_oxygen_spray);
-                    }
+//                    if (Application_manager.gw_1000) {
+//                        oxygen_text.setText("" + val_oxygen);
+//                    } else {
+//                        oxygen_text.setText("" + val_oxygen_injection);
+//                    }
+//                    switch(Application_manager.getProgramMode()) {
+//                        case Application_manager.MODE_L:
+//                            oxygen_text.setText("" + val_oxygen_injection);
+//                            break;
+//                        case Application_manager.MODE_H:
+//                        case Application_manager.MODE_A:
+//                            oxygen_text.setText("" + val_oxygen);
+//                            break;
+//                    }
+                    oxygen_text.setText("" + val_oxygen_injection);
                     pressure_text.setText("" + val_pressure);
                     time_text.setText("" + val_time);
                 }
@@ -598,10 +682,21 @@ public class Activity_waiting extends AppCompatActivity {
      * 동작 애니메이션 시작 - 영문
      */
     private void start_animation() {
-        if(Application_manager.gw_1000 == true){
-            background.setBackgroundResource(R.drawable.animation_working);
-        }else if(Application_manager.gw_1000 == false){
-            background.setBackgroundResource(R.drawable.animation_working_l);
+//        if(Application_manager.gw_1000 == true){
+//            background.setBackgroundResource(R.drawable.animation_working_a);
+//        }else if(Application_manager.gw_1000 == false){
+//            background.setBackgroundResource(R.drawable.animation_working_l);
+//        }
+        switch(Application_manager.getProgramMode()) {
+            case Application_manager.MODE_L:
+                background.setBackgroundResource(R.drawable.animation_working_l);
+                break;
+            case Application_manager.MODE_H:
+                background.setBackgroundResource(R.drawable.animation_working_h);
+                break;
+            case Application_manager.MODE_A:
+                background.setBackgroundResource(R.drawable.animation_working_a);
+                break;
         }
         frameAnimation = (AnimationDrawable) background.getBackground();
         frameAnimation.start();
@@ -611,10 +706,21 @@ public class Activity_waiting extends AppCompatActivity {
      * 동작 애니메이션 시작 - 중문
      */
     private void start_animation_ch() {
-        if(Application_manager.gw_1000 == true){
-            background.setBackgroundResource(R.drawable.animation_working_ch);
-        }else if(Application_manager.gw_1000 == false){
-            background.setBackgroundResource(R.drawable.animation_working_l_ch);
+//        if(Application_manager.gw_1000 == true){
+//            background.setBackgroundResource(R.drawable.animation_working_a_ch);
+//        }else if(Application_manager.gw_1000 == false){
+//            background.setBackgroundResource(R.drawable.animation_working_l_ch);
+//        }
+        switch(Application_manager.getProgramMode()) {
+            case Application_manager.MODE_L:
+                background.setBackgroundResource(R.drawable.animation_working_l_ch);
+                break;
+            case Application_manager.MODE_H:
+                background.setBackgroundResource(R.drawable.animation_working_h_ch);
+                break;
+            case Application_manager.MODE_A:
+                background.setBackgroundResource(R.drawable.animation_working_a_ch);
+                break;
         }
         frameAnimation = (AnimationDrawable) background.getBackground();
         frameAnimation.start();
@@ -634,21 +740,45 @@ public class Activity_waiting extends AppCompatActivity {
                     frameAnimation.stop();
                     // 리소스아이디 0을 넘김으로써 빈 drawable을 선택여 기존에 가지고 있던 리소스 자동 해제
                     frameAnimation.selectDrawable(0);
-                    if(Application_manager.gw_1000 == true) {
+//                    if(Application_manager.gw_1000 == true) {
+//
+//                        if (Application_manager.useChineseImage == 1) { // 중국어
+//                            background.setBackgroundResource(R.drawable.workingmotion0_ch);
+//                        } else {
+//                            background.setBackgroundResource(R.drawable.workingmotion0);
+//                        }
+//                    }
+//                    else if(Application_manager.gw_1000 == false) {
+//
+//                        if (Application_manager.useChineseImage == 1) { // 중국어
+//                            background.setBackgroundResource(R.drawable.workingmotion0_l_ch);
+//                        } else {
+//                            background.setBackgroundResource(R.drawable.l_workingmotion0_e);
+//                        }
+//                    }
 
-                        if (Application_manager.img_flag == 1) { // 중국어
-                            background.setBackgroundResource(R.drawable.workingmotion0_ch);
-                        } else {
-                            background.setBackgroundResource(R.drawable.workingmotion0);
-                        }
-                    }
-                    else if(Application_manager.gw_1000 == false) {
-
-                        if (Application_manager.img_flag == 1) { // 중국어
-                            background.setBackgroundResource(R.drawable.workingmotion0_l_ch);
-                        } else {
-                            background.setBackgroundResource(R.drawable.workingmotion0_l);
-                        }
+                    switch(Application_manager.getProgramMode()) {
+                        case Application_manager.MODE_L:
+                            if (Application_manager.useChineseImage == 1) { // 중국어
+                                background.setBackgroundResource(R.drawable.l_workingmotion0_c);
+                            } else {
+                                background.setBackgroundResource(R.drawable.l_workingmotion0_e);
+                            }
+                            break;
+                        case Application_manager.MODE_H:
+                            if (Application_manager.useChineseImage == 1) { // 중국어
+                                background.setBackgroundResource(R.drawable.h_workingmotion0_c);
+                            } else {
+                                background.setBackgroundResource(R.drawable.h_workingmotion0_e);
+                            }
+                            break;
+                        case Application_manager.MODE_A:
+                            if (Application_manager.useChineseImage == 1) { // 중국어
+                                background.setBackgroundResource(R.drawable.a_workingmotion0_c);
+                            } else {
+                                background.setBackgroundResource(R.drawable.a_workingmotion0_e);
+                            }
+                            break;
                     }
                 }
             });
@@ -826,28 +956,51 @@ public class Activity_waiting extends AppCompatActivity {
 
                 // 히터
                 // GW-1000H 버전인 경우
-                if (Application_manager.gw_1000) {
-
-                    // 온도 높을 때 - 냉
-                    if (Application_manager.SENSOR_TEMP_USER + 1 < Application_manager.SENSOR_TEMP) {
-
-                        communicator.set_tx(5, (byte) 0x01);
-                    }
-                    // 온도 낮을 때 - 온
-                    else if (Application_manager.SENSOR_TEMP_USER - 1 > Application_manager.SENSOR_TEMP) {
-
-                        communicator.set_tx(5, (byte) 0x02);
-                    }
-                    // 설정 범위 +-1 이내일 때 - 끄기
-                    else {
-
+//                if (Application_manager.gw_1000) {
+//
+//                    // 온도 높을 때 - 냉
+//                    if (Application_manager.SENSOR_TEMP_USER + 1 < Application_manager.SENSOR_TEMP) {
+//
+//                        communicator.set_tx(5, (byte) 0x01);
+//                    }
+//                    // 온도 낮을 때 - 온
+//                    else if (Application_manager.SENSOR_TEMP_USER - 1 > Application_manager.SENSOR_TEMP) {
+//
+//                        communicator.set_tx(5, (byte) 0x02);
+//                    }
+//                    // 설정 범위 +-1 이내일 때 - 끄기
+//                    else {
+//
+//                        communicator.set_tx(5, (byte) 0x00);
+//                    }
+//                }
+//                // GW-1000L 버전인 경우
+//                else {
+//
+//                    communicator.set_tx(5, (byte) 0x00);
+//                }
+                switch(Application_manager.getProgramMode()) {
+                    case Application_manager.MODE_L:
                         communicator.set_tx(5, (byte) 0x00);
-                    }
-                }
-                // GW-1000L 버전인 경우
-                else {
+                        break;
+                    case Application_manager.MODE_H:
+                    case Application_manager.MODE_A:
+                        // 온도 높을 때 - 냉
+                        if (Application_manager.SENSOR_TEMP_USER + 1 < Application_manager.SENSOR_TEMP) {
 
-                    communicator.set_tx(5, (byte) 0x00);
+                            communicator.set_tx(5, (byte) 0x01);
+                        }
+                        // 온도 낮을 때 - 온
+                        else if (Application_manager.SENSOR_TEMP_USER - 1 > Application_manager.SENSOR_TEMP) {
+
+                            communicator.set_tx(5, (byte) 0x02);
+                        }
+                        // 설정 범위 +-1 이내일 때 - 끄기
+                        else {
+
+                            communicator.set_tx(5, (byte) 0x00);
+                        }
+                        break;
                 }
             }
         };
@@ -902,10 +1055,10 @@ public class Activity_waiting extends AppCompatActivity {
                         view.setBackgroundResource(R.drawable.button_down_on);
                         break;
                     case R.id.waiting_dooropen_button:
-                        view.setBackgroundResource(Application_manager.door_open_on[Application_manager.img_flag]);
+                        view.setBackgroundResource(Application_manager.door_open_on[Application_manager.useChineseImage]);
                         break;
                     case R.id.waiting_doorclose_button:
-                        view.setBackgroundResource(Application_manager.door_close_on[Application_manager.img_flag]);
+                        view.setBackgroundResource(Application_manager.door_close_on[Application_manager.useChineseImage]);
                         break;
                     case R.id.waiting_time_text:
                         break;
@@ -939,40 +1092,82 @@ public class Activity_waiting extends AppCompatActivity {
                     case R.id.waiting_oxygen_up_button:
                         view.setBackgroundResource(R.drawable.button_up);
 
-                        if (Application_manager.gw_1000 == true) { // GW-1000H
+//                        if (Application_manager.gw_1000 == true) { // GW-1000H
+//
+//                            val_oxygen++;
+//                            if (val_oxygen > 5) val_oxygen = 5;
+//                            oxygen_text.setText("" + val_oxygen);
+//                            val = (byte) val_oxygen;
+//                        }
+//                        else { // GW-1000L
+//
+//                            val_oxygen_injection++;
+//                            if (val_oxygen_injection > 3) val_oxygen_injection = 3;
+//                            oxygen_text.setText("" + val_oxygen_injection);
+//                            val = (byte) val_oxygen_injection;
+//                        }
 
-                            val_oxygen++;
-                            if (val_oxygen > 5) val_oxygen = 5;
-                            oxygen_text.setText("" + val_oxygen);
-                            val = (byte) val_oxygen;
-                        }
-                        else { // GW-1000L
+//                        switch(Application_manager.getProgramMode()) {
+//                            case Application_manager.MODE_L:
+//                                val_oxygen_injection++;
+//                                if (val_oxygen_injection > 3) val_oxygen_injection = 3;
+//                                oxygen_text.setText("" + val_oxygen_injection);
+//                                val = (byte) val_oxygen_injection;
+//                                break;
+//                            case Application_manager.MODE_H:
+//                            case Application_manager.MODE_A:
+//                                val_oxygen++;
+//                                if (val_oxygen > 5) val_oxygen = 5;
+//                                oxygen_text.setText("" + val_oxygen);
+//                                val = (byte) val_oxygen;
+//                                break;
+//                        }
 
-                            val_oxygen_spray++;
-                            if (val_oxygen_spray > 3) val_oxygen_spray = 3;
-                            oxygen_text.setText("" + val_oxygen_spray);
-                            val = (byte) val_oxygen_spray;
-                        }
+                        val_oxygen_injection++;
+                        if (val_oxygen_injection > 3) val_oxygen_injection = 3;
+                        oxygen_text.setText("" + val_oxygen_injection);
+                        val = (byte) val_oxygen_injection;
 
                         communicator.set_tx(6, val);
                         break;
                     case R.id.waiting_oxygen_down_button:
                         view.setBackgroundResource(R.drawable.button_down);
 
-                        if (Application_manager.gw_1000 == true) { // GW-1000H
+//                        if (Application_manager.gw_1000 == true) { // GW-1000H
+//
+//                            val_oxygen--;
+//                            if (val_oxygen < 0) val_oxygen = 0;
+//                            oxygen_text.setText("" + val_oxygen);
+//                            val = (byte) val_oxygen;
+//                        }
+//                        else { // GW-1000L
+//
+//                            val_oxygen_injection--;
+//                            if (val_oxygen_injection < 0) val_oxygen_injection = 0;
+//                            oxygen_text.setText("" + val_oxygen_injection);
+//                            val = (byte) val_oxygen_injection;
+//                        }
 
-                            val_oxygen--;
-                            if (val_oxygen < 0) val_oxygen = 0;
-                            oxygen_text.setText("" + val_oxygen);
-                            val = (byte) val_oxygen;
-                        }
-                        else { // GW-1000L
+//                        switch(Application_manager.getProgramMode()) {
+//                            case Application_manager.MODE_L:
+//                                val_oxygen_injection--;
+//                                if (val_oxygen_injection < 0) val_oxygen_injection = 0;
+//                                oxygen_text.setText("" + val_oxygen_injection);
+//                                val = (byte) val_oxygen_injection;
+//                                break;
+//                            case Application_manager.MODE_H:
+//                            case Application_manager.MODE_A:
+//                                val_oxygen--;
+//                                if (val_oxygen < 0) val_oxygen = 0;
+//                                oxygen_text.setText("" + val_oxygen);
+//                                val = (byte) val_oxygen;
+//                                break;
+//                        }
 
-                            val_oxygen_spray--;
-                            if (val_oxygen_spray < 0) val_oxygen_spray = 0;
-                            oxygen_text.setText("" + val_oxygen_spray);
-                            val = (byte) val_oxygen_spray;
-                        }
+                        val_oxygen_injection--;
+                        if (val_oxygen_injection < 0) val_oxygen_injection = 0;
+                        oxygen_text.setText("" + val_oxygen_injection);
+                        val = (byte) val_oxygen_injection;
 
                         communicator.set_tx(6, val);
                         break;
@@ -1034,7 +1229,7 @@ public class Activity_waiting extends AppCompatActivity {
                         break;
                     case R.id.waiting_dooropen_button:
 
-                        view.setBackgroundResource(Application_manager.door_open_off[Application_manager.img_flag]);
+                        view.setBackgroundResource(Application_manager.door_open_off[Application_manager.useChineseImage]);
 
                         if (Application_manager.getSoundManager().play(Application_manager.m_language, 3) == 0) {
 
@@ -1047,7 +1242,7 @@ public class Activity_waiting extends AppCompatActivity {
                         break;
                     case R.id.waiting_doorclose_button:
 
-                        view.setBackgroundResource(Application_manager.door_close_off[Application_manager.img_flag]);
+                        view.setBackgroundResource(Application_manager.door_close_off[Application_manager.useChineseImage]);
 
                         if (Application_manager.getSoundManager().play(Application_manager.m_language, 4) == 0) {
 

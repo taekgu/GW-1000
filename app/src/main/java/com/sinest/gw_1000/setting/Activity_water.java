@@ -2,11 +2,8 @@ package com.sinest.gw_1000.setting;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.graphics.Typeface;
-import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
@@ -15,9 +12,6 @@ import android.widget.Button;
 import android.widget.Chronometer;
 import android.widget.LinearLayout;
 
-import com.google.android.gms.appindexing.Action;
-import com.google.android.gms.appindexing.AppIndex;
-import com.google.android.gms.appindexing.Thing;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.sinest.gw_1000.R;
 import com.sinest.gw_1000.management.Application_manager;
@@ -76,10 +70,10 @@ public class Activity_water extends Activity {
                 switch (v.getId()) {
                     case R.id.water_off:
                         if (water_flag[1] == true) {
-                            water_off.setBackgroundResource(Application_manager.save_setting_on[Application_manager.img_flag]);
+                            water_off.setBackgroundResource(Application_manager.save_setting_on[Application_manager.useChineseImage]);
                             water_flag[1] = false;
                         } else {
-                            water_off.setBackgroundResource(Application_manager.save_setting_off[Application_manager.img_flag]);
+                            water_off.setBackgroundResource(Application_manager.save_setting_off[Application_manager.useChineseImage]);
                             water_flag[1] = true;
                         }
                         break;
@@ -113,16 +107,16 @@ public class Activity_water extends Activity {
             if (action == MotionEvent.ACTION_DOWN) {
                 switch (id) {
                     case R.id.water_save:
-                        water_save.setBackgroundResource(Application_manager.save_on[Application_manager.img_flag]);
+                        water_save.setBackgroundResource(Application_manager.save_on[Application_manager.useChineseImage]);
                         break;
                     case R.id.water_back:
-                        water_back.setBackgroundResource(Application_manager.button_elipse_back_on[Application_manager.img_flag]);
+                        water_back.setBackgroundResource(Application_manager.button_elipse_back_on[Application_manager.useChineseImage]);
                         break;
                 }
             } else if (action == MotionEvent.ACTION_UP) {
                 switch (id) {
                     case R.id.water_save:
-                        water_save.setBackgroundResource(Application_manager.save_off[Application_manager.img_flag]);
+                        water_save.setBackgroundResource(Application_manager.save_off[Application_manager.useChineseImage]);
                         //change
                         Application_manager.set_m_water_stime((String)water_s_c.getText());
                         Application_manager.set_m_water_ftime((String)water_f_c.getText());
@@ -132,7 +126,7 @@ public class Activity_water extends Activity {
                         finish();
                         break;
                     case R.id.water_back:
-                        water_back.setBackgroundResource(Application_manager.button_elipse_back_off[Application_manager.img_flag]);
+                        water_back.setBackgroundResource(Application_manager.button_elipse_back_off[Application_manager.useChineseImage]);
                         Application_manager.set_m_water_f(true);
                         Application_manager.s_time_buf = Application_manager.m_water_heater_time_stime;
                         Application_manager.f_time_buf = Application_manager.m_water_heater_time_ftime;
@@ -150,10 +144,10 @@ public class Activity_water extends Activity {
         Application_manager.setFullScreen(this);
 
         // 언어에 따른 이미지 변경
-        water_off.setBackgroundResource(Application_manager.save_setting_off[Application_manager.img_flag]);
-        water_back.setBackgroundResource(Application_manager.button_elipse_back_off[Application_manager.img_flag]);
-        water_save.setBackgroundResource(Application_manager.save_off[Application_manager.img_flag]);
-        activity_water.setBackgroundResource(Application_manager.water_heater_timer_popup[Application_manager.img_flag]);
+        water_off.setBackgroundResource(Application_manager.save_setting_off[Application_manager.useChineseImage]);
+        water_back.setBackgroundResource(Application_manager.button_elipse_back_off[Application_manager.useChineseImage]);
+        water_save.setBackgroundResource(Application_manager.save_off[Application_manager.useChineseImage]);
+        activity_water.setBackgroundResource(Application_manager.water_heater_timer_popup[Application_manager.useChineseImage]);
 
         //change
         do_init_time();

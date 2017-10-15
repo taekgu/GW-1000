@@ -14,7 +14,6 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.sinest.gw_1000.R;
 import com.sinest.gw_1000.management.Application_manager;
@@ -105,7 +104,7 @@ public class Activity_waiting_working_time_popup extends Activity {
         // 배경 설정
         background = (ImageView) findViewById(R.id.working_time_standard);
         // 언어 중국어일 때
-        if (Application_manager.img_flag == 1) {
+        if (Application_manager.useChineseImage == 1) {
 
             background.setBackgroundResource(R.drawable.working_time_keypad_cn);
 

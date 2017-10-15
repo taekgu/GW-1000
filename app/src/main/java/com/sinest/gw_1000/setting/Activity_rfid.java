@@ -84,11 +84,11 @@ public class Activity_rfid extends Activity {
                 switch (v.getId()) {
                     case R.id.rfid_off:
                         if (rfid_flag[2] == true) {
-                            rfid_off.setBackgroundResource(Application_manager.save_setting_on[Application_manager.img_flag]);
+                            rfid_off.setBackgroundResource(Application_manager.save_setting_on[Application_manager.useChineseImage]);
                             rfid_flag[2] = false;
                             Application_manager.set_rfid_on_f(1);
                         } else {
-                            rfid_off.setBackgroundResource(Application_manager.save_setting_off[Application_manager.img_flag]);
+                            rfid_off.setBackgroundResource(Application_manager.save_setting_off[Application_manager.useChineseImage]);
                             rfid_flag[2] = true;
                             Application_manager.set_rfid_on_f(0);
                         }
@@ -138,13 +138,13 @@ public class Activity_rfid extends Activity {
                         rfid_t_down.setBackgroundResource(R.drawable.button_down_on);
                         break;
                     case R.id.rfid_save:
-                        rfid_save.setBackgroundResource(Application_manager.save_on[Application_manager.img_flag]);
+                        rfid_save.setBackgroundResource(Application_manager.save_on[Application_manager.useChineseImage]);
                         break;
                     case R.id.rfid_check:
-                        rfid_check.setBackgroundResource(Application_manager.check_on[Application_manager.img_flag]);
+                        rfid_check.setBackgroundResource(Application_manager.check_on[Application_manager.useChineseImage]);
                         break;
                     case R.id.rfid_back:
-                        rfid_back.setBackgroundResource(Application_manager.button_elipse_back_on[Application_manager.img_flag]);
+                        rfid_back.setBackgroundResource(Application_manager.button_elipse_back_on[Application_manager.useChineseImage]);
                         break;
                 }
             } else if (action == MotionEvent.ACTION_UP) {
@@ -192,17 +192,17 @@ public class Activity_rfid extends Activity {
                         }
                         break;
                     case R.id.rfid_save:
-                        rfid_save.setBackgroundResource(Application_manager.save_off[Application_manager.img_flag]);
+                        rfid_save.setBackgroundResource(Application_manager.save_off[Application_manager.useChineseImage]);
                         //save -> working_mode_num, treatment_num
                         if (rfid_flag[2] == false) {
                             save_f = true;
                         }
                         break;
                     case R.id.rfid_check:
-                        rfid_check.setBackgroundResource(Application_manager.check_off[Application_manager.img_flag]);
+                        rfid_check.setBackgroundResource(Application_manager.check_off[Application_manager.useChineseImage]);
                         break;
                     case R.id.rfid_back:
-                        rfid_back.setBackgroundResource(Application_manager.button_elipse_back_off[Application_manager.img_flag]);
+                        rfid_back.setBackgroundResource(Application_manager.button_elipse_back_off[Application_manager.useChineseImage]);
                         Application_manager.rfid_pass_f2 = false;
                         if(save_f == true)
                         {
@@ -227,11 +227,11 @@ public class Activity_rfid extends Activity {
         Application_manager.setFullScreen(this);
 
         // 언어에 따른 이미지 초기설정
-        rfid_save.setBackgroundResource(Application_manager.save_off[Application_manager.img_flag]);
-        rfid_check.setBackgroundResource(Application_manager.check_off[Application_manager.img_flag]);
-        rfid_off.setBackgroundResource(Application_manager.save_setting_off[Application_manager.img_flag]);
-        activity_rfid.setBackgroundResource(Application_manager.rfid_working_popup[Application_manager.img_flag]);
-        rfid_back.setBackgroundResource(Application_manager.button_elipse_back_off[Application_manager.img_flag]);
+        rfid_save.setBackgroundResource(Application_manager.save_off[Application_manager.useChineseImage]);
+        rfid_check.setBackgroundResource(Application_manager.check_off[Application_manager.useChineseImage]);
+        rfid_off.setBackgroundResource(Application_manager.save_setting_off[Application_manager.useChineseImage]);
+        activity_rfid.setBackgroundResource(Application_manager.rfid_working_popup[Application_manager.useChineseImage]);
+        rfid_back.setBackgroundResource(Application_manager.button_elipse_back_off[Application_manager.useChineseImage]);
 
         // 슬립 모드 동작 재시작
         Application_manager.setSleep_f(0,true);

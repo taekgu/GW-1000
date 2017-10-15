@@ -1,10 +1,8 @@
 package com.sinest.gw_1000.setting;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
@@ -111,8 +109,8 @@ public class Activity_emotion extends Activity {
         super.onResume();
 
         // 언어에 따른 버튼 설정
-        emotion_popup.setBackgroundResource(Application_manager.emotionpopup[Application_manager.img_flag]);
-        emotion_back.setBackgroundResource(Application_manager.button_elipse_back_off[Application_manager.img_flag]);
+        emotion_popup.setBackgroundResource(Application_manager.emotionpopup[Application_manager.useChineseImage]);
+        emotion_back.setBackgroundResource(Application_manager.button_elipse_back_off[Application_manager.useChineseImage]);
 
         // 슬립 모드 동작 재시작
         Application_manager.setSleep_f(0,true);
@@ -161,7 +159,7 @@ public class Activity_emotion extends Activity {
                         emotion_sound_down.setBackgroundResource(R.drawable.button_down_on);
                         break;
                     case R.id.emotion_back:
-                        emotion_back.setBackgroundResource(Application_manager.button_elipse_back_on[Application_manager.img_flag]);
+                        emotion_back.setBackgroundResource(Application_manager.button_elipse_back_on[Application_manager.useChineseImage]);
                         break;
                 }
             } else if (action == MotionEvent.ACTION_UP) {
@@ -243,7 +241,7 @@ public class Activity_emotion extends Activity {
                         }
                         break;
                     case R.id.emotion_back:
-                        emotion_back.setBackgroundResource(Application_manager.button_elipse_back_off[Application_manager.img_flag]);
+                        emotion_back.setBackgroundResource(Application_manager.button_elipse_back_off[Application_manager.useChineseImage]);
                         //change
                         Application_manager.set_m_emotion(led_mode_num,led_bright_num,sound_mode_num,sound_volume_num);
                         finish();
