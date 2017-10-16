@@ -360,11 +360,11 @@
                         android:gravity="center">
 
                         <Button
+                            android:id="@+id/b_pa"
                             android:layout_width="match_parent"
                             android:layout_height="0dp"
-                            android:id="@+id/b_ex"
                             android:layout_weight="92"
-                            android:background="@drawable/off"/>
+                            android:background="@drawable/off" />
 
                     </LinearLayout>
 
@@ -402,9 +402,9 @@
                         android:gravity="center">
 
                         <Button
+                            android:id="@+id/b_ventilationFan"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:id="@+id/b_pa"
                             android:background="@drawable/off"/>
 
                     </LinearLayout>
@@ -449,234 +449,234 @@
 
                 </LinearLayout>
 
-                <LinearLayout
-                    android:orientation="horizontal"
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_weight="67">
+                <!--<LinearLayout-->
+                    <!--android:orientation="horizontal"-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="0dp"-->
+                    <!--android:layout_weight="67">-->
 
-                    <LinearLayout
-                        android:orientation="vertical"
-                        android:layout_width="0dp"
-                        android:layout_weight="28"
-                        android:layout_height="match_parent">
+                    <!--<LinearLayout-->
+                        <!--android:orientation="vertical"-->
+                        <!--android:layout_width="0dp"-->
+                        <!--android:layout_weight="28"-->
+                        <!--android:layout_height="match_parent">-->
 
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="0dp"
-                            android:id="@+id/button11"
-                            android:layout_weight="20"
-                            android:textSize="40sp"
-                            android:layout_gravity="center"
-                            android:gravity="center"
-                            android:textColor="#00ffff"
-                            android:background="@drawable/button_off"/>
+                        <!--<TextView-->
+                            <!--android:layout_width="match_parent"-->
+                            <!--android:layout_height="0dp"-->
+                            <!--android:id="@+id/button11"-->
+                            <!--android:layout_weight="20"-->
+                            <!--android:textSize="40sp"-->
+                            <!--android:layout_gravity="center"-->
+                            <!--android:gravity="center"-->
+                            <!--android:textColor="#00ffff"-->
+                            <!--android:background="@drawable/button_off"/>-->
 
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="0dp"
-                            android:layout_weight="5"
-                            android:visibility="invisible"/>
+                        <!--<TextView-->
+                            <!--android:layout_width="match_parent"-->
+                            <!--android:layout_height="0dp"-->
+                            <!--android:layout_weight="5"-->
+                            <!--android:visibility="invisible"/>-->
 
-                        <TextView
+                        <!--<TextView-->
 
-                            android:layout_width="match_parent"
-                            android:layout_height="0dp"
-                            android:id="@+id/button21"
-                            android:layout_weight="20"
-                            android:textSize="40sp"
-                            android:layout_gravity="center"
-                            android:gravity="center"
-                            android:textColor="#00ffff"
-                            android:background="@drawable/button_off"/>
+                            <!--android:layout_width="match_parent"-->
+                            <!--android:layout_height="0dp"-->
+                            <!--android:id="@+id/button21"-->
+                            <!--android:layout_weight="20"-->
+                            <!--android:textSize="40sp"-->
+                            <!--android:layout_gravity="center"-->
+                            <!--android:gravity="center"-->
+                            <!--android:textColor="#00ffff"-->
+                            <!--android:background="@drawable/button_off"/>-->
 
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="0dp"
-                            android:layout_weight="5"
-                            android:visibility="invisible"/>
+                        <!--<TextView-->
+                            <!--android:layout_width="match_parent"-->
+                            <!--android:layout_height="0dp"-->
+                            <!--android:layout_weight="5"-->
+                            <!--android:visibility="invisible"/>-->
 
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="0dp"
-                            android:id="@+id/button31"
-                            android:layout_weight="20"
-                            android:textSize="40sp"
-                            android:layout_gravity="center"
-                            android:gravity="center"
-                            android:textColor="#00ffff"
-                            android:background="@drawable/button_off"/>
+                        <!--<TextView-->
+                            <!--android:layout_width="match_parent"-->
+                            <!--android:layout_height="0dp"-->
+                            <!--android:id="@+id/button31"-->
+                            <!--android:layout_weight="20"-->
+                            <!--android:textSize="40sp"-->
+                            <!--android:layout_gravity="center"-->
+                            <!--android:gravity="center"-->
+                            <!--android:textColor="#00ffff"-->
+                            <!--android:background="@drawable/button_off"/>-->
 
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="0dp"
-                            android:layout_weight="5"
-                            android:visibility="invisible"/>
+                        <!--<TextView-->
+                            <!--android:layout_width="match_parent"-->
+                            <!--android:layout_height="0dp"-->
+                            <!--android:layout_weight="5"-->
+                            <!--android:visibility="invisible"/>-->
 
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="0dp"
-                            android:id="@+id/button41"
-                            android:layout_weight="20"
-                            android:textSize="40sp"
-                            android:layout_gravity="center"
-                            android:gravity="center"
-                            android:textColor="#00ffff"
-                            android:background="@drawable/button_off"/>
-                    </LinearLayout>
+                        <!--<TextView-->
+                            <!--android:layout_width="match_parent"-->
+                            <!--android:layout_height="0dp"-->
+                            <!--android:id="@+id/button41"-->
+                            <!--android:layout_weight="20"-->
+                            <!--android:textSize="40sp"-->
+                            <!--android:layout_gravity="center"-->
+                            <!--android:gravity="center"-->
+                            <!--android:textColor="#00ffff"-->
+                            <!--android:background="@drawable/button_off"/>-->
+                    <!--</LinearLayout>-->
 
-                    <LinearLayout
-                        android:orientation="vertical"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="7">
+                    <!--<LinearLayout-->
+                        <!--android:orientation="vertical"-->
+                        <!--android:layout_width="0dp"-->
+                        <!--android:layout_height="match_parent"-->
+                        <!--android:layout_weight="7">-->
 
-                    </LinearLayout>
+                    <!--</LinearLayout>-->
 
-                    <LinearLayout
-                        android:orientation="vertical"
-                        android:layout_width="0dp"
-                        android:layout_weight="28"
-                        android:layout_height="match_parent">
+                    <!--<LinearLayout-->
+                        <!--android:orientation="vertical"-->
+                        <!--android:layout_width="0dp"-->
+                        <!--android:layout_weight="28"-->
+                        <!--android:layout_height="match_parent">-->
 
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="0dp"
-                            android:id="@+id/button12"
-                            android:layout_weight="20"
-                            android:textSize="40sp"
-                            android:layout_gravity="center"
-                            android:gravity="center"
-                            android:textColor="#00ffff"
-                            android:background="@drawable/button_off"/>
+                        <!--<TextView-->
+                            <!--android:layout_width="match_parent"-->
+                            <!--android:layout_height="0dp"-->
+                            <!--android:id="@+id/button12"-->
+                            <!--android:layout_weight="20"-->
+                            <!--android:textSize="40sp"-->
+                            <!--android:layout_gravity="center"-->
+                            <!--android:gravity="center"-->
+                            <!--android:textColor="#00ffff"-->
+                            <!--android:background="@drawable/button_off"/>-->
 
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="0dp"
-                            android:layout_weight="5"
-                            android:visibility="invisible"/>
+                        <!--<TextView-->
+                            <!--android:layout_width="match_parent"-->
+                            <!--android:layout_height="0dp"-->
+                            <!--android:layout_weight="5"-->
+                            <!--android:visibility="invisible"/>-->
 
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="0dp"
-                            android:id="@+id/button22"
-                            android:layout_weight="20"
-                            android:textSize="40sp"
-                            android:layout_gravity="center"
-                            android:gravity="center"
-                            android:textColor="#00ffff"
-                            android:background="@drawable/button_off"/>
+                        <!--<TextView-->
+                            <!--android:layout_width="match_parent"-->
+                            <!--android:layout_height="0dp"-->
+                            <!--android:id="@+id/button22"-->
+                            <!--android:layout_weight="20"-->
+                            <!--android:textSize="40sp"-->
+                            <!--android:layout_gravity="center"-->
+                            <!--android:gravity="center"-->
+                            <!--android:textColor="#00ffff"-->
+                            <!--android:background="@drawable/button_off"/>-->
 
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="0dp"
-                            android:layout_weight="5"
-                            android:visibility="invisible"/>
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="0dp"
-                            android:id="@+id/button32"
-                            android:layout_weight="20"
-                            android:textSize="40sp"
-                            android:layout_gravity="center"
-                            android:gravity="center"
-                            android:textColor="#00ffff"
-                            android:background="@drawable/button_off"/>
+                        <!--<TextView-->
+                            <!--android:layout_width="match_parent"-->
+                            <!--android:layout_height="0dp"-->
+                            <!--android:layout_weight="5"-->
+                            <!--android:visibility="invisible"/>-->
+                        <!--<TextView-->
+                            <!--android:layout_width="match_parent"-->
+                            <!--android:layout_height="0dp"-->
+                            <!--android:id="@+id/button32"-->
+                            <!--android:layout_weight="20"-->
+                            <!--android:textSize="40sp"-->
+                            <!--android:layout_gravity="center"-->
+                            <!--android:gravity="center"-->
+                            <!--android:textColor="#00ffff"-->
+                            <!--android:background="@drawable/button_off"/>-->
 
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="0dp"
-                            android:layout_weight="5"
-                            android:visibility="invisible"/>
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="0dp"
-                            android:id="@+id/button42"
-                            android:layout_weight="20"
-                            android:textSize="40sp"
-                            android:layout_gravity="center"
-                            android:gravity="center"
-                            android:textColor="#00ffff"
-                            android:background="@drawable/button_off"/>
-                    </LinearLayout>
+                        <!--<TextView-->
+                            <!--android:layout_width="match_parent"-->
+                            <!--android:layout_height="0dp"-->
+                            <!--android:layout_weight="5"-->
+                            <!--android:visibility="invisible"/>-->
+                        <!--<TextView-->
+                            <!--android:layout_width="match_parent"-->
+                            <!--android:layout_height="0dp"-->
+                            <!--android:id="@+id/button42"-->
+                            <!--android:layout_weight="20"-->
+                            <!--android:textSize="40sp"-->
+                            <!--android:layout_gravity="center"-->
+                            <!--android:gravity="center"-->
+                            <!--android:textColor="#00ffff"-->
+                            <!--android:background="@drawable/button_off"/>-->
+                    <!--</LinearLayout>-->
 
-                    <LinearLayout
-                        android:orientation="vertical"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="7">
+                    <!--<LinearLayout-->
+                        <!--android:orientation="vertical"-->
+                        <!--android:layout_width="0dp"-->
+                        <!--android:layout_height="match_parent"-->
+                        <!--android:layout_weight="7">-->
 
-                    </LinearLayout>
+                    <!--</LinearLayout>-->
 
-                    <LinearLayout
-                        android:orientation="vertical"
-                        android:layout_width="0dp"
-                        android:layout_weight="30"
-                        android:layout_height="match_parent">
+                    <!--<LinearLayout-->
+                        <!--android:orientation="vertical"-->
+                        <!--android:layout_width="0dp"-->
+                        <!--android:layout_weight="30"-->
+                        <!--android:layout_height="match_parent">-->
 
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="0dp"
-                            android:id="@+id/button13"
-                            android:layout_weight="20"
-                            android:textSize="40sp"
-                            android:layout_gravity="center"
-                            android:gravity="center"
-                            android:textColor="#00ffff"
-                            android:background="@drawable/button_off"/>
+                        <!--<TextView-->
+                            <!--android:layout_width="match_parent"-->
+                            <!--android:layout_height="0dp"-->
+                            <!--android:id="@+id/button13"-->
+                            <!--android:layout_weight="20"-->
+                            <!--android:textSize="40sp"-->
+                            <!--android:layout_gravity="center"-->
+                            <!--android:gravity="center"-->
+                            <!--android:textColor="#00ffff"-->
+                            <!--android:background="@drawable/button_off"/>-->
 
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="0dp"
-                            android:layout_weight="5"
-                            android:visibility="invisible"/>
+                        <!--<TextView-->
+                            <!--android:layout_width="match_parent"-->
+                            <!--android:layout_height="0dp"-->
+                            <!--android:layout_weight="5"-->
+                            <!--android:visibility="invisible"/>-->
 
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="0dp"
-                            android:id="@+id/button23"
-                            android:layout_weight="20"
-                            android:textSize="40sp"
-                            android:layout_gravity="center"
-                            android:gravity="center"
-                            android:textColor="#00ffff"
-                            android:background="@drawable/button_off"/>
+                        <!--<TextView-->
+                            <!--android:layout_width="match_parent"-->
+                            <!--android:layout_height="0dp"-->
+                            <!--android:id="@+id/button23"-->
+                            <!--android:layout_weight="20"-->
+                            <!--android:textSize="40sp"-->
+                            <!--android:layout_gravity="center"-->
+                            <!--android:gravity="center"-->
+                            <!--android:textColor="#00ffff"-->
+                            <!--android:background="@drawable/button_off"/>-->
 
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="0dp"
-                            android:layout_weight="5"
-                            android:visibility="invisible"/>
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="0dp"
-                            android:id="@+id/button33"
-                            android:layout_weight="20"
-                            android:textSize="40sp"
-                            android:layout_gravity="center"
-                            android:gravity="center"
-                            android:textColor="#00ffff"
-                            android:background="@drawable/button_off"/>
+                        <!--<TextView-->
+                            <!--android:layout_width="match_parent"-->
+                            <!--android:layout_height="0dp"-->
+                            <!--android:layout_weight="5"-->
+                            <!--android:visibility="invisible"/>-->
+                        <!--<TextView-->
+                            <!--android:layout_width="match_parent"-->
+                            <!--android:layout_height="0dp"-->
+                            <!--android:id="@+id/button33"-->
+                            <!--android:layout_weight="20"-->
+                            <!--android:textSize="40sp"-->
+                            <!--android:layout_gravity="center"-->
+                            <!--android:gravity="center"-->
+                            <!--android:textColor="#00ffff"-->
+                            <!--android:background="@drawable/button_off"/>-->
 
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="0dp"
-                            android:layout_weight="5"
-                            android:visibility="invisible"/>
+                        <!--<TextView-->
+                            <!--android:layout_width="match_parent"-->
+                            <!--android:layout_height="0dp"-->
+                            <!--android:layout_weight="5"-->
+                            <!--android:visibility="invisible"/>-->
 
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="0dp"
-                            android:id="@+id/button43"
-                            android:layout_weight="20"
-                            android:textSize="40sp"
-                            android:layout_gravity="center"
-                            android:gravity="center"
-                            android:textColor="#00ffff"
-                            android:background="@drawable/button_off"/>
-                    </LinearLayout>
+                        <!--<TextView-->
+                            <!--android:layout_width="match_parent"-->
+                            <!--android:layout_height="0dp"-->
+                            <!--android:id="@+id/button43"-->
+                            <!--android:layout_weight="20"-->
+                            <!--android:textSize="40sp"-->
+                            <!--android:layout_gravity="center"-->
+                            <!--android:gravity="center"-->
+                            <!--android:textColor="#00ffff"-->
+                            <!--android:background="@drawable/button_off"/>-->
+                    <!--</LinearLayout>-->
 
-                </LinearLayout>
+                <!--</LinearLayout>-->
 
                 <LinearLayout
                     android:orientation="horizontal"

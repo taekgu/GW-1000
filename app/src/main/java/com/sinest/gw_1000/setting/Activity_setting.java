@@ -31,27 +31,14 @@ public class Activity_setting extends AppCompatActivity {
 
     Communicator communicator;
 
-    TextView b_11;
-    TextView b_21;
-    TextView b_31;
-    TextView b_41;
-    TextView b_12;
-    TextView b_22;
-    TextView b_32;
-    TextView b_42;
-    TextView b_13;
-    TextView b_23;
-    TextView b_33;
-    TextView b_43;
-
     Button b_rf;
-    Button b_ex;
+    Button b_ventilationFan;
     Button b_wa;
-    Button b_pa;
+    Button b_pauseRotation;
     Button b_1m;
     Button b_3m;
     Button b_5m;
-    Button b_coutinue;
+    Button b_continue;
     Button b_back;
     Button b_emotion;
     Button b_language;
@@ -102,7 +89,7 @@ public class Activity_setting extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_setting);
 
         Application_manager.setFullScreen(this);
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
@@ -125,55 +112,11 @@ public class Activity_setting extends AppCompatActivity {
         communicator = Application_manager.getCommunicator();
         activity_setting = (LinearLayout)findViewById(R.id.activity_main);
 
-        b_11 = (TextView)findViewById(R.id.button11);
-        b_21 = (TextView)findViewById(R.id.button21);
-        b_31 = (TextView)findViewById(R.id.button31);
-        b_41 = (TextView)findViewById(R.id.button41);
-        b_12 = (TextView)findViewById(R.id.button12);
-        b_22 = (TextView)findViewById(R.id.button22);
-        b_32 = (TextView)findViewById(R.id.button32);
-        b_42 = (TextView)findViewById(R.id.button42);
-        b_13 = (TextView)findViewById(R.id.button13);
-        b_23 = (TextView)findViewById(R.id.button23);
-        b_33 = (TextView)findViewById(R.id.button33);
-        b_43 = (TextView)findViewById(R.id.button43);
-
         sleep_f = false;
         sleep_cnt = 0;
         sleep_cnt_end = 1000;
 
         SharedPreferences sharedPreferences = getSharedPreferences(Application_manager.DB_NAME, 0);
-        int resourceID;
-        int rx_idx = -1;
-        for (int i=1; i<=4; i++) { // 세로
-            for (int j=1; j<=3; j++) { // 가로
-                resourceID = getResources().getIdentifier("button" + i + "" + j, "id", "com.sinest.gw_1000");
-                TextView resource = (TextView) findViewById(resourceID);
-                // buttonij가 OFF 상태일 때
-                if (sharedPreferences.getInt((Application_manager.DB_SETTING_ONOFF_VAL_ + i + "" + j), 0) == 0) {
-
-                    button_flag[((j-1)*4 + i - 1)] = true;
-                    resource.setBackgroundResource(Application_manager.button_off[Application_manager.useChineseImage]);
-                    resource.setText("");
-                }
-                // buttonij가 ON 상태일 때
-                else {
-                    button_flag[((j-1)*4 + i - 1)] = false;
-                    resource.setBackgroundResource(Application_manager.button_on[Application_manager.useChineseImage]);
-                    if (j == 1) {
-                        rx_idx = 10 + i;
-                    }
-                    else if (j == 2) {
-                        rx_idx = 2 + i;
-                    }
-                    else if (j == 3) {
-                        rx_idx = 6 + i;
-                    }
-                    resource.setText(""+communicator.get_rx_idx(rx_idx));
-                    resource.setTypeface(tf);
-                }
-            }
-        }
 
         b_rf = (Button)findViewById(R.id.b_rf);
         rfid_state = sharedPreferences.getBoolean(Application_manager.DB_RFID_ONOFF, false);
@@ -184,37 +127,15 @@ public class Activity_setting extends AppCompatActivity {
         else {
             b_rf.setBackgroundResource(Application_manager.off[Application_manager.useChineseImage]);
         }
-        b_ex = (Button)findViewById(R.id.b_ex);
+        b_ventilationFan = (Button)findViewById(R.id.b_ventilationFan);
         b_wa = (Button)findViewById(R.id.b_wa);
-        b_pa = (Button)findViewById(R.id.b_pa);
+        b_pauseRotation = (Button)findViewById(R.id.b_pa);
         b_1m = (Button)findViewById(R.id.b_1m);
         b_3m = (Button)findViewById(R.id.b_3m);
         b_5m = (Button)findViewById(R.id.b_5m);
-        b_coutinue = (Button)findViewById(R.id.b_coutinue);
+        b_continue = (Button)findViewById(R.id.b_coutinue);
 
         custom_seekbar_horizontal = (CustomSeekbar_onethumb)findViewById(R.id.custom_seek_bar_horizontal);
-
-        b_11 = (TextView) findViewById(R.id.button11);
-        b_21 = (TextView) findViewById(R.id.button21);
-        b_31 = (TextView) findViewById(R.id.button31);
-        b_41 = (TextView) findViewById(R.id.button41);
-        b_12 = (TextView) findViewById(R.id.button12);
-        b_22 = (TextView) findViewById(R.id.button22);
-        b_32 = (TextView) findViewById(R.id.button32);
-        b_42 = (TextView) findViewById(R.id.button42);
-        b_13 = (TextView) findViewById(R.id.button13);
-        b_23 = (TextView) findViewById(R.id.button23);
-        b_33 = (TextView) findViewById(R.id.button33);
-        b_43 = (TextView) findViewById(R.id.button43);
-
-        b_rf = (Button) findViewById(R.id.b_rf);
-        b_ex = (Button) findViewById(R.id.b_ex);
-        b_wa = (Button) findViewById(R.id.b_wa);
-        b_pa = (Button) findViewById(R.id.b_pa);
-        b_1m = (Button) findViewById(R.id.b_1m);
-        b_3m = (Button) findViewById(R.id.b_3m);
-        b_5m = (Button) findViewById(R.id.b_5m);
-        b_coutinue = (Button) findViewById(R.id.b_coutinue);
 
         b_back = (Button) findViewById(R.id.b_back);
         b_emotion = (Button) findViewById(R.id.b_emotion);
@@ -242,153 +163,6 @@ public class Activity_setting extends AppCompatActivity {
             public void onClick(View v) {
                 Application_manager.set_m_start_sleep(0);
                 switch (v.getId()) {
-                    case R.id.button11:
-                        if (button_flag[0] == true) {
-                            b_11.setBackgroundResource(Application_manager.button_on[Application_manager.useChineseImage]);
-                            b_11.setText("" + communicator.get_rx_idx(11) + "%");
-                            b_11.setTypeface(tf);
-                            button_flag[0] = false;
-                            Application_manager.wakeLock(getApplicationContext());
-                        } else {
-                            b_11.setBackgroundResource(Application_manager.button_off[Application_manager.useChineseImage]);
-                            b_11.setText("");
-                            button_flag[0] = true;
-                            Application_manager.releaseWakeLock();
-                        }
-                        break;
-                    case R.id.button21:
-                        if (button_flag[1] == true) {
-                            b_21.setBackgroundResource(Application_manager.button_on[Application_manager.useChineseImage]);
-                            b_21.setText("" + communicator.get_rx_idx(12) + "%");
-                            b_21.setTypeface(tf);
-                            button_flag[1] = false;
-                        } else {
-                            b_21.setBackgroundResource(Application_manager.button_off[Application_manager.useChineseImage]);
-                            b_21.setText("");
-                            button_flag[1] = true;
-                        }
-                        break;
-                    case R.id.button31:
-                        if (button_flag[2] == true) {
-                            b_31.setBackgroundResource(Application_manager.button_on[Application_manager.useChineseImage]);
-                            b_31.setText("" + communicator.get_rx_idx(13) + "%");
-                            b_31.setTypeface(tf);
-                            button_flag[2] = false;
-                        } else {
-                            b_31.setBackgroundResource(Application_manager.button_off[Application_manager.useChineseImage]);
-                            button_flag[2] = true;
-                            b_31.setText("");
-                        }
-                        break;
-                    case R.id.button41:
-                        if (button_flag[3] == true) {
-                            b_41.setBackgroundResource(Application_manager.button_on[Application_manager.useChineseImage]);
-                            b_41.setText("" + communicator.get_rx_idx(14) + "%");
-                            b_41.setTypeface(tf);
-                            button_flag[3] = false;
-                        } else {
-                            b_41.setBackgroundResource(Application_manager.button_off[Application_manager.useChineseImage]);
-                            button_flag[3] = true;
-                            b_41.setText("");
-                        }
-                        break;
-                    case R.id.button12:
-                        if (button_flag[4] == true) {
-                            b_12.setBackgroundResource(Application_manager.button_on[Application_manager.useChineseImage]);
-                            b_12.setText("" + communicator.get_rx_idx(3) + "℃");
-                            b_12.setTypeface(tf);
-                            button_flag[4] = false;
-                        } else {
-                            b_12.setBackgroundResource(Application_manager.button_off[Application_manager.useChineseImage]);
-                            button_flag[4] = true;
-                            b_12.setText("");
-                        }
-                        break;
-                    case R.id.button22:
-                        if (button_flag[5] == true) {
-                            b_22.setBackgroundResource(Application_manager.button_on[Application_manager.useChineseImage]);
-                            b_22.setText("" + communicator.get_rx_idx(4) + "℃");
-                            b_22.setTypeface(tf);
-                            button_flag[5] = false;
-                        } else {
-                            b_22.setBackgroundResource(Application_manager.button_off[Application_manager.useChineseImage]);
-                            button_flag[5] = true;
-                            b_22.setText("");
-                        }
-                        break;
-                    case R.id.button32:
-                        if (button_flag[6] == true) {
-                            b_32.setBackgroundResource(Application_manager.button_on[Application_manager.useChineseImage]);
-                            b_32.setText("" + communicator.get_rx_idx(5) + "℃");
-                            b_32.setTypeface(tf);
-                            button_flag[6] = false;
-                        } else {
-                            b_32.setBackgroundResource(Application_manager.button_off[Application_manager.useChineseImage]);
-                            button_flag[6] = true;
-                            b_32.setText("");
-                        }
-                        break;
-                    case R.id.button42:
-                        if (button_flag[7] == true) {
-                            b_42.setBackgroundResource(Application_manager.button_on[Application_manager.useChineseImage]);
-                            b_42.setText("" + communicator.get_rx_idx(6) + "℃");
-                            b_42.setTypeface(tf);
-                            button_flag[7] = false;
-                        } else {
-                            b_42.setBackgroundResource(Application_manager.button_off[Application_manager.useChineseImage]);
-                            button_flag[7] = true;
-                            b_42.setText("");
-                        }
-                        break;
-                    case R.id.button13:
-                        if (button_flag[8] == true) {
-                            b_13.setBackgroundResource(Application_manager.button_on[Application_manager.useChineseImage]);
-                            b_13.setText("" + communicator.get_rx_idx(7) + "%");
-                            b_13.setTypeface(tf);
-                            button_flag[8] = false;
-                        } else {
-                            b_13.setBackgroundResource(Application_manager.button_off[Application_manager.useChineseImage]);
-                            button_flag[8] = true;
-                            b_13.setText("");
-                        }
-                        break;
-                    case R.id.button23:
-                        if (button_flag[9] == true) {
-                            b_23.setBackgroundResource(Application_manager.button_on[Application_manager.useChineseImage]);
-                            b_23.setText("" + communicator.get_rx_idx(8) + "%");
-                            b_23.setTypeface(tf);
-                            button_flag[9] = false;
-                        } else {
-                            b_23.setBackgroundResource(Application_manager.button_off[Application_manager.useChineseImage]);
-                            button_flag[9] = true;
-                            b_23.setText("");
-                        }
-                        break;
-                    case R.id.button33:
-                        if (button_flag[10] == true) {
-                            b_33.setBackgroundResource(Application_manager.button_on[Application_manager.useChineseImage]);
-                            b_33.setText("" + communicator.get_rx_idx(9) + "%");
-                            b_33.setTypeface(tf);
-                            button_flag[10] = false;
-                        } else {
-                            b_33.setBackgroundResource(Application_manager.button_off[Application_manager.useChineseImage]);
-                            button_flag[10] = true;
-                            b_33.setText("");
-                        }
-                        break;
-                    case R.id.button43:
-                        if (button_flag[11] == true) {
-                            b_43.setBackgroundResource(Application_manager.button_on[Application_manager.useChineseImage]);
-                            b_43.setText("" + communicator.get_rx_idx(10) + "%");
-                            b_43.setTypeface(tf);
-                            button_flag[11] = false;
-                        } else {
-                            b_43.setBackgroundResource(Application_manager.button_off[Application_manager.useChineseImage]);
-                            button_flag[11] = true;
-                            b_43.setText("");
-                        }
-                        break;
-//----------------------------------------------------------------------------------------
                     case R.id.b_rf:
                         if (button2_flag[0] == true) {
                             b_rf.setBackgroundResource(Application_manager.on[Application_manager.useChineseImage]);
@@ -400,17 +174,17 @@ public class Activity_setting extends AppCompatActivity {
                             button2_flag[0] = true;
                         }
                         break;
-                    case R.id.b_ex:
+                    case R.id.b_ventilationFan:
                         if (ex_f == 0) {
-                            b_ex.setBackgroundResource(Application_manager.on[Application_manager.useChineseImage]);
+                            b_ventilationFan.setBackgroundResource(Application_manager.on[Application_manager.useChineseImage]);
                             ex_f = 1;
-                            communicator.set_setting(2, (byte) 0x01);
+//                            communicator.set_setting(2, (byte) 0x01);
                         } else if (ex_f == 1) {
-                            b_ex.setBackgroundResource(Application_manager.off[Application_manager.useChineseImage]);
+                            b_ventilationFan.setBackgroundResource(Application_manager.off[Application_manager.useChineseImage]);
                             ex_f = 0;
-                            communicator.set_setting(2, (byte) 0x00);
+//                            communicator.set_setting(2, (byte) 0x00);
                         }
-                        communicator.getSocketManager().send_setting();
+//                        communicator.getSocketManager().send_setting();
                         break;
                     case R.id.b_wa:
                         if (button2_flag[2] == true) {
@@ -423,12 +197,12 @@ public class Activity_setting extends AppCompatActivity {
                         break;
                     case R.id.b_pa:
                         if (button2_flag[3] == true) {
-                            b_pa.setBackgroundResource(Application_manager.on[Application_manager.useChineseImage]);
+                            b_pauseRotation.setBackgroundResource(Application_manager.on[Application_manager.useChineseImage]);
                             button2_flag[3] = false;
                             communicator.set_setting(4, (byte) 0x00);
                             Application_manager.set_m_pause_rotation(button2_flag[3]);
                         } else {
-                            b_pa.setBackgroundResource(Application_manager.off[Application_manager.useChineseImage]);
+                            b_pauseRotation.setBackgroundResource(Application_manager.off[Application_manager.useChineseImage]);
                             button2_flag[3] = true;
                             communicator.set_setting(4, (byte) 0x01);
                         }
@@ -496,7 +270,7 @@ public class Activity_setting extends AppCompatActivity {
                     case R.id.b_coutinue:
                         if (button3_flag[3] == true) {
                             setZerosSleep();
-                            b_coutinue.setBackgroundResource(Application_manager.sleepmode_continue_on[Application_manager.useChineseImage]);
+                            b_continue.setBackgroundResource(Application_manager.sleepmode_continue_on[Application_manager.useChineseImage]);
                             sleep_f = false;
                             sleep_cnt = 0;
                             sleep_cnt_end = 0;
@@ -504,7 +278,7 @@ public class Activity_setting extends AppCompatActivity {
                             Application_manager.set_m_sleep_m(3);
                             button3_flag[3] = false;
                         } else {
-                            b_coutinue.setBackgroundResource(Application_manager.sleepmode_continue_off[Application_manager.useChineseImage]);
+                            b_continue.setBackgroundResource(Application_manager.sleepmode_continue_off[Application_manager.useChineseImage]);
                             sleep_f = false;
                             sleep_cnt = 0;
                             sleep_cnt_end = 0;
@@ -573,27 +347,15 @@ public class Activity_setting extends AppCompatActivity {
                 }
             }
         };
-        b_11.setOnClickListener(listener);
-        b_21.setOnClickListener(listener);
-        b_31.setOnClickListener(listener);
-        b_41.setOnClickListener(listener);
-        b_12.setOnClickListener(listener);
-        b_22.setOnClickListener(listener);
-        b_32.setOnClickListener(listener);
-        b_42.setOnClickListener(listener);
-        b_13.setOnClickListener(listener);
-        b_23.setOnClickListener(listener);
-        b_33.setOnClickListener(listener);
-        b_43.setOnClickListener(listener);
 
         b_rf.setOnClickListener(listener);
-        b_ex.setOnClickListener(listener);
+        b_ventilationFan.setOnClickListener(listener);
         b_wa.setOnClickListener(listener);
-        b_pa.setOnClickListener(listener);
+        b_pauseRotation.setOnClickListener(listener);
         b_1m.setOnClickListener(listener);
         b_3m.setOnClickListener(listener);
         b_5m.setOnClickListener(listener);
-        b_coutinue.setOnClickListener(listener);
+        b_continue.setOnClickListener(listener);
         b_language.setOnClickListener(listener);
         b_inverter.setOnClickListener(listener);
 
@@ -615,7 +377,7 @@ public class Activity_setting extends AppCompatActivity {
         button3_flag[1] = true;
         b_5m.setBackgroundResource(Application_manager.sleepmode_5min[Application_manager.useChineseImage]);
         button3_flag[2] = true;
-        b_coutinue.setBackgroundResource(Application_manager.sleepmode_continue_off[Application_manager.useChineseImage]);
+        b_continue.setBackgroundResource(Application_manager.sleepmode_continue_off[Application_manager.useChineseImage]);
         button3_flag[3] = true;
 
     }
@@ -801,15 +563,15 @@ public class Activity_setting extends AppCompatActivity {
             b_5m.setBackgroundResource(Application_manager.sleepmode_5min_on[Application_manager.useChineseImage]);
         }else if (sleep_ff == 3) {
             setZerosSleep();
-            b_coutinue.setBackgroundResource(Application_manager.sleepmode_continue_on[Application_manager.useChineseImage]);
+            b_continue.setBackgroundResource(Application_manager.sleepmode_continue_on[Application_manager.useChineseImage]);
         }
 
         ex_f = Application_manager.m_external_led;
         if (ex_f == 0) {
-            b_ex.setBackgroundResource(Application_manager.off[Application_manager.useChineseImage]);
+            b_ventilationFan.setBackgroundResource(Application_manager.off[Application_manager.useChineseImage]);
             //communicator.set_engineer(6,(byte)0x00);
         } else if (ex_f == 1) {
-            b_ex.setBackgroundResource(Application_manager.on[Application_manager.useChineseImage]);
+            b_ventilationFan.setBackgroundResource(Application_manager.on[Application_manager.useChineseImage]);
             //communicator.set_engineer(6,(byte)0x01);
         }
 
@@ -822,10 +584,10 @@ public class Activity_setting extends AppCompatActivity {
 
         button2_flag[3] = Application_manager.m_pause_rotation;
         if (button2_flag[3] == true) {
-            b_pa.setBackgroundResource(Application_manager.off[Application_manager.useChineseImage]);
+            b_pauseRotation.setBackgroundResource(Application_manager.off[Application_manager.useChineseImage]);
             communicator.set_setting(4, (byte) 0x00);
         } else {
-            b_pa.setBackgroundResource(Application_manager.on[Application_manager.useChineseImage]);
+            b_pauseRotation.setBackgroundResource(Application_manager.on[Application_manager.useChineseImage]);
             communicator.set_setting(4, (byte) 0x01);
         }
 
@@ -852,75 +614,14 @@ public class Activity_setting extends AppCompatActivity {
         b_emotion.setBackgroundResource(Application_manager.emotion_off[Application_manager.useChineseImage]);
         b_back.setBackgroundResource(Application_manager.button_circle_back_off[Application_manager.useChineseImage]);
 
-//        if(Application_manager.gw_1000 == false)
-//        {
-//            b_11.setVisibility(View.INVISIBLE);b_12.setVisibility(View.INVISIBLE);b_13.setVisibility(View.INVISIBLE);
-//            b_21.setVisibility(View.INVISIBLE);b_22.setVisibility(View.INVISIBLE);b_23.setVisibility(View.INVISIBLE);
-//            b_31.setVisibility(View.INVISIBLE);b_32.setVisibility(View.INVISIBLE);b_33.setVisibility(View.INVISIBLE);
-//            b_41.setVisibility(View.INVISIBLE);b_42.setVisibility(View.INVISIBLE);b_43.setVisibility(View.INVISIBLE);
-//        }else{
-//            b_11.setVisibility(View.VISIBLE);b_12.setVisibility(View.VISIBLE);b_13.setVisibility(View.VISIBLE);
-//            b_21.setVisibility(View.VISIBLE);b_22.setVisibility(View.VISIBLE);b_23.setVisibility(View.VISIBLE);
-//            b_31.setVisibility(View.VISIBLE);b_32.setVisibility(View.VISIBLE);b_33.setVisibility(View.VISIBLE);
-//            b_41.setVisibility(View.VISIBLE);b_42.setVisibility(View.VISIBLE);b_43.setVisibility(View.VISIBLE);
-//            init_nume();
-//        }
-        // 추가개발 - 개별 표시창 삭제
-        b_11.setVisibility(View.INVISIBLE);b_12.setVisibility(View.INVISIBLE);b_13.setVisibility(View.INVISIBLE);
-        b_21.setVisibility(View.INVISIBLE);b_22.setVisibility(View.INVISIBLE);b_23.setVisibility(View.INVISIBLE);
-        b_31.setVisibility(View.INVISIBLE);b_32.setVisibility(View.INVISIBLE);b_33.setVisibility(View.INVISIBLE);
-        b_41.setVisibility(View.INVISIBLE);b_42.setVisibility(View.INVISIBLE);b_43.setVisibility(View.INVISIBLE);
-    }
-
-    // 기호 표시
-    void init_nume(){
-        if (button_flag[0] == false) {
-            b_11.setText("" + communicator.get_rx_idx(11) + "%");
-            b_11.setTypeface(tf);
-        }
-        if (button_flag[1] == false) {
-            b_21.setText("" + communicator.get_rx_idx(12) + "%");
-            b_21.setTypeface(tf);
-        }
-        if (button_flag[2] == false) {
-            b_31.setText("" + communicator.get_rx_idx(13) + "%");
-            b_31.setTypeface(tf);
-        }
-        if (button_flag[3] == false) {
-            b_41.setText("" + communicator.get_rx_idx(14) + "%");
-            b_41.setTypeface(tf);
-        }
-        if (button_flag[4] == false) {
-            b_12.setText("" + communicator.get_rx_idx(3) + "℃");
-            b_12.setTypeface(tf);
-        }
-        if (button_flag[5] == false) {
-            b_22.setText("" + communicator.get_rx_idx(4) + "℃");
-            b_22.setTypeface(tf);
-        }
-        if (button_flag[6] == false) {
-            b_32.setText("" + communicator.get_rx_idx(5) + "℃");
-            b_32.setTypeface(tf);
-        }
-        if (button_flag[7] == false) {
-            b_42.setText("" + communicator.get_rx_idx(6) + "℃");
-            b_42.setTypeface(tf);
-        }
-        if (button_flag[8] == false) {
-            b_13.setText("" + communicator.get_rx_idx(7) + "%");
-            b_13.setTypeface(tf);
-        }
-        if (button_flag[9] == false) {
-            b_23.setText("" + communicator.get_rx_idx(8) + "%");
-            b_23.setTypeface(tf);
-        }
-        if (button_flag[10] == false) {
-            b_33.setText("" + communicator.get_rx_idx(9) + "%");
-            b_33.setTypeface(tf);
-        }
-        if (button_flag[11] == false) {
-            b_43.setText("" + communicator.get_rx_idx(10) + "%");
-            b_43.setTypeface(tf);
+        // MODE_L이면 ventilation fan 삭제
+        switch (Application_manager.getProgramMode()) {
+            case Application_manager.MODE_L:
+                b_ventilationFan.setVisibility(View.INVISIBLE);
+                break;
+            default:
+                b_ventilationFan.setVisibility(View.VISIBLE);
+                break;
         }
     }
 

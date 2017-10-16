@@ -25,7 +25,7 @@ import java.lang.Thread.UncaughtExceptionHandler;
 
 public class Application_manager extends Application {
 
-    // 동작 중인지 확인 flag
+    // 슬립 모드 동작 중인지 확인 flag
     public static boolean working_flag = false;
 
     // 설정된 water time에 포함되어 있는지 확인 flag
@@ -63,8 +63,6 @@ public class Application_manager extends Application {
     }
 
     // RFID - 일반 대기 모드 전환시 센서값 저장
-    public static int SENSOR_HUMIDITY   = 0;
-    public static int SENSOR_OXYGEN     = 0;
     public static int SENSOR_TEMP       = 0;
     public static int SENSOR_TEMP_BED   = 0;
 
@@ -401,6 +399,12 @@ public class Application_manager extends Application {
             editor.commit();
         }
 
+        programMode = sharedPreferences.getInt(PROGRAM_MODE, UNDEFINED);
+        if (programMode == UNDEFINED) {
+            LOG.D(getClass().getName(), "programMode is undefined. Set default value (GW-1000H)");
+            programMode = MODE_H;
+        }
+
         //시간차 저장
         m_gap_clock_f = sharedPreferences.getBoolean(DB_TIME_GAP_F,true);
 
@@ -413,52 +417,7 @@ public class Application_manager extends Application {
         isRun = true;
         thread_runningTime.start();
 
-//        if (gw_1000 == false) {
-//            // GW-1000L 버전 설정
-//            setting_back_image[0] = R.drawable.setting_back_image_l;
-//            setting_back_image[1] = R.drawable.setting_back_image_l_ch;
-//
-//            waiting_backimage[0] = R.drawable.waiting_backimage_l;
-//            waiting_backimage[1] = R.drawable.waiting_backimage_l_ch;
-//
-//        } else {
-//            // GW-1000H 버전 설정
-//            setting_back_image[0] = R.drawable.setting_back_image;
-//            setting_back_image[1] = R.drawable.setting_back_image_ch;
-//
-//            waiting_backimage[0] = R.drawable.workingmotion0;
-//            waiting_backimage[1] = R.drawable.workingmotion0_ch;
-//        }
-
-        switch (programMode) {
-            case MODE_L:
-                LOG.D("programMode : L");
-                setting_back_image[0] = R.drawable.setting_back_image_l;
-                setting_back_image[1] = R.drawable.setting_back_image_l_ch;
-
-                waiting_backimage[0] = R.drawable.waiting_backimage_l;
-                waiting_backimage[1] = R.drawable.waiting_backimage_l_ch;
-                break;
-            case MODE_A:
-                LOG.D("programMode : A");
-                setting_back_image[0] = R.drawable.setting_back_image;
-                setting_back_image[1] = R.drawable.setting_back_image_ch;
-
-                waiting_backimage[0] = R.drawable.a_workingmotion0_e;
-                waiting_backimage[1] = R.drawable.a_workingmotion0_c;
-                break;
-            case MODE_H:
-                LOG.D("programMode : H");
-                setting_back_image[0] = R.drawable.setting_back_image;
-                setting_back_image[1] = R.drawable.setting_back_image_ch;
-
-                waiting_backimage[0] = R.drawable.h_workingmotion0_e;
-                waiting_backimage[1] = R.drawable.h_workingmotion0_c;
-                break;
-            default:
-                LOG.D("programMode : UNDEFINED");
-                break;
-        }
+        setBackgroundImage();
 
         // 감성 LED 모드 및 밝기 불러오기
         led_mode_num = sharedPreferences.getInt(DB_EMOTION1,0);
@@ -480,25 +439,17 @@ public class Application_manager extends Application {
         m_water_heater_time_stime = sharedPreferences.getString(DB_WATER_ST,"00:00");
         m_water_heater_time_ftime = sharedPreferences.getString(DB_WATER_FT,"00:00");
 
-        //External_led
+        //External_led -> Ventilation fan
         m_external_led = sharedPreferences.getInt(DB_EXTERN_LED,0);
-        getCommunicator().set_setting(2, (byte)m_external_led);
+//        getCommunicator().set_setting(2, (byte)m_external_led);
 
-        //Rause Rotation
+        //Pause Rotation
         m_pause_rotation = sharedPreferences.getBoolean(DB_PAUSE,false);
         if (m_pause_rotation) {
             getCommunicator().set_setting(4, (byte)0x01);
         }
         else {
             getCommunicator().set_setting(4, (byte)0x00);
-        }
-
-        //PROGRAM_MODE_OLD
-//        gw_1000 = sharedPreferences.getBoolean(PROGRAM_MODE_OLD,true);
-        programMode = sharedPreferences.getInt(PROGRAM_MODE, UNDEFINED);
-        if (programMode == UNDEFINED) {
-            LOG.D(getClass().getName(), "programMode is undefined. Set default value (GW-1000H)");
-            programMode = MODE_H;
         }
 
         //DB_LANGUEAGE
@@ -1109,5 +1060,38 @@ public class Application_manager extends Application {
     }
     public synchronized static void setIsWaiting_init(boolean val) {
         isWaiting_init = val;
+    }
+
+    public void setBackgroundImage() {
+
+        switch (programMode) {
+            case MODE_L:
+                LOG.D("programMode : L");
+                setting_back_image[0] = R.drawable.setting_back_image_l;
+                setting_back_image[1] = R.drawable.setting_back_image_l_ch;
+
+                waiting_backimage[0] = R.drawable.waiting_backimage_l;
+                waiting_backimage[1] = R.drawable.waiting_backimage_l_ch;
+                break;
+            case MODE_A:
+                LOG.D("programMode : A");
+                setting_back_image[0] = R.drawable.setting_back_image;
+                setting_back_image[1] = R.drawable.setting_back_image_ch;
+
+                waiting_backimage[0] = R.drawable.a_workingmotion0_e;
+                waiting_backimage[1] = R.drawable.a_workingmotion0_c;
+                break;
+            case MODE_H:
+                LOG.D("programMode : H");
+                setting_back_image[0] = R.drawable.setting_back_image;
+                setting_back_image[1] = R.drawable.setting_back_image_ch;
+
+                waiting_backimage[0] = R.drawable.h_workingmotion0_e;
+                waiting_backimage[1] = R.drawable.h_workingmotion0_c;
+                break;
+            default:
+                LOG.D("programMode : UNDEFINED");
+                break;
+        }
     }
 }

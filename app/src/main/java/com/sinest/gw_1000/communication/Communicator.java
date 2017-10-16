@@ -181,6 +181,24 @@ public class Communicator {
     synchronized public void set_tx(int idx, byte val) {
 
         msg_tx[idx] = val;
+
+        // Ventilation fan on/off
+        if (idx == 1) {
+            switch (val) {
+                case 0x00:
+                case 0x02:
+                    msg_tx[7] = (byte) 0x00;
+                    break;
+                case 0x01:
+                    if (Application_manager.m_external_led == 1 && Application_manager.getProgramMode() != Application_manager.MODE_L) {
+                        msg_tx[7] = (byte) 0x01;
+                    }
+                    else {
+                        msg_tx[7] = (byte) 0x00;
+                    }
+                    break;
+            }
+        }
     }
 
     synchronized public byte[] get_tx() {

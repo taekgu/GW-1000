@@ -42,11 +42,13 @@ public class Activity_waiting_rfid extends AppCompatActivity {
     private final static int SET_BUTTON_INVISIBLE           = 1002;
     private final static int SET_BUTTON_VISIBLE             = 1003;
 
+    private final static int MAX_OXYGEN                     = Activity_waiting.MAX_OXYGEN;
+    private final static int MAX_PRESSURE                   = Activity_waiting.MAX_PRESSURE;
+
     Communicator communicator;
     Handler handler_update_data;
     BroadcastReceiver broadcastReceiver;
 
-//    private int val_oxygen = 0;
     private int val_oxygen_injection = 0;
     private int val_pressure = 0;
     private int val_time = 0;// 동작 전 설정 시간
@@ -80,7 +82,8 @@ public class Activity_waiting_rfid extends AppCompatActivity {
     private ImageView background_device;
     private AnimationDrawable frameAnimation;
 
-    CustomProgressBarBlock seekBar;
+    // 동작 중 노즐 위치 표시 바
+    CustomProgressBarBlock progressBar_nozzle_loc;
 
     ImageView waiting_door_open_button;
     ImageView waiting_door_close_button;
@@ -94,6 +97,7 @@ public class Activity_waiting_rfid extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_waiting_rfid);
         Application_manager.setFullScreen(this);
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
@@ -112,19 +116,12 @@ public class Activity_waiting_rfid extends AppCompatActivity {
         clock.setText(Application_manager.doInit_time());
 
         // 산소 농도, 압력, 시간 값 불러오기
-//        val_oxygen = sharedPreferences.getInt(Application_manager.DB_VAL_OXYGEN, 0);
         val_oxygen_injection = sharedPreferences.getInt(Application_manager.DB_VAL_OXYGEN_INJECTION, 0);
         val_pressure = sharedPreferences.getInt(Application_manager.DB_VAL_PRESSURE, 0);
         val_time = sharedPreferences.getInt(Application_manager.DB_VAL_TIME, 10);
 
         // tx 메시지의 DATA2, 5에 수압, 산소투입량 입력
-//        communicator.set_tx(3, (byte) (Application_manager.inverterVal | (byte) (Application_manager.m_inverter * 3)));
-//        if (Application_manager.gw_1000) {
-//            communicator.set_tx(6, (byte) val_oxygen);
-//        }
-//        else if (!Application_manager.gw_1000) {
-//            communicator.set_tx(6, (byte) val_oxygen_injection);
-//        }
+        communicator.set_tx(3, (byte) (Application_manager.inverterVal | (byte) (Application_manager.m_inverter * 3)));
         communicator.set_tx(6, (byte) val_oxygen_injection);
 
         time_text = (TextView)findViewById(R.id.waiting_rfid_time_text);
@@ -134,12 +131,6 @@ public class Activity_waiting_rfid extends AppCompatActivity {
         pressure_text = (TextView)findViewById(R.id.waiting_rfid_pressure_text);
         pressure_text.setTypeface(tf);
 
-//        if (Application_manager.gw_1000) {
-//            oxygen_text.setText("" + val_oxygen);
-//        }
-//        else if (!Application_manager.gw_1000) {
-//            oxygen_text.setText("" + val_oxygen_injection);
-//        }
         oxygen_text.setText("" + val_oxygen_injection);
         pressure_text.setText(""+val_pressure);
         time_text.setText(""+val_time);
@@ -150,7 +141,6 @@ public class Activity_waiting_rfid extends AppCompatActivity {
         textView_temperature_bed.setOnTouchListener(mTouchEvent);
 
         waiting_setting_button = (ImageView)findViewById(R.id.waiting_rfid_setting_button);
-        waiting_setting_button.setOnTouchListener(mTouchEvent);
 
         ImageView waiting_oxygen_up_button = (ImageView)findViewById(R.id.waiting_rfid_oxygen_up_button);
         ImageView waiting_oxygen_down_button = (ImageView)findViewById(R.id.waiting_rfid_oxygen_down_button);
@@ -161,6 +151,8 @@ public class Activity_waiting_rfid extends AppCompatActivity {
 
         waiting_door_open_button = (ImageView)findViewById(R.id.waiting_rfid_dooropen_button);
         waiting_door_close_button = (ImageView)findViewById(R.id.waiting_rfid_doorclose_button);
+
+        waiting_setting_button.setOnTouchListener(mTouchEvent);
 
         waiting_oxygen_up_button.setOnTouchListener(mTouchEvent);
         waiting_oxygen_down_button.setOnTouchListener(mTouchEvent);
@@ -177,7 +169,7 @@ public class Activity_waiting_rfid extends AppCompatActivity {
         background = (ImageView) findViewById(R.id.activity_waiting_rfid_background);
         background_device = (ImageView) findViewById(R.id.imageView_device_rfid);
 
-        seekBar = (CustomProgressBarBlock) findViewById(R.id.seekBar2_rfid);
+        progressBar_nozzle_loc = (CustomProgressBarBlock) findViewById(R.id.seekBar2_rfid);
 
         resolveIntent(getIntent());
         mAdapter = NfcAdapter.getDefaultAdapter(this);
@@ -192,27 +184,10 @@ public class Activity_waiting_rfid extends AppCompatActivity {
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 
         registReceiver();
-        isRun = true;
 
         // 언어에 따라 배경
         if (mode == 0) {
 
-//            if(Application_manager.gw_1000 == true) {
-//
-//                if (Application_manager.useChineseImage == 1) { // 중국어
-//                    background.setBackgroundResource(R.drawable.workingmotion0_ch);
-//                } else {
-//                    background.setBackgroundResource(R.drawable.workingmotion0);
-//                }
-//            }
-//            else if(Application_manager.gw_1000 == false) {
-//
-//                if (Application_manager.useChineseImage == 1) { // 중국어
-//                    background.setBackgroundResource(R.drawable.l_workingmotion0_c);
-//                } else {
-//                    background.setBackgroundResource(R.drawable.l_workingmotion0_e);
-//                }
-//            }
             switch(Application_manager.getProgramMode()) {
                 case Application_manager.MODE_L:
                     if (Application_manager.useChineseImage == 1) { // 중국어
@@ -240,19 +215,26 @@ public class Activity_waiting_rfid extends AppCompatActivity {
         waiting_door_open_button.setBackgroundResource(Application_manager.door_open_off[Application_manager.useChineseImage]);
         waiting_door_close_button.setBackgroundResource(Application_manager.door_close_off[Application_manager.useChineseImage]);
 
-        if(Application_manager.gw_1000 == true){
-
-            layout_switchable1.setVisibility(View.VISIBLE);
-            layout_switchable2.setVisibility(View.VISIBLE);
-            ImageView imageView_device = (ImageView) findViewById(R.id.imageView_device_rfid);
-            imageView_device.setVisibility(View.VISIBLE);
-        }
-        else if(Application_manager.gw_1000 == false){
-
-            layout_switchable1.setVisibility(View.INVISIBLE);
-            layout_switchable2.setVisibility(View.INVISIBLE);
-            ImageView imageView_device = (ImageView) findViewById(R.id.imageView_device_rfid);
-            imageView_device.setVisibility(View.INVISIBLE);
+        ImageView imageView_device;
+        switch(Application_manager.getProgramMode()) {
+            case Application_manager.MODE_L:
+                layout_switchable1.setVisibility(View.INVISIBLE);
+                layout_switchable2.setVisibility(View.INVISIBLE);
+                imageView_device = (ImageView) findViewById(R.id.imageView_device);
+                imageView_device.setVisibility(View.INVISIBLE);
+                break;
+            case Application_manager.MODE_H:
+                layout_switchable1.setVisibility(View.VISIBLE);
+                layout_switchable2.setVisibility(View.INVISIBLE);
+                imageView_device = (ImageView) findViewById(R.id.imageView_device);
+                imageView_device.setVisibility(View.VISIBLE);
+                break;
+            case Application_manager.MODE_A:
+                layout_switchable1.setVisibility(View.VISIBLE);
+                layout_switchable2.setVisibility(View.VISIBLE);
+                imageView_device = (ImageView) findViewById(R.id.imageView_device);
+                imageView_device.setVisibility(View.VISIBLE);
+                break;
         }
 
         if (mode == 0) {
@@ -273,12 +255,6 @@ public class Activity_waiting_rfid extends AppCompatActivity {
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-
-                TextView textView_oxygen = (TextView) findViewById(R.id.textView_rfid_oxygen);
-                textView_oxygen.setText(""+Application_manager.SENSOR_OXYGEN);
-
-                TextView textView_humidity = (TextView) findViewById(R.id.textView_rfid_humidity);
-                textView_humidity.setText(""+Application_manager.SENSOR_HUMIDITY);
 
                 // 수온 불러오기
                 textView_temperature.setText(""+Application_manager.SENSOR_TEMP);
@@ -328,11 +304,27 @@ public class Activity_waiting_rfid extends AppCompatActivity {
                 }
             }
         }
+
+        isRun = true;
+        Thread myThread = new Thread(new Runnable() {
+            public void run() {
+                while (isRun) {
+                    try {
+                        handler.sendMessage(handler.obtainMessage());
+                        Thread.sleep(1000);
+                    } catch (Throwable t) {
+                    }
+                }
+                Log.i("JW_LIFECYCLE", "Activity_waiting_rfid - time update thread 종료");
+            }
+        });
+        myThread.start();
     }
 
     @Override
     protected void onPause() {
         super.onPause();
+
         unregistReceiver();
         isRun = false;
 
@@ -342,7 +334,6 @@ public class Activity_waiting_rfid extends AppCompatActivity {
         }
 
         SharedPreferences.Editor editor = sharedPreferences.edit();
-//        editor.putInt(Application_manager.DB_VAL_OXYGEN, val_oxygen);
         editor.putInt(Application_manager.DB_VAL_OXYGEN_INJECTION, val_oxygen_injection);
         editor.putInt(Application_manager.DB_VAL_PRESSURE, val_pressure);
         editor.putInt(Application_manager.DB_VAL_TIME, val_time);
@@ -363,19 +354,6 @@ public class Activity_waiting_rfid extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        isRun = true;
-        Thread myThread = new Thread(new Runnable() {
-            public void run() {
-                while (isRun) {
-                    try {
-                        handler.sendMessage(handler.obtainMessage());
-                        Thread.sleep(1000);
-                    } catch (Throwable t) {
-                    }
-                }
-            }
-        });
-        myThread.start();
     }
 
     Handler handler = new Handler() {
@@ -473,7 +451,7 @@ public class Activity_waiting_rfid extends AppCompatActivity {
                     communicator.set_tx(2, (byte) patternNum);
 
                     fragmentTransaction.replace(R.id.frameLayout_rfid_fragment, fragment_working);
-                    fragmentTransaction.show(fragment_working);
+//                    fragmentTransaction.show(fragment_working);
                     fragmentTransaction.commit();
 
                     mode = 1;
@@ -484,7 +462,6 @@ public class Activity_waiting_rfid extends AppCompatActivity {
 
                     // 동작 모드로 바뀌기 이전 산소농도, 수압, 시간 값 저장
                     SharedPreferences.Editor editor = sharedPreferences.edit();
-//                    editor.putInt(Application_manager.DB_VAL_OXYGEN, val_oxygen);
                     editor.putInt(Application_manager.DB_VAL_OXYGEN_INJECTION, val_oxygen_injection);
                     editor.putInt(Application_manager.DB_VAL_PRESSURE, val_pressure);
                     editor.putInt(Application_manager.DB_VAL_TIME, val_time);
@@ -502,7 +479,7 @@ public class Activity_waiting_rfid extends AppCompatActivity {
                         @Override
                         public void run() {
 
-                            seekBar.setVisibility(View.VISIBLE);
+                            progressBar_nozzle_loc.setVisibility(View.VISIBLE);
                             ImageView imageView_rfid_card = (ImageView) findViewById(R.id.rfid_card);
                             imageView_rfid_card.setVisibility(View.INVISIBLE);
                         }
@@ -552,21 +529,12 @@ public class Activity_waiting_rfid extends AppCompatActivity {
         communicator.set_tx(1, (byte) 0x00);
 
         // 동작 시작 전 산소 농도, 압력, 시간 값 불러오기
-//        val_oxygen = sharedPreferences.getInt(Application_manager.DB_VAL_OXYGEN, 0);
         val_oxygen_injection = sharedPreferences.getInt(Application_manager.DB_VAL_OXYGEN_INJECTION, 0);
         val_pressure = sharedPreferences.getInt(Application_manager.DB_VAL_PRESSURE, 0);
         val_time = sharedPreferences.getInt(Application_manager.DB_VAL_TIME, 10);
 
         // 동작 시작 전 값으로 tx 값 복원
         byte val = (byte) val_oxygen_injection;
-//        if (Application_manager.gw_1000 == true) { // GW-1000H
-//
-//            val = (byte) val_oxygen;
-//        }
-//        else { // GW-1000L
-//
-//            val = (byte) val_oxygen_injection;
-//        }
         communicator.set_tx(6, val);
         communicator.set_tx(3, (byte) (Application_manager.inverterVal | (byte) (Application_manager.m_inverter * 3)));
 
@@ -605,11 +573,6 @@ public class Activity_waiting_rfid extends AppCompatActivity {
                 @Override
                 public void run() {
 
-//                    if (Application_manager.gw_1000) {
-//                        oxygen_text.setText("" + val_oxygen);
-//                    } else {
-//                        oxygen_text.setText("" + val_oxygen_injection);
-//                    }
                     oxygen_text.setText("" + val_oxygen_injection);
                     pressure_text.setText("" + val_pressure);
                     time_text.setText("" + val_time);
@@ -624,7 +587,7 @@ public class Activity_waiting_rfid extends AppCompatActivity {
                 @Override
                 public void run() {
 
-                    seekBar.setVisibility(View.INVISIBLE);
+                    progressBar_nozzle_loc.setVisibility(View.INVISIBLE);
                     ImageView imageView_rfid_card = (ImageView) findViewById(R.id.rfid_card);
                     imageView_rfid_card.setVisibility(View.VISIBLE);
                 }
@@ -646,20 +609,34 @@ public class Activity_waiting_rfid extends AppCompatActivity {
     }
 
     private void start_animation() {
-        if(Application_manager.gw_1000 == true){
-            background.setBackgroundResource(R.drawable.animation_working_a);
-        }else if(Application_manager.gw_1000 == false){
-            background.setBackgroundResource(R.drawable.animation_working_l);
+
+        switch(Application_manager.getProgramMode()) {
+            case Application_manager.MODE_L:
+                background.setBackgroundResource(R.drawable.animation_working_l);
+                break;
+            case Application_manager.MODE_H:
+                background.setBackgroundResource(R.drawable.animation_working_h);
+                break;
+            case Application_manager.MODE_A:
+                background.setBackgroundResource(R.drawable.animation_working_a);
+                break;
         }
         frameAnimation = (AnimationDrawable) background.getBackground();
         frameAnimation.start();
     }
 
     private void start_animation_ch() {
-        if(Application_manager.gw_1000 == true){
-            background.setBackgroundResource(R.drawable.animation_working_a_ch);
-        }else if(Application_manager.gw_1000 == false){
-            background.setBackgroundResource(R.drawable.animation_working_l_ch);
+
+        switch(Application_manager.getProgramMode()) {
+            case Application_manager.MODE_L:
+                background.setBackgroundResource(R.drawable.animation_working_l_ch);
+                break;
+            case Application_manager.MODE_H:
+                background.setBackgroundResource(R.drawable.animation_working_h_ch);
+                break;
+            case Application_manager.MODE_A:
+                background.setBackgroundResource(R.drawable.animation_working_a_ch);
+                break;
         }
         frameAnimation = (AnimationDrawable) background.getBackground();
         frameAnimation.start();
@@ -773,62 +750,17 @@ public class Activity_waiting_rfid extends AppCompatActivity {
 
                 if (msg.what == 1) {
 
-                    int[] onoff_flag = new int[12];
-                    for (int i=1; i<=4; i++) { // 세로
+//                    int[] onoff_flag = new int[12];
+//                    for (int i=1; i<=4; i++) { // 세로
+//
+//                        for (int j = 1; j <= 3; j++) { // 가로
+//
+//                            onoff_flag[((j-1)*4 + i - 1)] = sharedPreferences.getInt(Application_manager.DB_SETTING_ONOFF_VAL_ + i + "" + j, 0);
+//                        }
+//                    }
 
-                        for (int j = 1; j <= 3; j++) { // 가로
-
-                            onoff_flag[((j-1)*4 + i - 1)] = sharedPreferences.getInt(Application_manager.DB_SETTING_ONOFF_VAL_ + i + "" + j, 0);
-                        }
-                    }
-
-                    // 산소농도 평균
-                    int temp = 0;
-                    int cnt = 0;
-                    for (int i=0; i<4; i++) {
-
-                        if (onoff_flag[i+8] == 1) {
-
-                            temp += communicator.get_rx_idx(i+7);
-                            cnt++;
-                        }
-                    }
-                    if (cnt != 0)
-                        temp /= cnt;
-                    TextView textView_oxygen = (TextView) findViewById(R.id.textView_rfid_oxygen);
-                    textView_oxygen.setText(""+temp);
-                    Application_manager.SENSOR_OXYGEN = temp;
-
-                    // 습도 평균
-                    temp = 0;
-                    cnt = 0;
-                    for (int i=4; i<8; i++) {
-
-                        if (onoff_flag[i-4] == 1) {
-
-                            temp += communicator.get_rx_idx(i+7);
-                            cnt++;
-                        }
-                    }
-                    if (cnt != 0)
-                        temp /= cnt;
-                    TextView textView_humidity = (TextView) findViewById(R.id.textView_rfid_humidity);
-                    textView_humidity.setText(""+temp);
-                    Application_manager.SENSOR_HUMIDITY = temp;
-
-                    // 내부온도 평균
-                    temp = 0;
-                    cnt = 0;
-                    for (int i=8; i<12; i++) {
-
-                        if (onoff_flag[i-4] == 1) {
-
-                            temp += communicator.get_rx_idx(i-5);
-                            cnt++;
-                        }
-                    }
-                    if (cnt != 0)
-                        temp /= cnt;
+                    // 내부온도 (단일값)
+                    int temp = communicator.get_rx_idx(3);
                     textView_temperature = (TextView) findViewById(R.id.textView_rfid_temperature_above);
                     textView_temperature.setText(""+temp);
                     Application_manager.SENSOR_TEMP = temp;
@@ -840,7 +772,7 @@ public class Activity_waiting_rfid extends AppCompatActivity {
                     Application_manager.SENSOR_TEMP_BED = temp;
 
                     // 노즐 위치
-                    seekBar.setProgress(communicator.get_rx_idx(15));
+                    progressBar_nozzle_loc.setProgress(14-communicator.get_rx_idx(15));
                 }
                 else if (msg.what == SET_BUTTON_INVISIBLE) {
 
@@ -878,20 +810,28 @@ public class Activity_waiting_rfid extends AppCompatActivity {
                 }
 
                 // 히터
-                // 온도 높을 때 - 냉
-                if (Application_manager.SENSOR_TEMP_USER + 1 < Application_manager.SENSOR_TEMP) {
+                switch(Application_manager.getProgramMode()) {
+                    case Application_manager.MODE_L:
+                        communicator.set_tx(5, (byte) 0x00);
+                        break;
+                    case Application_manager.MODE_H:
+                    case Application_manager.MODE_A:
+                        // 온도 높을 때 - 냉
+                        if (Application_manager.SENSOR_TEMP_USER + 1 < Application_manager.SENSOR_TEMP) {
 
-                    communicator.set_tx(5, (byte) 0x01);
-                }
-                // 온도 낮을 때 - 온
-                else if (Application_manager.SENSOR_TEMP_USER - 1 > Application_manager.SENSOR_TEMP) {
+                            communicator.set_tx(5, (byte) 0x01);
+                        }
+                        // 온도 낮을 때 - 온
+                        else if (Application_manager.SENSOR_TEMP_USER - 1 > Application_manager.SENSOR_TEMP) {
 
-                    communicator.set_tx(5, (byte) 0x02);
-                }
-                // 설정 범위 +-1 이내일 때 - 끄기
-                else {
+                            communicator.set_tx(5, (byte) 0x02);
+                        }
+                        // 설정 범위 +-1 이내일 때 - 끄기
+                        else {
 
-                    communicator.set_tx(5, (byte) 0x00);
+                            communicator.set_tx(5, (byte) 0x00);
+                        }
+                        break;
                 }
             }
         };
@@ -951,22 +891,8 @@ public class Activity_waiting_rfid extends AppCompatActivity {
                     case R.id.waiting_rfid_oxygen_up_button:
                         view.setBackgroundResource(R.drawable.button_up);
 
-//                        if (Application_manager.gw_1000 == true) { // GW-1000H
-//
-//                            val_oxygen++;
-//                            if (val_oxygen > 5) val_oxygen = 5;
-//                            oxygen_text.setText("" + val_oxygen);
-//                            val = (byte) val_oxygen;
-//                        }
-//                        else { // GW-1000L
-//
-//                            val_oxygen_injection++;
-//                            if (val_oxygen_injection > 3) val_oxygen_injection = 3;
-//                            oxygen_text.setText("" + val_oxygen_injection);
-//                            val = (byte) val_oxygen_injection;
-//                        }
                         val_oxygen_injection++;
-                        if (val_oxygen_injection > 3) val_oxygen_injection = 3;
+                        if (val_oxygen_injection > MAX_OXYGEN) val_oxygen_injection = MAX_OXYGEN;
                         oxygen_text.setText("" + val_oxygen_injection);
                         val = (byte) val_oxygen_injection;
 
@@ -975,20 +901,6 @@ public class Activity_waiting_rfid extends AppCompatActivity {
                     case R.id.waiting_rfid_oxygen_down_button:
                         view.setBackgroundResource(R.drawable.button_down);
 
-//                        if (Application_manager.gw_1000 == true) { // GW-1000H
-//
-//                            val_oxygen--;
-//                            if (val_oxygen < 0) val_oxygen = 0;
-//                            oxygen_text.setText("" + val_oxygen);
-//                            val = (byte) val_oxygen;
-//                        }
-//                        else { // GW-1000L
-//
-//                            val_oxygen_injection--;
-//                            if (val_oxygen_injection < 0) val_oxygen_injection = 0;
-//                            oxygen_text.setText("" + val_oxygen_injection);
-//                            val = (byte) val_oxygen_injection;
-//                        }
                         val_oxygen_injection--;
                         if (val_oxygen_injection < 0) val_oxygen_injection = 0;
                         oxygen_text.setText("" + val_oxygen_injection);
@@ -999,8 +911,8 @@ public class Activity_waiting_rfid extends AppCompatActivity {
                     case R.id.waiting_rfid_pressure_up_button:
                         view.setBackgroundResource(R.drawable.button_up);
 
-                            val_pressure += 1;
-                            if (val_pressure > 6) val_pressure = 6;
+                        val_pressure += 1;
+                        if (val_pressure > MAX_PRESSURE) val_pressure = MAX_PRESSURE;
                             pressure_text.setText("" + val_pressure);
 
                             if (mode == 1) {
@@ -1109,7 +1021,9 @@ public class Activity_waiting_rfid extends AppCompatActivity {
         }
     };
 
-    // back키 작동 중지
+    /**
+     * Back 버튼 터치 이벤트
+     */
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event){
         switch(keyCode){

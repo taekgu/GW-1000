@@ -34,7 +34,7 @@ public class Activity_engine extends AppCompatActivity {
 
     Button hidden_e_1; Button hidden_e_2; Button hidden_e_3; Button hidden_e_4;
 
-    TextView oxygen_m; TextView operation_t;
+    TextView operation_t;
     Intent check;
     Intent main_intent;
     String check_activity;
@@ -109,8 +109,6 @@ public class Activity_engine extends AppCompatActivity {
         eng_r_left = (Button)findViewById(R.id.eng_r_left);
         eng_r_right = (Button)findViewById(R.id.eng_r_right);
 
-        oxygen_m = (TextView) findViewById(R.id.oxygen_m);
-        oxygen_m.setTypeface(tf);
         operation_t = (TextView) findViewById(R.id.operation_t);
         operation_t.setTypeface(tf);
 
@@ -123,8 +121,6 @@ public class Activity_engine extends AppCompatActivity {
         invert_choice = (Button)findViewById(R.id.invert_choice);
 
         communicator = Application_manager.getCommunicator();
-        int ox_m = (communicator.get_rx_idx(7)+communicator.get_rx_idx(8)+communicator.get_rx_idx(9)+communicator.get_rx_idx(10))/4;
-        oxygen_m.setText(String.valueOf(ox_m));
 
         main_intent = new Intent(this, Activity_waiting.class);
 
@@ -305,16 +301,14 @@ public class Activity_engine extends AppCompatActivity {
                         }
                         break;
                     case R.id.eng_b_inter:
-                        //
+                        // On
                         if (heater_f == 0) {
                             eng_b_inter.setBackgroundResource(R.drawable.button_blue);
                             heater_f = 1;
                             communicator.set_engineer(4,(byte)0x01);
-                        } else if(heater_f == 1){
-                            eng_b_inter.setBackgroundResource(R.drawable.button_pink);
-                            heater_f = 2;
-                            communicator.set_engineer(4,(byte)0x02);
-                        } else if(heater_f == 2){
+                        }
+                        // Off
+                        else {
                             eng_b_inter.setBackgroundResource(R.drawable.button_gry);
                             heater_f = 0;
                             communicator.set_engineer(4,(byte)0x00);
@@ -370,23 +364,6 @@ public class Activity_engine extends AppCompatActivity {
                                 Application_manager.setting_back_image[1] = R.drawable.setting_back_image_l_ch;
                                 break;
                         }
-
-//                        if (mode_f == true) {
-//                            program_m.setBackgroundResource(Application_manager.program_mode_L[Application_manager.useChineseImage]);
-//                            Application_manager.set_m_gw_1000(false);
-//                            // GW-1000L 버전 설정
-//                            Application_manager.setting_back_image[0] = R.drawable.setting_back_image_l;
-//                            Application_manager.setting_back_image[1] = R.drawable.setting_back_image_l_ch;
-//                            Log.i("JW", "l버전 설정");
-//                            mode_f = false;
-//                        } else {
-//                            program_m.setBackgroundResource(Application_manager.program_mode_H[Application_manager.useChineseImage]);
-//                            Application_manager.set_m_gw_1000(true);
-//                            // GW-1000H 버전 설정
-//                            Application_manager.setting_back_image[0] = R.drawable.setting_back_image;
-//                            Application_manager.setting_back_image[1] = R.drawable.setting_back_image_ch;
-//                            mode_f = true;
-//                        }
                         break;
                     case R.id.invert_choice:
                         // LS (0x10)

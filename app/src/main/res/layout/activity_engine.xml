@@ -226,16 +226,10 @@
                 android:visibility="invisible"
                 android:layout_weight="3" />
 
-            <TextView
-                android:text="00"
-                android:layout_gravity="center"
-                android:gravity="right|center"
+            <View
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:id="@+id/oxygen_m"
-                android:textSize="40sp"
-                android:textColor="#00ffff"
-                android:layout_weight="10" />
+                android:layout_weight="10"/>
 
             <Button
                 android:layout_width="0dp"
