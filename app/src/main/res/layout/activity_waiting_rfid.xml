@@ -171,35 +171,6 @@
                                 android:layout_width="0dp"
                                 android:layout_height="match_parent"
                                 android:layout_weight="13">
-
-                                <RelativeLayout
-                                    android:layout_width="match_parent"
-                                    android:layout_height="match_parent"
-                                    android:gravity="center">
-
-                                    <ImageView
-                                        android:id="@+id/waiting_rfid_humidity"
-                                        android:layout_width="match_parent"
-                                        android:layout_height="match_parent"
-                                        app:srcCompat="@drawable/humidity"/>
-
-                                    <TextView
-                                        android:id="@+id/textView_rfid_humidity"
-                                        android:layout_width="0dp"
-                                        android:layout_height="0dp"
-                                        android:alpha="100"
-                                        android:text="0"
-                                        android:textColor="#000000"
-                                        android:textSize="15dp"
-                                        android:gravity="center"
-                                        android:layout_alignStart="@+id/waiting_rfid_humidity"
-                                        android:layout_alignEnd="@+id/waiting_rfid_humidity"
-                                        android:layout_alignTop="@+id/waiting_rfid_humidity"
-                                        android:layout_alignBottom="@+id/waiting_rfid_humidity"
-                                        android:layout_marginRight="15dp"/>
-
-                                </RelativeLayout>
-
                             </LinearLayout>
 
                             <LinearLayout
@@ -245,47 +216,6 @@
                                         android:text="0"
                                         android:textColor="#ffffff"
                                         android:gravity="center"/>
-
-                                </RelativeLayout>
-
-                            </LinearLayout>
-
-                            <LinearLayout
-                                android:layout_width="0dp"
-                                android:layout_height="match_parent"
-                                android:layout_weight="5">
-                            </LinearLayout>
-
-                            <LinearLayout
-                                android:layout_width="0dp"
-                                android:layout_height="match_parent"
-                                android:layout_weight="13">
-
-                                <RelativeLayout
-                                    android:layout_width="match_parent"
-                                    android:layout_height="match_parent"
-                                    android:gravity="center">
-
-                                    <ImageView
-                                        android:id="@+id/waiting_rfid_oxygen"
-                                        android:layout_width="match_parent"
-                                        android:layout_height="match_parent"
-                                        app:srcCompat="@drawable/oxygen"/>
-
-                                    <TextView
-                                        android:id="@+id/textView_rfid_oxygen"
-                                        android:layout_width="0dp"
-                                        android:layout_height="0dp"
-                                        android:alpha="100"
-                                        android:text="0"
-                                        android:textColor="#000000"
-                                        android:textSize="15dp"
-                                        android:gravity="center"
-                                        android:layout_alignStart="@+id/waiting_rfid_oxygen"
-                                        android:layout_alignEnd="@+id/waiting_rfid_oxygen"
-                                        android:layout_alignTop="@+id/waiting_rfid_oxygen"
-                                        android:layout_alignBottom="@+id/waiting_rfid_oxygen"
-                                        android:layout_marginRight="15dp"/>
 
                                 </RelativeLayout>
 

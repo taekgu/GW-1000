@@ -831,6 +831,8 @@ public class Activity_waiting extends AppCompatActivity {
                         }
                         break;
                 }
+
+                // 추가개발 - 도어 상태 업데이트 (1000H)
             }
         };
     }

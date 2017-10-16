@@ -220,19 +220,19 @@ public class Activity_waiting_rfid extends AppCompatActivity {
             case Application_manager.MODE_L:
                 layout_switchable1.setVisibility(View.INVISIBLE);
                 layout_switchable2.setVisibility(View.INVISIBLE);
-                imageView_device = (ImageView) findViewById(R.id.imageView_device);
+                imageView_device = (ImageView) findViewById(R.id.imageView_device_rfid);
                 imageView_device.setVisibility(View.INVISIBLE);
                 break;
             case Application_manager.MODE_H:
                 layout_switchable1.setVisibility(View.VISIBLE);
                 layout_switchable2.setVisibility(View.INVISIBLE);
-                imageView_device = (ImageView) findViewById(R.id.imageView_device);
+                imageView_device = (ImageView) findViewById(R.id.imageView_device_rfid);
                 imageView_device.setVisibility(View.VISIBLE);
                 break;
             case Application_manager.MODE_A:
                 layout_switchable1.setVisibility(View.VISIBLE);
                 layout_switchable2.setVisibility(View.VISIBLE);
-                imageView_device = (ImageView) findViewById(R.id.imageView_device);
+                imageView_device = (ImageView) findViewById(R.id.imageView_device_rfid);
                 imageView_device.setVisibility(View.VISIBLE);
                 break;
         }
@@ -394,7 +394,8 @@ public class Activity_waiting_rfid extends AppCompatActivity {
 
             // modeNum 설정 방법 정해야됨
             // mode == 0 (대기 상태) 일 때만 동작
-            if (mode == 0) {
+            if (mode == 0
+                    && !Application_manager.getIsWaiting_init()) {
 
                 changeFragment_working(0);
             }
