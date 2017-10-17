@@ -215,25 +215,18 @@ public class Activity_waiting_rfid extends AppCompatActivity {
         waiting_door_open_button.setBackgroundResource(Application_manager.door_open_off[Application_manager.useChineseImage]);
         waiting_door_close_button.setBackgroundResource(Application_manager.door_close_off[Application_manager.useChineseImage]);
 
-        ImageView imageView_device;
         switch(Application_manager.getProgramMode()) {
             case Application_manager.MODE_L:
                 layout_switchable1.setVisibility(View.INVISIBLE);
                 layout_switchable2.setVisibility(View.INVISIBLE);
-                imageView_device = (ImageView) findViewById(R.id.imageView_device_rfid);
-                imageView_device.setVisibility(View.INVISIBLE);
                 break;
             case Application_manager.MODE_H:
                 layout_switchable1.setVisibility(View.VISIBLE);
                 layout_switchable2.setVisibility(View.INVISIBLE);
-                imageView_device = (ImageView) findViewById(R.id.imageView_device_rfid);
-                imageView_device.setVisibility(View.VISIBLE);
                 break;
             case Application_manager.MODE_A:
                 layout_switchable1.setVisibility(View.VISIBLE);
                 layout_switchable2.setVisibility(View.VISIBLE);
-                imageView_device = (ImageView) findViewById(R.id.imageView_device_rfid);
-                imageView_device.setVisibility(View.VISIBLE);
                 break;
         }
 
@@ -268,15 +261,7 @@ public class Activity_waiting_rfid extends AppCompatActivity {
             Application_manager.setSleep_f(0,true);
         }
 
-        // 도어 상태
-        if (Application_manager.isDoorOpened) {
-
-            background_device.setBackgroundResource(R.drawable.open);
-        }
-        else {
-
-            background_device.setBackgroundResource(R.drawable.close);
-        }
+        updateDoorState();
 
         // 동작 중에 액티비티 resume 시
         if (mode == 1) {
@@ -751,15 +736,6 @@ public class Activity_waiting_rfid extends AppCompatActivity {
 
                 if (msg.what == 1) {
 
-//                    int[] onoff_flag = new int[12];
-//                    for (int i=1; i<=4; i++) { // 세로
-//
-//                        for (int j = 1; j <= 3; j++) { // 가로
-//
-//                            onoff_flag[((j-1)*4 + i - 1)] = sharedPreferences.getInt(Application_manager.DB_SETTING_ONOFF_VAL_ + i + "" + j, 0);
-//                        }
-//                    }
-
                     // 내부온도 (단일값)
                     int temp = communicator.get_rx_idx(3);
                     textView_temperature = (TextView) findViewById(R.id.textView_rfid_temperature_above);
@@ -816,6 +792,8 @@ public class Activity_waiting_rfid extends AppCompatActivity {
                         communicator.set_tx(5, (byte) 0x00);
                         break;
                     case Application_manager.MODE_H:
+                        // 추가개발 - 도어 상태 업데이트 (1000H)
+                        updateDoorState();
                     case Application_manager.MODE_A:
                         // 온도 높을 때 - 냉
                         if (Application_manager.SENSOR_TEMP_USER + 1 < Application_manager.SENSOR_TEMP) {
@@ -1048,5 +1026,30 @@ public class Activity_waiting_rfid extends AppCompatActivity {
                 break;
         }
         return super.onTouchEvent(event);
+    }
+
+    private void updateDoorState() {
+
+        switch(Application_manager.getProgramMode()) {
+            case Application_manager.MODE_L:
+                background_device.setBackgroundResource(R.drawable.none);
+                break;
+            case Application_manager.MODE_H:
+                if (Application_manager.getCommunicator().get_rx_idx(16) == 0x00) {
+                    background_device.setBackgroundResource(R.drawable.close);
+                }
+                else {
+                    background_device.setBackgroundResource(R.drawable.open);
+                }
+                break;
+            case Application_manager.MODE_A:
+                if (Application_manager.isDoorOpened) {
+                    background_device.setBackgroundResource(R.drawable.open);
+                }
+                else {
+                    background_device.setBackgroundResource(R.drawable.close);
+                }
+                break;
+        }
     }
 }
