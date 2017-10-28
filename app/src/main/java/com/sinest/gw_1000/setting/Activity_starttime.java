@@ -23,12 +23,13 @@ public class Activity_starttime extends Activity {
     Button start_time0; Button start_time_enter; Button start_time_back;
     boolean[] start_flag = {true,true,true,true,true,true,true,true,true,true,true,true};
     Chronometer start_time;
-    String s_buf = Application_manager.m_water_heater_time_stime;
+
+    String s_buf;
     int int_buf;
     int int_c = 0;
 
-    String buf_l;
-    String buf_r;
+    String buf_l = "00";
+    String buf_r = "00";
     int int_l;
     int int_r;
     int check;
@@ -36,8 +37,8 @@ public class Activity_starttime extends Activity {
     int check_ent;
     int l_ent;
     int r_ent;
-    String buf_l_ent;
-    String buf_r_ent;
+    String buf_l_ent = "00";
+    String buf_r_ent = "00";
 
     Intent start_result;
     ImageView start_time_id;
@@ -72,10 +73,14 @@ public class Activity_starttime extends Activity {
 
         start_result = this.getIntent();
 
+        s_buf = start_result.getStringExtra("start");
+        if (s_buf == null) {
+            s_buf = "00:00";
+        }
+
         start_time = (Chronometer) findViewById(R.id.start_time);
 
         Typeface tf = Typeface.createFromAsset(getAssets(), "fonts/digital.ttf");
-        start_time.setText(start_result.getStringExtra("start"));
         start_time.setTypeface(tf);
 
         /*
@@ -164,7 +169,7 @@ public class Activity_starttime extends Activity {
         start_time_id.setBackgroundResource(Application_manager.water_heater_start_timer_keyped[Application_manager.useChineseImage]);
         start_time_enter.setBackgroundResource(Application_manager.keypad_enter[Application_manager.useChineseImage]);
         start_time_back.setBackgroundResource(Application_manager.keypad_back[Application_manager.useChineseImage]);
-        start_time.setText(Application_manager.m_water_heater_time_stime);
+        start_time.setText(s_buf);
         // 슬립 모드 동작 재시작
         Application_manager.setSleep_f(0,true);
     }
@@ -251,5 +256,4 @@ public class Activity_starttime extends Activity {
             int_c++;
         }
     }
-
 }

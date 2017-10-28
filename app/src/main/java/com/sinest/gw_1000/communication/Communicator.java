@@ -5,11 +5,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.util.Log;
 
 import com.sinest.gw_1000.management.Application_manager;
-
-import java.net.Socket;
 
 /**
  * Created by Jinwook on 2016-11-15.
@@ -182,23 +179,23 @@ public class Communicator {
 
         msg_tx[idx] = val;
 
-        // Ventilation fan on/off
-        if (idx == 1) {
-            switch (val) {
-                case 0x00:
-                case 0x02:
-                    msg_tx[7] = (byte) 0x00;
-                    break;
-                case 0x01:
-                    if (Application_manager.m_external_led == 1 && Application_manager.getProgramMode() != Application_manager.MODE_L) {
-                        msg_tx[7] = (byte) 0x01;
-                    }
-                    else {
-                        msg_tx[7] = (byte) 0x00;
-                    }
-                    break;
-            }
-        }
+        // 동작 상태에서만 팬 동작 Ventilation fan on/off -> deprecated
+//        if (idx == 1) {
+//            switch (val) {
+//                case 0x00:
+//                case 0x02:
+//                    msg_tx[7] = (byte) 0x00;
+//                    break;
+//                case 0x01:
+//                    if (Application_manager.mVentilationFan == 1 && Application_manager.getProgramMode() != Application_manager.MODE_L) {
+//                        msg_tx[7] = (byte) 0x01;
+//                    }
+//                    else {
+//                        msg_tx[7] = (byte) 0x00;
+//                    }
+//                    break;
+//            }
+//        }
     }
 
     synchronized public byte[] get_tx() {

@@ -24,12 +24,12 @@ public class Activity_finishtime extends Activity {
 
     Chronometer finish_time;
 
-    String s_buf = Application_manager.m_water_heater_time_ftime;
+    String s_buf;
     int int_buf;
     int int_c = 0;
 
-    String buf_l;
-    String buf_r;
+    String buf_l = "00";
+    String buf_r = "00";
     int int_l;
     int int_r;
     int check;
@@ -37,11 +37,10 @@ public class Activity_finishtime extends Activity {
     int check_ent;
     int l_ent;
     int r_ent;
-    String buf_l_ent;
-    String buf_r_ent;
+    String buf_l_ent = "00";
+    String buf_r_ent = "00";
 
     Intent finish_result;
-
     ImageView finish_time_id;
 
     @Override
@@ -74,10 +73,14 @@ public class Activity_finishtime extends Activity {
 
         finish_result = this.getIntent();
 
+        s_buf = finish_result.getStringExtra("finish");
+        if (s_buf == null) {
+            s_buf = "00:00";
+        }
+
         finish_time = (Chronometer) findViewById(R.id.finish_time);
 
         Typeface tf = Typeface.createFromAsset(getAssets(), "fonts/digital.ttf");
-        finish_time.setText(finish_result.getStringExtra("finish"));
         finish_time.setTypeface(tf);
 
         /*
@@ -166,7 +169,7 @@ public class Activity_finishtime extends Activity {
         finish_time_id.setBackgroundResource(Application_manager.water_heater_finishtimer_keyped[Application_manager.useChineseImage]);
         finish_time_enter.setBackgroundResource(Application_manager.keypad_enter[Application_manager.useChineseImage]);
         finish_time_back.setBackgroundResource(Application_manager.keypad_back[Application_manager.useChineseImage]);
-        finish_time.setText(Application_manager.m_water_heater_time_ftime);
+        finish_time.setText(s_buf);
         // 슬립 모드 동작 재시작
         Application_manager.setSleep_f(0,true);
     }

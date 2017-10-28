@@ -78,9 +78,11 @@ public class Activity_water extends Activity {
                         }
                         break;
                     case R.id.water_s_c:
+                        intent_start.putExtra("start", water_s_c.getText());
                         startActivity(intent_start);
                         break;
                     case R.id.water_f_c:
+                        intent_start.putExtra("finish", water_f_c.getText());
                         startActivity(intent_finish);
                         break;
                 }

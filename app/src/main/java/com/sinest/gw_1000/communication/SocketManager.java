@@ -34,7 +34,7 @@ public class SocketManager {
     private final static int SERVER_DISCONNECTED  = 1002;
 
     private static final String IP_ADDRESS  = "192.168.0.1";
-//    private static final String IP_ADDRESS  = "192.168.219.178";
+//    private static final String IP_ADDRESS  = "192.168.219.148";
 //    private static final String IP_ADDRESS  = "192.168.160.130";
     private static final int PORT           = 20002;
 
@@ -135,7 +135,7 @@ public class SocketManager {
                 }
             } catch (SocketException e) {
 
-                Log.i("JW_COMM_EX", "Socket 연결 exception");
+                Log.i("JW_COMM_EX", "Socket 연결 exception : " + e.getMessage());
                 init();
             } catch (IOException e) {
 
@@ -255,7 +255,9 @@ public class SocketManager {
 
                 Log.i("JW_COMM_EX", "IO stream exception (stopping): " + e.getMessage());
             }
-            thread.interrupt();
+            if (thread != null) {
+                thread.interrupt();
+            }
 
             init();
         }

@@ -178,13 +178,13 @@ public class Activity_setting extends AppCompatActivity {
                         if (ex_f == 0) {
                             b_ventilationFan.setBackgroundResource(Application_manager.on[Application_manager.useChineseImage]);
                             ex_f = 1;
-//                            communicator.set_setting(2, (byte) 0x01);
+                            communicator.set_setting(2, (byte) 0x01);
                         } else if (ex_f == 1) {
                             b_ventilationFan.setBackgroundResource(Application_manager.off[Application_manager.useChineseImage]);
                             ex_f = 0;
-//                            communicator.set_setting(2, (byte) 0x00);
+                            communicator.set_setting(2, (byte) 0x00);
                         }
-//                        communicator.getSocketManager().send_setting();
+                        communicator.getSocketManager().send_setting();
                         break;
                     case R.id.b_wa:
                         if (button2_flag[2] == true) {
@@ -313,6 +313,7 @@ public class Activity_setting extends AppCompatActivity {
                             b_inverter.setBackgroundResource(Application_manager.inverter_0[Application_manager.useChineseImage]);
                             b_inverter_f = 0;
                         }
+                        Application_manager.setInverter(b_inverter_f);
                         break;
                     case R.id.hidden_s_1:
                         if (hidden[3] == true) {
@@ -515,7 +516,7 @@ public class Activity_setting extends AppCompatActivity {
         Application_manager.m_water_heater_time_save = button2_flag[2];
         Application_manager.set_m_water_ff(button2_flag[2]);
 
-        Application_manager.m_external_led = ex_f;
+//        Application_manager.mVentilationFan = ex_f;
         Application_manager.set_m_external_led(ex_f);
 
         Application_manager.m_pause_rotation = button2_flag[3];
@@ -524,8 +525,8 @@ public class Activity_setting extends AppCompatActivity {
         Application_manager.m_language = b_language_f;
         Application_manager.set_m_language(b_language_f);
 
-        Application_manager.m_inverter = b_inverter_f;
-        Application_manager.set_m_inverter(b_inverter_f);
+//        Application_manager.mInverter = b_inverter_f;
+//        Application_manager.setInverter(b_inverter_f);
 
         //----------------------------------------언어 변경시 버튼 상태 저장 -----------------
 
@@ -566,13 +567,11 @@ public class Activity_setting extends AppCompatActivity {
             b_continue.setBackgroundResource(Application_manager.sleepmode_continue_on[Application_manager.useChineseImage]);
         }
 
-        ex_f = Application_manager.m_external_led;
+        ex_f = Application_manager.mVentilationFan;
         if (ex_f == 0) {
             b_ventilationFan.setBackgroundResource(Application_manager.off[Application_manager.useChineseImage]);
-            //communicator.set_engineer(6,(byte)0x00);
         } else if (ex_f == 1) {
             b_ventilationFan.setBackgroundResource(Application_manager.on[Application_manager.useChineseImage]);
-            //communicator.set_engineer(6,(byte)0x01);
         }
 
         button2_flag[2] = Application_manager.m_water_heater_f;
@@ -600,7 +599,7 @@ public class Activity_setting extends AppCompatActivity {
             b_language.setBackgroundResource(Application_manager.language_ch[Application_manager.useChineseImage]);
         }
 
-        b_inverter_f = Application_manager.m_inverter;
+        b_inverter_f = Application_manager.mInverter;
         if (b_inverter_f == 0) {
             b_inverter.setBackgroundResource(Application_manager.inverter_0[Application_manager.useChineseImage]);
         } else if (b_inverter_f == 1) {

@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.WindowManager;
 
 import com.sinest.gw_1000.R;
+import com.sinest.gw_1000.Utils.Const;
 import com.sinest.gw_1000.Utils.LOG;
 import com.sinest.gw_1000.communication.Communicator;
 import com.sinest.gw_1000.setting.Activity_setting;
@@ -36,8 +37,7 @@ public class Application_manager extends Application {
     public static final String DB_DOOR_STATE = "door_state";
 
     // 인버터 타입 false: 야스카와 / true: LS
-    public static boolean inverterType = false;
-    public static byte inverterVal = 0x00; // LS: 0x10, 야스카와: 0x00
+    public static byte inverterType = 0x00; // LS: 0x10, 야스카와: 0x00
     public static final String DB_INVERT_TYPE = "invert_type";
 
     // 활성 액티비티 대기모드인지 엔지니어모드인지 확인
@@ -206,10 +206,10 @@ public class Application_manager extends Application {
     public static int m_language = 0;
 
     //Inverter 0-> 0 1-> 50 2-> 100
-    public static int m_inverter = 0;
+    public static int mInverter = 0;
 
-    //External_led
-    public static int m_external_led = 0;
+    // Ventilation fan
+    public static int mVentilationFan = 0;
 
     //Water HeaterTimer
     public static boolean m_water_heater_time_save = false;
@@ -239,10 +239,10 @@ public class Application_manager extends Application {
     public static boolean gw_1000 = true;
 
     // GW-1000 L, A, H
-    public static final int UNDEFINED   = 0;
+    public static final int UNDEFINED   = -1;
+    public static final int MODE_H      = 0;
     public static final int MODE_L      = 1;
     public static final int MODE_A      = 2;
-    public static final int MODE_H      = 3;
     public static int programMode = UNDEFINED;
 
     //-------------------------------Img ---------------------------------------------------
@@ -374,13 +374,13 @@ public class Application_manager extends Application {
         WindowManager mgr = (WindowManager)context.getSystemService(Context.WINDOW_SERVICE);
         mgr.getDefaultDisplay().getMetrics(metrics);
 
-        load_data();
+        loadData();
     }
 
     /**
      * DB에서 초기값 로드
      */
-    private void load_data(){
+    private void loadData(){
 
         Application_manager.communicator = new Communicator(context);
         Application_manager.soundManager = new SoundManager(context);
@@ -404,6 +404,7 @@ public class Application_manager extends Application {
             LOG.D(getClass().getName(), "programMode is undefined. Set default value (GW-1000H)");
             programMode = MODE_H;
         }
+        communicator.set_tx(7, (byte) programMode);
 
         //시간차 저장
         m_gap_clock_f = sharedPreferences.getBoolean(DB_TIME_GAP_F,true);
@@ -429,9 +430,12 @@ public class Application_manager extends Application {
         sound_volume_num = sharedPreferences.getInt(DB_EMOTION4,1);
         soundManager.setVolume_therapy(sound_volume_num);
 
-        // 인버터 타입 불러오기
-        inverterType = sharedPreferences.getBoolean(DB_INVERT_TYPE, false);
-        set_inverter(inverterType);
+        // 인버터 타입과 값 불러오기
+        setInverterType((byte) sharedPreferences.getInt(DB_INVERT_TYPE, Const.TYPE_LS));
+        mInverter = sharedPreferences.getInt(DB_INVERTER,0);
+        LOG.D("Inverter = " + mInverter);
+
+        updateInverter();
 
         //water_heater_time_save
         m_water_heater_time_save = sharedPreferences.getBoolean(DB_WATER_F,false);
@@ -440,8 +444,8 @@ public class Application_manager extends Application {
         m_water_heater_time_ftime = sharedPreferences.getString(DB_WATER_FT,"00:00");
 
         //External_led -> Ventilation fan
-        m_external_led = sharedPreferences.getInt(DB_EXTERN_LED,0);
-//        getCommunicator().set_setting(2, (byte)m_external_led);
+        mVentilationFan = sharedPreferences.getInt(DB_EXTERN_LED,0);
+        getCommunicator().set_setting(2, (byte) mVentilationFan);
 
         //Pause Rotation
         m_pause_rotation = sharedPreferences.getBoolean(DB_PAUSE,false);
@@ -454,9 +458,6 @@ public class Application_manager extends Application {
 
         //DB_LANGUEAGE
         m_language = sharedPreferences.getInt(DB_LANGUEAGE,0);
-
-        //DB_INVERTER
-        m_inverter = sharedPreferences.getInt(DB_INVERTER,0);
 
         //DB_VOLUME
         m_volume = sharedPreferences.getInt(DB_VOLUME,0);
@@ -492,18 +493,36 @@ public class Application_manager extends Application {
         isDoorOpened = sharedPreferences.getBoolean(DB_DOOR_STATE, false);
     }
 
-    public static void set_inverter(boolean _inverterType) {
+//    public static void setInverterType_flag(boolean _inverterType) {
+//
+//        // LS
+//        if (_inverterType) {
+//            communicator.set_engineer(2, (byte)0x10);
+//            inverterType = 0x10;
+//        }
+//        // 야스카와
+//        else {
+//            communicator.set_engineer(2, (byte)0x00);
+//            inverterType = 0x00;
+//        }
+//
+//        updateInverter();
+//    }
 
-        // LS
-        if (_inverterType) {
-            communicator.set_engineer(2, (byte)0x10);
-            inverterVal = 0x10;
-        }
-        // 야스카와
-        else {
-            communicator.set_engineer(2, (byte)0x00);
-            inverterVal = 0x00;
-        }
+    public static void setInverterType(byte val) {
+
+        inverterType = val;
+
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putInt(DB_INVERT_TYPE, inverterType);
+        editor.commit();
+
+        updateInverter();
+    }
+
+    public static byte getInverterType() {
+
+        return inverterType;
     }
 
     /**
@@ -526,9 +545,13 @@ public class Application_manager extends Application {
         editor.commit();
         programMode = mode;
 
+        // 상온제어 OFF -> deprecated
         if (programMode == MODE_L) {
             communicator.set_tx(5, (byte) 0x00);
         }
+
+        // 프로그램 모드
+        communicator.set_tx(7, (byte) programMode);
     }
 
     public static int getProgramMode() { return programMode; }
@@ -591,12 +614,15 @@ public class Application_manager extends Application {
         }
     }
 
-    synchronized public static void set_m_inverter(int i){
+    synchronized public static void setInverter(int val){
 
         SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putInt(DB_INVERTER, i);
+        editor.putInt(DB_INVERTER, val);
         editor.commit();
-        m_inverter = i;
+        mInverter = val;
+        LOG.D("Inverter = " + val);
+
+        updateInverter();
     }
 
     synchronized public static void set_m_pause_rotation(boolean i){
@@ -612,7 +638,7 @@ public class Application_manager extends Application {
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putInt(DB_EXTERN_LED, i);
         editor.commit();
-        m_external_led = i;
+        mVentilationFan = i;
     }
 
     synchronized public static void set_m_water_ftime(String ft){
@@ -1093,5 +1119,20 @@ public class Application_manager extends Application {
                 LOG.D("programMode : UNDEFINED");
                 break;
         }
+    }
+
+    public static void updateInverter() {
+
+        byte newVal = (byte) (communicator.get_tx_idx(3) & 0b00000011);
+        LOG.D("updateInverter | before = " + newVal);
+
+        // 인버터 타입 false: 야스카와 / true: LS
+        newVal |= inverterType << 6;
+
+        // 원점복귀 수압 0, 1(50), 2(100)
+        newVal |= mInverter << 4;
+
+        communicator.set_tx(3, newVal);
+        LOG.D("updateInverter | after = " + newVal);
     }
 }

@@ -121,7 +121,8 @@ public class Activity_waiting_rfid extends AppCompatActivity {
         val_time = sharedPreferences.getInt(Application_manager.DB_VAL_TIME, 10);
 
         // tx 메시지의 DATA2, 5에 수압, 산소투입량 입력
-        communicator.set_tx(3, (byte) (Application_manager.inverterVal | (byte) (Application_manager.m_inverter * 3)));
+//        communicator.set_tx(3, (byte) (Application_manager.inverterType | (byte) (Application_manager.mInverter * 3)));
+        setPressure(val_pressure);
         communicator.set_tx(6, (byte) val_oxygen_injection);
 
         time_text = (TextView)findViewById(R.id.waiting_rfid_time_text);
@@ -422,7 +423,7 @@ public class Activity_waiting_rfid extends AppCompatActivity {
 
                     Log.i("JW", "changeFragment (waiting_rfid -> working)");
 
-                    communicator.set_tx(3, (byte) (Application_manager.inverterVal | (byte) val_pressure));
+                    setPressure(val_pressure);
 
                     // 동작 시 설정 버튼 안보이게
                     handler_update_data.sendEmptyMessage(SET_BUTTON_INVISIBLE);
@@ -522,7 +523,7 @@ public class Activity_waiting_rfid extends AppCompatActivity {
         // 동작 시작 전 값으로 tx 값 복원
         byte val = (byte) val_oxygen_injection;
         communicator.set_tx(6, val);
-        communicator.set_tx(3, (byte) (Application_manager.inverterVal | (byte) (Application_manager.m_inverter * 3)));
+        setPressure(val_pressure);
 
         // 치료 음악 재생 종료
         if (Application_manager.sound_mode_num != 0) {
@@ -895,7 +896,7 @@ public class Activity_waiting_rfid extends AppCompatActivity {
                             pressure_text.setText("" + val_pressure);
 
                             if (mode == 1) {
-                                communicator.set_tx(3, (byte) (Application_manager.inverterVal | (byte) val_pressure));
+                                setPressure(val_pressure);
                             }
                         break;
                     case R.id.waiting_rfid_pressure_down_button:
@@ -906,7 +907,7 @@ public class Activity_waiting_rfid extends AppCompatActivity {
                             pressure_text.setText("" + val_pressure);
 
                             if (mode == 1) {
-                                communicator.set_tx(3, (byte) (Application_manager.inverterVal | (byte) val_pressure));
+                                setPressure(val_pressure);
                             }
                         break;
                     case R.id.waiting_rfid_time_up_button:
@@ -1051,5 +1052,12 @@ public class Activity_waiting_rfid extends AppCompatActivity {
                 }
                 break;
         }
+    }
+
+    private void setPressure(int pressure) {
+
+        byte oldVal = Application_manager.getCommunicator().get_tx_idx(3);
+        oldVal &= 0b11110000;
+        communicator.set_tx(3, (byte) (oldVal | (byte) pressure));
     }
 }

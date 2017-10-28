@@ -15,6 +15,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.sinest.gw_1000.R;
+import com.sinest.gw_1000.Utils.Const;
 import com.sinest.gw_1000.communication.Communicator;
 import com.sinest.gw_1000.management.Application_manager;
 import com.sinest.gw_1000.management.CustomProgressDialog;
@@ -47,14 +48,9 @@ public class Activity_engine extends AppCompatActivity {
 
     boolean[] hidden = {false,false,false,false};
 
-//    boolean mode_f = true;
-
-    boolean invert_f = true;
-
     int heater_f = 0;
     int w_press = 0;
     int oxy = 0;
-    Byte inverter = 0x00;
 
     Communicator communicator;
     TextView clock;
@@ -145,7 +141,7 @@ public class Activity_engine extends AppCompatActivity {
                             eng_h_flag[0] = true;
                             w_press = 0;
                         }
-                        communicator.set_engineer(2,(byte)((byte)inverter|(byte)w_press));
+                        updateInverterMsg();
                         break;
                     case R.id.eng_36h:
                         //
@@ -159,7 +155,7 @@ public class Activity_engine extends AppCompatActivity {
                             eng_h_flag[1] = true;
                             w_press = 0;
                         }
-                        communicator.set_engineer(2,(byte)((byte)inverter|(byte)w_press));
+                        updateInverterMsg();
                         break;
                     case R.id.eng_43h:
                         //
@@ -173,7 +169,7 @@ public class Activity_engine extends AppCompatActivity {
                             eng_h_flag[2] = true;
                             w_press = 0;
                         }
-                        communicator.set_engineer(2,(byte)((byte)inverter|(byte)w_press));
+                        updateInverterMsg();
                         break;
                     case R.id.eng_48h:
                         //
@@ -187,7 +183,7 @@ public class Activity_engine extends AppCompatActivity {
                             eng_h_flag[3] = true;
                             w_press = 0;
                         }
-                        communicator.set_engineer(2,(byte)((byte)inverter|(byte)w_press));
+                        updateInverterMsg();
                         break;
                     case R.id.eng_54h:
                         //
@@ -201,7 +197,7 @@ public class Activity_engine extends AppCompatActivity {
                             eng_h_flag[4] = true;
                             w_press = 0;
                         }
-                        communicator.set_engineer(2,(byte)((byte)inverter|(byte)w_press));
+                        updateInverterMsg();
                         break;
                     case R.id.eng_60h:
                         //
@@ -215,7 +211,7 @@ public class Activity_engine extends AppCompatActivity {
                             eng_h_flag[5] = true;
                             w_press = 0;
                         }
-                        communicator.set_engineer(2,(byte)((byte)inverter|(byte)w_press));
+                        updateInverterMsg();
                         break;
                     case R.id.eng_1step:
                         //
@@ -367,25 +363,17 @@ public class Activity_engine extends AppCompatActivity {
                         break;
                     case R.id.invert_choice:
                         // LS (0x10)
-                        if (invert_f == true) {
-                            invert_choice.setBackgroundResource(Application_manager.inverter_ls[Application_manager.useChineseImage]);
-                            invert_f = false;
-                            inverter = 0x10;
+                        if (Application_manager.getInverterType() == Const.TYPE_LS) {
+                            invert_choice.setBackgroundResource(Application_manager.inverter_ys[Application_manager.useChineseImage]);
+                            Application_manager.setInverterType(Const.TYPE_YS);
                         }
                         // 야스카와 (0x00)
                         else {
-                            invert_choice.setBackgroundResource(Application_manager.inverter_ys[Application_manager.useChineseImage]);
-                            invert_f = true;
-                            inverter = 0x00;
+                            invert_choice.setBackgroundResource(Application_manager.inverter_ls[Application_manager.useChineseImage]);
+                            Application_manager.setInverterType(Const.TYPE_LS);
                         }
-                        SharedPreferences sharedPreferences = getSharedPreferences(Application_manager.DB_NAME, 0);
-                        SharedPreferences.Editor editor = sharedPreferences.edit();
-                        editor.putBoolean(Application_manager.DB_INVERT_TYPE, !invert_f);
-                        editor.commit();
 
-                        Application_manager.inverterType = !invert_f;
-                        Application_manager.set_inverter(Application_manager.inverterType);
-                        communicator.set_engineer(2,(byte)((byte)inverter|(byte)w_press));
+                        updateInverterMsg();
                         break;
                     /*
                     * 히든 버튼
@@ -539,8 +527,8 @@ public class Activity_engine extends AppCompatActivity {
                         // 중지 명령 -> 모터 원점 복귀
                         communicator.set_tx(1, (byte)0x00);
 
-                        finish();
-                        //wait_motor_back(check_activity);
+//                        finish();
+                        wait_motor_back(check_activity);
                         break;
                     case R.id.eng_b_left:
                         eng_b_left.setBackgroundResource(R.drawable.moving_left_off);
@@ -656,17 +644,24 @@ public class Activity_engine extends AppCompatActivity {
         Application_manager.setIsEngineerMode(true);
 
         // 인버터 타입 불러오기
-        if (Application_manager.inverterType) {
+        if (Application_manager.getInverterType() == Const.TYPE_LS) {
             invert_choice.setBackgroundResource(Application_manager.inverter_ls[Application_manager.useChineseImage]);
-            invert_f = false;
-            inverter = 0x10;
         }
         // 야스카와 (0x00)
         else {
             invert_choice.setBackgroundResource(Application_manager.inverter_ys[Application_manager.useChineseImage]);
-            invert_f = true;
-            inverter = 0x00;
         }
+//        if (Application_manager.inverterType_flag) {
+//            invert_choice.setBackgroundResource(Application_manager.inverter_ls[Application_manager.useChineseImage]);
+//            invert_f = false;
+//            inverter = 0x10;
+//        }
+//        // 야스카와 (0x00)
+//        else {
+//            invert_choice.setBackgroundResource(Application_manager.inverter_ys[Application_manager.useChineseImage]);
+//            invert_f = true;
+//            inverter = 0x00;
+//        }
     }
 
     @Override
@@ -675,10 +670,10 @@ public class Activity_engine extends AppCompatActivity {
         isRun = false;
 
         // DB에 저장된 압력값을 다시 불러와 기기에 전달
-        int val_pressure = 0;
-        SharedPreferences sharedPreferences = getSharedPreferences(Application_manager.DB_NAME, 0);
-        sharedPreferences.getInt(Application_manager.DB_VAL_PRESSURE, val_pressure);
-        communicator.set_tx(3, (byte)(Application_manager.inverterVal | (byte)val_pressure));
+//        int val_pressure = 0;
+//        SharedPreferences sharedPreferences = getSharedPreferences(Application_manager.DB_NAME, 0);
+//        sharedPreferences.getInt(Application_manager.DB_VAL_PRESSURE, val_pressure);
+//        communicator.set_tx(3, (byte)(Application_manager.inverterType | (byte)val_pressure));
     }
 
     /*
@@ -738,5 +733,10 @@ public class Activity_engine extends AppCompatActivity {
         };
         CustomProgressDialog progressDialog = new CustomProgressDialog(this);
         progressDialog.showDialog(handler);
+    }
+
+    private void updateInverterMsg() {
+
+        communicator.set_engineer(2, (byte)(Application_manager.getInverterType() << 6 | Application_manager.mInverter << 4 | (byte) w_press));
     }
 }

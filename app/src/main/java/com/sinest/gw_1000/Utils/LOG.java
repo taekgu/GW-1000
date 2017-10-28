@@ -8,7 +8,7 @@ import android.util.Log;
 
 public class LOG {
 
-    private static final String TAG = "JW";
+    private static final String TAG = "TEST";
 
     public static void D(String msg) {
 
