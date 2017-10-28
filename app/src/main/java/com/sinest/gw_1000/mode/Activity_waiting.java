@@ -1099,5 +1099,6 @@ public class Activity_waiting extends AppCompatActivity {
 
         byte oldVal = Application_manager.getCommunicator().get_tx_idx(3);
         oldVal &= 0b11110000;
+        communicator.set_tx(3, (byte) (oldVal | (byte) pressure));
     }
 }
