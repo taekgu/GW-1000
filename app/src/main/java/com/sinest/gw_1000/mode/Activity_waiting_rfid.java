@@ -796,6 +796,8 @@ public class Activity_waiting_rfid extends AppCompatActivity {
                         // 추가개발 - 도어 상태 업데이트 (1000H)
                         updateDoorState();
                     case Application_manager.MODE_A:
+                        // 20180624 - MODE_A도 센서 값에 따라 도어 이미지 변경되도록 수정
+                        updateDoorState();
                         // 온도 높을 때 - 냉
                         if (Application_manager.SENSOR_TEMP_USER + 1 < Application_manager.SENSOR_TEMP) {
 
@@ -947,26 +949,26 @@ public class Activity_waiting_rfid extends AppCompatActivity {
                         }
                         break;
                     case R.id.waiting_rfid_dooropen_button:
-
+                        // 20180624 - MODE_A도 센서 값에 따라 도어 이미지 변경되도록 수정
                         view.setBackgroundResource(Application_manager.door_open_off[Application_manager.useChineseImage]);
 
                         if (Application_manager.getSoundManager().play(Application_manager.m_language, 3) == 0) {
 
-                            background_device.setBackgroundResource(R.drawable.open);
-                            Application_manager.set_door_state(true);
+//                            background_device.setBackgroundResource(R.drawable.open);
+//                            Application_manager.set_door_state(true);
 
                             val = 0x01;
                             communicator.set_tx(8, val);
                         }
                         break;
                     case R.id.waiting_rfid_doorclose_button:
-
+                        // 20180624 - MODE_A도 센서 값에 따라 도어 이미지 변경되도록 수정
                         view.setBackgroundResource(Application_manager.door_close_off[Application_manager.useChineseImage]);
 
                         if (Application_manager.getSoundManager().play(Application_manager.m_language, 4) == 0) {
 
-                            background_device.setBackgroundResource(R.drawable.close);
-                            Application_manager.set_door_state(false);
+//                            background_device.setBackgroundResource(R.drawable.close);
+//                            Application_manager.set_door_state(false);
 
                             val = 0x02;
                             communicator.set_tx(8, val);
@@ -1044,11 +1046,19 @@ public class Activity_waiting_rfid extends AppCompatActivity {
                 }
                 break;
             case Application_manager.MODE_A:
-                if (Application_manager.isDoorOpened) {
-                    background_device.setBackgroundResource(R.drawable.open);
+//                if (Application_manager.isDoorOpened) {
+//                    background_device.setBackgroundResource(R.drawable.open);
+//                }
+//                else {
+//                    background_device.setBackgroundResource(R.drawable.close);
+//                }
+//                break;
+                // 20180624 - MODE_A도 센서 값에 따라 도어 이미지 변경되도록 수정
+                if (Application_manager.getCommunicator().get_rx_idx(16) == 0x00) {
+                    background_device.setBackgroundResource(R.drawable.close);
                 }
                 else {
-                    background_device.setBackgroundResource(R.drawable.close);
+                    background_device.setBackgroundResource(R.drawable.open);
                 }
                 break;
         }

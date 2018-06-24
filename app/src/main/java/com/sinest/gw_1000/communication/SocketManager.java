@@ -34,7 +34,7 @@ public class SocketManager {
     private final static int SERVER_DISCONNECTED  = 1002;
 
     private static final String IP_ADDRESS  = "192.168.0.1";
-//    private static final String IP_ADDRESS  = "192.168.219.148";
+//    private static final String IP_ADDRESS  = "192.168.219.184";
 //    private static final String IP_ADDRESS  = "192.168.160.130";
     private static final int PORT           = 20002;
 
